@@ -23,7 +23,6 @@ INSTALLED_APPS = [
   'base.apps.BaseConfig',
   'errors.apps.ErrorsConfig',
   'verification.apps.VerificationConfig',
-  'settings.apps.SettingsConfig',
   'django.contrib.admin',
   'django.contrib.auth',
   'django.contrib.contenttypes',
