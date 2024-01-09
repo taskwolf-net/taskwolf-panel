@@ -1,0 +1,51 @@
+{% load static %}
+<html lang="en">
+  {% include 'templates/head.html' %}
+  <body>
+     {% include 'templates/home-header.html' %}
+    <form>
+      <img id="login-logo" src="{% static 'img/logo.png' %}"></br></br></br>
+      <div class="form-outline mb-4">
+        <label for="email" class="form-label">Email address</label>
+        <input type="email" id="email" class="form-control" placeholder="Email">
+      </div>
+      <div class="form-outline mb-4">
+        <div class="d-flex">
+          <label for="password" class="form-label">Password</label>
+          <a id="forgot-password" href="/password/reset/request/">Forgot your password?</a>
+        </div>
+        <input type="password" id="password" class="form-control" placeholder="Password"/>
+      </div>
+      <div class="form-check mb-3">
+        <input type="checkbox" class="form-check-input" id="remember-check">
+        <label class="form-check-label" for="remember-check" id="remember-check-label">Remember me</label>
+      </div>
+      <button type="button" id="login" class="btn btn-primary mb-4">LOG IN</button></br>
+      <p class="text-light">Not yet registered? <a id="not-registered" class="text-decoration-none" href="/register/">Create account</a>
+    </form>
+  </body>
+</html>
+
+<script>
+  document.getElementById("password").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      document.getElementById("login").click();
+    }
+  });
+
+  document.getElementById('login').onclick = function(event) {
+    let request = new HttpRequest("https://api.taskwolf.net/v1/verification/login/", "POST", [{key: "Content-Type", value: "application/json"}],
+      {email: document.getElementById("email").value, password: document.getElementById("password").value});
+    request.send(function (status, responseText) {
+      if (status == 200) {
+        Cookie.create("token", JSON.parse(responseText).apiKey, 60 * 60);
+        Cookie.destroy("taskwolf-organization-target");
+        window.location.href = "/dashboard/";
+      } else {
+        swal("Authentication failed!", "The password entered is incorrect!", "error");
+        document.getElementById("password").value = "";
+      }
+    });
+  };
+</script>

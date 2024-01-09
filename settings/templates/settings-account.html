@@ -1,0 +1,141 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'templates/head.html' %}
+  <body>
+    {% include 'templates/neutral-header.html' %}
+    <div class="settings-container">
+      {% include 'templates/settings-sidebar.html' %}
+      <div class="settings-content">
+        <h1 class="settings-headline">{% trans 'settings.account.headline' %}</h1>
+        <div id="settings-account-password-container">
+          <h3 id="settings-account-password-headline">{% trans 'settings.account.password.headline' %}</h3>
+          <form>
+            <div class="form-outline mb-4">
+              <label for="settings-account-current-password" class="form-label">{% trans 'settings.account.password.current.password' %}</label>
+              <input id="settings-account-current-password" type="password" class="form-control" placeholder="{% trans 'settings.account.password.current.password' %}">
+            </div>
+            <div class="form-outline mb-4">
+              <label for="settings-account-new-password" class="form-label">{% trans 'settings.account.password.new.password' %}</label>
+              <input id="settings-account-new-password" type="password" class="form-control" placeholder="{% trans 'settings.account.password.new.password' %}">
+            </div>
+            <div class="form-outline mb-4">
+              <label for="settings-account-new-password-repetition" class="form-label">{% trans 'settings.account.password.new.password.repetition' %}</label>
+              <input id="settings-account-new-password-repetition" type="password" class="form-control" placeholder="{% trans 'settings.account.password.new.password.repetition' %}">
+            </div>
+          </form>
+          <button id="settings-account-password-button" type="button" class="btn btn-success">{% trans 'settings.account.password.submit' %}</button>
+        </div>
+        <div id="settings-account-email-container">
+          <h3 id="settings-account-email-headline">{% trans 'settings.account.email.headline' %}</h3>
+          <form>
+            <div class="form-outline mb-4">
+              <label for="settings-account-password" class="form-label">{% trans 'settings.account.email.password' %}</label>
+              <input id="settings-account-password" type="password" class="form-control" placeholder="{% trans 'settings.account.email.password' %}">
+            </div>
+            <div class="form-outline mb-4">
+              <label for="settings-account-email" class="form-label">{% trans 'settings.account.email.new.email' %}</label>
+              <input id="settings-account-email" type="email" class="form-control" placeholder="{% trans 'settings.account.email.new.email' %}">
+            </div>
+          </form>
+          <button id="settings-account-email-button" type="button" class="btn btn-success">{% trans 'settings.account.email.change' %}</button>
+        </div>
+        <div id="settings-account-delete-container">
+          <h3 id="settings-account-delete-headline">{% trans 'settings.account.delete.headline' %}</h3>
+          <p id="settings-account-delete-disclaimer" class="text-secondary my-3">{% trans 'settings.account.delete.disclaimer' %}</p>
+          <button id="settings-account-delete-button" type="button" class="btn btn-danger">{% trans 'settings.account.delete' %}</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  document.getElementById("settings-account-password-button").onclick = function(event) {
+    var currentPasswordElement = document.getElementById("settings-account-current-password");
+    var newPasswordElement = document.getElementById("settings-account-new-password");
+    var newPasswordRepetitionElement = document.getElementById("settings-account-new-password-repetition");
+    if (currentPasswordElement.value === "" || newPasswordElement.value === "") {
+      return;
+    }
+    if (newPasswordElement.value !== newPasswordRepetitionElement.value) {
+      newPasswordElement.value = "";
+      newPasswordRepetitionElement.value = "";
+      swal("{% trans 'settings.account.password.mismatch.title' %}", "{% trans 'settings.account.password.mismatch.body' %}", "error");
+      return;
+    }
+    let request = new HttpRequest("https://api.taskwolf.net/v1/settings/account/password/change/", "POST", [{key: "Content-Type", value: "application/json"},
+      {key: "Authorization", value: "Bearer " + Cookie.find("token")}], {currentPassword: currentPasswordElement.value, newPassword: newPasswordElement.value});
+    request.send(function (status, responseText) {
+      var response = JSON.parse(responseText);
+      if (response.success === false) {
+        swal("{% trans 'settings.account.password.wrong.title' %}", "{% trans 'settings.account.password.wrong.body' %}", "error");
+      } else {
+        swal("{% trans 'settings.account.password.successful.title' %}", "{% trans 'settings.account.password.successful.body' %}", "success");
+      }
+      currentPasswordElement.value = "";
+      newPasswordElement.value = "";
+      newPasswordRepetitionElement.value = "";
+    });
+  };
+
+  document.getElementById("settings-account-email-button").onclick = function(event) {
+    var passwordElement = document.getElementById("settings-account-password");
+    var emailElement = document.getElementById("settings-account-email");
+    if (passwordElement.value === "" || emailElement.value === "") {
+      return;
+    }
+    let request = new HttpRequest("https://api.taskwolf.net/v1/settings/account/email/change/request/", "POST", [{key: "Content-Type", value: "application/json"},
+      {key: "Authorization", value: "Bearer " + Cookie.find("token")}], {password: passwordElement.value, newEmail: emailElement.value});
+    request.send(function (status, responseText) {
+      var response = JSON.parse(responseText);
+      if (response.success === false) {
+        if (response.errorCode === 1000) {
+          swal("{% trans 'settings.account.email.wrong.password.title' %}", "{% trans 'settings.account.email.wrong.password.body' %}", "error");
+        } else if (response.errorCode === 1001) {
+          swal("{% trans 'settings.account.email.exists.title' %}", "{% trans 'settings.account.email.exists.body' %}", "error");
+        }
+      } else {
+        swal("{% trans 'settings.account.email.successful.title' %}", "{% trans 'settings.account.email.successful.body' %}", "success");
+      }
+      passwordElement.value = "";
+      emailElement.value = "";
+    });
+  };
+
+  document.getElementById("settings-account-delete-button").onclick = function (event) {
+    openAccountDeleteMenu();
+  }
+
+  function openAccountDeleteMenu() {
+    swal({
+      title: "{% trans 'settings.account.delete.title' %}",
+      text: "{% trans 'settings.account.delete.body' %}",
+      content: {
+        element: "input",
+        attributes: {
+          placeholder: "{% trans 'settings.account.delete.password' %}",
+          type: "password",
+        },
+      },
+      icon: "warning",
+      dangerMode: true,
+      buttons: true,
+    }).then(result => {
+      if (result != null) {
+        let request = new HttpRequest("https://api.taskwolf.net/v1/settings/account/delete/", "POST", [{key: "Content-Type", value: "application/json"},
+          {key: "Authorization", value: "Bearer " + Cookie.find("token")}], {password: result});
+        request.send(function (status, responseText) {
+          var success = JSON.parse(responseText).success;
+          if (success === true) {
+            Cookie.destroy("token");
+            Cookie.destroy("taskwolf-organization-target");
+            swal("{% trans 'settings.account.delete.successful.title' %}", "{% trans 'settings.account.delete.successful.body' %}", "success").then(success => window.location.href = "/");
+          } else {
+            swal("{% trans 'settings.account.delete.failed.title' %}", "{% trans 'settings.account.delete.failed.body' %}", "error");
+          }
+        });
+      }
+    });
+  }
+</script>
