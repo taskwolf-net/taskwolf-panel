@@ -1,0 +1,17 @@
+{% load static %}
+{% load i18n %}
+<div class="bg-dark collapse collapse-horizontal" id="sidebar">
+  <div id="sidebar-content">
+    <ul class="navbar-nav ml-auto mt-4 h-100 d-flex align-items-center">
+      <li class="sidebar-item">
+        <a href="/dashboard/" class="sidebar-link nav-link {% if request.path == '/dashboard/' or request.path == '/' %}sidebar-active{% endif %}" aria-current="page"><i class="sidebar-icon fa fa-home" aria-hidden="true"></i>{% trans 'panel.sidebar.dashboard' %}</a>
+      </li>
+      <li class="sidebar-item">
+        <a href="/tickets/" class="sidebar-link nav-link {% if 'tickets' in request.path %}sidebar-active{% endif %}" aria-current="page"><i class="sidebar-icon fa fa-ticket" aria-hidden="true"></i>{% trans 'panel.sidebar.tickets' %}</a>
+      </li>
+      <li class="sidebar-item">
+        <a href="/emails/" class="sidebar-link nav-link {% if 'tickets' in request.path %}sidebar-active{% endif %}" aria-current="page"><i class="sidebar-icon fa fa-envelope" aria-hidden="true"></i>{% trans 'panel.sidebar.emails' %}</a>
+      </li>
+    </ul>
+  </div>
+</div>
