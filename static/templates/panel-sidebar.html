@@ -7,10 +7,10 @@
         <a href="/dashboard/" class="sidebar-link nav-link {% if request.path == '/dashboard/' or request.path == '/' %}sidebar-active{% endif %}" aria-current="page"><i class="sidebar-icon fa fa-home" aria-hidden="true"></i>{% trans 'panel.sidebar.dashboard' %}</a>
       </li>
       <li class="sidebar-item">
-        <a href="/tickets/" class="sidebar-link nav-link {% if 'tickets' in request.path %}sidebar-active{% endif %}" aria-current="page"><i class="sidebar-icon fa fa-ticket" aria-hidden="true"></i>{% trans 'panel.sidebar.tickets' %}</a>
+        <a href="/tickets/" class="sidebar-link nav-link {% if 'ticket' in request.path %}sidebar-active{% endif %}" aria-current="page"><i class="sidebar-icon fa fa-ticket" aria-hidden="true"></i>{% trans 'panel.sidebar.tickets' %}</a>
       </li>
       <li class="sidebar-item">
-        <a href="/emails/" class="sidebar-link nav-link {% if 'tickets' in request.path %}sidebar-active{% endif %}" aria-current="page"><i class="sidebar-icon fa fa-envelope" aria-hidden="true"></i>{% trans 'panel.sidebar.emails' %}</a>
+        <a href="/emails/" class="sidebar-link nav-link {% if 'email' in request.path %}sidebar-active{% endif %}" aria-current="page"><i class="sidebar-icon fa fa-envelope" aria-hidden="true"></i>{% trans 'panel.sidebar.emails' %}</a>
       </li>
     </ul>
   </div>
