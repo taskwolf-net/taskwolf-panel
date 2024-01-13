@@ -1,0 +1,139 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'templates/head.html' %}
+  <body>
+    {% include 'templates/panel-header.html' %}
+    {% include 'templates/panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="tickets-wrapper">
+        <h1 id="tickets-headline">{% trans 'tickets.headline' %}</h1>
+        <div id="tickets-header">
+          <div id="tickets-search-box">
+            <input id="tickets-search-input" placeholder=" {% trans 'tickets.search' %}" type="text" class="form-control" value="" autocomplete="off">
+            <button type="button">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+        <ul id="tickets-table-description">
+          <li id="tickets-table-description-title">
+            <div>
+              <span>{% trans 'tickets.title' %}</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span>{% trans 'tickets.type' %}</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span>{% trans 'tickets.status' %}</span>
+            </div>
+          </li>
+        </ul>
+        <ul id="tickets-list">
+        </ul>
+        <div id="tickets-empty">
+          <span id="tickets-empty-headline">{% trans 'tickets.empty.headline' %}</span>
+          <span>{% trans 'tickets.empty.text' %}</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  var tickets;
+  var ticketsCurrentNameFilter = "";
+
+  $(document).ready(function() {
+    fetchTicketsData(function() {
+      displayTickets();
+    });
+  });
+
+  function fetchTicketsData(callback) {
+    let request = new HttpRequest("https://api.taskwolf.net/v1/team/tickets/find/", "GET", [{key: "Content-Type", value: "application/json"},
+      {key: "Authorization", value: "Bearer " + Cookie.find("token")}]);
+    request.send(function (status, responseText) {
+      tickets = JSON.parse(responseText).tickets;
+      callback();
+    });
+  }
+
+  function displayTickets() {
+    document.getElementById("tickets-list").innerHTML = "";
+    var displayedTickets = 0;
+    for (var i = 0; i < tickets.length; i++) {
+      var entry = tickets[i];
+      if(!(shouldDisplayTicketEntry(entry))) {
+        continue;
+      }
+      var type = "";
+      if (entry.type.toUpperCase() === "REQUEST") {
+        type = "{% trans 'tickets.type.request' %}";
+      }
+      if (entry.type.toUpperCase() === "BUG") {
+        type = "{% trans 'tickets.type.bug' %}";
+      }
+      displayTicket(entry.id, entry.title, type, entry.status);
+      displayedTickets++;
+    }
+    if (displayedTickets === 0) {
+      document.getElementById("tickets-empty").style.display = "flex";
+    } else {
+      document.getElementById("tickets-empty").style.display = "none";
+    }
+  }
+
+  function shouldDisplayTicketEntry(entry) {
+    return ticketsCurrentNameFilter.length === 0 ||
+      entry.title.toLowerCase().includes(ticketsCurrentNameFilter.toLowerCase()) ||
+      entry.type.toLowerCase().includes(ticketsCurrentNameFilter.toLowerCase()) ||
+      entry.status.toLowerCase().includes(ticketsCurrentNameFilter.toLowerCase());
+  }
+
+  function displayTicket(id, title, type, status) {
+    var entry = document.createElement('li');
+    entry.role = "button";
+    entry.classList.add("ticket-entry");
+    var titleDiv = document.createElement("div");
+    titleDiv.classList.add("ticket-entry-title");
+    var titleElement = document.createElement("span");
+    titleElement.innerText = title;
+    titleElement.classList.add("tickets-list-title");
+    titleDiv.appendChild(titleElement);
+    entry.appendChild(titleDiv);
+    appendTicketsCell(entry, "type", type, "span");
+    if (status.toUpperCase() === "OPEN") {
+      appendTicketsCell(entry, "status", "{% trans 'tickets.status.open' %}", "span").classList.add("text-success");
+    } else {
+      appendTicketsCell(entry, "status", "{% trans 'tickets.status.closed' %}", "span").classList.add("text-danger");
+    }
+    entry.onclick = function (event) {
+      clickTicket(id);
+    }
+    document.getElementById("tickets-list").appendChild(entry);
+  }
+
+  function clickTicket(id) {
+    window.location.href = "/ticket/" + id + "/";
+  }
+
+  function appendTicketsCell(entry, identifier, information, elementType) {
+    var div = document.createElement("div");
+    var element = document.createElement(elementType);
+    element.innerText = information;
+    element.classList.add("tickets-list-" + identifier);
+    div.appendChild(element);
+    entry.appendChild(div);
+    return element;
+  }
+
+  document.getElementById("tickets-search-input").oninput = function(event) {
+    ticketsCurrentNameFilter = event.target.value;
+    displayTickets();
+  };
+</script>
