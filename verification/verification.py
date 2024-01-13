@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from base.authentication import isAuthenticated
 from panel.panel import dashboard
 
-def login(request):
+async def login(request):
   authenticated = await isAuthenticated(request)
   if (authenticated):
     return await dashboard(request)
