@@ -50,7 +50,7 @@
     var messageElement = document.createElement("div");
     messageElement.classList.add("ticket-message", "ql-editor");
     messageElement.innerHTML = message.message;
-    var entry = displayEntry(message.teamWritten ? "{% static 'img/tickets/taskwolf-profile-picture.png' %}" : ticket.creatorProfilePicture, message.author,
+    var entry = displayEntry(message.teamWritten ? "{% static 'img/taskwolf-profile-picture.png' %}" : ticket.creatorProfilePicture, message.author,
       message.time.split(" ")[0], message.time.split(" ")[1], messageElement);
     if (index > 0 && message.selfWritten) {
       var deleteButton = document.createElement("button");
@@ -87,7 +87,7 @@
   function displayAnswerField() {
     var answerField = document.createElement("div");
     answerField.id = "ticket-answer-field";
-    displayEntry("{% static 'img/tickets/taskwolf-profile-picture.png' %}", "Taskwolf", "", "", answerField);
+    displayEntry("{% static 'img/taskwolf-profile-picture.png' %}", "Taskwolf", "", "", answerField);
     var quill = new Quill('#ticket-answer-field', {
       modules: {
         toolbar: [

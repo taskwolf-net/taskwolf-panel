@@ -82,7 +82,7 @@
 }
 
 .ticket-entry-title {
-  width: 60% !important;
+  width: 40% !important;
 }
 
 #tickets-table-description {
@@ -106,7 +106,7 @@
 }
 
 #tickets-table-description-title {
-  width: 60% !important;
+  width: 40% !important;
 }
 
 #tickets-table-description button {

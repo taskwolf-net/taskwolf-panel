@@ -24,12 +24,17 @@
           </li>
           <li>
             <div>
+              <span>{% trans 'tickets.creator' %}</span>
+            </div>
+          </li>
+          <li>
+            <div>
               <span>{% trans 'tickets.type' %}</span>
             </div>
           </li>
           <li>
             <div>
-              <span>{% trans 'tickets.status' %}</span>
+              <span>{% trans 'tickets.date' %}</span>
             </div>
           </li>
         </ul>
@@ -78,7 +83,7 @@
       if (entry.type.toUpperCase() === "BUG") {
         type = "{% trans 'tickets.type.bug' %}";
       }
-      displayTicket(entry.id, entry.title, type, entry.status);
+      displayTicket(entry.id, entry.title, entry.creator, type, entry.date);
       displayedTickets++;
     }
     if (displayedTickets === 0) {
@@ -91,11 +96,12 @@
   function shouldDisplayTicketEntry(entry) {
     return ticketsCurrentNameFilter.length === 0 ||
       entry.title.toLowerCase().includes(ticketsCurrentNameFilter.toLowerCase()) ||
+      entry.creator.toLowerCase().includes(ticketsCurrentNameFilter.toLowerCase()) ||
       entry.type.toLowerCase().includes(ticketsCurrentNameFilter.toLowerCase()) ||
-      entry.status.toLowerCase().includes(ticketsCurrentNameFilter.toLowerCase());
+      entry.date.toLowerCase().includes(ticketsCurrentNameFilter.toLowerCase());
   }
 
-  function displayTicket(id, title, type, status) {
+  function displayTicket(id, title, creator, type, date) {
     var entry = document.createElement('li');
     entry.role = "button";
     entry.classList.add("ticket-entry");
@@ -106,12 +112,9 @@
     titleElement.classList.add("tickets-list-title");
     titleDiv.appendChild(titleElement);
     entry.appendChild(titleDiv);
+    appendTicketsCell(entry, "creator", creator, "span");
     appendTicketsCell(entry, "type", type, "span");
-    if (status.toUpperCase() === "OPEN") {
-      appendTicketsCell(entry, "status", "{% trans 'tickets.status.open' %}", "span").classList.add("text-success");
-    } else {
-      appendTicketsCell(entry, "status", "{% trans 'tickets.status.closed' %}", "span").classList.add("text-danger");
-    }
+    appendTicketsCell(entry, "date", date, "span");
     entry.onclick = function (event) {
       clickTicket(id);
     }
