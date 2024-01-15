@@ -7,10 +7,170 @@
     {% include 'templates/panel-sidebar.html' %}
     <div class="sidebar-influenced">
       <div id="dashboard-wrapper">
+        <div id="dashboard-container" class="d-none">
+          <h1 id="dashboard-headline">{% trans 'panel.dashboard.headline' %}</h1>
+          <div id="dashboard-progress">
+            <div class="dashboard-progress-entry">
+              <h4 class="dashboard-progress-entry-headline">{% trans 'panel.dashboard.open.tickets' %}</h4>
+              <div id="dashboard-open-tickets-circle" class="dashboard-progress-entry-circle"></div>
+            </div>
+            <div class="dashboard-progress-entry">
+              <h4 class="dashboard-progress-entry-headline">{% trans 'panel.dashboard.open.emails' %}</h4>
+              <div id="dashboard-open-emails-circle" class="dashboard-progress-entry-circle"></div>
+            </div>
+            <div class="dashboard-progress-entry">
+              <h4 class="dashboard-progress-entry-headline">{% trans 'panel.dashboard.team.size' %}</h4>
+              <div id="dashboard-team-size-circle" class="dashboard-progress-entry-circle"></div>
+            </div>
+          </div>
+          <div id="dashboard-first-charts">
+            <div id="dashboard-personal-processed-requests-chart-container">
+              <canvas id="dashboard-personal-processed-requests-chart"></canvas>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </body>
 </html>
 
 <script>
+  var statistics;
+
+  $(document).ready(function() {
+    displayDashboard();
+  });
+
+  function displayDashboard() {
+    displayLoader();
+    fetchStatisticsData(function() {
+      document.getElementById("dashboard-open-tickets-circle").innerHTML = "";
+      document.getElementById("dashboard-open-emails-circle").innerHTML = "";
+      document.getElementById("dashboard-team-size-circle").innerHTML = "";
+      var totalRequests = (statistics.totalRequests === 0) ? 1 : statistics.totalRequests;
+      drawProgress("#dashboard-open-tickets-circle", statistics.openTickets,totalRequests , "", "#d3d3d3", "#235bd1");
+      drawProgress("#dashboard-open-emails-circle", statistics.openEmails, totalRequests, "", "#d3d3d3", "#235bd1");
+      drawProgress("#dashboard-team-size-circle", statistics.teamSize, statistics.teamSizeGoal, "", "#d3d3d3", "#235bd1");
+      removeLoader();
+      drawPersonalProcessedRequestsGraph(statistics.personalProcessedRequests);
+    });
+  }
+
+  function fetchStatisticsData(callback) {
+    let request = new HttpRequest("https://api.taskwolf.net/v1/team/statistics/", "GET", [{key: "Content-Type", value: "application/json"},
+      {key: "Authorization", value: "Bearer " + Cookie.find("token")}]);
+    request.send(function (status, responseText) {
+      statistics = JSON.parse(responseText);
+      callback();
+    });
+  }
+
+  function drawProgress(circleElement, value, maxValue, circleValueSuffix, fromColor, toColor) {
+    var bar = new ProgressBar.Circle(circleElement, {
+      color: '#ffffff',
+      strokeWidth: 4,
+      trailColor: '#4a4a4a',
+      trailWidth: 1.8,
+      easing: 'easeInOut',
+      duration: 800,
+      text: {
+        autoStyleContainer: false
+      },
+      from: { color: fromColor, width: 2 },
+      to: { color: toColor, width: 4 },
+      step: function(state, circle) {
+        circle.path.setAttribute('stroke', state.color);
+        circle.path.setAttribute('stroke-width', state.width);
+        var value = Math.round(circle.value() * maxValue);
+        circle.setText(value + circleValueSuffix);
+      }
+    });
+    bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+    bar.text.style.fontSize = '2rem';
+    bar.animate(value / maxValue);
+  }
+
+  function drawPersonalProcessedRequestsGraph(personalProcessedRequests) {
+    const xValues = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dez"];
+    new Chart("dashboard-personal-processed-requests-chart", {
+      type: 'bar',
+      data: {
+        labels: xValues,
+        datasets: [{
+          data: Object.keys(personalProcessedRequests).map((key) => personalProcessedRequests[key]),
+          backgroundColor: [
+            'rgb(106,199,116, 0.6)'
+          ],
+          borderColor: [
+            'rgb(106,199,116)'
+          ],
+          borderWidth: 2
+        }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false
+          },
+          title: {
+            display: true,
+            text: "{% trans 'panel.dashboard.personal.processed.requests' %}",
+            color: '#ffffff',
+            font: {
+              size: 22,
+            },
+          }
+        },
+        scales: {
+          y: {
+            ticks: {
+              color: '#cacaca',
+              font: {
+                size: 18,
+              },
+              precision: 0,
+            },
+            grid: {
+              display: false
+            },
+            border: {
+              width: 2,
+              color: '#cacaca',
+            },
+          },
+          x: {
+            ticks: {
+              color: '#cacaca',
+              font: {
+                size: 18,
+              },
+              precision: 0,
+            },
+            grid: {
+              display: false
+            },
+            border: {
+              width: 2,
+              color: '#cacaca',
+            },
+          }
+        }
+      },
+    });
+  }
+
+  function displayLoader() {
+    document.getElementById("dashboard-container").classList.add("d-none");
+    var loader = document.createElement("div");
+    loader.id = "dashboard-loader";
+    loader.classList.add("loader");
+    document.getElementById("dashboard-wrapper").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("dashboard-wrapper").removeChild(document.getElementById("dashboard-loader"));
+    document.getElementById("dashboard-container").classList.remove("d-none");
+  }
 </script>

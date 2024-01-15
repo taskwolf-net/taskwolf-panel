@@ -28,6 +28,16 @@ msgid "panel.sidebar.emails"
 msgstr "Emails"
 
 # DASHBOARD
+msgid "panel.dashboard.headline"
+msgstr "Dashboard"
+msgid "panel.dashboard.open.tickets"
+msgstr "Open Tickets"
+msgid "panel.dashboard.open.emails"
+msgstr "Open Emails"
+msgid "panel.dashboard.team.size"
+msgstr "Team Size"
+msgid "panel.dashboard.personal.processed.requests"
+msgstr "Personal Processed Requests"
 
 # TICKETS
 msgid "tickets.headline"

@@ -11,7 +11,7 @@ msgstr "Übersicht"
 msgid "neutral.header.logout"
 msgstr "Ausloggen"
 
-# PRODUCT
+# PANEL
 
 # HEADER
 msgid "panel.header.dashboard"
@@ -26,6 +26,18 @@ msgid "panel.sidebar.tickets"
 msgstr "Tickets"
 msgid "panel.sidebar.emails"
 msgstr "Emails"
+
+# DASHBOARD
+msgid "panel.dashboard.headline"
+msgstr "Übersicht"
+msgid "panel.dashboard.open.tickets"
+msgstr "Offene Tickets"
+msgid "panel.dashboard.open.emails"
+msgstr "Offene Emails"
+msgid "panel.dashboard.team.size"
+msgstr "Team Größe"
+msgid "panel.dashboard.personal.processed.requests"
+msgstr "Persönlich bearbeitete Anfragen"
 
 # TICKETS
 msgid "tickets.headline"
