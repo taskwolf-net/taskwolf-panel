@@ -1,0 +1,146 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'templates/head.html' %}
+  <body>
+    {% include 'templates/panel-header.html' %}
+    {% include 'templates/panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="administration-wrapper">
+        <h1 id="administration-headline">{% trans 'panel.administration.headline' %}</h1>
+        <ul id="administration-groups">
+        </ul>
+        <button type="button" id="administration-group-add" class="btn btn-primary mt-4">{% trans 'panel.administration.group.add' %}</button>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  var groups;
+  var members;
+
+  $(document).ready(function() {
+    fetchGroupsData(function() {
+      fetchMembersData(function() {
+        displayGroups();
+      });
+    });
+  });
+
+  function fetchGroupsData(callback) {
+    let request = new HttpRequest("https://api.taskwolf.net/v1/team/groups/", "GET", [{key: "Content-Type", value: "application/json"},
+      {key: "Authorization", value: "Bearer " + Cookie.find("token")}]);
+    request.send(function (status, responseText) {
+      groups = JSON.parse(responseText).groups.sort(function(firstGroup, secondGroup) {
+        return secondGroup.priority - firstGroup.priority;
+      });
+      callback();
+    });
+  }
+
+  function fetchMembersData(callback) {
+    let request = new HttpRequest("https://api.taskwolf.net/v1/team/members/", "GET", [{key: "Content-Type", value: "application/json"},
+      {key: "Authorization", value: "Bearer " + Cookie.find("token")}]);
+    request.send(function (status, responseText) {
+      members = JSON.parse(responseText).members;
+      callback();
+    });
+  }
+
+  function displayGroups() {
+    document.getElementById("administration-groups").innerHTML = "";
+    for (var i = 0; i < groups.length; i++) {
+      displayGroup(groups[i].name);
+    }
+  }
+
+  function displayGroup(name) {
+    var groupMembers = members.filter((member) => member.group === name);
+    var groupElement = document.createElement("li");
+    groupElement.classList.add("mb-4");
+    var groupHeaderElement = document.createElement("div");
+    groupHeaderElement.classList.add("administration-group-header");
+    var groupNameElement = document.createElement("h2");
+    groupNameElement.classList.add("text-left");
+    groupNameElement.innerHTML = name + " (" + groupMembers.length + "):";
+    groupHeaderElement.appendChild(groupNameElement);
+    var groupEditElement = document.createElement("button");
+    groupEditElement.classList.add("btn", "btn-success", "administration-group-edit");
+    groupEditElement.type = "button";
+    groupEditElement.innerHTML = "{% trans 'panel.administration.group.edit' %}";
+    groupEditElement.onclick = function (event) {
+      window.location.href = "/group/" + name.toLowerCase() + "/";
+    }
+    groupHeaderElement.appendChild(groupEditElement);
+    groupElement.appendChild(groupHeaderElement);
+    var groupMembersElement = document.createElement("ul");
+    groupMembersElement.classList.add("administration-group-members");
+    for (var i = 0; i < groupMembers.length; i++) {
+      var member = groupMembers[i];
+      groupMembersElement.appendChild(createTeamMemberElement(member.id,
+        member.name, member.profilePicture));
+    }
+    if (groupMembers.length === 0) {
+      var groupEmptyElement = document.createElement("h6");
+      groupEmptyElement.classList.add("mt-4");
+      groupEmptyElement.innerHTML = "{% trans 'panel.administration.group.empty' %}";
+      groupElement.appendChild(groupEmptyElement);
+    }
+    groupElement.appendChild(groupMembersElement);
+    document.getElementById("administration-groups").appendChild(groupElement);
+  }
+
+  function createTeamMemberElement(memberId, memberName, profilePicture) {
+    var memberElement = document.createElement("li");
+    memberElement.classList.add("administration-group-member");
+    memberElement.role = "button";
+    var memberInformationContainer = document.createElement("div");
+    memberInformationContainer.classList.add("administration-group-member-information");
+    var memberIconElement = document.createElement("img");
+    memberIconElement.classList.add("administration-group-member-icon");
+    memberIconElement.src = profilePicture;
+    memberInformationContainer.appendChild(memberIconElement);
+    var memberNameElement = document.createElement("span");
+    memberNameElement.classList.add("administration-group-member-name");
+    memberNameElement.innerHTML = memberName;
+    memberInformationContainer.appendChild(memberNameElement);
+    memberElement.appendChild(memberInformationContainer);
+    memberElement.onclick = function(event) {
+      window.location.href = "/member/" + memberId + "/";
+    }
+    return memberElement;
+  }
+
+  document.getElementById("administration-group-add").onclick = function (event) {
+    var groupAddForm = document.createElement("div");
+    var groupNameElement = document.createElement("input");
+    groupNameElement.classList.add("swal-content__input");
+    groupNameElement.placeholder = "{% trans 'panel.administration.group.add.name' %}";
+    groupAddForm.appendChild(groupNameElement);
+    var groupPriorityElement = document.createElement("input");
+    groupPriorityElement.classList.add("swal-content__input", "mt-2");
+    groupPriorityElement.placeholder = "{% trans 'panel.administration.group.add.priority' %}";
+    groupPriorityElement.min = 0;
+    groupPriorityElement.max = 100;
+    groupPriorityElement.type = "number";
+    groupAddForm.appendChild(groupPriorityElement);
+    swal({
+      title: "{% trans 'panel.administration.group.add.title' %}",
+      text: "{% trans 'panel.administration.group.add.body' %}",
+      content: groupAddForm,
+      icon: "info",
+      buttons: true,
+    }).then(result => {
+      if (result) {
+        var name = groupNameElement.value;
+        var priority = groupPriorityElement.value;
+        let request = new HttpRequest("https://api.taskwolf.net/v1/team/group/add/", "POST", [{key: "Content-Type", value: "application/json"},
+          {key: "Authorization", value: "Bearer " + Cookie.find("token")}], {name: name, priority: priority});
+        request.send(function (status, responseText) {
+          swal("{% trans 'panel.administration.group.add.successful.title' %}", "{% trans 'panel.administration.group.add.successful.body' %}", "success").then(success => window.location.reload());
+        });
+      }
+    });
+  }
+</script>

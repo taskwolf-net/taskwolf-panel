@@ -2,7 +2,7 @@
 {% load i18n %}
 <div class="bg-dark collapse collapse-horizontal" id="sidebar">
   <div id="sidebar-content">
-    <ul class="navbar-nav ml-auto mt-4 h-100 d-flex align-items-center">
+    <ul id="panel-sidebar-items" class="navbar-nav ml-auto mt-4 h-100 d-flex align-items-center">
       <li class="sidebar-item">
         <a href="/dashboard/" class="sidebar-link nav-link {% if request.path == '/dashboard/' or request.path == '/' %}sidebar-active{% endif %}" aria-current="page"><i class="sidebar-icon fa fa-home" aria-hidden="true"></i>{% trans 'panel.sidebar.dashboard' %}</a>
       </li>
@@ -15,3 +15,31 @@
     </ul>
   </div>
 </div>
+
+<script>
+  $(document).ready(function() {
+    let request = new HttpRequest("https://api.taskwolf.net/v1/team/member/has/permission/", "POST", [{key: "Content-Type", value: "application/json"},
+      {key: "Authorization", value: "Bearer " + Cookie.find("token")}], {permission: "administrator"});
+    request.send(function (status, responseText) {
+      if (JSON.parse(responseText).hasPermission === true) {
+        var administratorItem = document.createElement("li");
+        administratorItem.classList.add("sidebar-item");
+        var administratorLink = document.createElement("a");
+        administratorLink.href = "/administration/";
+        administratorLink.classList.add("sidebar-link", "nav-link");
+        var url = window.location.href.toLowerCase();
+        if (url.indexOf("administration") > -1 || url.indexOf("group") > -1 || url.indexOf("member") > -1) {
+          administratorLink.classList.add("sidebar-active");
+        }
+        administratorLink.ariaCurrent = "page";
+        var administratorIcon = document.createElement("i");
+        administratorIcon.classList.add("sidebar-icon", "fa", "fa-user-tie");
+        administratorIcon.ariaHidden = "true";
+        administratorLink.appendChild(administratorIcon);
+        administratorLink.innerHTML = administratorLink.innerHTML + "{% trans 'panel.sidebar.administrator' %}";
+        administratorItem.appendChild(administratorLink);
+        document.getElementById("panel-sidebar-items").appendChild(administratorItem);
+      }
+    });
+  });
+</script>

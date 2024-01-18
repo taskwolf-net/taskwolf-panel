@@ -1,0 +1,80 @@
+#administration-wrapper {
+  width: min(calc(1500px - 15vw), 95%);
+  text-align: center;
+  margin-top: 2%;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+}
+
+#administration-headline {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 2%;
+}
+
+#administration-groups {
+  list-style-type: none;
+  padding: 0;
+}
+
+.administration-group-header {
+  display: flex;
+  border-bottom: 2px #4a4a4a solid;
+  padding-bottom: 5px;
+  margin-bottom: 1%;
+}
+
+.administration-group-edit {
+  margin-left: auto;
+  height: fit-content;
+}
+
+.administration-group-members {
+  list-style-type: none;
+}
+
+.administration-group-member {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  padding: 10px;
+  justify-content: space-between;
+  transition-duration: 0.3s;
+}
+
+.administration-group-member:hover {
+  background-color: #232838;
+  border-radius: 20px;
+}
+
+.administration-group-member-information {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.administration-group-member-icon {
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+  border-radius: 40%;
+}
+
+.administration-group-member-name {
+  margin-left: 4%;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.swal-content__input {
+  color: white;
+  background-color: #34435a;
+  border-radius: 5px;
+  border-color: white !important;
+}
+
+.swal-content__input::placeholder {
+  color: #a5a5a5;
+}

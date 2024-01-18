@@ -1,0 +1,193 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'templates/head.html' %}
+  <body>
+    {% include 'templates/panel-header.html' %}
+    {% include 'templates/panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="group-wrapper">
+        <h1 id="group-headline"></h1>
+        <div id="group-priority-header">
+          <h2>{% trans 'panel.group.priority.headline' %}</h2>
+        </div>
+        <div id="group-priority-container" class="my-4">
+          <input id="group-priority-input" type="number" min="0" max="100" placeholder="{% trans 'panel.group.priority' %}">
+          <button id="group-priority-change" class="btn btn-success" type="button">{% trans 'panel.group.priority.change' %}</button>
+        </div>
+        <div id="group-members-header">
+          <h2>{% trans 'panel.group.members.headline' %}</h2>
+          <button id="group-member-add" class="btn btn-success" type="button">{% trans 'panel.group.member.add' %}</button>
+        </div>
+        <ul id="group-members">
+        </ul>
+        <div id="group-permissions-header">
+          <h2>{% trans 'panel.group.permissions.headline' %}</h2>
+          <button id="group-permission-add" class="btn btn-success" type="button">{% trans 'panel.group.permission.add' %}</button>
+        </div>
+        <ul id="group-permissions">
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  var group;
+  var members;
+
+  $(document).ready(function() {
+    fetchGroupsData(function() {
+      fetchMembersData(function() {
+        displayGroup();
+      });
+    });
+  });
+
+  function fetchGroupsData(callback) {
+    let request = new HttpRequest("https://api.taskwolf.net/v1/team/groups/", "GET", [{key: "Content-Type", value: "application/json"},
+      {key: "Authorization", value: "Bearer " + Cookie.find("token")}]);
+    request.send(function (status, responseText) {
+      group = JSON.parse(responseText).groups.filter((group) => group.name.toLowerCase() === "{{group}}".toLowerCase())[0];
+      callback();
+    });
+  }
+
+  function fetchMembersData(callback) {
+    let request = new HttpRequest("https://api.taskwolf.net/v1/team/members/", "GET", [{key: "Content-Type", value: "application/json"},
+      {key: "Authorization", value: "Bearer " + Cookie.find("token")}]);
+    request.send(function (status, responseText) {
+      members = JSON.parse(responseText).members.filter((member) => member.group.toLowerCase() === "{{group}}".toLowerCase());
+      callback();
+    });
+  }
+
+  function displayGroup() {
+    document.getElementById("group-headline").innerHTML = group.name;
+    document.getElementById("group-priority-input").value = group.priority;
+    for (var i = 0; i < members.length; i++) {
+      var member = members[i];
+      document.getElementById("group-members").appendChild(
+        createTeamMemberElement(member.id, member.name, member.profilePicture));
+    }
+    if (members.length === 0) {
+      var groupEmptyElement = document.createElement("h6");
+      groupEmptyElement.classList.add("mt-4");
+      groupEmptyElement.innerHTML = "{% trans 'panel.group.empty' %}";
+      document.getElementById("group-members").appendChild(groupEmptyElement);
+    }
+    for (var i = 0; i < group.permissions.length; i++) {
+      document.getElementById("group-permissions").appendChild(
+        createPermissionElement(group.permissions[i]));
+    }
+    if (group.permissions.length === 0) {
+      var groupPermissionsEmptyElement = document.createElement("h6");
+      groupPermissionsEmptyElement.classList.add("mt-4");
+      groupPermissionsEmptyElement.innerHTML = "{% trans 'panel.group.permissions.empty' %}";
+      document.getElementById("group-permissions").appendChild(groupPermissionsEmptyElement);
+    }
+  }
+
+  document.getElementById("group-priority-change").onclick = function (event) {
+    var priority = document.getElementById("group-priority-input").value;
+    let request = new HttpRequest("https://api.taskwolf.net/v1/team/group/priority/change/", "POST", [{key: "Content-Type", value: "application/json"},
+      {key: "Authorization", value: "Bearer " + Cookie.find("token")}], {priority: priority, group: group.name});
+    request.send(function (status, responseText) {
+      swal("{% trans 'panel.group.priority.changed.title' %}", "{% trans 'panel.group.priority.changed.body' %}", "success").then(success => window.location.reload());
+    });
+  }
+
+  function createTeamMemberElement(memberId, memberName, profilePicture) {
+    var memberElement = document.createElement("li");
+    memberElement.classList.add("group-member");
+    var memberInformationContainer = document.createElement("div");
+    memberInformationContainer.classList.add("group-member-information");
+    var memberIconElement = document.createElement("img");
+    memberIconElement.classList.add("group-member-icon");
+    memberIconElement.src = profilePicture;
+    memberInformationContainer.appendChild(memberIconElement);
+    var memberNameElement = document.createElement("span");
+    memberNameElement.classList.add("group-member-name");
+    memberNameElement.innerHTML = memberName;
+    memberInformationContainer.appendChild(memberNameElement);
+    memberElement.appendChild(memberInformationContainer);
+    var memberRemoveElement = document.createElement("span");
+    memberRemoveElement.classList.add("group-member-remove", "fa", "fa-ban", "text-danger");
+    memberRemoveElement.onclick = function (event) {
+      let request = new HttpRequest("https://api.taskwolf.net/v1/team/member/remove/", "POST",
+        [{key: "Content-Type", value: "application/json"}, {key: "Authorization", value: "Bearer " + Cookie.find("token")}],
+        {member: memberId});
+      request.send(function (status, responseText) {
+        location.reload();
+      });
+    }
+    memberElement.appendChild(memberRemoveElement);
+    return memberElement;
+  }
+
+  document.getElementById("group-member-add").onclick = function (event) {
+    swal({
+      title: "{% trans 'panel.group.member.add.title' %}",
+      text: "{% trans 'panel.group.member.add.body' %}",
+      content: {
+        element: "input",
+        attributes: {
+          placeholder: "{% trans 'panel.group.member.add.email' %}",
+        },
+      },
+      icon: "info",
+      buttons: true,
+    }).then(result => {
+      if (result != null) {
+        let request = new HttpRequest("https://api.taskwolf.net/v1/team/member/add/", "POST", [{key: "Content-Type", value: "application/json"},
+          {key: "Authorization", value: "Bearer " + Cookie.find("token")}], {email: result, group: group.name});
+        request.send(function (status, responseText) {
+          swal("{% trans 'panel.group.member.add.successful.title' %}", "{% trans 'panel.group.member.add.successful.body' %}", "success").then(success => window.location.reload());
+        });
+      }
+    });
+  }
+
+  function createPermissionElement(permission) {
+    var permissionElement = document.createElement("li");
+    permissionElement.classList.add("group-permission");
+    var permissionNameElement = document.createElement("div");
+    permissionNameElement.classList.add("group-permission-name");
+    permissionNameElement.innerHTML = "• \"" + permission + "\"";
+    permissionElement.appendChild(permissionNameElement);
+    var permissionRemoveElement = document.createElement("span");
+    permissionRemoveElement.classList.add("group-permission-remove", "fa", "fa-ban", "text-danger");
+    permissionRemoveElement.onclick = function (event) {
+      let request = new HttpRequest("https://api.taskwolf.net/v1/team/group/permission/remove/", "POST",
+        [{key: "Content-Type", value: "application/json"}, {key: "Authorization", value: "Bearer " + Cookie.find("token")}],
+        {permission: permission, group: group.name});
+      request.send(function (status, responseText) {
+        location.reload();
+      });
+    }
+    permissionElement.appendChild(permissionRemoveElement);
+    return permissionElement;
+  }
+
+  document.getElementById("group-permission-add").onclick = function (event) {
+    swal({
+      title: "{% trans 'panel.group.permission.add.title' %}",
+      text: "{% trans 'panel.group.permission.add.body' %}",
+      content: {
+        element: "input",
+        attributes: {
+          placeholder: "{% trans 'panel.group.permission.add.name' %}",
+        },
+      },
+      icon: "info",
+      buttons: true,
+    }).then(result => {
+      if (result != null) {
+        let request = new HttpRequest("https://api.taskwolf.net/v1/team/group/permission/add/", "POST", [{key: "Content-Type", value: "application/json"},
+          {key: "Authorization", value: "Bearer " + Cookie.find("token")}], {permission: result, group: group.name});
+        request.send(function (status, responseText) {
+          swal("{% trans 'panel.group.permission.add.successful.title' %}", "{% trans 'panel.group.permission.add.successful.body' %}", "success").then(success => window.location.reload());
+        });
+      }
+    });
+  }
+</script>

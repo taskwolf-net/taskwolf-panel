@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from base.authentication import isAuthenticated
-from panel.panel import dashboard
+from panel.dashboard import dashboard
 
 async def login(request):
   authenticated = await isAuthenticated(request)
