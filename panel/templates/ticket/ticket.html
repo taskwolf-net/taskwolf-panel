@@ -30,8 +30,8 @@
   });
 
   function fetchTicketsData(callback) {
-    let request = new HttpRequest("https://api.taskwolf.net/v1/team/ticket/find/", "POST", [{key: "Content-Type", value: "application/json"},
-      {key: "Authorization", value: "Bearer " + Cookie.find("token")}], {ticket: "{{ticket}}"});
+    let request = new HttpRequest("https://api.taskwolf.net/v1/team/ticket/find/", "POST", [],
+      {ticket: "{{ticket}}"});
     request.send(function (status, responseText) {
       ticket = JSON.parse(responseText);
       callback();
@@ -75,8 +75,8 @@
       buttons: true,
     }).then(willDelete => {
       if (willDelete) {
-        let request = new HttpRequest("https://api.taskwolf.net/v1/team/ticket/message/delete/", "POST", [{key: "Content-Type", value: "application/json"},
-          {key: "Authorization", value: "Bearer " + Cookie.find("token")}], {ticket: ticket.id, message: id});
+        let request = new HttpRequest("https://api.taskwolf.net/v1/team/ticket/message/delete/", "POST", [],
+          {ticket: ticket.id, message: id});
         request.send(function (status, responseText) {
           swal("{% trans 'ticket.message.delete.successful.title' %}", "{% trans 'ticket.message.delete.successful.body' %}", "success").then(success => window.location.reload());
         });
@@ -153,8 +153,8 @@
 
   document.getElementById("ticket-message-add").onclick = function(event) {
     var message = document.getElementById("ticket-answer-field").firstElementChild.innerHTML;
-    let request = new HttpRequest("https://api.taskwolf.net/v1/team/ticket/answer/", "POST", [{key: "Content-Type", value: "application/json"},
-      {key: "Authorization", value: "Bearer " + Cookie.find("token")}], {ticket: ticket.id, message: message});
+    let request = new HttpRequest("https://api.taskwolf.net/v1/team/ticket/answer/", "POST", [],
+      {ticket: ticket.id, message: message});
     request.send(function (status, responseText) {
       swal("{% trans 'ticket.message.add.successful.title' %}", "{% trans 'ticket.message.add.successful.body' %}", "success").then(success => window.location.reload());
     });
@@ -169,8 +169,8 @@
       buttons: true,
     }).then(willDelete => {
       if (willDelete) {
-        let request = new HttpRequest("https://api.taskwolf.net/v1/team/ticket/delete/", "POST", [{key: "Content-Type", value: "application/json"},
-          {key: "Authorization", value: "Bearer " + Cookie.find("token")}], {ticket: ticket.id});
+        let request = new HttpRequest("https://api.taskwolf.net/v1/team/ticket/delete/", "POST", [],
+          {ticket: ticket.id});
         request.send(function (status, responseText) {
           swal("{% trans 'ticket.delete.successful.title' %}", "{% trans 'ticket.delete.successful.body' %}", "success").then(success => window.location.href = "/tickets/");
         });

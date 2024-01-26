@@ -57,8 +57,7 @@
   }
 
   function fetchStatisticsData(callback) {
-    let request = new HttpRequest("https://api.taskwolf.net/v1/team/statistics/", "GET", [{key: "Content-Type", value: "application/json"},
-      {key: "Authorization", value: "Bearer " + Cookie.find("token")}]);
+    let request = new HttpRequest("https://api.taskwolf.net/v1/team/statistics/", "GET", []);
     request.send(function (status, responseText) {
       statistics = JSON.parse(responseText);
       callback();

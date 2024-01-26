@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '***REMOVED***'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 SECURE_CROSS_ORIGIN_OPENER_POLICY = None
@@ -21,6 +21,7 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 
 INSTALLED_APPS = [
   'base.apps.BaseConfig',
+  'whitelist.apps.WhitelistConfig',
   'errors.apps.ErrorsConfig',
   'verification.apps.VerificationConfig',
   'panel.apps.PanelConfig',
@@ -43,6 +44,7 @@ MIDDLEWARE = [
   'django.contrib.messages.middleware.MessageMiddleware',
   'django.middleware.clickjacking.XFrameOptionsMiddleware',
   'corsheaders.middleware.CorsMiddleware',
+  'whitelist.middleware.WhitelistMiddleware',
 ]
 
 CSRF_TRUSTED_ORIGINS = ["https://panel.taskwolf.net"]
@@ -116,3 +118,5 @@ LANGUAGES = (
   ('en', 'English'),
   ('de', 'Deutsch'),
 )
+
+WHITELIST = True

@@ -44,8 +44,7 @@
   });
 
   function fetchGroupsData(callback) {
-    let request = new HttpRequest("https://api.taskwolf.net/v1/team/groups/", "GET", [{key: "Content-Type", value: "application/json"},
-      {key: "Authorization", value: "Bearer " + Cookie.find("token")}]);
+    let request = new HttpRequest("https://api.taskwolf.net/v1/team/groups/", "GET", []);
     request.send(function (status, responseText) {
       group = JSON.parse(responseText).groups.filter((group) => group.name.toLowerCase() === "{{group}}".toLowerCase())[0];
       callback();
@@ -53,8 +52,7 @@
   }
 
   function fetchMembersData(callback) {
-    let request = new HttpRequest("https://api.taskwolf.net/v1/team/members/", "GET", [{key: "Content-Type", value: "application/json"},
-      {key: "Authorization", value: "Bearer " + Cookie.find("token")}]);
+    let request = new HttpRequest("https://api.taskwolf.net/v1/team/members/", "GET", []);
     request.send(function (status, responseText) {
       members = JSON.parse(responseText).members.filter((member) => member.group.toLowerCase() === "{{group}}".toLowerCase());
       callback();
@@ -89,8 +87,7 @@
 
   document.getElementById("group-priority-change").onclick = function (event) {
     var priority = document.getElementById("group-priority-input").value;
-    let request = new HttpRequest("https://api.taskwolf.net/v1/team/group/priority/change/", "POST", [{key: "Content-Type", value: "application/json"},
-      {key: "Authorization", value: "Bearer " + Cookie.find("token")}], {priority: priority, group: group.name});
+    let request = new HttpRequest("https://api.taskwolf.net/v1/team/group/priority/change/", "POST", [], {priority: priority, group: group.name});
     request.send(function (status, responseText) {
       swal("{% trans 'panel.group.priority.changed.title' %}", "{% trans 'panel.group.priority.changed.body' %}", "success").then(success => window.location.reload());
     });
@@ -114,8 +111,7 @@
     memberRemoveElement.classList.add("group-member-remove", "fa", "fa-ban", "text-danger");
     memberRemoveElement.onclick = function (event) {
       let request = new HttpRequest("https://api.taskwolf.net/v1/team/member/remove/", "POST",
-        [{key: "Content-Type", value: "application/json"}, {key: "Authorization", value: "Bearer " + Cookie.find("token")}],
-        {member: memberId});
+        [], {member: memberId});
       request.send(function (status, responseText) {
         location.reload();
       });
@@ -138,8 +134,8 @@
       buttons: true,
     }).then(result => {
       if (result != null) {
-        let request = new HttpRequest("https://api.taskwolf.net/v1/team/member/add/", "POST", [{key: "Content-Type", value: "application/json"},
-          {key: "Authorization", value: "Bearer " + Cookie.find("token")}], {email: result, group: group.name});
+        let request = new HttpRequest("https://api.taskwolf.net/v1/team/member/add/", "POST", [],
+          {email: result, group: group.name});
         request.send(function (status, responseText) {
           swal("{% trans 'panel.group.member.add.successful.title' %}", "{% trans 'panel.group.member.add.successful.body' %}", "success").then(success => window.location.reload());
         });
@@ -157,8 +153,7 @@
     var permissionRemoveElement = document.createElement("span");
     permissionRemoveElement.classList.add("group-permission-remove", "fa", "fa-ban", "text-danger");
     permissionRemoveElement.onclick = function (event) {
-      let request = new HttpRequest("https://api.taskwolf.net/v1/team/group/permission/remove/", "POST",
-        [{key: "Content-Type", value: "application/json"}, {key: "Authorization", value: "Bearer " + Cookie.find("token")}],
+      let request = new HttpRequest("https://api.taskwolf.net/v1/team/group/permission/remove/", "POST", [],
         {permission: permission, group: group.name});
       request.send(function (status, responseText) {
         location.reload();
@@ -182,8 +177,8 @@
       buttons: true,
     }).then(result => {
       if (result != null) {
-        let request = new HttpRequest("https://api.taskwolf.net/v1/team/group/permission/add/", "POST", [{key: "Content-Type", value: "application/json"},
-          {key: "Authorization", value: "Bearer " + Cookie.find("token")}], {permission: result, group: group.name});
+        let request = new HttpRequest("https://api.taskwolf.net/v1/team/group/permission/add/", "POST", [],
+          {permission: result, group: group.name});
         request.send(function (status, responseText) {
           swal("{% trans 'panel.group.permission.add.successful.title' %}", "{% trans 'panel.group.permission.add.successful.body' %}", "success").then(success => window.location.reload());
         });

@@ -30,8 +30,8 @@
   });
 
   function fetchEmailData(callback) {
-    let request = new HttpRequest("https://api.taskwolf.net/v1/team/mail/find/", "POST", [{key: "Content-Type", value: "application/json"},
-      {key: "Authorization", value: "Bearer " + Cookie.find("token")}], {mail: "{{email}}"});
+    let request = new HttpRequest("https://api.taskwolf.net/v1/team/mail/find/", "POST", [],
+      {mail: "{{email}}"});
     request.send(function (status, responseText) {
       email = JSON.parse(responseText);
       callback();
@@ -123,8 +123,8 @@
 
   document.getElementById("email-message-add").onclick = function(event) {
     var message = document.getElementById("email-answer-field").firstElementChild.innerHTML;
-    let request = new HttpRequest("https://api.taskwolf.net/v1/team/mail/answer/", "POST", [{key: "Content-Type", value: "application/json"},
-      {key: "Authorization", value: "Bearer " + Cookie.find("token")}], {mail: email.id, message: message});
+    let request = new HttpRequest("https://api.taskwolf.net/v1/team/mail/answer/", "POST", [],
+      {mail: email.id, message: message});
     request.send(function (status, responseText) {
       swal("{% trans 'email.message.add.successful.title' %}", "{% trans 'email.message.add.successful.body' %}", "success").then(success => window.location.reload());
     });
@@ -139,8 +139,8 @@
       buttons: true,
     }).then(willDelete => {
       if (willDelete) {
-        let request = new HttpRequest("https://api.taskwolf.net/v1/team/mail/delete/", "POST", [{key: "Content-Type", value: "application/json"},
-          {key: "Authorization", value: "Bearer " + Cookie.find("token")}], {mail: email.id});
+        let request = new HttpRequest("https://api.taskwolf.net/v1/team/mail/delete/", "POST", [],
+          {mail: email.id});
         request.send(function (status, responseText) {
           swal("{% trans 'email.delete.successful.title' %}", "{% trans 'email.delete.successful.body' %}", "success").then(success => window.location.href = "/emails/");
         });

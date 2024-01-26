@@ -18,8 +18,8 @@
 
 <script>
   $(document).ready(function() {
-    let request = new HttpRequest("https://api.taskwolf.net/v1/team/member/has/permission/", "POST", [{key: "Content-Type", value: "application/json"},
-      {key: "Authorization", value: "Bearer " + Cookie.find("token")}], {permission: "administrator"});
+    let request = new HttpRequest("https://api.taskwolf.net/v1/team/member/has/permission/", "POST", [],
+      {permission: "administrator"});
     request.send(function (status, responseText) {
       if (JSON.parse(responseText).hasPermission === true) {
         var administratorItem = document.createElement("li");

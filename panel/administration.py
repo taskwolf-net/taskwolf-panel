@@ -7,7 +7,7 @@ import jwt
 from django.utils import translation
 from django.shortcuts import render
 from django.http import HttpResponse
-from base.authentication import authentication_required, isAuthenticated
+from base.authentication import authentication_required, isAuthenticated, applyWhitelistKey
 from . import dashboard
 
 def administrator_required(function):
@@ -23,9 +23,11 @@ async def hasAdministrationPermission(request):
   token = request.COOKIES.get('token')
   if (token is None):
     return False
+  headers = {"Authorization": "Bearer " + token}
+  applyWhitelistKey(request, headers)
   response = await asyncio.get_event_loop().run_in_executor(None,
     partial(requests.post, "http://127.0.0.1:10101/v1/team/member/has/permission/",
-      headers = {"Authorization": "Bearer " + token}, json = {"permission": "administrator"}))
+      headers = headers, json = {"permission": "administrator"}))
   text = response.text
   jsonText = json.loads(text)
   hasPermission = jsonText["hasPermission"]

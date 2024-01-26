@@ -6,6 +6,7 @@ import json
 import jwt
 from verification import verification
 from django.utils import translation
+from django.conf import settings
 
 def authentication_required(function):
   @wraps(function)
@@ -21,9 +22,11 @@ async def isAuthenticated(request):
   token = request.COOKIES.get('token')
   if (token is None):
     return False
+  headers = {}
+  applyWhitelistKey(request, headers)
   response = await asyncio.get_event_loop().run_in_executor(None,
     partial(requests.post, "http://127.0.0.1:10101/v1/team/verification/isValid/",
-      json = {"token": token}))
+      json = {"token": token}, headers = headers))
   text = response.text
   jsonText = json.loads(text)
   isValid = jsonText["isValid"]
@@ -35,9 +38,18 @@ async def applyLanguage(request):
   token = request.COOKIES.get('token')
   if (token is None):
     return False
+  headers = {"Authorization": "Bearer " + token}
+  applyWhitelistKey(request, headers)
   response = await asyncio.get_event_loop().run_in_executor(None,
     partial(requests.get, "http://127.0.0.1:10101/v1/settings/language/",
-    headers = {"Authorization": "Bearer " + token}))
+    headers = headers))
   text = response.text
   jsonText = json.loads(text)
   translation.activate(jsonText["language"])
+
+def applyWhitelistKey(request, headers):
+  if (not settings.WHITELIST):
+    return
+  whitelistKey = request.COOKIES.get('taskwolf-whitelist-key')
+  if (whitelistKey != None):
+    headers["WHITELIST-KEY"] = whitelistKey
