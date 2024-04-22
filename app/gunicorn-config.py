@@ -1,3 +1,3 @@
 pythonpath = "/home/lukas/taskwolf/panel-web"
-bind = "192.168.178.112:9000"
+bind = "10.10.0.6:9000"
 workers = 4
