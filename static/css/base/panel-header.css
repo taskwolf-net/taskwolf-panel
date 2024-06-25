@@ -10,44 +10,57 @@
 }
 
 #sidebar-button {
-  position: absolute;
-  margin-left: 30px;
-  color: white;
+  width: 40px;
+  margin-left: 35px;
   background-color: transparent;
   border: none;
   font-size: 30px;
 }
 
-#navbar-logo-container {
-  margin-left: calc(300px / 2 - 64px);
+#sidebar-button {
+  color: white;
+}
+
+#navbar-logo {
+  margin-left: 25px;
+}
+
+#navbar-logo img {
+  padding: 5px;
+}
+
+#profile-button-wrapper {
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+#profile-button-wrapper:hover {
+  background-color: #30363b;
 }
 
 #profile-picture {
-  width: 64px;
-  height: 64px;
-  border-radius: 40%;
-  background-color: #212529;
+  font-size: 26px;
+}
+
+#profile-picture-arrow {
+  font-size: 18px;
+  padding-left: 10px;
+}
+
+#profile-picture, #profile-picture-arrow {
+  color: white;
+}
+
+#profile-button-wrapper::after {
+  display: none;
 }
 
 #profile-button-container {
   margin-left: auto;
   margin-right: 50px;
   position: relative;
-}
-
-#profile-button-wrapper {
-  border-radius: 50%;
-  width: 64px;
-  height: 64px;
-  text-align: center;
-  background-color: white !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#profile-button-wrapper::after {
-  display: none;
 }
 
 @media (max-width: 575px) {

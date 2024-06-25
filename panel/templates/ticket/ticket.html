@@ -50,7 +50,7 @@
     var messageElement = document.createElement("div");
     messageElement.classList.add("ticket-message", "ql-editor");
     messageElement.innerHTML = message.message;
-    var entry = displayEntry(message.teamWritten ? "{% static 'img/taskwolf-profile-picture.png' %}" : ticket.creatorProfilePicture, message.author,
+    var entry = displayEntry(message.teamWritten, message.author,
       message.time.split(" ")[0], message.time.split(" ")[1], messageElement);
     if (index > 0 && message.selfWritten) {
       var deleteButton = document.createElement("button");
@@ -87,7 +87,7 @@
   function displayAnswerField() {
     var answerField = document.createElement("div");
     answerField.id = "ticket-answer-field";
-    displayEntry("{% static 'img/taskwolf-profile-picture.png' %}", "Taskwolf", "", "", answerField);
+    displayEntry(true, "Taskwolf", "", "", answerField);
     var quill = new Quill('#ticket-answer-field', {
       modules: {
         toolbar: [
@@ -110,15 +110,21 @@
     });
   }
 
-  function displayEntry(picture, author, date, time, contentElement) {
+  function displayEntry(taskwolfWritten, author, date, time, contentElement) {
     var messageContainer = document.createElement("li");
     messageContainer.classList.add("ticket-message-container");
     var messageDescription = document.createElement("div");
     messageDescription.classList.add("ticket-message-description")
-    var messagePicture = document.createElement("img");
-    messagePicture.classList.add("ticket-message-picture");
-    messagePicture.src = picture;
-    messageDescription.appendChild(messagePicture);
+    if (taskwolfWritten) {
+      var taskwolfPicture = document.createElement("img");
+      taskwolfPicture.classList.add("ticket-message-profile-picture");
+      taskwolfPicture.src = "{% static 'img/taskwolf-profile-picture.png' %}";
+      messageDescription.appendChild(taskwolfPicture);
+    } else {
+      var userPicture = document.createElement("i");
+      userPicture.classList.add("ticket-message-profile-icon", "fa-regular", "fa-user");
+      messageDescription.appendChild(userPicture);
+    }
     messageDescription.appendChild(document.createElement("br"));
     messageDescription.appendChild(document.createElement("br"));
     var messageAuthor = document.createElement("b");

@@ -55,10 +55,14 @@ input:-webkit-autofill:active{
   margin-top: 2%;
 }
 
-.email-message-picture {
+.email-message-profile-picture {
   width: 64px;
   height: 64px;
   border-radius: 40%;
+}
+
+.email-message-profile-icon {
+  font-size: 32px;
 }
 
 .email-message-divider {

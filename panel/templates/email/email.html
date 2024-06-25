@@ -50,14 +50,14 @@
     var messageElement = document.createElement("div");
     messageElement.classList.add("email-message", "ql-editor");
     messageElement.innerHTML = message.body;
-    displayEntry(message.teamWritten ? "{% static 'img/taskwolf-profile-picture.png' %}" : "{% static 'img/generic-profile-picture.png' %}", message.sender.replace("@", "\u200B@"),
+    displayEntry(message.teamWritten, message.sender.replace("@", "\u200B@"),
       message.time.split(" ")[0], message.time.split(" ")[1], messageElement);
   }
 
   function displayAnswerField() {
     var answerField = document.createElement("div");
     answerField.id = "email-answer-field";
-    displayEntry("{% static 'img/taskwolf-profile-picture.png' %}", "Taskwolf", "", "", answerField);
+    displayEntry(true, "Taskwolf", "", "", answerField);
     var quill = new Quill('#email-answer-field', {
       modules: {
         toolbar: [
@@ -80,15 +80,21 @@
     });
   }
 
-  function displayEntry(picture, author, date, time, contentElement) {
+  function displayEntry(taskwolfWritten, author, date, time, contentElement) {
     var messageContainer = document.createElement("li");
     messageContainer.classList.add("email-message-container");
     var messageDescription = document.createElement("div");
     messageDescription.classList.add("email-message-description")
-    var messagePicture = document.createElement("img");
-    messagePicture.classList.add("email-message-picture");
-    messagePicture.src = picture;
-    messageDescription.appendChild(messagePicture);
+    if (taskwolfWritten) {
+      var taskwolfPicture = document.createElement("img");
+      taskwolfPicture.classList.add("email-message-profile-picture");
+      taskwolfPicture.src = "{% static 'img/taskwolf-profile-picture.png' %}";
+      messageDescription.appendChild(taskwolfPicture);
+    } else {
+      var userPicture = document.createElement("i");
+      userPicture.classList.add("email-message-profile-icon", "fa-regular", "fa-user");
+      messageDescription.appendChild(userPicture);
+    }
     messageDescription.appendChild(document.createElement("br"));
     messageDescription.appendChild(document.createElement("br"));
     var messageAuthor = document.createElement("b");
