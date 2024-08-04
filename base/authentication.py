@@ -25,7 +25,7 @@ async def isAuthenticated(request):
   headers = {}
   applyWhitelistKey(request, headers)
   response = await asyncio.get_event_loop().run_in_executor(None,
-    partial(requests.post, "http://10.10.0.3:10101/v1/team/verification/isValid/",
+    partial(requests.post, "http://10.96.0.9/v1/verification/isValid/",
       json = {"token": token}, headers = headers))
   text = response.text
   jsonText = json.loads(text)
@@ -37,15 +37,17 @@ async def isAuthenticated(request):
 async def applyLanguage(request):
   token = request.COOKIES.get('token')
   if (token is None):
+    translation.activate("en")
     return False
-  headers = {"Authorization": "Bearer " + token}
+  """headers = {"Authorization": "Bearer " + token}
   applyWhitelistKey(request, headers)
   response = await asyncio.get_event_loop().run_in_executor(None,
     partial(requests.get, "http://10.10.0.3:10101/v1/settings/language/",
     headers = headers))
   text = response.text
   jsonText = json.loads(text)
-  translation.activate(jsonText["language"])
+  translation.activate(jsonText["language"])"""
+  translation.activate("en")
 
 def applyWhitelistKey(request, headers):
   if (not settings.WHITELIST):

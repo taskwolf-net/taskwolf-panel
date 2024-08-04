@@ -18,7 +18,7 @@
 
 <script>
   $(document).ready(function() {
-    let request = new HttpRequest("https://api.taskwolf.net/v1/team/member/has/permission/", "POST", [],
+    let request = new HttpRequest("https://team.taskwolf.net/v1/member/has/permission/", "POST", [],
       {permission: "administrator"});
     request.send(function (status, responseText) {
       if (JSON.parse(responseText).hasPermission === true) {

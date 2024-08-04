@@ -55,7 +55,7 @@
   });
 
   function fetchEmailsData(callback) {
-    let request = new HttpRequest("https://api.taskwolf.net/v1/team/mails/find/", "GET", []);
+    let request = new HttpRequest("https://team.taskwolf.net/v1/mails/find/", "GET", []);
     request.send(function (status, responseText) {
       emails = JSON.parse(responseText).mails;
       callback();
