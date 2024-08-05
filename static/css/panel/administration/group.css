@@ -85,10 +85,7 @@
 }
 
 .group-member-icon {
-  width: 64px;
-  height: 64px;
-  min-width: 64px;
-  border-radius: 40%;
+  font-size: 28px;
 }
 
 .group-member-name {

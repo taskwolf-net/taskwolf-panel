@@ -98,9 +98,8 @@
     memberElement.classList.add("group-member");
     var memberInformationContainer = document.createElement("div");
     memberInformationContainer.classList.add("group-member-information");
-    var memberIconElement = document.createElement("img");
-    memberIconElement.classList.add("group-member-icon");
-    memberIconElement.src = profilePicture;
+    var memberIconElement = document.createElement("i");
+    memberIconElement.classList.add("group-member-icon", "fa-regular", "fa-user");
     memberInformationContainer.appendChild(memberIconElement);
     var memberNameElement = document.createElement("span");
     memberNameElement.classList.add("group-member-name");
