@@ -6,6 +6,7 @@
       <li class="sidebar-item">
         <a href="/dashboard/" class="sidebar-link nav-link {% if request.path == '/dashboard/' or request.path == '/' %}sidebar-active{% endif %}" aria-current="page"><i class="sidebar-icon fa fa-home" aria-hidden="true"></i>{% trans 'panel.sidebar.dashboard' %}</a>
       </li>
+      <li class="sidebar-divider"></li>
       <li class="sidebar-item">
         <a href="/tickets/" class="sidebar-link nav-link {% if 'ticket' in request.path %}sidebar-active{% endif %}" aria-current="page"><i class="sidebar-icon fa fa-ticket" aria-hidden="true"></i>{% trans 'panel.sidebar.tickets' %}</a>
       </li>
@@ -15,6 +16,7 @@
       <li class="sidebar-item">
         <a href="/sales/" class="sidebar-link nav-link {% if 'sale' in request.path %}sidebar-active{% endif %}" aria-current="page"><i class="sidebar-icon fa fa-arrow-trend-up" aria-hidden="true"></i>{% trans 'panel.sidebar.sales' %}</a>
       </li>
+      <li class="sidebar-divider"></li>
       <li id="administration-sidebar-item" class="sidebar-item d-none">
         <a href="/administration/" class="sidebar-link nav-link {% if '/administration/' in request.path or '/group/' in request.path or '/member/' in request.path %}sidebar-active{% endif %}" aria-current="page"><i class="sidebar-icon fa   fa-user-tie" aria-hidden="true"></i>{% trans 'panel.sidebar.administrator' %}</a>
       </li>

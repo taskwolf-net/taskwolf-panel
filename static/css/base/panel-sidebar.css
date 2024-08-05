@@ -5,6 +5,7 @@
   height: 100%;
   transition: 0s;
   z-index: 90;
+  border-right: 1px #4a4a4a solid;
 }
 
 .sidebar-item {
@@ -33,4 +34,17 @@
 .sidebar-active {
   background-color: #666666;
   border-radius: 10px;
+}
+
+.sidebar-divider {
+  width: 90%;
+  margin: 2% auto;
+  border-bottom: 1px #4a4a4a solid;
+}
+
+@media(max-height: 600px) {
+  .sidebar-divider {
+    margin: 0;
+    border: none;
+  }
 }
