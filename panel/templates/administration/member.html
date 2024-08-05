@@ -8,7 +8,16 @@
     <div class="sidebar-influenced">
       <div id="member-container">
         <div id="member-wrapper" class="d-none">
-          <h1 id="member-headline"></h1>
+          <div id="member-header">
+            <div class="w-25 text-start">
+              <button id="member-delete" type="button" class="btn btn-danger">{% trans 'panel.member.delete' %}</button>
+            </div>
+            <div>
+              <h1 id="member-headline"></h1>
+            </div>
+            <div class="w-25 text-end">
+            </div>
+          </div>
           <div id="member-group-header">
             <h2>{% trans 'panel.member.group.headline' %}</h2>
           </div>
@@ -141,6 +150,24 @@
           {permission: input.value, member: member.id});
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'panel.member.permission.add.successful.title' %}", "{% trans 'panel.member.permission.add.successful.body' %}", "success").then(success => window.location.reload());
+        });
+      }
+    });
+  }
+
+  document.getElementById("member-delete").onclick = function(event) {
+    Swal.fire({
+      title: "{% trans 'panel.member.delete.title' %}",
+      text: "{% trans 'panel.member.delete.body' %}",
+      icon: "warning",
+      confirmButtonColor: "#dc3545",
+      showCancelButton: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        let request = new HttpRequest("https://team.taskwolf.net/v1/member/remove/", "POST", [],
+          {member: member.id});
+        request.send(function (status, responseText) {
+          Swal.fire("{% trans 'panel.member.delete.successful.title' %}", "{% trans 'panel.member.delete.successful.body' %}", "success").then(success => window.location.href = "/administration/");
         });
       }
     });

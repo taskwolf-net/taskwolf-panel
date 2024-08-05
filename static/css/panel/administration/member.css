@@ -7,10 +7,19 @@
   color: white;
 }
 
+#member-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
 #member-headline {
   text-align: center;
   font-weight: bold;
-  margin-bottom: 2%;
 }
 
 #member-group-header {
