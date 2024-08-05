@@ -6,14 +6,14 @@
     {% include 'templates/panel-header.html' %}
     {% include 'templates/panel-sidebar.html' %}
     <div class="sidebar-influenced">
-      <div id="email-container">
-        <h1 id="email-headline"></h1>
+      <div id="question-container">
+        <h1 id="question-headline"></h1>
         <hr class="hr border-white my-4"/>
-        <ul id="email-messages">
+        <ul id="question-messages">
         </ul>
-        <div id="email-operations">
-          <button type="button" id="email-message-add" class="btn btn-primary disabled">{% trans 'ticket.message.add' %}</button>
-          <button type="button" id="email-delete" class="btn btn-danger">{% trans 'ticket.delete' %}</button>
+        <div id="question-operations">
+          <button type="button" id="question-message-add" class="btn btn-primary disabled">{% trans 'question.message.add' %}</button>
+          <button type="button" id="question-delete" class="btn btn-danger">{% trans 'question.delete' %}</button>
         </div>
       </div>
     </div>
@@ -21,34 +21,34 @@
 </html>
 
 <script>
-  var email;
+  var question;
 
   $(document).ready(function() {
-    fetchEmailData(function() {
-      displayEmail();
+    fetchQuestionData(function() {
+      displayQuestion();
     });
   });
 
-  function fetchEmailData(callback) {
-    let request = new HttpRequest("https://team.taskwolf.net/v1/mail/find/", "POST", [],
-      {mail: "{{email}}"});
+  function fetchQuestionData(callback) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/question/find/", "POST", [],
+      {question: "{{question}}"});
     request.send(function (status, responseText) {
-      email = JSON.parse(responseText);
+      question = JSON.parse(responseText);
       callback();
     });
   }
 
-  function displayEmail() {
-    document.getElementById("email-headline").innerHTML = email.title;
-    for (var i = 0; i < email.messages.length; i++) {
-      displayMessage(email.messages[i]);
+  function displayQuestion() {
+    document.getElementById("question-headline").innerHTML = question.title;
+    for (var i = 0; i < question.messages.length; i++) {
+      displayMessage(question.messages[i]);
     }
     displayAnswerField();
   }
 
   function displayMessage(message) {
     var messageElement = document.createElement("div");
-    messageElement.classList.add("email-message", "ql-editor");
+    messageElement.classList.add("question-message", "ql-editor");
     messageElement.innerHTML = message.body;
     displayEntry(message.teamWritten, message.sender.replace("@", "\u200B@"),
       message.time.split(" ")[0], message.time.split(" ")[1], messageElement);
@@ -56,9 +56,9 @@
 
   function displayAnswerField() {
     var answerField = document.createElement("div");
-    answerField.id = "email-answer-field";
+    answerField.id = "question-answer-field";
     displayEntry(true, "Taskwolf", "", "", answerField);
-    var quill = new Quill('#email-answer-field', {
+    var quill = new Quill('#question-answer-field', {
       modules: {
         toolbar: [
           [{'size': ['huge', 'large', false, 'small']}],
@@ -73,82 +73,82 @@
     });
     quill.on('text-change', function(delta, oldDelta, source) {
       if (answerField.firstElementChild.innerHTML !== "<p><br></p>") {
-        document.getElementById("email-message-add").classList.remove("disabled");
+        document.getElementById("question-message-add").classList.remove("disabled");
       } else {
-        document.getElementById("email-message-add").classList.add("disabled");
+        document.getElementById("question-message-add").classList.add("disabled");
       }
     });
   }
 
   function displayEntry(taskwolfWritten, author, date, time, contentElement) {
     var messageContainer = document.createElement("li");
-    messageContainer.classList.add("email-message-container");
+    messageContainer.classList.add("question-message-container");
     var messageDescription = document.createElement("div");
-    messageDescription.classList.add("email-message-description")
+    messageDescription.classList.add("question-message-description")
     if (taskwolfWritten) {
       var taskwolfPicture = document.createElement("img");
-      taskwolfPicture.classList.add("email-message-profile-picture");
+      taskwolfPicture.classList.add("question-message-profile-picture");
       taskwolfPicture.src = "{% static 'img/taskwolf-profile-picture.png' %}";
       messageDescription.appendChild(taskwolfPicture);
     } else {
       var userPicture = document.createElement("i");
-      userPicture.classList.add("email-message-profile-icon", "fa-regular", "fa-user");
+      userPicture.classList.add("question-message-profile-icon", "fa-regular", "fa-user");
       messageDescription.appendChild(userPicture);
     }
     messageDescription.appendChild(document.createElement("br"));
     messageDescription.appendChild(document.createElement("br"));
     var messageAuthor = document.createElement("b");
-    messageAuthor.classList.add("email-message-author");
+    messageAuthor.classList.add("question-message-author");
     messageAuthor.innerHTML = author;
     messageDescription.appendChild(messageAuthor);
     messageDescription.appendChild(document.createElement("br"));
     messageDescription.appendChild(document.createElement("br"));
     var messageDate = document.createElement("label");
-    messageDate.classList.add("email-message-date");
+    messageDate.classList.add("question-message-date");
     messageDate.innerHTML = date;
     messageDescription.appendChild(messageDate);
     messageDescription.appendChild(document.createElement("br"));
     messageContainer.appendChild(messageDescription);
     var messageTime = document.createElement("label");
-    messageTime.classList.add("email-message-time");
+    messageTime.classList.add("question-message-time");
     messageTime.innerHTML = time;
     messageDescription.appendChild(messageTime);
     messageDescription.appendChild(document.createElement("br"));
     messageDescription.appendChild(document.createElement("br"));
     messageContainer.appendChild(messageDescription);
     var divider = document.createElement("div");
-    divider.classList.add("email-message-divider");
+    divider.classList.add("question-message-divider");
     messageContainer.appendChild(divider);
     var messageContent = document.createElement("div");
-    messageContent.classList.add("email-message-content");
+    messageContent.classList.add("question-message-content");
     messageContent.appendChild(contentElement);
     messageContainer.appendChild(messageContent);
-    document.getElementById("email-messages").appendChild(messageContainer);
+    document.getElementById("question-messages").appendChild(messageContainer);
     return messageContainer;
   }
 
-  document.getElementById("email-message-add").onclick = function(event) {
-    var message = document.getElementById("email-answer-field").firstElementChild.innerHTML;
-    let request = new HttpRequest("https://team.taskwolf.net/v1/mail/answer/", "POST", [],
-      {mail: email.id, message: message});
+  document.getElementById("question-message-add").onclick = function(event) {
+    var message = document.getElementById("question-answer-field").firstElementChild.innerHTML;
+    let request = new HttpRequest("https://team.taskwolf.net/v1/question/answer/", "POST", [],
+      {question: question.id, message: message});
     request.send(function (status, responseText) {
-      Swal.fire("{% trans 'email.message.add.successful.title' %}", "{% trans 'email.message.add.successful.body' %}", "success").then(success => window.location.reload());
+      Swal.fire("{% trans 'question.message.add.successful.title' %}", "{% trans 'question.message.add.successful.body' %}", "success").then(success => window.location.reload());
     });
   }
 
-  document.getElementById("email-delete").onclick = function(event) {
+  document.getElementById("question-delete").onclick = function(event) {
     Swal.fire({
-      title: "{% trans 'email.delete.title' %}",
-      text: "{% trans 'email.delete.body' %}",
+      title: "{% trans 'question.delete.title' %}",
+      text: "{% trans 'question.delete.body' %}",
       icon: "warning",
       confirmButtonColor: "#dc3545",
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        let request = new HttpRequest("https://team.taskwolf.net/v1/mail/delete/", "POST", [],
-          {mail: email.id});
+        let request = new HttpRequest("https://team.taskwolf.net/v1/question/delete/", "POST", [],
+          {question: question.id});
         request.send(function (status, responseText) {
-          Swal.fire("{% trans 'email.delete.successful.title' %}", "{% trans 'email.delete.successful.body' %}", "success").then(success => window.location.href = "/emails/");
+          Swal.fire("{% trans 'question.delete.successful.title' %}", "{% trans 'question.delete.successful.body' %}", "success").then(success => window.location.href = "/questions/");
         });
       }
     });

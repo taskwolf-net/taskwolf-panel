@@ -21,26 +21,26 @@ input:-webkit-autofill:active{
   font-size: 20px;
 }
 
-#email-container {
+#question-container {
   width: min(calc(1300px - 15vw), 95%);
   margin: auto;
   text-align: center;
   color: white;
 }
 
-#email-headline {
+#question-headline {
   text-align: center;
   font-weight: bold;
   margin-top: 2%;
   margin-bottom: 2%;
 }
 
-#email-messages {
+#question-messages {
   list-style-type: none;
   padding: 0;
 }
 
-.email-message-container {
+.question-message-container {
   position: relative;
   display: flex;
   width: 100%;
@@ -50,38 +50,38 @@ input:-webkit-autofill:active{
   box-shadow: 0 2px 5px #212529;
 }
 
-.email-message-description {
+.question-message-description {
   width: 20%;
   margin-top: 2%;
 }
 
-.email-message-profile-picture {
+.question-message-profile-picture {
   width: 64px;
   height: 64px;
   border-radius: 40%;
 }
 
-.email-message-profile-icon {
+.question-message-profile-icon {
   font-size: 32px;
 }
 
-.email-message-divider {
+.question-message-divider {
   width: 1px;
   border-right: 1px #8d8d8d solid;
 }
 
-.email-message-content {
+.question-message-content {
   width: 100%;
   display: block;
   padding: 2%;
 }
 
-.email-message {
+.question-message {
   text-align: left;
   padding: 0 !important;
 }
 
-#email-answer-field {
+#question-answer-field {
   height: 300px;
   color: white !important;
   border: 1px #787878 solid;
@@ -132,15 +132,15 @@ input:-webkit-autofill:active{
   background-color: #212529 !important;
 }
 
-#email-operations {
+#question-operations {
   display: flex;
   margin-bottom: 2%;
 }
 
-#email-message-add {
+#question-message-add {
 
 }
 
-#email-delete {
+#question-delete {
   margin-left: auto;
 }

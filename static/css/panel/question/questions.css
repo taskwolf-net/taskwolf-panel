@@ -1,11 +1,11 @@
-#emails-headline {
+#questions-headline {
   color: white;
   text-align: center;
   font-weight: bold;
   margin-top: 2%;
 }
 
-#emails-header {
+#questions-header {
   width: min(calc(2000px - 15vw), 95%);
   margin: auto;
   margin-top: 2%;
@@ -14,7 +14,7 @@
   justify-content: center;
 }
 
-#emails-search-box {
+#questions-search-box {
   width: 100%;
   height: 100%;
   display: flex;
@@ -24,7 +24,7 @@
   background-color: #202428;
 }
 
-#emails-search-box input {
+#questions-search-box input {
   flex-grow: 2;
   border: none;
   border-radius: 5px;
@@ -32,11 +32,11 @@
   color: white;
 }
 
-#emails-search-box input:focus{
+#questions-search-box input:focus{
   box-shadow: 0 0 0 rgb(255, 255, 255);
 }
 
-#emails-search-box button {
+#questions-search-box button {
   background-color: #202428;
   color: #9b9b9b;
   border: none;
@@ -44,12 +44,12 @@
 }
 
 @media (max-width: 400px) {
-  #emails-header {
+  #questions-header {
     margin-bottom: 5%;
   }
 }
 
-#emails-list {
+#questions-list {
   width: min(calc(2000px - 15vw), 95%);
   position: relative;
   list-style-type: none;
@@ -57,7 +57,7 @@
   margin: auto;
 }
 
-#emails-list li {
+#questions-list li {
   border-bottom: 1px #4a4a4a solid;
   width: 100%;
   color: white;
@@ -69,11 +69,11 @@
   transition-duration: 0.3s;
 }
 
-#emails-list li:hover {
+#questions-list li:hover {
   background-color: #19202c !important;
 }
 
-#emails-list li div {
+#questions-list li div {
   padding: 3%;
   display: flex;
   flex-direction: column;
@@ -81,11 +81,11 @@
   text-align: left;
 }
 
-.email-entry-title {
+.question-entry-title {
   width: 60% !important;
 }
 
-#emails-table-description {
+#questions-table-description {
   width: min(calc(2000px - 15vw), 95%);
   position: relative;
   list-style-type: none;
@@ -98,34 +98,34 @@
   flex-direction: row;
 }
 
-#emails-table-description li {
+#questions-table-description li {
   width: 20%;
   padding: 2% 3%;
   font-weight: bold;
   font-size: 20px;
 }
 
-#emails-table-description-title {
+#questions-table-description-title {
   width: 60% !important;
 }
 
-#emails-table-description button {
+#questions-table-description button {
   border: none;
   background-color: #222b38;
   color: #9b9b9b;
 }
 
 @media (max-width: 400px) {
-  #emails-table-description li {
+  #questions-table-description li {
     font-size: .8em;
   }
 
-  #emails-list li div span {
+  #questions-list li div span {
     font-size: .8em;
   }
 }
 
-#emails-empty {
+#questions-empty {
   color: white;
   display: none;
   flex-flow: wrap;
@@ -135,13 +135,13 @@
   white-space: pre;
 }
 
-#emails-empty-headline {
+#questions-empty-headline {
   font-size: 20px;
   font-weight: bold;
   width: 100%;
   margin-bottom: 1%;
 }
 
-#emails-empty-link {
+#questions-empty-link {
   text-decoration: none;
 }
