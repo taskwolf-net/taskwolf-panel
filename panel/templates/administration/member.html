@@ -6,24 +6,26 @@
     {% include 'panel-header.html' %}
     {% include 'panel-sidebar.html' %}
     <div class="sidebar-influenced">
-      <div id="member-wrapper">
-        <h1 id="member-headline"></h1>
-        <div id="member-group-header">
-          <h2>{% trans 'panel.member.group.headline' %}</h2>
-        </div>
-        <div id="member-group-dropdown" class="dropdown">
-          <button id="member-group-dropdown-button" class="btn btn-secondary dropdown-toggle bg-dark my-4" type="button" data-bs-toggle="dropdown">
-            {% trans 'panel.member.group' %}
-          </button>
-          <ul id="member-group-dropdown-list" class="dropdown-menu dropdown-menu-dark">
+      <div id="member-container">
+        <div id="member-wrapper" class="d-none">
+          <h1 id="member-headline"></h1>
+          <div id="member-group-header">
+            <h2>{% trans 'panel.member.group.headline' %}</h2>
+          </div>
+          <div id="member-group-dropdown" class="dropdown">
+            <button id="member-group-dropdown-button" class="btn btn-secondary dropdown-toggle bg-dark my-4" type="button" data-bs-toggle="dropdown">
+              {% trans 'panel.member.group' %}
+            </button>
+            <ul id="member-group-dropdown-list" class="dropdown-menu dropdown-menu-dark">
+            </ul>
+          </div>
+          <div id="member-permissions-header">
+            <h2>{% trans 'panel.member.permissions.headline' %}</h2>
+            <button id="member-permission-add" class="btn btn-success" type="button">{% trans 'panel.member.permission.add' %}</button>
+          </div>
+          <ul id="member-permissions">
           </ul>
         </div>
-        <div id="member-permissions-header">
-          <h2>{% trans 'panel.member.permissions.headline' %}</h2>
-          <button id="member-permission-add" class="btn btn-success" type="button">{% trans 'panel.member.permission.add' %}</button>
-        </div>
-        <ul id="member-permissions">
-        </ul>
       </div>
     </div>
   </body>
@@ -34,9 +36,11 @@
   var groups;
 
   $(document).ready(function() {
+    displayLoader();
     fetchMembersData(function() {
       fetchGroupsData(function() {
         displayMember();
+        removeLoader();
       });
     });
   });
@@ -140,5 +144,17 @@
         });
       }
     });
+  }
+
+  function displayLoader() {
+    var loader = document.createElement("div");
+    loader.classList.add("loader");
+    document.getElementById("member-container").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("member-container")
+      .removeChild(document.getElementsByClassName("loader")[0]);
+    document.getElementById("member-wrapper").classList.remove("d-none");
   }
 </script>

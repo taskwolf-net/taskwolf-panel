@@ -6,36 +6,39 @@
     {% include 'panel-header.html' %}
     {% include 'panel-sidebar.html' %}
     <div class="sidebar-influenced">
-      <div id="group-wrapper">
-        <div id="group-header">
-          <div>
-            <button id="group-delete" type="button" class="btn btn-danger">{% trans 'panel.group.delete' %}</button>
+      <div id="group-container">
+        <div id="group-wrapper" class="d-none">
+          <div id="group-header">
+            <div>
+              <button id="group-delete" type="button" class="btn btn-danger">{% trans 'panel.group.delete' %}</button>
+            </div>
+            <div>
+              <h1 id="group-headline"></h1>
+            </div>
+            <div>
+              <button id="group-rename" type="button" class="fa-solid fa-pen-to-square"></button>
+            </div>
           </div>
-          <div>
-            <h1 id="group-headline"></h1>
+          <div id="group-priority-header">
+            <h2>{% trans 'panel.group.priority.headline' %}</h2>
           </div>
-          <div>
-            <button id="group-rename" type="button" class="fa-solid fa-pen-to-square"></button>
+          <div id="group-priority-container" class="my-4">
+            <input id="group-priority-input" type="number" min="0" max="100" placeholder="{% trans 'panel.group.priority' %}">
+            <button id="group-priority-change" class="btn btn-success" type="button">{% trans 'panel.group.priority.change' %}</button>
           </div>
+          <div id="group-members-header">
+            <h2>{% trans 'panel.group.members.headline' %}</h2>
+            <button id="group-member-add" class="btn btn-success" type="button">{% trans 'panel.group.member.add' %}</button>
+          </div>
+          <ul id="group-members">
+          </ul>
+          <div id="group-permissions-header">
+            <h2>{% trans 'panel.group.permissions.headline' %}</h2>
+            <button id="group-permission-add" class="btn btn-success" type="button">{% trans 'panel.group.permission.add' %}</button>
+          </div>
+          <ul id="group-permissions">
+          </ul>
         </div>
-        <div id="group-priority-header">
-          <h2>{% trans 'panel.group.priority.headline' %}</h2>
-        </div>
-        <div id="group-priority-container" class="my-4">
-          <input id="group-priority-input" type="number" min="0" max="100" placeholder="{% trans 'panel.group.priority' %}">
-          <button id="group-priority-change" class="btn btn-success" type="button">{% trans 'panel.group.priority.change' %}</button>
-        </div>
-        <div id="group-members-header">
-          <h2>{% trans 'panel.group.members.headline' %}</h2>
-          <button id="group-member-add" class="btn btn-success" type="button">{% trans 'panel.group.member.add' %}</button>
-        </div>
-        <ul id="group-members">
-        </ul>
-        <div id="group-permissions-header">
-          <h2>{% trans 'panel.group.permissions.headline' %}</h2>
-          <button id="group-permission-add" class="btn btn-success" type="button">{% trans 'panel.group.permission.add' %}</button>
-        </div>
-        <ul id="group-permissions">
       </div>
     </div>
   </body>
@@ -46,9 +49,11 @@
   var members;
 
   $(document).ready(function() {
+    displayLoader();
     fetchGroupsData(function() {
       fetchMembersData(function() {
         displayGroup();
+        removeLoader();
       });
     });
   });
@@ -242,5 +247,17 @@
         });
       }
     });
+  }
+
+  function displayLoader() {
+    var loader = document.createElement("div");
+    loader.classList.add("loader");
+    document.getElementById("group-container").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("group-container")
+      .removeChild(document.getElementsByClassName("loader")[0]);
+    document.getElementById("group-wrapper").classList.remove("d-none");
   }
 </script>
