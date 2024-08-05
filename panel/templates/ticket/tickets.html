@@ -40,6 +40,7 @@
         </ul>
         <ul id="tickets-list">
         </ul>
+        <div id="tickets-loader"></div>
         <div id="tickets-empty">
           <span id="tickets-empty-headline">{% trans 'tickets.empty.headline' %}</span>
           <span>{% trans 'tickets.empty.text' %}</span>
@@ -54,8 +55,10 @@
   var ticketsCurrentNameFilter = "";
 
   $(document).ready(function() {
+    displayLoader();
     fetchTicketsData(function() {
       displayTickets();
+      removeLoader();
     });
   });
 
@@ -138,4 +141,15 @@
     ticketsCurrentNameFilter = event.target.value;
     displayTickets();
   };
+
+  function displayLoader() {
+    var loader = document.createElement("div");
+    loader.classList.add("loader", "loader-list");
+    document.getElementById("tickets-loader").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("tickets-loader").removeChild(
+      document.getElementsByClassName("loader")[0]);
+  }
 </script>

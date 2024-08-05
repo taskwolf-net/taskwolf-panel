@@ -35,6 +35,7 @@
         </ul>
         <ul id="sales-list">
         </ul>
+        <div id="sales-loader"></div>
         <div id="sales-empty">
           <span id="sales-empty-headline">{% trans 'sales.empty.headline' %}</span>
           <span>{% trans 'sales.empty.text' %}</span>
@@ -49,8 +50,10 @@
   var salesCurrentNameFilter = "";
 
   $(document).ready(function() {
+    displayLoader();
     fetchSalesData(function() {
       displaySales();
+      removeLoader();
     });
   });
 
@@ -124,4 +127,15 @@
     salesCurrentNameFilter = event.target.value;
     displaySales();
   };
+
+  function displayLoader() {
+    var loader = document.createElement("div");
+    loader.classList.add("loader", "loader-list");
+    document.getElementById("sales-loader").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("sales-loader").removeChild(
+      document.getElementsByClassName("loader")[0]);
+  }
 </script>
