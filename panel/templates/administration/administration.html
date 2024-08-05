@@ -6,11 +6,13 @@
     {% include 'panel-header.html' %}
     {% include 'panel-sidebar.html' %}
     <div class="sidebar-influenced">
-      <div id="administration-wrapper">
-        <h1 id="administration-headline">{% trans 'panel.administration.headline' %}</h1>
-        <ul id="administration-groups">
-        </ul>
-        <button type="button" id="administration-group-add" class="btn btn-primary mt-4">{% trans 'panel.administration.group.add' %}</button>
+      <div id="administration-container">
+        <div id="administration-wrapper" class="d-none">
+          <h1 id="administration-headline">{% trans 'panel.administration.headline' %}</h1>
+          <ul id="administration-groups">
+          </ul>
+          <button type="button" id="administration-group-add" class="btn btn-primary mt-4">{% trans 'panel.administration.group.add' %}</button>
+        </div>
       </div>
     </div>
   </body>
@@ -21,9 +23,11 @@
   var members;
 
   $(document).ready(function() {
+    displayLoader();
     fetchGroupsData(function() {
       fetchMembersData(function() {
         displayGroups();
+        removeLoader();
       });
     });
   });
@@ -139,5 +143,17 @@
         });
       }
     });
+  }
+
+  function displayLoader() {
+    var loader = document.createElement("div");
+    loader.classList.add("loader");
+    document.getElementById("administration-container").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("administration-wrapper")
+      .removeChild(document.getElementsByClassName("loader")[0]);
+    document.getElementById("administration-container").classList.remove("d-none");
   }
 </script>
