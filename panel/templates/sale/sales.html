@@ -1,0 +1,127 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'templates/head.html' %}
+  <body>
+    {% include 'templates/panel-header.html' %}
+    {% include 'templates/panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="sales-wrapper">
+        <h1 id="sales-headline">{% trans 'sales.headline' %}</h1>
+        <div id="sales-header">
+          <div id="sales-search-box">
+            <input id="sales-search-input" placeholder="{% trans 'sales.search' %}" type="text" class="form-control" value="" autocomplete="off">
+            <button type="button">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+        <ul id="sales-table-description">
+          <li id="sales-table-description-title">
+            <div>
+              <span>{% trans 'sales.title' %}</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span>{% trans 'sales.sender' %}</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span>{% trans 'sales.date' %}</span>
+            </div>
+          </li>
+        </ul>
+        <ul id="sales-list">
+        </ul>
+        <div id="sales-empty">
+          <span id="sales-empty-headline">{% trans 'sales.empty.headline' %}</span>
+          <span>{% trans 'sales.empty.text' %}</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  var sales;
+  var salesCurrentNameFilter = "";
+
+  $(document).ready(function() {
+    fetchSalesData(function() {
+      displaySales();
+    });
+  });
+
+  function fetchSalesData(callback) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/sales/find/", "GET", []);
+    request.send(function (status, responseText) {
+      sales = JSON.parse(responseText).sales;
+      callback();
+    });
+  }
+
+  function displaySales() {
+    document.getElementById("sales-list").innerHTML = "";
+    var displayedSales = 0;
+    for (var i = 0; i < sales.length; i++) {
+      var entry = sales[i];
+      if(!(shouldDisplaySaleEntry(entry))) {
+        continue;
+      }
+      displaySale(entry.id, entry.title, entry.sender, entry.date);
+      displayedSales++;
+    }
+    if (displayedSales === 0) {
+      document.getElementById("sales-empty").style.display = "flex";
+    } else {
+      document.getElementById("sales-empty").style.display = "none";
+    }
+  }
+
+  function shouldDisplaySaleEntry(entry) {
+    return salesCurrentNameFilter.length === 0 ||
+      entry.title.toLowerCase().includes(salesCurrentNameFilter.toLowerCase()) ||
+      entry.sender.toLowerCase().includes(salesCurrentNameFilter.toLowerCase()) ||
+      entry.date.toLowerCase().includes(salesCurrentNameFilter.toLowerCase());
+  }
+
+  function displaySale(id, title, sender, date) {
+    var entry = document.createElement('li');
+    entry.role = "button";
+    entry.classList.add("sale-entry");
+    var titleDiv = document.createElement("div");
+    titleDiv.classList.add("sale-entry-title");
+    var titleElement = document.createElement("span");
+    titleElement.innerText = title;
+    titleElement.classList.add("sales-list-title");
+    titleDiv.appendChild(titleElement);
+    entry.appendChild(titleDiv);
+    appendSalesCell(entry, "sender", sender, "span");
+    appendSalesCell(entry, "date", date, "span");
+    entry.onclick = function (event) {
+      clickSale(id);
+    }
+    document.getElementById("sales-list").appendChild(entry);
+  }
+
+  function clickSale(id) {
+    window.location.href = "/sale/" + id + "/";
+  }
+
+  function appendSalesCell(entry, identifier, information, elementType) {
+    var div = document.createElement("div");
+    var element = document.createElement(elementType);
+    element.innerText = information;
+    element.classList.add("sales-list-" + identifier);
+    div.appendChild(element);
+    entry.appendChild(div);
+    return element;
+  }
+
+  document.getElementById("sales-search-input").oninput = function(event) {
+    salesCurrentNameFilter = event.target.value;
+    displaySales();
+  };
+</script>

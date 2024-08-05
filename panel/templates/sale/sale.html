@@ -1,0 +1,156 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'templates/head.html' %}
+  <body>
+    {% include 'templates/panel-header.html' %}
+    {% include 'templates/panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="sale-container">
+        <h1 id="sale-headline"></h1>
+        <hr class="hr border-white my-4"/>
+        <ul id="sale-messages">
+        </ul>
+        <div id="sale-operations">
+          <button type="button" id="sale-message-add" class="btn btn-primary disabled">{% trans 'sale.message.add' %}</button>
+          <button type="button" id="sale-delete" class="btn btn-danger">{% trans 'sale.delete' %}</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  var sale;
+
+  $(document).ready(function() {
+    fetchSaleData(function() {
+      displaySale();
+    });
+  });
+
+  function fetchSaleData(callback) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/sale/find/", "POST", [],
+      {sale: "{{sale}}"});
+    request.send(function (status, responseText) {
+      sale = JSON.parse(responseText);
+      callback();
+    });
+  }
+
+  function displaySale() {
+    document.getElementById("sale-headline").innerHTML = sale.title;
+    for (var i = 0; i < sale.messages.length; i++) {
+      displayMessage(sale.messages[i]);
+    }
+    displayAnswerField();
+  }
+
+  function displayMessage(message) {
+    var messageElement = document.createElement("div");
+    messageElement.classList.add("sale-message", "ql-editor");
+    messageElement.innerHTML = message.body;
+    displayEntry(message.teamWritten, message.sender.replace("@", "\u200B@"),
+      message.time.split(" ")[0], message.time.split(" ")[1], messageElement);
+  }
+
+  function displayAnswerField() {
+    var answerField = document.createElement("div");
+    answerField.id = "sale-answer-field";
+    displayEntry(true, "Taskwolf", "", "", answerField);
+    var quill = new Quill('#sale-answer-field', {
+      modules: {
+        toolbar: [
+          [{'size': ['huge', 'large', false, 'small']}],
+          ['bold', 'italic', 'underline'],
+          ['image'],
+          [{'list': 'ordered'}, {'list': 'bullet'}],
+          [{'align': []}],
+          [{'color': []}],
+        ]
+      },
+      theme: 'snow'
+    });
+    quill.on('text-change', function(delta, oldDelta, source) {
+      if (answerField.firstElementChild.innerHTML !== "<p><br></p>") {
+        document.getElementById("sale-message-add").classList.remove("disabled");
+      } else {
+        document.getElementById("sale-message-add").classList.add("disabled");
+      }
+    });
+  }
+
+  function displayEntry(taskwolfWritten, author, date, time, contentElement) {
+    var messageContainer = document.createElement("li");
+    messageContainer.classList.add("sale-message-container");
+    var messageDescription = document.createElement("div");
+    messageDescription.classList.add("sale-message-description")
+    if (taskwolfWritten) {
+      var taskwolfPicture = document.createElement("img");
+      taskwolfPicture.classList.add("sale-message-profile-picture");
+      taskwolfPicture.src = "{% static 'img/taskwolf-profile-picture.png' %}";
+      messageDescription.appendChild(taskwolfPicture);
+    } else {
+      var userPicture = document.createElement("i");
+      userPicture.classList.add("sale-message-profile-icon", "fa-regular", "fa-user");
+      messageDescription.appendChild(userPicture);
+    }
+    messageDescription.appendChild(document.createElement("br"));
+    messageDescription.appendChild(document.createElement("br"));
+    var messageAuthor = document.createElement("b");
+    messageAuthor.classList.add("sale-message-author");
+    messageAuthor.innerHTML = author;
+    messageDescription.appendChild(messageAuthor);
+    messageDescription.appendChild(document.createElement("br"));
+    messageDescription.appendChild(document.createElement("br"));
+    var messageDate = document.createElement("label");
+    messageDate.classList.add("sale-message-date");
+    messageDate.innerHTML = date;
+    messageDescription.appendChild(messageDate);
+    messageDescription.appendChild(document.createElement("br"));
+    messageContainer.appendChild(messageDescription);
+    var messageTime = document.createElement("label");
+    messageTime.classList.add("sale-message-time");
+    messageTime.innerHTML = time;
+    messageDescription.appendChild(messageTime);
+    messageDescription.appendChild(document.createElement("br"));
+    messageDescription.appendChild(document.createElement("br"));
+    messageContainer.appendChild(messageDescription);
+    var divider = document.createElement("div");
+    divider.classList.add("sale-message-divider");
+    messageContainer.appendChild(divider);
+    var messageContent = document.createElement("div");
+    messageContent.classList.add("sale-message-content");
+    messageContent.appendChild(contentElement);
+    messageContainer.appendChild(messageContent);
+    document.getElementById("sale-messages").appendChild(messageContainer);
+    return messageContainer;
+  }
+
+  document.getElementById("sale-message-add").onclick = function(event) {
+    var message = document.getElementById("sale-answer-field").firstElementChild.innerHTML;
+    let request = new HttpRequest("https://team.taskwolf.net/v1/sale/answer/", "POST", [],
+      {sale: sale.id, message: message});
+    request.send(function (status, responseText) {
+      Swal.fire("{% trans 'sale.message.add.successful.title' %}", "{% trans 'sale.message.add.successful.body' %}", "success").then(success => window.location.reload());
+    });
+  }
+
+  document.getElementById("sale-delete").onclick = function(event) {
+    Swal.fire({
+      title: "{% trans 'sale.delete.title' %}",
+      text: "{% trans 'sale.delete.body' %}",
+      icon: "warning",
+      confirmButtonColor: "#dc3545",
+      showCancelButton: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        let request = new HttpRequest("https://team.taskwolf.net/v1/sale/delete/", "POST", [],
+          {sale: sale.id});
+        request.send(function (status, responseText) {
+          Swal.fire("{% trans 'sale.delete.successful.title' %}", "{% trans 'sale.delete.successful.body' %}", "success").then(success => window.location.href = "/sales/");
+        });
+      }
+    });
+  }
+</script>
