@@ -113,19 +113,19 @@
   document.getElementById("administration-group-add").onclick = function (event) {
     var groupAddForm = document.createElement("div");
     groupAddForm.classList.add("swal2-content");
+    var groupAddDescription = document.createElement("p");
+    groupAddDescription.innerText = "{% trans 'panel.administration.group.add.body' %}";
+    groupAddForm.appendChild(groupAddDescription);
     var groupNameElement = document.createElement("input");
     groupNameElement.placeholder = "{% trans 'panel.administration.group.add.name' %}";
     groupAddForm.appendChild(groupNameElement);
+    groupAddForm.appendChild(document.createElement("br"));
     var groupPriorityElement = document.createElement("input");
     groupPriorityElement.classList.add("mt-2");
     groupPriorityElement.placeholder = "{% trans 'panel.administration.group.add.priority' %}";
-    groupPriorityElement.min = 0;
-    groupPriorityElement.max = 100;
-    groupPriorityElement.type = "number";
     groupAddForm.appendChild(groupPriorityElement);
     Swal.fire({
       title: "{% trans 'panel.administration.group.add.title' %}",
-      text: "{% trans 'panel.administration.group.add.body' %}",
       html: groupAddForm,
       showCancelButton: true,
     }).then(result => {

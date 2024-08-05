@@ -7,10 +7,26 @@
   color: white;
 }
 
+#group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+#group-rename {
+  background-color: rgba(0,0,0,0) !important;
+  border: none;
+  font-size: 28px;
+  color: white;
+}
+
 #group-headline {
   text-align: center;
   font-weight: bold;
-  margin-bottom: 2%;
 }
 
 #group-priority-header {
