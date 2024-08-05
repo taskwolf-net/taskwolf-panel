@@ -25,11 +25,11 @@
 <script>
   document.getElementById('complete').onclick = function(event) {
     if (document.getElementById("password").value !== document.getElementById("password-repetition").value) {
-      swal("Completion failed!", "The two passwords entered do not match", "error");
+      Swal.fire("Completion failed!", "The two passwords entered do not match", "error");
       return;
     }
     if (!passwordInput.checkValidity()) {
-      swal("Completion failed!", "The selected password is not strong enough", "error");
+      Swal.fire("Completion failed!", "The selected password is not strong enough", "error");
       return;
     }
     let request = new HttpRequest("https://team.taskwolf.net/v1/verification/complete/", "POST", [],

@@ -67,18 +67,18 @@
   }
 
   function deleteMessage(id) {
-    swal({
+    Swal.fire({
       title: "{% trans 'ticket.message.delete.title' %}",
       text: "{% trans 'ticket.message.delete.body' %}",
       icon: "warning",
-      dangerMode: true,
-      buttons: true,
-    }).then(willDelete => {
-      if (willDelete) {
+      confirmButtonColor: "#dc3545",
+      showCancelButton: true,
+    }).then(result => {
+      if (result.isConfirmed) {
         let request = new HttpRequest("https://team.taskwolf.net/v1/ticket/message/delete/", "POST", [],
           {ticket: ticket.id, message: id});
         request.send(function (status, responseText) {
-          swal("{% trans 'ticket.message.delete.successful.title' %}", "{% trans 'ticket.message.delete.successful.body' %}", "success").then(success => window.location.reload());
+          Swal.fire("{% trans 'ticket.message.delete.successful.title' %}", "{% trans 'ticket.message.delete.successful.body' %}", "success").then(success => window.location.reload());
         });
       }
     });
@@ -162,23 +162,23 @@
     let request = new HttpRequest("https://team.taskwolf.net/v1/ticket/answer/", "POST", [],
       {ticket: ticket.id, message: message});
     request.send(function (status, responseText) {
-      swal("{% trans 'ticket.message.add.successful.title' %}", "{% trans 'ticket.message.add.successful.body' %}", "success").then(success => window.location.reload());
+      Swal.fire("{% trans 'ticket.message.add.successful.title' %}", "{% trans 'ticket.message.add.successful.body' %}", "success").then(success => window.location.reload());
     });
   }
 
   document.getElementById("ticket-delete").onclick = function(event) {
-    swal({
+    Swal.fire({
       title: "{% trans 'ticket.delete.title' %}",
       text: "{% trans 'ticket.delete.body' %}",
       icon: "warning",
-      dangerMode: true,
-      buttons: true,
-    }).then(willDelete => {
-      if (willDelete) {
+      confirmButtonColor: "#dc3545",
+      showCancelButton: true,
+    }).then(result => {
+      if (result.isConfirmed) {
         let request = new HttpRequest("https://team.taskwolf.net/v1/ticket/delete/", "POST", [],
           {ticket: ticket.id});
         request.send(function (status, responseText) {
-          swal("{% trans 'ticket.delete.successful.title' %}", "{% trans 'ticket.delete.successful.body' %}", "success").then(success => window.location.href = "/tickets/");
+          Swal.fire("{% trans 'ticket.delete.successful.title' %}", "{% trans 'ticket.delete.successful.body' %}", "success").then(success => window.location.href = "/tickets/");
         });
       }
     });

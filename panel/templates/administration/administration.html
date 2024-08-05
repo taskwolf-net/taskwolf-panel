@@ -112,31 +112,30 @@
 
   document.getElementById("administration-group-add").onclick = function (event) {
     var groupAddForm = document.createElement("div");
+    groupAddForm.classList.add("swal2-content");
     var groupNameElement = document.createElement("input");
-    groupNameElement.classList.add("swal-content__input");
     groupNameElement.placeholder = "{% trans 'panel.administration.group.add.name' %}";
     groupAddForm.appendChild(groupNameElement);
     var groupPriorityElement = document.createElement("input");
-    groupPriorityElement.classList.add("swal-content__input", "mt-2");
+    groupPriorityElement.classList.add("mt-2");
     groupPriorityElement.placeholder = "{% trans 'panel.administration.group.add.priority' %}";
     groupPriorityElement.min = 0;
     groupPriorityElement.max = 100;
     groupPriorityElement.type = "number";
     groupAddForm.appendChild(groupPriorityElement);
-    swal({
+    Swal.fire({
       title: "{% trans 'panel.administration.group.add.title' %}",
       text: "{% trans 'panel.administration.group.add.body' %}",
-      content: groupAddForm,
-      icon: "info",
-      buttons: true,
+      html: groupAddForm,
+      showCancelButton: true,
     }).then(result => {
-      if (result) {
+      if (result.isConfirmed) {
         var name = groupNameElement.value;
         var priority = groupPriorityElement.value;
         let request = new HttpRequest("https://team.taskwolf.net/v1/group/add/", "POST", [],
           {name: name, priority: priority});
         request.send(function (status, responseText) {
-          swal("{% trans 'panel.administration.group.add.successful.title' %}", "{% trans 'panel.administration.group.add.successful.body' %}", "success").then(success => window.location.reload());
+          Swal.fire("{% trans 'panel.administration.group.add.successful.title' %}", "{% trans 'panel.administration.group.add.successful.body' %}", "success").then(success => window.location.reload());
         });
       }
     });

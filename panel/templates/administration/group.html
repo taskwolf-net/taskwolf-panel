@@ -87,9 +87,9 @@
 
   document.getElementById("group-priority-change").onclick = function (event) {
     var priority = document.getElementById("group-priority-input").value;
-    let request = new HttpRequest("https://team.taskwolf.net/v1/group/priority/change/", "POST", [], {priority: priority, group: group.name});
+    let request = new HttpRequest("https://team.taskwolf.net/v1/group/priority/change/", "POST", [], {priority: priority, name: group.name});
     request.send(function (status, responseText) {
-      swal("{% trans 'panel.group.priority.changed.title' %}", "{% trans 'panel.group.priority.changed.body' %}", "success").then(success => window.location.reload());
+      Swal.fire("{% trans 'panel.group.priority.changed.title' %}", "{% trans 'panel.group.priority.changed.body' %}", "success").then(success => window.location.reload());
     });
   }
 
@@ -120,23 +120,24 @@
   }
 
   document.getElementById("group-member-add").onclick = function (event) {
-    swal({
+    var content = document.createElement("div");
+    content.classList.add("swal2-content");
+    var text = document.createElement("p");
+    text.innerText = "{% trans 'panel.group.member.add.body' %}";
+    content.appendChild(text);
+    var input = document.createElement("input");
+    input.placeholder = "{% trans 'panel.group.member.add.email' %}";
+    content.appendChild(input);
+    Swal.fire({
       title: "{% trans 'panel.group.member.add.title' %}",
-      text: "{% trans 'panel.group.member.add.body' %}",
-      content: {
-        element: "input",
-        attributes: {
-          placeholder: "{% trans 'panel.group.member.add.email' %}",
-        },
-      },
-      icon: "info",
-      buttons: true,
+      html: content,
+      showCancelButton: true,
     }).then(result => {
-      if (result != null) {
+      if (result.isConfirmed) {
         let request = new HttpRequest("https://team.taskwolf.net/v1/member/add/", "POST", [],
-          {email: result, group: group.name});
+          {email: input.value, name: group.name});
         request.send(function (status, responseText) {
-          swal("{% trans 'panel.group.member.add.successful.title' %}", "{% trans 'panel.group.member.add.successful.body' %}", "success").then(success => window.location.reload());
+          Swal.fire("{% trans 'panel.group.member.add.successful.title' %}", "{% trans 'panel.group.member.add.successful.body' %}", "success").then(success => window.location.reload());
         });
       }
     });
@@ -153,7 +154,7 @@
     permissionRemoveElement.classList.add("group-permission-remove", "fa", "fa-ban", "text-danger");
     permissionRemoveElement.onclick = function (event) {
       let request = new HttpRequest("https://team.taskwolf.net/v1/group/permission/remove/", "POST", [],
-        {permission: permission, group: group.name});
+        {permission: permission, name: group.name});
       request.send(function (status, responseText) {
         location.reload();
       });
@@ -163,23 +164,24 @@
   }
 
   document.getElementById("group-permission-add").onclick = function (event) {
-    swal({
+    var content = document.createElement("div");
+    content.classList.add("swal2-content");
+    var text = document.createElement("p");
+    text.innerText = "{% trans 'panel.group.permission.add.body' %}";
+    content.appendChild(text);
+    var input = document.createElement("input");
+    input.placeholder = "{% trans 'panel.group.permission.add.name' %}";
+    content.appendChild(input);
+    Swal.fire({
       title: "{% trans 'panel.group.permission.add.title' %}",
-      text: "{% trans 'panel.group.permission.add.body' %}",
-      content: {
-        element: "input",
-        attributes: {
-          placeholder: "{% trans 'panel.group.permission.add.name' %}",
-        },
-      },
-      icon: "info",
-      buttons: true,
+      html: content,
+      showCancelButton: true,
     }).then(result => {
-      if (result != null) {
+      if (result.isConfirmed) {
         let request = new HttpRequest("https://team.taskwolf.net/v1/group/permission/add/", "POST", [],
-          {permission: result, group: group.name});
+          {permission: input.value, name: group.name});
         request.send(function (status, responseText) {
-          swal("{% trans 'panel.group.permission.add.successful.title' %}", "{% trans 'panel.group.permission.add.successful.body' %}", "success").then(success => window.location.reload());
+          Swal.fire("{% trans 'panel.group.permission.add.successful.title' %}", "{% trans 'panel.group.permission.add.successful.body' %}", "success").then(success => window.location.reload());
         });
       }
     });

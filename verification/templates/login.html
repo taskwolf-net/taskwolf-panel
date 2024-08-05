@@ -37,7 +37,7 @@
         Cookie.destroy("taskwolf-organization-target");
         window.location.href = "/dashboard/";
       } else {
-        swal("Authentication failed!", "The password entered is incorrect!", "error");
+        Swal.fire("Authentication failed!", "The password entered is incorrect!", "error");
         document.getElementById("password").value = "";
       }
     });
