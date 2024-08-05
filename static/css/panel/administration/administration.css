@@ -39,6 +39,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 5px;
+  border-radius: 10px;
   padding: 10px;
   justify-content: space-between;
   transition-duration: 0.3s;
@@ -46,7 +47,6 @@
 
 .administration-group-member:hover {
   background-color: #232838;
-  border-radius: 20px;
 }
 
 .administration-group-member-information {
