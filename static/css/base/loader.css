@@ -1,15 +1,16 @@
 .loader {
-  color: #cccccc;
   font-size: 11px;
-  background: #cccccc;
   animation: escaleY 1s infinite ease-in-out;
   width: 1em;
   height: 4em;
   animation-delay: -0.16s;
   position: relative;
-  left: 50%;
-  top: 40%;
+  margin-left: 50%;
+  margin-top: calc(50vh - 80px + 2em);
+  color: #cccccc;
+  background: #cccccc;
 }
+
 .loader:before,
 .loader:after {
   content: '';
@@ -21,6 +22,7 @@
   height: 4em;
   animation: escaleY 1s infinite ease-in-out;
 }
+
 .loader:before {
   left: -2em;
   animation-delay: -0.32s;
