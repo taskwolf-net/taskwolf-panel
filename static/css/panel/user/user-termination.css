@@ -1,0 +1,29 @@
+#user-termination-wrapper {
+  width: min(1200px, 95%);
+  margin: auto;
+}
+
+#user-termination-container .nav-tabs {
+  width: min(1200px, 100%);
+  margin: 40px auto 75px auto;
+  border: none;
+}
+
+#user-termination-container .nav-link {
+  border: none;
+  transition-duration: 0.3s;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#user-termination-container .nav-link {
+  color: white;
+}
+
+#user-termination-container .nav-link-active {
+  color: #8fc0f1;
+  border-bottom: 2px #8fc0f1 solid;
+}
