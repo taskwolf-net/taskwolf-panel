@@ -1,0 +1,95 @@
+#user-bundle-wrapper {
+  width: min(1200px, 95%);
+  margin: auto;
+  color: white;
+}
+
+#user-bundle-container .nav-tabs {
+  width: min(1200px, 100%);
+  margin: 40px auto 75px auto;
+  border: none;
+}
+
+#user-bundle-container .nav-link {
+  border: none;
+  transition-duration: 0.3s;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#user-bundle-container .nav-link {
+  color: white;
+}
+
+#user-bundle-container .nav-link-active {
+  color: #8fc0f1;
+  border-bottom: 2px #8fc0f1 solid;
+}
+
+#user-bundle-unavailable {
+  padding: 30px;
+  border-radius: 5px;
+}
+
+#user-bundle-unavailable {
+  background-color: #131820;
+  border: 1px #2b3441 solid;
+}
+
+#user-bundle-information {
+  padding: 30px;
+  border-radius: 5px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+#user-bundle-information {
+  background-color: #131820;
+  border: 1px #2b3441 solid;
+}
+
+#user-bundle-information-entries {
+  list-style-type: none;
+  padding: 0;
+  width: min(800px, 100%);
+  margin: 20px auto auto;
+  border-radius: 5px;
+}
+
+#user-bundle-information-entries {
+  border: 1px #596066 solid;
+}
+
+.user-bundle-information-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.user-bundle-information-entry-description {
+  display: flex;
+  align-items: center;
+  width: 75%;
+}
+
+.user-bundle-information-entry-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.user-bundle-information-divider {
+  width: 100%;
+  height: 0;
+}
+
+.user-bundle-information-divider {
+  border-bottom: 1px #596066 solid;
+}

@@ -29,12 +29,12 @@
   });
 
   document.getElementById("user-find").onclick = function (event) {
-    let request = new HttpRequest("https://team.taskwolf.net/v1/user/find/", "POST",
+    let request = new HttpRequest("https://team.taskwolf.net/v1/user/search/", "POST",
       [], {user: document.getElementById("users-search-input").value});
     request.send(function (status, responseText) {
       var information = JSON.parse(responseText);
       if (information.userFound) {
-        window.location.href = "/user/" + information.userId + "/";
+        window.location.href = "/user/" + information.userId + "/general/";
         return;
       }
       Swal.fire("{% trans 'users.find.failed.title' %}", "{% trans 'users.find.failed.body' %}", "error");

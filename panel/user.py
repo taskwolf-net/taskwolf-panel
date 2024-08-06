@@ -8,6 +8,31 @@ async def users(request):
     'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/users.css']})
 
 @authentication_required
-async def user(request, id):
-  return render(request, 'user/user.html', {'title': 'Taskwolf - User',
-    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user.css'], 'user': id})
+async def userGeneral(request, id):
+  return render(request, 'user/user-general.html', {'title': 'Taskwolf - User - General',
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-general.css'],
+    'user': id})
+
+@authentication_required
+async def userOrganization(request, id):
+  return render(request, 'user/user-organization.html', {'title': 'Taskwolf - User - Organization',
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-organization.css'],
+    'user': id})
+
+@authentication_required
+async def userBundle(request, id):
+  return render(request, 'user/user-bundle.html', {'title': 'Taskwolf - User - Bundle',
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-bundle.css'],
+     'user': id})
+
+@authentication_required
+async def userPayment(request, id):
+  return render(request, 'user/user-payment.html', {'title': 'Taskwolf - User - Payment',
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-payment.css'],
+    'user': id})
+
+@authentication_required
+async def userTermination(request, id):
+  return render(request, 'user/user-termination.html', {'title': 'Taskwolf - User - Termination',
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-termination.css'],
+     'user': id})
