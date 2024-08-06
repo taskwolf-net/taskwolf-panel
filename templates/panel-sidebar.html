@@ -20,9 +20,6 @@
       <li id="users-sidebar-item" class="sidebar-item d-none">
         <a href="/users/" class="sidebar-link nav-link {% if 'user' in request.path %}sidebar-active{% endif %}" aria-current="page"><i class="sidebar-icon fa fa-user" aria-hidden="true"></i>{% trans 'panel.sidebar.users' %}</a>
       </li>
-      <li id="organizations-sidebar-item" class="sidebar-item d-none">
-        <a href="/organizations/" class="sidebar-link nav-link {% if 'organization' in request.path %}sidebar-active{% endif %}" aria-current="page"><i class="sidebar-icon fa fa-people-group" aria-hidden="true"></i>{% trans 'panel.sidebar.organizations' %}</a>
-      </li>
       <li id="administration-sidebar-item" class="sidebar-item d-none">
         <a href="/administration/" class="sidebar-link nav-link {% if 'administration' in request.path or 'group' in request.path or 'member' in request.path %}sidebar-active{% endif %}" aria-current="page"><i class="sidebar-icon fa fa-building-columns" aria-hidden="true"></i>{% trans 'panel.sidebar.administrator' %}</a>
       </li>
@@ -37,7 +34,6 @@
     request.send(function (status, responseText) {
       if (JSON.parse(responseText).hasPermission === true) {
         document.getElementById("users-sidebar-item").classList.remove("d-none");
-        document.getElementById("organizations-sidebar-item").classList.remove("d-none");
         document.getElementById("administration-sidebar-item").classList.remove("d-none");
       }
     });
