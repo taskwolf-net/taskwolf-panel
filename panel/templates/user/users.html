@@ -1,0 +1,43 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body>
+    {% include 'panel-header.html' %}
+    {% include 'panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="users-wrapper">
+        <h1 id="users-headline">{% trans 'users.headline' %}</h1>
+        <div id="users-search-box">
+          <input id="users-search-input" placeholder=" {% trans 'users.search' %}" type="text" class="form-control" value="" autocomplete="off">
+          <button type="button">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+        <button type="button" id="user-find" class="btn btn-primary d-block mx-auto mt-5 px-5">{% trans 'users.find' %}</button>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  document.getElementById("users-search-input").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      document.getElementById("user-find").click();
+    }
+  });
+
+  document.getElementById("user-find").onclick = function (event) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/user/find/", "POST",
+      [], {user: document.getElementById("users-search-input").value});
+    request.send(function (status, responseText) {
+      var information = JSON.parse(responseText);
+      if (information.userFound) {
+        window.location.href = "/user/" + information.userId + "/";
+        return;
+      }
+      Swal.fire("{% trans 'users.find.failed.title' %}", "{% trans 'users.find.failed.body' %}", "error");
+    });
+  }
+</script>

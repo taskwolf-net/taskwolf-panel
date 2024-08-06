@@ -46,6 +46,10 @@ msgid "panel.sidebar.questions"
 msgstr "Fragen"
 msgid "panel.sidebar.sales"
 msgstr "Verkauf"
+msgid "panel.sidebar.users"
+msgstr "Nutzer"
+msgid "panel.sidebar.organizations"
+msgstr "Organisationen"
 msgid "panel.sidebar.administrator"
 msgstr "Verwaltung"
 
@@ -176,6 +180,24 @@ msgid "sale.delete.successful.title"
 msgstr "Gelöscht!"
 msgid "sale.delete.successful.body"
 msgstr "Du hast den Verkauf erfolgreich gelöscht!"
+
+# USERS
+msgid "users.headline"
+msgstr "Nutzer finden"
+msgid "users.search"
+msgstr "Nach Nutzer suchen..."
+msgid "users.find"
+msgstr "FINDEN"
+msgid "users.find.failed.title"
+msgstr "Nutzer konnte nicht gefunden werden"
+msgid "users.find.failed.body"
+msgstr "Es konnte kein Nutzer gefunden werden, dem die E-Mail zugewiesen werden konnte"
+
+# USER
+
+# ORGANIZATIONS
+
+# ORGANIZATION
 
 # ADMINISTRATION
 msgid "panel.administration.headline"

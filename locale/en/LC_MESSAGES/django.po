@@ -48,6 +48,10 @@ msgid "panel.sidebar.questions"
 msgstr "Questions"
 msgid "panel.sidebar.sales"
 msgstr "Sales"
+msgid "panel.sidebar.users"
+msgstr "Users"
+msgid "panel.sidebar.organizations"
+msgstr "Organizations"
 msgid "panel.sidebar.administrator"
 msgstr "Administration"
 
@@ -178,6 +182,24 @@ msgid "sale.delete.successful.title"
 msgstr "Deleted!"
 msgid "sale.delete.successful.body"
 msgstr "You have successfully deleted this sale!"
+
+# USERS
+msgid "users.headline"
+msgstr "Find user"
+msgid "users.search"
+msgstr "Search for user..."
+msgid "users.find"
+msgstr "FIND"
+msgid "users.find.failed.title"
+msgstr "User could not be found"
+msgid "users.find.failed.body"
+msgstr "No user could be found to whom the email could be assigned"
+
+# USER
+
+# ORGANIZATIONS
+
+# ORGANIZATION
 
 # ADMINISTRATION
 msgid "panel.administration.headline"
