@@ -198,8 +198,6 @@ msgstr "No user could be found to whom the email could be assigned"
 # USER
 msgid "user.tab.general"
 msgstr "GENERAL"
-msgid "user.tab.organization"
-msgstr "ORGANIZATIONS"
 msgid "user.tab.bundle"
 msgstr "PACKAGE"
 msgid "user.tab.payment"

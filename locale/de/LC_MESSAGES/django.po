@@ -196,8 +196,6 @@ msgstr "Es konnte kein Nutzer gefunden werden, dem die E-Mail zugewiesen werden 
 # USER
 msgid "user.tab.general"
 msgstr "ALLGEMEIN"
-msgid "user.tab.organization"
-msgstr "ORGANISATIONEN"
 msgid "user.tab.bundle"
 msgstr "PAKET"
 msgid "user.tab.payment"
