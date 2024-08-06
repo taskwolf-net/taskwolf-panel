@@ -206,7 +206,7 @@
     displayLoader();
     fetchBundle(function (bundle) {
       removeLoader();
-      if (bundle.hasBundle === false || bundle.bundleType !== "TRIAL" && bundle.bundleType !== "PROFESSIONAL") {
+      if (bundle.found === false || bundle.type !== "TRIAL" && bundle.type !== "PROFESSIONAL") {
         document.getElementById("user-bundle-unavailable").classList.remove("d-none");
         return;
       }
@@ -218,69 +218,69 @@
     document.getElementById("user-bundle-information-type").innerHTML =
       findPackageName(bundle);
     $(document.getElementById("user-bundle-information-entry-class"))
-      .toggleClass("d-none", bundle.bundleClass === "NONE");
+      .toggleClass("d-none", bundle.class === "NONE");
     $(document.getElementById("user-bundle-information-divider-class"))
-      .toggleClass("d-none", bundle.bundleClass === "NONE");
+      .toggleClass("d-none", bundle.class === "NONE");
     document.getElementById("user-bundle-information-class").innerHTML =
       findPackageClass(bundle);
     document.getElementById("user-bundle-information-price").innerHTML =
-      bundle.bundlePrice + " €";
+      bundle.price + " €";
     document.getElementById("user-bundle-information-runtime").innerHTML =
-      "1 " + (bundle.bundleRuntime === "WEEKLY" ? "{% trans 'user.bundle.runtime.week' %}" :
-        (bundle.bundleRuntime === "MONTHLY" ? "{% trans 'user.bundle.runtime.month' %}" :
+      "1 " + (bundle.runtime === "WEEKLY" ? "{% trans 'user.bundle.runtime.week' %}" :
+        (bundle.runtime === "MONTHLY" ? "{% trans 'user.bundle.runtime.month' %}" :
           "{% trans 'user.bundle.runtime.year' %}"));
     document.getElementById("user-bundle-information-workflow-access").innerHTML =
-      bundle.bundleWorkflowAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+      bundle.workflowAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
     document.getElementById("user-bundle-information-workflow-number").innerHTML =
-      bundle.bundleWorkflowNumberLimit < 0 ? "{% trans 'user.bundle.unlimited' %}" : bundle.bundleWorkflowNumberLimit;
+      bundle.workflowNumberLimit < 0 ? "{% trans 'user.bundle.unlimited' %}" : bundle.workflowNumberLimit;
     document.getElementById("user-bundle-information-workflow-operation").innerHTML =
-      bundle.bundleWorkflowOperationLimit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      bundle.workflowOperationLimit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     document.getElementById("user-bundle-information-template-access").innerHTML =
       true ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
     document.getElementById("user-bundle-information-database-access").innerHTML =
-      bundle.bundleDatabaseAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+      bundle.databaseAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
     document.getElementById("user-bundle-information-database-number").innerHTML =
-      bundle.bundleDatabaseNumberLimit < 0 ? "{% trans 'user.bundle.unlimited' %}" : bundle.bundleDatabaseNumberLimit;
+      bundle.databaseNumberLimit < 0 ? "{% trans 'user.bundle.unlimited' %}" : bundle.databaseNumberLimit;
     document.getElementById("user-bundle-information-database-data").innerHTML =
-      bundle.bundleDatabaseDataLimit + " GB";
+      bundle.databaseDataLimit + " GB";
     document.getElementById("user-bundle-information-webhook-access").innerHTML =
-      bundle.bundleWebhookAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+      bundle.webhookAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
     document.getElementById("user-bundle-information-webhook-number").innerHTML =
-      bundle.bundleWebhookNumberLimit < 0 ? "{% trans 'user.bundle.unlimited' %}" : bundle.bundleWebhookNumberLimit;
+      bundle.webhookNumberLimit < 0 ? "{% trans 'user.bundle.unlimited' %}" : bundle.webhookNumberLimit;
     document.getElementById("user-bundle-information-device-access").innerHTML =
-      bundle.bundleDeviceAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+      bundle.deviceAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
     document.getElementById("user-bundle-information-account-access").innerHTML =
-      bundle.bundleAccountsAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+      bundle.accountsAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
     document.getElementById("user-bundle-information-account-number").innerHTML =
-      bundle.bundleAccountsNumberLimit < 0 ? "{% trans 'user.bundle.unlimited' %}" : bundle.bundleAccountsNumberLimit;
+      bundle.accountsNumberLimit < 0 ? "{% trans 'user.bundle.unlimited' %}" : bundle.accountsNumberLimit;
   }
 
   function findPackageName(bundle) {
-    if (bundle.bundleType === "TRIAL") {
+    if (bundle.type === "TRIAL") {
       return "{% trans 'user.bundle.free' %}";
-    } else if (bundle.bundleType === "PROFESSIONAL") {
+    } else if (bundle.type === "PROFESSIONAL") {
       return "{% trans 'user.bundle.professional' %}";
-    } else if (bundle.bundleType === "TEAM") {
+    } else if (bundle.type === "TEAM") {
       return "{% trans 'user.bundle.team' %}";
-    } else if (bundle.bundleType === "ENTERPRISE") {
+    } else if (bundle.type === "ENTERPRISE") {
       return "{% trans 'user.bundle.enterprise' %}";
     }
   }
 
   function findPackageClass(bundle) {
-    if (bundle.bundleClass === "NONE") {
+    if (bundle.class === "NONE") {
       return "";
-    } else if (bundle.bundleClass === "BEGINNER") {
+    } else if (bundle.class === "BEGINNER") {
       return "{% trans 'user.bundle.beginner' %}";
-    } else if (bundle.bundleClass === "ADVANCED") {
+    } else if (bundle.class === "ADVANCED") {
       return "{% trans 'user.bundle.advanced' %}";
-    } else if (bundle.bundleClass === "EXPERT") {
+    } else if (bundle.class === "EXPERT") {
       return "{% trans 'user.bundle.expert' %}";
     }
   }
 
   function fetchBundle(callback) {
-    let request = new HttpRequest("https://team.taskwolf.net/v1/user/find/", "POST",
+    let request = new HttpRequest("https://team.taskwolf.net/v1/user/bundle/find/", "POST",
       [], {user: "{{user}}"});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));
