@@ -1,5 +1,5 @@
 from django.urls import path, include
-from . import dashboard, ticket, question, sale, administration
+from . import dashboard, ticket, question, sale, user, organization, administration
 
 urlpatterns = [
   path('dashboard/', dashboard.dashboard),
@@ -9,6 +9,10 @@ urlpatterns = [
   path('question/<str:id>/', question.question),
   path('sales/', sale.sales),
   path('sale/<str:id>/', sale.sale),
+  path('users/', user.users),
+  path('user/<str:id>/', user.user),
+  path('organizations/', organization.organizations),
+  path('organization/<str:id>/', organization.organization),
   path('administration/', administration.administration),
   path('group/<str:name>/', administration.group),
   path('member/<str:id>/', administration.member),
