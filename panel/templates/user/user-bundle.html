@@ -226,9 +226,7 @@
     document.getElementById("user-bundle-information-price").innerHTML =
       bundle.price + " €";
     document.getElementById("user-bundle-information-runtime").innerHTML =
-      "1 " + (bundle.runtime === "WEEKLY" ? "{% trans 'user.bundle.runtime.week' %}" :
-        (bundle.runtime === "MONTHLY" ? "{% trans 'user.bundle.runtime.month' %}" :
-          "{% trans 'user.bundle.runtime.year' %}"));
+      findPackageRuntime(bundle);
     document.getElementById("user-bundle-information-workflow-access").innerHTML =
       bundle.workflowAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
     document.getElementById("user-bundle-information-workflow-number").innerHTML =
@@ -276,6 +274,16 @@
       return "{% trans 'user.bundle.advanced' %}";
     } else if (bundle.class === "EXPERT") {
       return "{% trans 'user.bundle.expert' %}";
+    }
+  }
+
+  function findPackageRuntime(bundle) {
+    if (bundle.runtime === "WEEKLY") {
+      return "1 {% trans 'user.bundle.runtime.week' %}";
+    } else if (bundle.runtime === "MONTHLY") {
+      return "1 {% trans 'user.bundle.runtime.monthly' %}";
+    } else if (bundle.runtime === "YEARLY") {
+      return "1 {% trans 'user.bundle.runtime.year' %}";
     }
   }
 
