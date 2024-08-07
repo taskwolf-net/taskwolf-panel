@@ -1,0 +1,51 @@
+#user-bundle-change-wrapper {
+  width: min(1200px, 95%);
+  margin: auto;
+}
+
+#user-bundle-change-back {
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  width: 52px;
+  height: 52px;
+  border: none;
+  color: #b5b5b5;
+  background-color: transparent;
+  border-radius: 50%;
+  font-size: 25px;
+}
+
+#user-bundle-change-back:hover {
+  background-color: #212937;
+}
+
+#user-bundle-change-process {
+  padding: 30px;
+  border-radius: 5px;
+}
+
+#user-bundle-change-process {
+  background-color: #131820;
+  border: 1px #2b3441 solid;
+}
+
+#user-bundle-change-process-data {
+  width: min(600px, 100%);
+  margin: auto;
+}
+
+input {
+  background-color: #0d1117 !important;
+  color: white !important;
+  border-radius: 4px !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #ffffff;
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 20px 20px #23232329;
+}

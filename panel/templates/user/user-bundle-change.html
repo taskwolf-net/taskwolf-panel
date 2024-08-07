@@ -1,0 +1,116 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body class="dark">
+    {% include 'panel-header.html' %}
+    {% include 'panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="user-bundle-change-container">
+        <div id="user-bundle-change-wrapper">
+          <button id="user-bundle-change-back"><i class="fa-solid fa-arrow-left-long"></i></button>
+          <div id="user-bundle-change-process">
+            <h4 class="fw-bold mb-4">{% trans 'user.bundle.change.headline' %}</h4>
+            <p class="mb-5">{% trans 'user.bundle.change.description' %}</p>
+            <div id="user-bundle-change-process-data">
+              <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'user.bundle.change.type' %}</label>
+                <div class="dropdown">
+                  <button id="user-bundle-change-type" class="btn btn-secondary dropdown-toggle bg-dark w-100" type="button" data-bs-toggle="dropdown">
+                    {% trans 'user.bundle.change.type' %}
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-dark w-100">
+                    <li class="dropdown-item user-bundle-change-type-entry">{% trans 'user.bundle.change.type.trial' %}</li>
+                    <li class="dropdown-item user-bundle-change-type-entry">{% trans 'user.bundle.change.type.professional' %}</li>
+                    <li class="dropdown-item user-bundle-change-type-entry">{% trans 'user.bundle.change.type.team' %}</li>
+                    <li class="dropdown-item user-bundle-change-type-entry">{% trans 'user.bundle.change.type.enterprise' %}</li>
+                  </ul>
+                </div>
+              </div>
+              <div id="user-bundle-change-class-container" class="form-outline mb-3">
+                <label class="form-label">{% trans 'user.bundle.change.class' %}</label>
+                <div class="dropdown">
+                  <button id="user-bundle-change-class" class="btn btn-secondary dropdown-toggle bg-dark w-100" type="button" data-bs-toggle="dropdown">
+                    {% trans 'user.bundle.change.class' %}
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-dark w-100">
+                    <li class="dropdown-item user-bundle-change-class-entry">{% trans 'user.bundle.change.class.beginner' %}</li>
+                    <li class="dropdown-item user-bundle-change-class-entry">{% trans 'user.bundle.change.class.advanced' %}</li>
+                    <li class="dropdown-item user-bundle-change-class-entry">{% trans 'user.bundle.change.class.expert' %}</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'user.bundle.change.runtime' %}</label>
+                <div class="dropdown">
+                  <button id="user-bundle-change-runtime" class="btn btn-secondary dropdown-toggle bg-dark w-100" type="button" data-bs-toggle="dropdown">
+                    {% trans 'user.bundle.change.runtime' %}
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-dark w-100">
+                    <li id="user-bundle-change-runtime-weekly" class="dropdown-item user-bundle-change-runtime-entry">{% trans 'user.bundle.change.runtime.weekly' %}</li>
+                    <li class="dropdown-item user-bundle-change-runtime-entry">{% trans 'user.bundle.change.runtime.monthly' %}</li>
+                    <li class="dropdown-item user-bundle-change-runtime-entry">{% trans 'user.bundle.change.runtime.yearly' %}</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'user.bundle.change.price' %}</label>
+                <input id="user-bundle-change-price" class="form-control" placeholder="{% trans 'user.bundle.change.price' %}">
+              </div>
+              <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'user.bundle.change.operation.limit' %}</label>
+                <input id="user-bundle-change-operation-limit" class="form-control" placeholder="{% trans 'user.bundle.change.operation.limit' %}">
+              </div>
+              <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'user.bundle.change.database.data.limit' %}</label>
+                <input id="user-bundle-change-database-data-limit" class="form-control" placeholder="{% trans 'user.bundle.change.database.data.limit' %}">
+              </div>
+            </div>
+            <button type="button" id="user-bundle-change" class="btn btn-danger d-block px-5 mt-5 mx-auto">{% trans 'user.bundle.change' %}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  $(document).ready(function() {
+    prepareDropdown("user-bundle-change-type", "user-bundle-change-type-entry", function (value) {
+      if (value !== "{% trans 'user.bundle.change.type.trial' %}") {
+        document.getElementById("user-bundle-change-runtime-weekly").classList.add("d-none");
+      } else {
+        document.getElementById("user-bundle-change-runtime-weekly").classList.remove("d-none");
+      }
+      if (value === "{% trans 'user.bundle.change.type.trial' %}" || value === "{% trans 'user.bundle.change.type.enterprise' %}") {
+        document.getElementById("user-bundle-change-class-container").classList.add("d-none");
+      } else {
+        document.getElementById("user-bundle-change-class-container").classList.remove("d-none");
+      }
+    });
+    prepareDropdown("user-bundle-change-class", "user-bundle-change-class-entry", () => {});
+    prepareDropdown("user-bundle-runtime-class", "user-bundle-change-runtime-entry", () => {});
+  });
+
+  function prepareDropdown(buttonId, entryId, onSelect) {
+    var button = document.getElementById(buttonId);
+    var dropdownElements = document.getElementsByClassName(entryId);
+    for (let i = 0; i < dropdownElements.length; i++) {
+      let dropdownElement = dropdownElements[i];
+      dropdownElement.onclick = function (event) {
+        var value = dropdownElement.innerHTML;
+        button.classList.add("fw-bold");
+        button.innerHTML = value;
+        onSelect(value);
+      }
+    }
+  }
+
+  document.getElementById("user-bundle-change-back").onclick = function (event) {
+    window.location.href = "/user/{{user}}/bundle/";
+  }
+
+  document.getElementById("user-bundle-change").onclick = function (event) {
+
+  }
+</script>

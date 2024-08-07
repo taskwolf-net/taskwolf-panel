@@ -194,6 +194,7 @@
             <h4 class="fw-bold mb-4">{% trans 'user.bundle.unavailable.headline' %}</h4>
             <p class="mb-3">{% trans 'user.bundle.unavailable.description' %}</p>
           </div>
+          <button type="button" id="user-bundle-change" class="btn btn-primary d-block px-5 my-5 mx-auto">{% trans 'user.bundle.change' %}</button>
         </div>
       </div>
     </div>
@@ -276,6 +277,10 @@
     } else if (bundle.class === "EXPERT") {
       return "{% trans 'user.bundle.expert' %}";
     }
+  }
+
+  document.getElementById("user-bundle-change").onclick = function (event) {
+    window.location.href = "/user/{{user}}/bundle/change/";
   }
 
   function fetchBundle(callback) {

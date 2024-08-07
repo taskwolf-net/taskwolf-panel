@@ -9,24 +9,30 @@ async def users(request):
 
 @authentication_required
 async def userGeneral(request, id):
-  return render(request, 'user/user-general.html', {'title': 'Taskwolf - User - General',
+  return render(request, 'user/user-general.html', {'title': 'Taskwolf - User',
     'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-general.css'],
     'user': id})
 
 @authentication_required
 async def userBundle(request, id):
-  return render(request, 'user/user-bundle.html', {'title': 'Taskwolf - User - Bundle',
+  return render(request, 'user/user-bundle.html', {'title': 'Taskwolf - User',
     'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-bundle.css'],
      'user': id})
 
 @authentication_required
+async def userBundleChange(request, id):
+  return render(request, 'user/user-bundle-change.html', {'title': 'Taskwolf - User',
+   'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-bundle-change.css'],
+    'user': id})
+
+@authentication_required
 async def userPayment(request, id):
-  return render(request, 'user/user-payment.html', {'title': 'Taskwolf - User - Payment',
+  return render(request, 'user/user-payment.html', {'title': 'Taskwolf - User',
     'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-payment.css'],
     'user': id})
 
 @authentication_required
 async def userTermination(request, id):
-  return render(request, 'user/user-termination.html', {'title': 'Taskwolf - User - Termination',
+  return render(request, 'user/user-termination.html', {'title': 'Taskwolf - User',
     'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-termination.css'],
      'user': id})
