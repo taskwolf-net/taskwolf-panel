@@ -7,9 +7,9 @@
     {% include 'panel-sidebar.html' %}
     <div class="sidebar-influenced">
       <div id="user-bundle-change-container">
-        <div id="user-bundle-change-wrapper">
+        <div id="user-bundle-change-wrapper" class="d-none">
           <button id="user-bundle-change-back"><i class="fa-solid fa-arrow-left-long"></i></button>
-          <div id="user-bundle-change-process">
+          <div id="user-bundle-change-process" class="mb-5">
             <h4 class="fw-bold mb-4">{% trans 'user.bundle.change.headline' %}</h4>
             <p class="mb-5">{% trans 'user.bundle.change.description' %}</p>
             <div id="user-bundle-change-process-data">
@@ -22,8 +22,6 @@
                   <ul class="dropdown-menu dropdown-menu-dark w-100">
                     <li class="dropdown-item user-bundle-change-type-entry">{% trans 'user.bundle.change.type.trial' %}</li>
                     <li class="dropdown-item user-bundle-change-type-entry">{% trans 'user.bundle.change.type.professional' %}</li>
-                    <li class="dropdown-item user-bundle-change-type-entry">{% trans 'user.bundle.change.type.team' %}</li>
-                    <li class="dropdown-item user-bundle-change-type-entry">{% trans 'user.bundle.change.type.enterprise' %}</li>
                   </ul>
                 </div>
               </div>
@@ -54,16 +52,24 @@
                 </div>
               </div>
               <div class="form-outline mb-3">
-                <label class="form-label">{% trans 'user.bundle.change.price' %}</label>
-                <input id="user-bundle-change-price" class="form-control" placeholder="{% trans 'user.bundle.change.price' %}">
+                <label class="form-label">{% trans 'user.bundle.change.workflow.limit' %}</label>
+                <input id="user-bundle-change-workflow-limit" class="form-control" placeholder="{% trans 'user.bundle.change.workflow.limit' %}">
               </div>
               <div class="form-outline mb-3">
                 <label class="form-label">{% trans 'user.bundle.change.operation.limit' %}</label>
                 <input id="user-bundle-change-operation-limit" class="form-control" placeholder="{% trans 'user.bundle.change.operation.limit' %}">
               </div>
               <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'user.bundle.change.database.limit' %}</label>
+                <input id="user-bundle-change-database-limit" class="form-control" placeholder="{% trans 'user.bundle.change.database.limit' %}">
+              </div>
+              <div class="form-outline mb-3">
                 <label class="form-label">{% trans 'user.bundle.change.database.data.limit' %}</label>
                 <input id="user-bundle-change-database-data-limit" class="form-control" placeholder="{% trans 'user.bundle.change.database.data.limit' %}">
+              </div>
+              <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'user.bundle.change.price' %}</label>
+                <input id="user-bundle-change-price" class="form-control" placeholder="{% trans 'user.bundle.change.price' %}">
               </div>
             </div>
             <button type="button" id="user-bundle-change" class="btn btn-danger d-block px-5 mt-5 mx-auto">{% trans 'user.bundle.change' %}</button>
@@ -76,23 +82,50 @@
 
 <script>
   $(document).ready(function() {
-    prepareDropdown("user-bundle-change-type", "user-bundle-change-type-entry", function (value) {
-      if (value !== "{% trans 'user.bundle.change.type.trial' %}") {
-        document.getElementById("user-bundle-change-runtime-weekly").classList.add("d-none");
-      } else {
-        document.getElementById("user-bundle-change-runtime-weekly").classList.remove("d-none");
-      }
-      if (value === "{% trans 'user.bundle.change.type.trial' %}" || value === "{% trans 'user.bundle.change.type.enterprise' %}") {
-        document.getElementById("user-bundle-change-class-container").classList.add("d-none");
-      } else {
-        document.getElementById("user-bundle-change-class-container").classList.remove("d-none");
-      }
+    displayLoader();
+    fetchBundle(function (bundle) {
+      displayBundleChange(bundle);
+      removeLoader();
     });
-    prepareDropdown("user-bundle-change-class", "user-bundle-change-class-entry", () => {});
-    prepareDropdown("user-bundle-runtime-class", "user-bundle-change-runtime-entry", () => {});
   });
 
-  function prepareDropdown(buttonId, entryId, onSelect) {
+  function displayBundleChange(bundle) {
+    prepareDropdown("user-bundle-change-type", "user-bundle-change-type-entry",
+      function (value) {return findBundleType(value) === bundle.type}, onBundleTypeSelect);
+    prepareDropdown("user-bundle-change-class", "user-bundle-change-class-entry",
+      function (value) {return findBundleClass(value) === bundle.class}, () => {});
+    prepareDropdown("user-bundle-change-runtime", "user-bundle-change-runtime-entry",
+      function (value) {return findBundleRuntime(value) === bundle.runtime}, () => {});
+    if (bundle.found) {
+      document.getElementById("user-bundle-change-workflow-limit").value =
+        bundle.workflowNumberLimit;
+      document.getElementById("user-bundle-change-operation-limit").value =
+        bundle.workflowOperationLimit;
+      document.getElementById("user-bundle-change-database-limit").value =
+        bundle.databaseNumberLimit;
+      document.getElementById("user-bundle-change-database-data-limit").value =
+        bundle.databaseDataLimit.replaceAll(".", "");
+      document.getElementById("user-bundle-change-price").value = bundle.price;
+    }
+  }
+
+  function onBundleTypeSelect(type) {
+    if (type !== "{% trans 'user.bundle.change.type.trial' %}") {
+      document.getElementById("user-bundle-change-runtime-weekly").classList.add("d-none");
+    } else {
+      document.getElementById("user-bundle-change-runtime-weekly").classList.remove("d-none");
+    }
+    if (type === "{% trans 'user.bundle.change.type.trial' %}") {
+      document.getElementById("user-bundle-change-class-container").classList.add("d-none");
+      var classButton = document.getElementById("user-bundle-change-class");
+      classButton.innerHTML = "{% trans 'user.bundle.change.class' %}";
+      classButton.classList.remove("fw-bold");
+    } else {
+      document.getElementById("user-bundle-change-class-container").classList.remove("d-none");
+    }
+  }
+
+  function prepareDropdown(buttonId, entryId, initialSelect, onSelect) {
     var button = document.getElementById(buttonId);
     var dropdownElements = document.getElementsByClassName(entryId);
     for (let i = 0; i < dropdownElements.length; i++) {
@@ -103,7 +136,18 @@
         button.innerHTML = value;
         onSelect(value);
       }
+      if (initialSelect(dropdownElement.innerHTML)) {
+        dropdownElement.click();
+      }
     }
+  }
+
+  function fetchBundle(callback) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/user/bundle/find/", "POST",
+      [], {user: "{{user}}"});
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText));
+    });
   }
 
   document.getElementById("user-bundle-change-back").onclick = function (event) {
@@ -111,6 +155,72 @@
   }
 
   document.getElementById("user-bundle-change").onclick = function (event) {
+    var bundleType = findBundleType(document.getElementById("user-bundle-change-type"));
+    var bundleClass = findBundleClass(document.getElementById("user-bundle-change-class"));
+    var bundleRuntime = findBundleRuntime(document.getElementById("user-bundle-change-runtime"));
+    var workflowLimit = document.getElementById("user-bundle-change-workflow-limit").value;
+    var operationLimit = document.getElementById("user-bundle-change-operation-limit").value;
+    var databaseLimit = document.getElementById("user-bundle-change-database-limit").value;
+    var databaseDataLimit = document.getElementById("user-bundle-change-database-data-limit").value;
+    var price = document.getElementById("user-bundle-change-price").value;
+    Swal.fire({
+      title: "{% trans 'user.bundle.change.submit.title' %}",
+      text: "{% trans 'user.bundle.change.submit.body' %}",
+      icon: "warning",
+      confirmButtonColor: "#dc3545",
+      showCancelButton: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        let request = new HttpRequest("https://team.taskwolf.net/v1/user/bundle/change/", "POST",
+          [], {user: "{{user}}", type: bundleType, class: bundleClass, runtime: bundleRuntime,
+          workflowNumberLimit: workflowLimit, workflowOperationLimit: operationLimit,
+          databaseNumberLimit: databaseLimit, databaseDataLimit: databaseDataLimit, price: price});
+        request.send(function (status, responseText) {
+          Swal.fire("{% trans 'user.bundle.change.successful.title' %}", "{% trans 'user.bundle.change.successful.body' %}", "success").then(success => window.location.reload());
+        });
+      }
+    });
+  }
 
+  function findBundleType(content) {
+    if (content === "{% trans 'user.bundle.change.type.trial' %}") {
+      return "TRIAL";
+    } else if (content === "{% trans 'user.bundle.change.type.professional' %}") {
+      return "PROFESSIONAL";
+    }
+  }
+
+  function findBundleClass(content) {
+    if (content === "{% trans 'user.bundle.change.class.beginner' %}") {
+      return "BEGINNER";
+    } else if (content === "{% trans 'user.bundle.change.class.advanced' %}") {
+      return "ADVANCED";
+    } else if (content === "{% trans 'user.bundle.change.class.expert' %}") {
+      return "EXPERT";
+    } else {
+      return "NONE";
+    }
+  }
+
+  function findBundleRuntime(content) {
+    if (content === "{% trans 'user.bundle.change.runtime.weekly' %}") {
+      return "WEEKLY";
+    } else if (content === "{% trans 'user.bundle.change.runtime.monthly' %}") {
+      return "MONTHLY";
+    } else if (content === "{% trans 'user.bundle.change.runtime.yearly' %}") {
+      return "YEARLY";
+    }
+  }
+
+  function displayLoader() {
+    var loader = document.createElement("div");
+    loader.classList.add("loader");
+    document.getElementById("user-bundle-change-container").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("user-bundle-change-container")
+      .removeChild(document.getElementsByClassName("loader")[0]);
+    document.getElementById("user-bundle-change-wrapper").classList.remove("d-none");
   }
 </script>
