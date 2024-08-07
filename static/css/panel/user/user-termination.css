@@ -27,3 +27,18 @@
   color: #8fc0f1;
   border-bottom: 2px #8fc0f1 solid;
 }
+
+#user-termination-process, #user-termination-not-possible, #user-termination-done {
+  padding: 30px;
+  border-radius: 5px;
+}
+
+#user-termination-process {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+#user-termination-process, #user-termination-not-possible, #user-termination-done {
+  background-color: #131820;
+  border: 1px #2b3441 solid;
+}

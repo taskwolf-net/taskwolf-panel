@@ -16,6 +16,20 @@
               <li class="nav-item"><a class="nav-link nav-link-active" href="/user/{{user}}/termination/">{% trans 'user.tab.termination' %}</a></li>
             </ul>
           </div>
+          <div id="user-termination-process">
+            <h4 class="fw-bold mb-4">{% trans 'user.termination.headline' %}</h4>
+            <p id="user-termination-process-description" class="mb-3"></p>
+            <p id="user-termination-process-description-dynamic" class="mb-5"></p>
+            <button type="button" id="user-termination" class="btn btn-danger d-block px-5 mt-5 mx-auto">{% trans 'user.termination' %}</button>
+          </div>
+          <div id="user-termination-not-possible">
+            <h4 class="fw-bold mb-4">{% trans 'user.termination.headline' %}</h4>
+            <p class="mb-0">{% trans 'user.termination.not.possible.description' %}</p>
+          </div>
+          <div id="user-termination-done">
+            <h4 class="fw-bold mb-4">{% trans 'user.termination.headline' %}</h4>
+            <p id="user-termination-done-description" class="mb-0"></p>
+          </div>
         </div>
       </div>
     </div>
@@ -25,8 +39,81 @@
 <script>
   $(document).ready(function() {
     displayLoader();
-    removeLoader();
+    fetchBundle(function (bundle) {
+      if (bundle.type !== "TRIAL" && bundle.type !== "PROFESSIONAL") {
+        window.location.href = "/";
+        return;
+      }
+      fetchTerminationStatus(function (terminationStatus) {
+        displayTerminationInformation(terminationStatus, bundle);
+        removeLoader();
+      });
+    });
   });
+
+  function displayTerminationInformation(terminationStatus, bundle) {
+    var expiration = formatTime(bundle.expiration);
+    if (terminationStatus.terminable === false) {
+      document.getElementById("user-termination-process").classList.add("d-none");
+      document.getElementById("user-termination-done").classList.add("d-none");
+      return;
+    }
+    if (terminationStatus.terminated === true) {
+      document.getElementById("user-termination-process").classList.add("d-none");
+      document.getElementById("user-termination-not-possible").classList.add("d-none");
+      document.getElementById("user-termination-done-description").innerHTML =
+        "{% trans 'user.termination.done.description' %}".replace("%s", expiration);
+      return;
+    }
+    document.getElementById("user-termination-done").classList.add("d-none");
+    document.getElementById("user-termination-not-possible").classList.add("d-none");
+    document.getElementById("user-termination-process-description").innerHTML =
+      "{% trans 'user.termination.process.description' %}".replace("%s", expiration);
+    var dynamicElement = document.getElementById("user-termination-process-description-dynamic");
+    if (terminationStatus.directlyEffective) {
+      dynamicElement.innerHTML = "{% trans 'user.termination.process.description.instant' %}";
+    } else {
+      dynamicElement.innerHTML = "{% trans 'user.termination.process.description.delayed' %}";
+    }
+  }
+
+  function formatTime(time) {
+    return new Date(time).toLocaleDateString().replace(/(^|\D)(\d)(?!\d)/g, '$10$2');
+  }
+
+  function fetchTerminationStatus(callback) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/user/termination/status/", "POST",
+      [], {user: "{{user}}"});
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText));
+    });
+  }
+
+  function fetchBundle(callback) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/user/bundle/find/", "POST",
+      [], {user: "{{user}}"});
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText));
+    });
+  }
+
+  document.getElementById("user-termination").onclick = function (event) {
+    Swal.fire({
+      title: "{% trans 'user.termination.process.title' %}",
+      text: "{% trans 'user.termination.process.body' %}",
+      icon: "warning",
+      confirmButtonColor: "#dc3545",
+      showCancelButton: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        let request = new HttpRequest("https://team.taskwolf.net/v1/user/bundle/terminate/", "POST",
+          [], {user: "{{user}}"});
+        request.send(function (status, responseText) {
+          Swal.fire("{% trans 'user.termination.process.successful.title' %}", "{% trans 'user.termination.process.successful.body' %}", "success").then(success => window.location.reload());
+        });
+      }
+    });
+  }
 
   function displayLoader() {
     var loader = document.createElement("div");

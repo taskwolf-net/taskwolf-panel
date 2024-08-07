@@ -205,8 +205,6 @@ msgstr "KÜNDIGUNG"
 
 # USER - GENERAL
 
-# USER - ORGANIZATION
-
 # USER - BUNDLE
 msgid "user.bundle.headline"
 msgstr "PAKET"
@@ -300,6 +298,28 @@ msgid "user.payment.invoice.download"
 msgstr "ANSEHEN"
 
 # USER - TERMINATION
+msgid "user.termination.headline"
+msgstr "KÜNDIGUNG"
+msgid "user.termination.process.description"
+msgstr "Das Paket läuft am %s ab."
+msgid "user.termination.process.description.instant"
+msgstr "Wenn Sie das Paket jetzt kündigen, muss der Kunde keine weiteren Zahlungen leisten. Das Paket wird am Ende des laufenden Zeitraums nicht mehr verlängert und steht dem Kunden nicht mehr zur Verfügung."
+msgid "user.termination.process.description.delayed"
+msgstr "Da der Kunde das Jahrespaket gebucht hat, ist es nicht möglich, direkt zu kündigen. Wenn Sie das Paket jetzt kündigen, wird die Kündigung gespeichert und dann zum Ablauf des Pakets umgesetzt."
+msgid "user.termination"
+msgstr "KÜNDIGEN"
+msgid "user.termination.process.title"
+msgstr "Kündigung"
+msgid "user.termination.process.body"
+msgstr "Sind Sie sicher, dass Sie Ihr Paket kündigen möchten?"
+msgid "user.termination.process.successful.title"
+msgstr "Kündigung erfolgreich"
+msgid "user.termination.process.successful.body"
+msgstr "Sie haben das Paket erfolgreich gekündigt"
+msgid "user.termination.not.possible.description"
+msgstr "Sie können das Paket nicht kündigen. Das liegt daran, dass der Kunde die kostenlose Testversion von Taskwolf benutzen. Diese läuft nach einer Woche vollautomatisch ab."
+msgid "user.termination.done.description"
+msgstr "Das Paket wurde bereits gekündigt. Das Paket läuft am %s aus."
 
 # ORGANIZATION
 

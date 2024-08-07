@@ -207,8 +207,6 @@ msgstr "TERMINATION"
 
 # USER - GENERAL
 
-# USER - ORGANIZATION
-
 # USER - BUNDLE
 msgid "user.bundle.headline"
 msgstr "PACKAGE"
@@ -302,6 +300,28 @@ msgid "user.payment.invoice.download"
 msgstr "VIEW"
 
 # USER - TERMINATION
+msgid "user.termination.headline"
+msgstr "TERMINATION"
+msgid "user.termination.process.description"
+msgstr "The package expires on %s."
+msgid "user.termination.process.description.instant"
+msgstr "If you cancel the package now, the customer will not have to make any further payments. The package will not be extended at the end of the current period and will no longer be available to the customer."
+msgid "user.termination.process.description.delayed"
+msgstr "As the annual package has been booked, it is not possible to cancel directly. If you cancel the package now, the cancellation will be saved and then implemented when the package expires."
+msgid "user.termination"
+msgstr "TERMINATE"
+msgid "user.termination.process.title"
+msgstr "Termination"
+msgid "user.termination.process.body"
+msgstr "Are you sure you want to terminate the package?"
+msgid "user.termination.process.successful.title"
+msgstr "Termination successful"
+msgid "user.termination.process.successful.body"
+msgstr "You have successfully terminated the package"
+msgid "user.termination.not.possible.description"
+msgstr "You cannot terminate the package. This is because the customer is using the free trial version of Taskwolf. This expires fully automatically after one week."
+msgid "user.termination.done.description"
+msgstr "The package have already been cancelled. The package expires on %s."
 
 # ORGANIZATION
 
