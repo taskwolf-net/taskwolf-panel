@@ -27,3 +27,175 @@
   color: #8fc0f1;
   border-bottom: 2px #8fc0f1 solid;
 }
+
+#user-general-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.user-general-side {
+  width: 45%;
+}
+
+.user-general-section {
+  margin-bottom: 5vh;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+.user-general-section {
+  background-color: #131820;
+  border: 1px #2b3441 solid;
+}
+
+.user-general-profile-picture {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 10px;
+  border-radius: 50%;
+  background-color: white;
+  color: black;
+  font-size: 26px;
+}
+
+.user-general-profile-language {
+  width: 32px;
+  height: 18px;
+  border-radius: 2px;
+}
+
+#user-general-ticket-list-description {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px #717171 solid;
+  padding: 10px 15px;
+}
+
+#user-general-ticket-list-description span {
+  width: calc(100% / 3);
+  font-weight: bold;
+}
+
+#user-general-ticket-list {
+  list-style-type: none;
+  width: 100%;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#user-general-ticket-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  padding: 10px;
+  transition-duration: 0.2s;
+}
+
+#user-general-ticket-list li:hover {
+  background-color: #1c232f;
+}
+
+.user-general-ticket-cell {
+  width: calc(100% / 3);
+}
+
+.user-general-ticket-badge {
+  margin: auto;
+  width: fit-content;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.user-general-ticket-request {
+  background-color: #2d6ba9;
+  border: 2px #3986d3 solid;
+}
+
+.user-general-ticket-bug {
+  background-color: #b46b2f;
+  border: 2px #d98442 solid;
+}
+
+.user-general-ticket-open {
+  background-color: #2e9827;
+  border: 2px #3aaf32 solid;
+}
+
+.user-general-ticket-closed {
+  background-color: #b63030;
+  border: 2px #dc3838 solid;
+}
+
+#user-general-organization-list-description {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px #717171 solid;
+  padding: 10px 15px;
+}
+
+#user-general-organization-list-description span {
+  width: calc(100% / 3);
+  font-weight: bold;
+}
+
+#user-general-organization-list {
+  list-style-type: none;
+  width: 100%;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#user-general-organization-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.user-general-organization-cell {
+  width: calc(100% / 3);
+}
+
+.user-general-organization-role {
+  margin: auto;
+  width: fit-content;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.user-general-organization-owner {
+  background-color: #a92d2d;
+  border: 2px #d33939 solid;
+}
+
+.user-general-organization-member {
+  background-color: #ffffff;
+  border: 2px #b7b7b7 solid;
+  color: black;
+}
+
+@media (max-width: 1200px) {
+  #user-general-content {
+    display: block;
+  }
+
+  .user-general-side {
+    width: 100%;
+  }
+}

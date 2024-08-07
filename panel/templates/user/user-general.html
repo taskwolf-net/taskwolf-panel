@@ -15,6 +15,56 @@
               <li class="nav-item"><a class="nav-link" href="/user/{{user}}/payment/">{% trans 'user.tab.payment' %}</a></li>
               <li class="nav-item"><a class="nav-link" href="/user/{{user}}/termination/">{% trans 'user.tab.termination' %}</a></li>
             </ul>
+            <div id="user-general-content">
+              <div class="user-general-side">
+                <div class="user-general-section">
+                  <h4 class="fw-bold mb-4">{% trans 'user.general.profile.headline' %}</h4>
+                  <div class="user-general-profile-picture mb-4">
+                    <span class="fa-solid fa-user"></span>
+                  </div>
+                  <div id="user-general-profile-id" class="mb-1"><span class="fw-bold">{% trans 'user.general.profile.id' %}: </span></div>
+                  <div id="user-general-profile-name" class="mb-1"><span class="fw-bold">{% trans 'user.general.profile.name' %}: </span></div>
+                  <div id="user-general-profile-email" class="mb-1"><span class="fw-bold">{% trans 'user.general.profile.email' %}: </span></div>
+                  <div id="user-general-profile-language"><span class="fw-bold">{% trans 'user.general.profile.language' %}:</span></div>
+                </div>
+                <div class="user-general-section">
+                  <h4 class="fw-bold mb-4">{% trans 'user.general.ticket.headline' %}</h4>
+                  <div id="user-general-ticket-list-description">
+                    <span>{% trans 'user.general.ticket.name' %}</span>
+                    <span class="text-center">{% trans 'user.general.ticket.type' %}</span>
+                    <span class="text-center">{% trans 'user.general.ticket.status' %}</span>
+                  </div>
+                  <ul id="user-general-ticket-list">
+                  </ul>
+                  <div id="user-general-ticket-empty" class="text-center d-none">
+                    <span>{% trans 'user.general.ticket.empty' %}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="user-general-side">
+                <div class="user-general-section">
+                  <h4 class="fw-bold mb-4">{% trans 'user.general.bundle.headline' %}</h4>
+                  <div id="user-general-bundle-type" class="mb-1"><span class="fw-bold">{% trans 'user.general.bundle.type' %}: </span></div>
+                  <div id="user-general-bundle-class" class="mb-1"><span class="fw-bold">{% trans 'user.general.bundle.class' %}: </span></div>
+                  <div id="user-general-bundle-runtime" class="mb-1"><span class="fw-bold">{% trans 'user.general.bundle.runtime' %}: </span></div>
+                  <div id="user-general-bundle-price"><span class="fw-bold">{% trans 'user.general.bundle.price' %}: </span></div>
+                  <div id="user-general-bundle-unavailable" class="d-none"><span>{% trans 'user.general.bundle.unavailable' %}</span></div>
+                </div>
+                <div class="user-general-section">
+                  <h4 class="fw-bold mb-4">{% trans 'user.general.organization.headline' %}</h4>
+                  <div id="user-general-organization-list-description">
+                    <span>{% trans 'user.general.organization.name' %}</span>
+                    <span class="text-center">{% trans 'user.general.organization.role' %}</span>
+                    <span class="text-center">{% trans 'user.general.organization.access' %}</span>
+                  </div>
+                  <ul id="user-general-organization-list">
+                  </ul>
+                  <div id="user-general-organization-empty" class="text-center d-none">
+                    <span>{% trans 'user.general.organization.empty' %}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -25,8 +75,205 @@
 <script>
   $(document).ready(function() {
     displayLoader();
-    removeLoader();
+    fetchUser(function (user) {
+      if (user.found === false) {
+        return;
+      }
+      fetchBundle(function (bundle) {
+        removeLoader();
+        displayGeneralInformation(user, bundle);
+      });
+    });
   });
+
+  function displayGeneralInformation(user, bundle) {
+    displayProfileInformation(user);
+    displayBundleInformation(bundle);
+    displayTicketInformation(user);
+    displayOrganizationInformation(user);
+  }
+
+  function displayProfileInformation(user) {
+    document.getElementById("user-general-profile-id").innerHTML += user.id;
+    document.getElementById("user-general-profile-name").innerHTML += user.name;
+    document.getElementById("user-general-profile-email").innerHTML += user.email;
+    var languageElement = document.getElementById("user-general-profile-language");
+    if (user.language.toUpperCase() === "EN") {
+      languageElement.innerHTML += "<img class='user-general-profile-language mx-2' src='{% static 'img/languages/en.png' %}'>";
+      languageElement.innerHTML += "({% trans 'user.general.profile.language.en' %})";
+    }
+    if (user.language.toUpperCase() === "DE") {
+      languageElement.innerHTML += "<img class='user-general-profile-language mx-2' src='{% static 'img/languages/de.png' %}'>";
+      languageElement.innerHTML += "({% trans 'user.general.profile.language.de' %})";
+    }
+  }
+
+  function displayBundleInformation(bundle) {
+    if (bundle.found === false) {
+      document.getElementById("user-general-bundle-unavailable").classList.remove("d-none");
+      return;
+    }
+    document.getElementById("user-general-bundle-type").innerHTML += findPackageName(bundle);
+    if (bundle.class === "NONE") {
+      document.getElementById("user-general-bundle-class").classList.add("d-none");
+    } else {
+      document.getElementById("user-general-bundle-class").innerHTML += findPackageClass(bundle);
+    }
+    document.getElementById("user-general-bundle-runtime").innerHTML += findPackageRuntime(bundle);
+    document.getElementById("user-general-bundle-price").innerHTML += bundle.price + " €";
+  }
+
+  function findPackageName(bundle) {
+    if (bundle.type === "TRIAL") {
+      return "{% trans 'user.bundle.free' %}";
+    } else if (bundle.type === "PROFESSIONAL") {
+      return "{% trans 'user.bundle.professional' %}";
+    } else if (bundle.type === "TEAM") {
+      return "{% trans 'user.bundle.team' %}";
+    } else if (bundle.type === "ENTERPRISE") {
+      return "{% trans 'user.bundle.enterprise' %}";
+    }
+  }
+
+  function findPackageClass(bundle) {
+    if (bundle.class === "NONE") {
+      return "";
+    } else if (bundle.class === "BEGINNER") {
+      return "{% trans 'user.bundle.beginner' %}";
+    } else if (bundle.class === "ADVANCED") {
+      return "{% trans 'user.bundle.advanced' %}";
+    } else if (bundle.class === "EXPERT") {
+      return "{% trans 'user.bundle.expert' %}";
+    }
+  }
+
+  function findPackageRuntime(bundle) {
+    if (bundle.runtime === "WEEKLY") {
+      return "1 {% trans 'user.bundle.runtime.week' %}";
+    } else if (bundle.runtime === "MONTHLY") {
+      return "1 {% trans 'user.bundle.runtime.monthly' %}";
+    } else if (bundle.runtime === "YEARLY") {
+      return "1 {% trans 'user.bundle.runtime.year' %}";
+    }
+  }
+
+  function displayTicketInformation(user) {
+    for (var i = 0; i < user.tickets.length; i++) {
+      document.getElementById("user-general-ticket-list")
+        .appendChild(createTicketEntry(user.tickets[i]));
+    }
+    if (user.tickets.length === 0) {
+      document.getElementById("user-general-ticket-empty")
+        .classList.remove("d-none");
+      document.getElementById("user-general-ticket-list")
+        .classList.add("d-none");
+      document.getElementById("user-general-ticket-list-description")
+        .classList.add("d-none");
+    }
+  }
+
+  function createTicketEntry(ticket) {
+    var ticketElement = document.createElement("li");
+    var nameElement = document.createElement("p");
+    nameElement.innerHTML = ticket.name;
+    ticketElement.appendChild(createTicketCell(nameElement, "start"));
+    var typeElement = document.createElement("p");
+    typeElement.classList.add("user-general-ticket-badge");
+    if (ticket.type === "REQUEST") {
+      typeElement.innerHTML = "{% trans 'user.general.ticket.request' %}";
+      typeElement.classList.add("user-general-ticket-request");
+    } else if (ticket.type === "BUG") {
+      typeElement.innerHTML = "{% trans 'user.general.ticket.bug' %}";
+      typeElement.classList.add("user-general-ticket-bug");
+    }
+    ticketElement.appendChild(createTicketCell(typeElement, "center"));
+    var statusElement = document.createElement("p");
+    statusElement.classList.add("user-general-ticket-badge");
+    if (ticket.status === "OPEN") {
+      statusElement.innerHTML = "{% trans 'user.general.ticket.open' %}";
+      statusElement.classList.add("user-general-ticket-open");
+    } else if (ticket.status === "CLOSED") {
+      statusElement.innerHTML = "{% trans 'user.general.ticket.closed' %}";
+      statusElement.classList.add("user-general-ticket-closed");
+    }
+    ticketElement.onclick = function (event) {
+      window.location.href = "/ticket/" + ticket.id + "/";
+    }
+    ticketElement.appendChild(createTicketCell(statusElement, "center"));
+    return ticketElement;
+  }
+
+  function createTicketCell(content, position) {
+    var cell = document.createElement("div");
+    cell.classList.add("user-general-ticket-cell", "text-" + position);
+    content.classList.add("mb-0");
+    cell.appendChild(content);
+    return cell;
+  }
+
+  function displayOrganizationInformation(user) {
+    for (var i = 0; i < user.organizations.length; i++) {
+      document.getElementById("user-general-organization-list")
+        .appendChild(createOrganizationEntry(user.organizations[i]));
+    }
+    if (user.organizations.length === 0) {
+      document.getElementById("user-general-organization-empty")
+        .classList.remove("d-none");
+      document.getElementById("user-general-organization-list")
+        .classList.add("d-none");
+      document.getElementById("user-general-organization-list-description")
+        .classList.add("d-none");
+    }
+  }
+
+  function createOrganizationEntry(organization) {
+    var organizationElement = document.createElement("li");
+    var nameElement = document.createElement("p");
+    nameElement.innerHTML = organization.name;
+    organizationElement.appendChild(createOrganizationCell(nameElement, "start"));
+    var roleElement = document.createElement("p");
+    roleElement.classList.add("user-general-organization-role");
+    if (organization.role === "OWNER") {
+      roleElement.innerHTML = "{% trans 'user.general.organization.owner' %}";
+      roleElement.classList.add("user-general-organization-owner");
+    } else if (organization.role === "MEMBER") {
+      roleElement.innerHTML = "{% trans 'user.general.organization.member' %}";
+      roleElement.classList.add("user-general-organization-member");
+    }
+    organizationElement.appendChild(createOrganizationCell(roleElement, "center"));
+    var viewButton = document.createElement("button");
+    viewButton.classList.add("btn", "btn-primary");
+    viewButton.innerHTML = "{% trans 'user.general.organization.view' %}";
+    viewButton.onclick = function (event) {
+      window.location.href = "/organization/" + organization.id + "/";
+    }
+    organizationElement.appendChild(createOrganizationCell(viewButton, "center"));
+    return organizationElement;
+  }
+
+  function createOrganizationCell(content, position) {
+    var cell = document.createElement("div");
+    cell.classList.add("user-general-organization-cell", "text-" + position);
+    content.classList.add("mb-0");
+    cell.appendChild(content);
+    return cell;
+  }
+
+  function fetchUser(callback) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/user/find/", "POST",
+      [], {user: "{{user}}"});
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText));
+    });
+  }
+
+  function fetchBundle(callback) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/user/bundle/find/", "POST",
+      [], {user: "{{user}}"});
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText));
+    });
+  }
 
   function displayLoader() {
     var loader = document.createElement("div");
