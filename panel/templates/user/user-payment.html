@@ -16,7 +16,7 @@
               <li class="nav-item"><a class="nav-link" href="/user/{{user}}/termination/">{% trans 'user.tab.termination' %}</a></li>
             </ul>
           </div>
-          <div id="user-payments">
+          <div id="user-payments" class="d-none">
             <h3 class="fw-bold mb-4">{% trans 'user.payment.headline' %}</h3>
             <ul id="user-payment-description">
               <li>
@@ -69,15 +69,16 @@
     fetchBundle(function (bundle) {
       if (bundle.found === false || bundle.type !== "TRIAL" && bundle.type !== "PROFESSIONAL") {
         document.getElementById("user-payment-unavailable").classList.remove("d-none");
+        removeLoader();
         return;
       }
       fetchPayments(function (payments) {
+        removeLoader();
         if (payments.found === false) {
           document.getElementById("user-payment-unavailable").classList.remove("d-none");
           return;
         }
-        displayPayments(payments);
-        removeLoader();
+        displayPayments(payments.payments);
       });
     });
   });
@@ -99,6 +100,7 @@
       displayPayment(payment.time, payment.amount, payment.method,
         payment.status, payment.invoice);
     }
+    document.getElementById("user-payments").classList.remove("d-none");
   }
 
   function displayPayment(time, amount, method, status, invoice) {
@@ -189,7 +191,7 @@
     let request = new HttpRequest("https://team.taskwolf.net/v1/user/payments/find/", "POST",
       [], {user: "{{user}}"});
     request.send(function (status, responseText) {
-      callback(JSON.parse(responseText).payments);
+      callback(JSON.parse(responseText));
     });
   }
 
