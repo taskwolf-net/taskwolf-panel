@@ -14,6 +14,7 @@ urlpatterns = [
   path('user/<str:id>/bundle/', user.userBundle),
   path('user/<str:id>/bundle/change/', user.userBundleChange),
   path('user/<str:id>/payment/', user.userPayment),
+  path('user/<str:id>/offer/', user.userOffer),
   path('user/<str:id>/termination/', user.userTermination),
   path('organization/<str:id>/', organization.organization),
   path('administration/', administration.administration),

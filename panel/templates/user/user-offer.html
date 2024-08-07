@@ -1,0 +1,57 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body class="dark">
+    {% include 'panel-header.html' %}
+    {% include 'panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="user-offer-container">
+        <div id="user-offer-wrapper" class="d-none">
+          <div>
+            <ul class="nav nav-tabs">
+              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/general/">{% trans 'user.tab.general' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/bundle/">{% trans 'user.tab.bundle' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/payment/">{% trans 'user.tab.payment' %}</a></li>
+              <li class="nav-item"><a class="nav-link nav-link-active" href="/user/{{user}}/offer/">{% trans 'user.tab.offer' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/termination/">{% trans 'user.tab.termination' %}</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  $(document).ready(function() {
+    displayLoader();
+    fetchBundle(function (bundle) {
+      if (bundle.type !== "TRIAL" && bundle.type !== "PROFESSIONAL") {
+        window.location.href = "/";
+        return;
+      }
+      removeLoader();
+    });
+  });
+
+  function fetchBundle(callback) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/user/bundle/find/", "POST",
+      [], {user: "{{user}}"});
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText));
+    });
+  }
+
+  function displayLoader() {
+    var loader = document.createElement("div");
+    loader.classList.add("loader");
+    document.getElementById("user-offer-container").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("user-offer-container")
+      .removeChild(document.getElementsByClassName("loader")[0]);
+    document.getElementById("user-offer-wrapper").classList.remove("d-none");
+  }
+</script>

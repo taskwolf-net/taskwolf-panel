@@ -202,6 +202,8 @@ msgid "user.tab.bundle"
 msgstr "PACKAGE"
 msgid "user.tab.payment"
 msgstr "PAYMENTS"
+msgid "user.tab.offer"
+msgstr "OFFERS"
 msgid "user.tab.termination"
 msgstr "TERMINATION"
 
@@ -398,6 +400,8 @@ msgid "user.payment.unavailable.description"
 msgstr "This user has not yet made any payments. This is probably because he is only a member of an organization."
 msgid "user.payment.invoice.download"
 msgstr "VIEW"
+
+# USER - OFFER
 
 # USER - TERMINATION
 msgid "user.termination.headline"
