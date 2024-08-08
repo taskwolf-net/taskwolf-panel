@@ -9,7 +9,11 @@ async def offer(request, id):
      'offer': id})
 
 @authentication_required
-async def createOffer(request, id):
+async def createUserOffer(request, id):
+  return await createOffer(request, id, "user")
+
+@authentication_required
+async def createOffer(request, id, type):
   return render(request, 'offer/offer-create.html', {'title': 'Taskwolf - Offer',
     'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/offer/offer-create.css'],
-      'target': id})
+      'target': id, "type": type})

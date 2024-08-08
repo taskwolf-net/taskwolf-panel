@@ -20,25 +20,27 @@
                     {% trans 'offer.create.type' %}
                   </button>
                   <ul class="dropdown-menu dropdown-menu-dark w-100">
-                    <li class="dropdown-item offer-create-type-entry">{% trans 'offer.create.type.trial' %}</li>
-                    <li class="dropdown-item offer-create-type-entry">{% trans 'offer.create.type.professional' %}</li>
+                    <li id="offer-create-type-trial" class="dropdown-item offer-create-type-entry">{% trans 'offer.create.type.trial' %}</li>
+                    <li id="offer-create-type-professional" class="dropdown-item offer-create-type-entry">{% trans 'offer.create.type.professional' %}</li>
+                    <li id="offer-create-type-team" class="dropdown-item offer-create-type-entry">{% trans 'offer.create.type.team' %}</li>
+                    <li id="offer-create-type-enterprise" class="dropdown-item offer-create-type-entry">{% trans 'offer.create.type.enterprise' %}</li>
                   </ul>
                 </div>
               </div>
-              <div id="offer-create-class-container" class="form-outline mb-3">
+              <div id="offer-create-class-container" class="form-outline mb-3 d-none">
                 <label class="form-label">{% trans 'offer.create.class' %}</label>
                 <div class="dropdown">
                   <button id="offer-create-class" class="btn btn-secondary dropdown-toggle bg-dark w-100" type="button" data-bs-toggle="dropdown">
                     {% trans 'offer.create.class' %}
                   </button>
                   <ul class="dropdown-menu dropdown-menu-dark w-100">
-                    <li class="dropdown-item offer-create-class-entry">{% trans 'offer.create.class.beginner' %}</li>
-                    <li class="dropdown-item offer-create-class-entry">{% trans 'offer.create.class.advanced' %}</li>
-                    <li class="dropdown-item offer-create-class-entry">{% trans 'offer.create.class.expert' %}</li>
+                    <li id="offer-create-class-beginner" class="dropdown-item offer-create-class-entry">{% trans 'offer.create.class.beginner' %}</li>
+                    <li id="offer-create-class-advanced" class="dropdown-item offer-create-class-entry">{% trans 'offer.create.class.advanced' %}</li>
+                    <li id="offer-create-class-expert" class="dropdown-item offer-create-class-entry">{% trans 'offer.create.class.expert' %}</li>
                   </ul>
                 </div>
               </div>
-              <div class="form-outline mb-3">
+              <div id="offer-create-runtime-container" class="form-outline mb-3 d-none">
                 <label class="form-label">{% trans 'offer.create.runtime' %}</label>
                 <div class="dropdown">
                   <button id="offer-create-runtime" class="btn btn-secondary dropdown-toggle bg-dark w-100" type="button" data-bs-toggle="dropdown">
@@ -67,10 +69,6 @@
                 <label class="form-label">{% trans 'offer.create.database.data.limit' %}</label>
                 <input id="offer-create-database-data-limit" class="form-control" placeholder="{% trans 'offer.create.database.data.limit' %}">
               </div>
-              <div class="form-outline mb-3">
-                <label class="form-label">{% trans 'offer.create.price' %}</label>
-                <input id="offer-create-price" class="form-control" placeholder="{% trans 'offer.create.price' %}">
-              </div>
             </div>
             <button type="button" id="offer-create" class="btn btn-danger d-block px-5 mt-5 mx-auto">{% trans 'offer.create' %}</button>
           </div>
@@ -89,13 +87,27 @@
     });
   });
 
-  function displayOfferCreation() {
-    prepareDropdown("offer-create-type", "offer-create-type-entry",
-      () => {}, onBundleTypeSelect);
-    prepareDropdown("offer-create-class", "offer-create-class-entry",
-      () => {}, () => {resetBundleRuntime()});
-    prepareDropdown("offer-create-runtime", "offer-create-runtime-entry",
-      () => {}, () => {});
+  function displayOfferCreation(bundle) {
+    displayBundleTypeSelect(bundle);
+    displayBundleClassSelect(bundle);
+    prepareDropdown("offer-create-runtime", "offer-create-runtime-entry", () => {});
+  }
+
+  function displayBundleTypeSelect(bundle) {
+    prepareDropdown("offer-create-type", "offer-create-type-entry", onBundleTypeSelect);
+    if ("{{type}}" === "user") {
+      document.getElementById("offer-create-type-team").classList.add("d-none");
+      document.getElementById("offer-create-type-enterprise").classList.add("d-none");
+      if (bundle.type === "PROFESSIONAL") {
+        document.getElementById("offer-create-type-trial").classList.add("d-none");
+      }
+    } else if ("{{type}}" === "organization") {
+      document.getElementById("offer-create-type-trial").classList.add("d-none");
+      document.getElementById("offer-create-type-professional").classList.add("d-none");
+      if (bundle.type === "ENTERPRISE") {
+        document.getElementById("offer-create-type-team").classList.add("d-none");
+      }
+    }
   }
 
   function onBundleTypeSelect(type) {
@@ -106,11 +118,28 @@
     } else {
       document.getElementById("offer-create-runtime-weekly").classList.remove("d-none");
     }
-    if (type === "{% trans 'offer.create.type.trial' %}") {
+    if (type === "{% trans 'offer.create.type.trial' %}" || type === "{% trans 'offer.create.type.enterprise' %}") {
       document.getElementById("offer-create-class-container").classList.add("d-none");
+      document.getElementById("offer-create-runtime-container").classList.remove("d-none");
     } else {
       document.getElementById("offer-create-class-container").classList.remove("d-none");
+      document.getElementById("offer-create-runtime-container").classList.add("d-none");
     }
+  }
+
+  function displayBundleClassSelect(bundle) {
+    prepareDropdown("offer-create-class", "offer-create-class-entry", onBundleClassSelect);
+    if (bundle.class === "ADVANCED") {
+      document.getElementById("offer-create-class-beginner").classList.add("d-none");
+    } else if (bundle.class === "EXPERT") {
+      document.getElementById("offer-create-class-beginner").classList.add("d-none");
+      document.getElementById("offer-create-class-advanced").classList.add("d-none");
+    }
+  }
+
+  function onBundleClassSelect(type) {
+    resetBundleRuntime();
+    document.getElementById("offer-create-runtime-container").classList.remove("d-none");
   }
 
   function resetBundleClass() {
@@ -125,7 +154,7 @@
     runtimeButton.classList.remove("fw-bold");
   }
 
-  function prepareDropdown(buttonId, entryId, initialSelect, onSelect) {
+  function prepareDropdown(buttonId, entryId, onSelect) {
     var button = document.getElementById(buttonId);
     var dropdownElements = document.getElementsByClassName(entryId);
     for (let i = 0; i < dropdownElements.length; i++) {
@@ -135,9 +164,6 @@
         button.classList.add("fw-bold");
         button.innerHTML = value;
         onSelect(value);
-      }
-      if (initialSelect(dropdownElement.innerHTML)) {
-        dropdownElement.click();
       }
     }
   }
@@ -150,18 +176,89 @@
     });
   }
 
-  document.getElementById("offer-create-back").onclick = function (event) {
-    window.location = document.referrer;
+  document.getElementById("offer-create").onclick = function (event) {
+    calculateOfferPrice();
   }
 
-  document.getElementById("offer-create").onclick = function (event) {
-    var body = {user: "{{user}}"};
+  function calculateOfferPrice() {
+    var body = buildOfferRequestBody();
+    if (body === {}) {
+      return;
+    }
+    let request = new HttpRequest("https://team.taskwolf.net/v1/offer/price/suggestion/", "POST", [], body);
+    request.send(function (status, responseText) {
+      var price = JSON.parse(responseText).price;
+      var content = document.createElement("div");
+      content.classList.add("swal2-content");
+      var descriptionElement = document.createElement("p");
+      descriptionElement.innerHTML = "{% trans 'offer.create.price.suggestion.body' %}";
+      content.appendChild(descriptionElement);
+      var priceElement = document.createElement("h1");
+      priceElement.classList.add("fw-bold", "mt-5", "mb-4");
+      priceElement.innerHTML = Number.parseFloat(price).toFixed(2) + " €";
+      content.appendChild(priceElement);
+      Swal.fire({
+        title: "{% trans 'offer.create.price.suggestion.title' %}",
+        html: content,
+        icon: "warning",
+        showCancelButton: true,
+        showDenyButton: true,
+        denyButtonColor: "#dc35c6",
+        denyButtonText: "{% trans 'offer.create.price.manual' %}"
+      }).then(result => {
+        if (result.isConfirmed) {
+          createOffer(price);
+        } else if (result.isDenied) {
+          manualOfferPrice();
+        }
+      });
+    });
+  }
+
+  function manualOfferPrice() {
+    var content = document.createElement("div");
+    content.classList.add("swal2-content");
+    var descriptionElement = document.createElement("p");
+    descriptionElement.innerHTML = "{% trans 'offer.create.price.manual.body' %}";
+    content.appendChild(descriptionElement);
+    var priceElement = document.createElement("input");
+    priceElement.classList.add("mt-3", "mb-2");
+    priceElement.placeholder = "{% trans 'offer.create.price.manual.price' %}";
+    content.appendChild(priceElement);
+    Swal.fire({
+      title: "{% trans 'offer.create.price.manual.title' %}",
+      html: content,
+      icon: "warning",
+      showCancelButton: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        createOffer(priceElement.value);
+      }
+    });
+  }
+
+  function createOffer(price) {
+    var body = buildOfferRequestBody();
+    if (body === {}) {
+      return;
+    }
+    body.target = "{{target}}";
+    body.price = price;
+    let request = new HttpRequest("https://team.taskwolf.net/v1/offer/create/", "POST", [], body);
+    request.send(function (status, responseText) {
+      Swal.fire("{% trans 'offer.create.successful.title' %}", "{% trans 'offer.create.successful.body' %}", "success")
+        .then(success => returnPage());
+    });
+  }
+
+  function buildOfferRequestBody() {
+    var body = {};
     var bundleType = findBundleType(document.getElementById("offer-create-type").innerHTML);
     var bundleClass = findBundleClass(document.getElementById("offer-create-class").innerHTML);
     var bundleRuntime = findBundleRuntime(document.getElementById("offer-create-runtime").innerHTML);
     if (bundleType === "" || bundleRuntime === "" || (bundleType !== "TRIAL" && bundleClass === "NONE")) {
       Swal.fire("{% trans 'offer.create.failed.title' %}", "{% trans 'offer.create.failed.body' %}", "error");
-      return;
+      return {};
     }
     body.type = bundleType;
     body.class = bundleClass;
@@ -182,25 +279,7 @@
     if (databaseDataLimit !== "") {
       body.databaseDataLimit = databaseDataLimit;
     }
-    var price = document.getElementById("offer-create-price").value;
-    if (price !== "") {
-      body.price = price;
-    }
-    Swal.fire({
-      title: "{% trans 'offer.create.submit.title' %}",
-      text: "{% trans 'offer.create.submit.body' %}",
-      icon: "warning",
-      confirmButtonColor: "#dc3545",
-      showCancelButton: true,
-    }).then(result => {
-      if (result.isConfirmed) {
-        let request = new HttpRequest("https://team.taskwolf.net/v1/user/bundle/change/", "POST", [], body);
-        request.send(function (status, responseText) {
-          Swal.fire("{% trans 'offer.create.successful.title' %}", "{% trans 'offer.create.successful.body' %}", "success")
-            .then(success => window.location = document.referrer);
-        });
-      }
-    });
+    return body;
   }
 
   function findBundleType(content) {
@@ -233,6 +312,18 @@
       return "YEARLY";
     }
     return "";
+  }
+
+  document.getElementById("offer-create-back").onclick = function (event) {
+    returnPage();
+  }
+
+  function returnPage() {
+    if ("{{type}}" === "user") {
+      window.location.href = "/user/{{target}}/offers/";
+    } else if ("{{type}}" === "organization") {
+      window.location.href = "/organization/{{target}}/offers/";
+    }
   }
 
   function displayLoader() {

@@ -20,25 +20,25 @@
                     {% trans 'user.bundle.change.type' %}
                   </button>
                   <ul class="dropdown-menu dropdown-menu-dark w-100">
-                    <li class="dropdown-item user-bundle-change-type-entry">{% trans 'user.bundle.change.type.trial' %}</li>
-                    <li class="dropdown-item user-bundle-change-type-entry">{% trans 'user.bundle.change.type.professional' %}</li>
+                    <li id="user-bundle-change-type-trial" class="dropdown-item user-bundle-change-type-entry">{% trans 'user.bundle.change.type.trial' %}</li>
+                    <li id="user-bundle-change-type-professional" class="dropdown-item user-bundle-change-type-entry">{% trans 'user.bundle.change.type.professional' %}</li>
                   </ul>
                 </div>
               </div>
-              <div id="user-bundle-change-class-container" class="form-outline mb-3">
+              <div id="user-bundle-change-class-container" class="form-outline mb-3 d-none">
                 <label class="form-label">{% trans 'user.bundle.change.class' %}</label>
                 <div class="dropdown">
                   <button id="user-bundle-change-class" class="btn btn-secondary dropdown-toggle bg-dark w-100" type="button" data-bs-toggle="dropdown">
                     {% trans 'user.bundle.change.class' %}
                   </button>
                   <ul class="dropdown-menu dropdown-menu-dark w-100">
-                    <li class="dropdown-item user-bundle-change-class-entry">{% trans 'user.bundle.change.class.beginner' %}</li>
-                    <li class="dropdown-item user-bundle-change-class-entry">{% trans 'user.bundle.change.class.advanced' %}</li>
-                    <li class="dropdown-item user-bundle-change-class-entry">{% trans 'user.bundle.change.class.expert' %}</li>
+                    <li id="user-bundle-change-class-beginner" class="dropdown-item user-bundle-change-class-entry">{% trans 'user.bundle.change.class.beginner' %}</li>
+                    <li id="user-bundle-change-class-advanced" class="dropdown-item user-bundle-change-class-entry">{% trans 'user.bundle.change.class.advanced' %}</li>
+                    <li id="user-bundle-change-class-expert" class="dropdown-item user-bundle-change-class-entry">{% trans 'user.bundle.change.class.expert' %}</li>
                   </ul>
                 </div>
               </div>
-              <div class="form-outline mb-3">
+              <div id="user-bundle-change-runtime-container" class="form-outline mb-3 d-none">
                 <label class="form-label">{% trans 'user.bundle.change.runtime' %}</label>
                 <div class="dropdown">
                   <button id="user-bundle-change-runtime" class="btn btn-secondary dropdown-toggle bg-dark w-100" type="button" data-bs-toggle="dropdown">
@@ -90,23 +90,18 @@
   });
 
   function displayBundleChange(bundle) {
-    prepareDropdown("user-bundle-change-type", "user-bundle-change-type-entry",
-      function (value) {return findBundleType(value) === bundle.type}, onBundleTypeSelect);
-    prepareDropdown("user-bundle-change-class", "user-bundle-change-class-entry",
-      (value) => {return findBundleClass(value) === bundle.class},
-      () => {resetBundleRuntime()});
+    displayBundleTypeSelect(bundle);
+    displayBundleClassSelect(bundle);
     prepareDropdown("user-bundle-change-runtime", "user-bundle-change-runtime-entry",
       function (value) {return findBundleRuntime(value) === bundle.runtime}, () => {});
-    if (bundle.found) {
-      document.getElementById("user-bundle-change-workflow-limit").value =
-        bundle.workflowNumberLimit;
-      document.getElementById("user-bundle-change-operation-limit").value =
-        bundle.workflowOperationLimit;
-      document.getElementById("user-bundle-change-database-limit").value =
-        bundle.databaseNumberLimit;
-      document.getElementById("user-bundle-change-database-data-limit").value =
-        bundle.databaseDataLimit;
-      document.getElementById("user-bundle-change-price").value = bundle.price;
+    fillInputFields(bundle);
+  }
+
+  function displayBundleTypeSelect(bundle) {
+    prepareDropdown("user-bundle-change-type", "user-bundle-change-type-entry",
+      function (value) {return findBundleType(value) === bundle.type}, onBundleTypeSelect);
+    if (bundle.type === "PROFESSIONAL") {
+      document.getElementById("user-bundle-change-type-trial").classList.add("d-none");
     }
   }
 
@@ -120,9 +115,27 @@
     }
     if (type === "{% trans 'user.bundle.change.type.trial' %}") {
       document.getElementById("user-bundle-change-class-container").classList.add("d-none");
+      document.getElementById("user-bundle-change-runtime-container").classList.remove("d-none");
     } else {
       document.getElementById("user-bundle-change-class-container").classList.remove("d-none");
+      document.getElementById("user-bundle-change-runtime-container").classList.add("d-none");
     }
+  }
+
+  function displayBundleClassSelect(bundle) {
+    prepareDropdown("user-bundle-change-class", "user-bundle-change-class-entry",
+      (value) => {return findBundleClass(value) === bundle.class}, onBundleClassSelect);
+    if (bundle.class === "ADVANCED") {
+      document.getElementById("user-bundle-change-class-beginner").classList.add("d-none");
+    } else if (bundle.class === "EXPERT") {
+      document.getElementById("user-bundle-change-class-beginner").classList.add("d-none");
+      document.getElementById("user-bundle-change-class-advanced").classList.add("d-none");
+    }
+  }
+
+  function onBundleClassSelect(type) {
+    resetBundleRuntime();
+    document.getElementById("user-bundle-change-runtime-container").classList.remove("d-none");
   }
 
   function resetBundleClass() {
@@ -152,6 +165,21 @@
         dropdownElement.click();
       }
     }
+  }
+
+  function fillInputFields(bundle) {
+    if (!bundle.found) {
+      return;
+    }
+    document.getElementById("user-bundle-change-workflow-limit").value =
+      bundle.workflowNumberLimit;
+    document.getElementById("user-bundle-change-operation-limit").value =
+      bundle.workflowOperationLimit;
+    document.getElementById("user-bundle-change-database-limit").value =
+      bundle.databaseNumberLimit;
+    document.getElementById("user-bundle-change-database-data-limit").value =
+      bundle.databaseDataLimit;
+    document.getElementById("user-bundle-change-price").value = bundle.price;
   }
 
   function fetchBundle(callback) {
