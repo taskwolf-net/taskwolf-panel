@@ -1,0 +1,249 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body class="dark">
+    {% include 'panel-header.html' %}
+    {% include 'panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="offer-create-container">
+        <div id="offer-create-wrapper" class="d-none">
+          <button id="offer-create-back"><i class="fa-solid fa-arrow-left-long"></i></button>
+          <div id="offer-create-process" class="mb-5">
+            <h4 class="fw-bold mb-4">{% trans 'offer.create.headline' %}</h4>
+            <p class="mb-5">{% trans 'offer.create.description' %}</p>
+            <div id="offer-create-process-data">
+              <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'offer.create.type' %}</label>
+                <div class="dropdown">
+                  <button id="offer-create-type" class="btn btn-secondary dropdown-toggle bg-dark w-100" type="button" data-bs-toggle="dropdown">
+                    {% trans 'offer.create.type' %}
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-dark w-100">
+                    <li class="dropdown-item offer-create-type-entry">{% trans 'offer.create.type.trial' %}</li>
+                    <li class="dropdown-item offer-create-type-entry">{% trans 'offer.create.type.professional' %}</li>
+                  </ul>
+                </div>
+              </div>
+              <div id="offer-create-class-container" class="form-outline mb-3">
+                <label class="form-label">{% trans 'offer.create.class' %}</label>
+                <div class="dropdown">
+                  <button id="offer-create-class" class="btn btn-secondary dropdown-toggle bg-dark w-100" type="button" data-bs-toggle="dropdown">
+                    {% trans 'offer.create.class' %}
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-dark w-100">
+                    <li class="dropdown-item offer-create-class-entry">{% trans 'offer.create.class.beginner' %}</li>
+                    <li class="dropdown-item offer-create-class-entry">{% trans 'offer.create.class.advanced' %}</li>
+                    <li class="dropdown-item offer-create-class-entry">{% trans 'offer.create.class.expert' %}</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'offer.create.runtime' %}</label>
+                <div class="dropdown">
+                  <button id="offer-create-runtime" class="btn btn-secondary dropdown-toggle bg-dark w-100" type="button" data-bs-toggle="dropdown">
+                    {% trans 'offer.create.runtime' %}
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-dark w-100">
+                    <li id="offer-create-runtime-weekly" class="dropdown-item offer-create-runtime-entry">{% trans 'offer.create.runtime.weekly' %}</li>
+                    <li class="dropdown-item offer-create-runtime-entry">{% trans 'offer.create.runtime.monthly' %}</li>
+                    <li class="dropdown-item offer-create-runtime-entry">{% trans 'offer.create.runtime.yearly' %}</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'offer.create.workflow.limit' %}</label>
+                <input id="offer-create-workflow-limit" class="form-control" placeholder="{% trans 'offer.create.workflow.limit' %}">
+              </div>
+              <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'offer.create.operation.limit' %}</label>
+                <input id="offer-create-operation-limit" class="form-control" placeholder="{% trans 'offer.create.operation.limit' %}">
+              </div>
+              <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'offer.create.database.limit' %}</label>
+                <input id="offer-create-database-limit" class="form-control" placeholder="{% trans 'offer.create.database.limit' %}">
+              </div>
+              <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'offer.create.database.data.limit' %}</label>
+                <input id="offer-create-database-data-limit" class="form-control" placeholder="{% trans 'offer.create.database.data.limit' %}">
+              </div>
+              <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'offer.create.price' %}</label>
+                <input id="offer-create-price" class="form-control" placeholder="{% trans 'offer.create.price' %}">
+              </div>
+            </div>
+            <button type="button" id="offer-create" class="btn btn-danger d-block px-5 mt-5 mx-auto">{% trans 'offer.create' %}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  $(document).ready(function() {
+    displayLoader();
+    fetchBundle(function (bundle) {
+      displayOfferCreation(bundle);
+      removeLoader();
+    });
+  });
+
+  function displayOfferCreation() {
+    prepareDropdown("offer-create-type", "offer-create-type-entry",
+      () => {}, onBundleTypeSelect);
+    prepareDropdown("offer-create-class", "offer-create-class-entry",
+      () => {}, () => {resetBundleRuntime()});
+    prepareDropdown("offer-create-runtime", "offer-create-runtime-entry",
+      () => {}, () => {});
+  }
+
+  function onBundleTypeSelect(type) {
+    resetBundleClass();
+    resetBundleRuntime();
+    if (type !== "{% trans 'offer.create.type.trial' %}") {
+      document.getElementById("offer-create-runtime-weekly").classList.add("d-none");
+    } else {
+      document.getElementById("offer-create-runtime-weekly").classList.remove("d-none");
+    }
+    if (type === "{% trans 'offer.create.type.trial' %}") {
+      document.getElementById("offer-create-class-container").classList.add("d-none");
+    } else {
+      document.getElementById("offer-create-class-container").classList.remove("d-none");
+    }
+  }
+
+  function resetBundleClass() {
+    var classButton = document.getElementById("offer-create-class");
+    classButton.innerHTML = "{% trans 'offer.create.class' %}";
+    classButton.classList.remove("fw-bold");
+  }
+
+  function resetBundleRuntime() {
+    var runtimeButton = document.getElementById("offer-create-runtime");
+    runtimeButton.innerHTML = "{% trans 'offer.create.runtime' %}";
+    runtimeButton.classList.remove("fw-bold");
+  }
+
+  function prepareDropdown(buttonId, entryId, initialSelect, onSelect) {
+    var button = document.getElementById(buttonId);
+    var dropdownElements = document.getElementsByClassName(entryId);
+    for (let i = 0; i < dropdownElements.length; i++) {
+      let dropdownElement = dropdownElements[i];
+      dropdownElement.onclick = function (event) {
+        var value = dropdownElement.innerHTML;
+        button.classList.add("fw-bold");
+        button.innerHTML = value;
+        onSelect(value);
+      }
+      if (initialSelect(dropdownElement.innerHTML)) {
+        dropdownElement.click();
+      }
+    }
+  }
+
+  function fetchBundle(callback) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/user/bundle/find/", "POST",
+      [], {user: "{{target}}"});
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText));
+    });
+  }
+
+  document.getElementById("offer-create-back").onclick = function (event) {
+    window.location = document.referrer;
+  }
+
+  document.getElementById("offer-create").onclick = function (event) {
+    var body = {user: "{{user}}"};
+    var bundleType = findBundleType(document.getElementById("offer-create-type").innerHTML);
+    var bundleClass = findBundleClass(document.getElementById("offer-create-class").innerHTML);
+    var bundleRuntime = findBundleRuntime(document.getElementById("offer-create-runtime").innerHTML);
+    if (bundleType === "" || bundleRuntime === "" || (bundleType !== "TRIAL" && bundleClass === "NONE")) {
+      Swal.fire("{% trans 'offer.create.failed.title' %}", "{% trans 'offer.create.failed.body' %}", "error");
+      return;
+    }
+    body.type = bundleType;
+    body.class = bundleClass;
+    body.runtime = bundleRuntime;
+    var workflowLimit = document.getElementById("offer-create-workflow-limit").value;
+    if (workflowLimit !== "") {
+      body.workflowNumberLimit = workflowLimit;
+    }
+    var operationLimit = document.getElementById("offer-create-operation-limit").value;
+    if (operationLimit !== "") {
+      body.workflowOperationLimit = operationLimit;
+    }
+    var databaseLimit = document.getElementById("offer-create-database-limit").value;
+    if (databaseLimit !== "") {
+      body.databaseNumberLimit = databaseLimit;
+    }
+    var databaseDataLimit = document.getElementById("offer-create-database-data-limit").value;
+    if (databaseDataLimit !== "") {
+      body.databaseDataLimit = databaseDataLimit;
+    }
+    var price = document.getElementById("offer-create-price").value;
+    if (price !== "") {
+      body.price = price;
+    }
+    Swal.fire({
+      title: "{% trans 'offer.create.submit.title' %}",
+      text: "{% trans 'offer.create.submit.body' %}",
+      icon: "warning",
+      confirmButtonColor: "#dc3545",
+      showCancelButton: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        let request = new HttpRequest("https://team.taskwolf.net/v1/user/bundle/change/", "POST", [], body);
+        request.send(function (status, responseText) {
+          Swal.fire("{% trans 'offer.create.successful.title' %}", "{% trans 'offer.create.successful.body' %}", "success")
+            .then(success => window.location = document.referrer);
+        });
+      }
+    });
+  }
+
+  function findBundleType(content) {
+    if (content === "{% trans 'offer.create.type.trial' %}") {
+      return "TRIAL";
+    } else if (content === "{% trans 'offer.create.type.professional' %}") {
+      return "PROFESSIONAL";
+    }
+    return "";
+  }
+
+  function findBundleClass(content) {
+    if (content === "{% trans 'offer.create.class.beginner' %}") {
+      return "BEGINNER";
+    } else if (content === "{% trans 'offer.create.class.advanced' %}") {
+      return "ADVANCED";
+    } else if (content === "{% trans 'offer.create.class.expert' %}") {
+      return "EXPERT";
+    } else {
+      return "NONE";
+    }
+  }
+
+  function findBundleRuntime(content) {
+    if (content === "{% trans 'offer.create.runtime.weekly' %}") {
+      return "WEEKLY";
+    } else if (content === "{% trans 'offer.create.runtime.monthly' %}") {
+      return "MONTHLY";
+    } else if (content === "{% trans 'offer.create.runtime.yearly' %}") {
+      return "YEARLY";
+    }
+    return "";
+  }
+
+  function displayLoader() {
+    var loader = document.createElement("div");
+    loader.classList.add("loader");
+    document.getElementById("offer-create-container").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("offer-create-container")
+      .removeChild(document.getElementsByClassName("loader")[0]);
+    document.getElementById("offer-create-wrapper").classList.remove("d-none");
+  }
+</script>
