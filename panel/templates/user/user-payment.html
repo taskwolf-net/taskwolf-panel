@@ -68,7 +68,7 @@
   $(document).ready(function() {
     displayLoader()
     fetchBundle(function (bundle) {
-      if (bundle.found === false || bundle.type !== "TRIAL" && bundle.type !== "PROFESSIONAL") {
+      if (bundle.found === false) {
         document.getElementById("user-payment-unavailable").classList.remove("d-none");
         removeLoader();
         return;

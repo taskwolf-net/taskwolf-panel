@@ -27,10 +27,6 @@
   $(document).ready(function() {
     displayLoader();
     fetchBundle(function (bundle) {
-      if (bundle.type !== "TRIAL" && bundle.type !== "PROFESSIONAL") {
-        window.location.href = "/";
-        return;
-      }
       removeLoader();
     });
   });

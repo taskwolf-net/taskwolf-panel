@@ -207,8 +207,9 @@
     displayLoader();
     fetchBundle(function (bundle) {
       removeLoader();
-      if (bundle.found === false || bundle.type !== "TRIAL" && bundle.type !== "PROFESSIONAL") {
+      if (bundle.found === false) {
         document.getElementById("user-bundle-unavailable").classList.remove("d-none");
+        document.getElementById("user-bundle-information").classList.add("d-none");
         return;
       }
       displayGeneralInformation(bundle);
@@ -282,7 +283,7 @@
     if (bundle.runtime === "WEEKLY") {
       return "1 {% trans 'user.bundle.runtime.week' %}";
     } else if (bundle.runtime === "MONTHLY") {
-      return "1 {% trans 'user.bundle.runtime.monthly' %}";
+      return "1 {% trans 'user.bundle.runtime.month' %}";
     } else if (bundle.runtime === "YEARLY") {
       return "1 {% trans 'user.bundle.runtime.year' %}";
     }

@@ -42,10 +42,12 @@
               <div class="user-general-side">
                 <div class="user-general-section">
                   <h4 class="fw-bold mb-4">{% trans 'user.general.bundle.headline' %}</h4>
-                  <div id="user-general-bundle-type" class="mb-1"><span class="fw-bold">{% trans 'user.general.bundle.type' %}: </span></div>
-                  <div id="user-general-bundle-class" class="mb-1"><span class="fw-bold">{% trans 'user.general.bundle.class' %}: </span></div>
-                  <div id="user-general-bundle-runtime" class="mb-1"><span class="fw-bold">{% trans 'user.general.bundle.runtime' %}: </span></div>
-                  <div id="user-general-bundle-price"><span class="fw-bold">{% trans 'user.general.bundle.price' %}: </span></div>
+                  <div id="user-general-bundle-content">
+                    <div id="user-general-bundle-type" class="mb-1"><span class="fw-bold">{% trans 'user.general.bundle.type' %}: </span></div>
+                    <div id="user-general-bundle-class" class="mb-1"><span class="fw-bold">{% trans 'user.general.bundle.class' %}: </span></div>
+                    <div id="user-general-bundle-runtime" class="mb-1"><span class="fw-bold">{% trans 'user.general.bundle.runtime' %}: </span></div>
+                    <div id="user-general-bundle-price"><span class="fw-bold">{% trans 'user.general.bundle.price' %}: </span></div>
+                  </div>
                   <div id="user-general-bundle-unavailable" class="d-none"><span>{% trans 'user.general.bundle.unavailable' %}</span></div>
                 </div>
                 <div class="user-general-section">
@@ -109,6 +111,7 @@
   function displayBundleInformation(bundle) {
     if (bundle.found === false) {
       document.getElementById("user-general-bundle-unavailable").classList.remove("d-none");
+      document.getElementById("user-general-bundle-content").classList.add("d-none");
       return;
     }
     document.getElementById("user-general-bundle-type").innerHTML += findPackageName(bundle);
