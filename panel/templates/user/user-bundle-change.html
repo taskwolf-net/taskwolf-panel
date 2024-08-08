@@ -93,7 +93,8 @@
     prepareDropdown("user-bundle-change-type", "user-bundle-change-type-entry",
       function (value) {return findBundleType(value) === bundle.type}, onBundleTypeSelect);
     prepareDropdown("user-bundle-change-class", "user-bundle-change-class-entry",
-      function (value) {return findBundleClass(value) === bundle.class}, () => {});
+      (value) => {return findBundleClass(value) === bundle.class},
+      () => {resetBundleRuntime()});
     prepareDropdown("user-bundle-change-runtime", "user-bundle-change-runtime-entry",
       function (value) {return findBundleRuntime(value) === bundle.runtime}, () => {});
     if (bundle.found) {
@@ -104,12 +105,14 @@
       document.getElementById("user-bundle-change-database-limit").value =
         bundle.databaseNumberLimit;
       document.getElementById("user-bundle-change-database-data-limit").value =
-        bundle.databaseDataLimit.replaceAll(".", "");
+        bundle.databaseDataLimit;
       document.getElementById("user-bundle-change-price").value = bundle.price;
     }
   }
 
   function onBundleTypeSelect(type) {
+    resetBundleClass();
+    resetBundleRuntime();
     if (type !== "{% trans 'user.bundle.change.type.trial' %}") {
       document.getElementById("user-bundle-change-runtime-weekly").classList.add("d-none");
     } else {
@@ -117,12 +120,21 @@
     }
     if (type === "{% trans 'user.bundle.change.type.trial' %}") {
       document.getElementById("user-bundle-change-class-container").classList.add("d-none");
-      var classButton = document.getElementById("user-bundle-change-class");
-      classButton.innerHTML = "{% trans 'user.bundle.change.class' %}";
-      classButton.classList.remove("fw-bold");
     } else {
       document.getElementById("user-bundle-change-class-container").classList.remove("d-none");
     }
+  }
+
+  function resetBundleClass() {
+    var classButton = document.getElementById("user-bundle-change-class");
+    classButton.innerHTML = "{% trans 'user.bundle.change.class' %}";
+    classButton.classList.remove("fw-bold");
+  }
+
+  function resetBundleRuntime() {
+    var runtimeButton = document.getElementById("user-bundle-change-runtime");
+    runtimeButton.innerHTML = "{% trans 'user.bundle.change.runtime' %}";
+    runtimeButton.classList.remove("fw-bold");
   }
 
   function prepareDropdown(buttonId, entryId, initialSelect, onSelect) {
@@ -155,14 +167,37 @@
   }
 
   document.getElementById("user-bundle-change").onclick = function (event) {
-    var bundleType = findBundleType(document.getElementById("user-bundle-change-type"));
-    var bundleClass = findBundleClass(document.getElementById("user-bundle-change-class"));
-    var bundleRuntime = findBundleRuntime(document.getElementById("user-bundle-change-runtime"));
+    var body = {user: "{{user}}"};
+    var bundleType = findBundleType(document.getElementById("user-bundle-change-type").innerHTML);
+    var bundleClass = findBundleClass(document.getElementById("user-bundle-change-class").innerHTML);
+    var bundleRuntime = findBundleRuntime(document.getElementById("user-bundle-change-runtime").innerHTML);
+    if (bundleType === "" || bundleRuntime === "" || (bundleType !== "TRIAL" && bundleClass === "NONE")) {
+      Swal.fire("{% trans 'user.bundle.change.failed.title' %}", "{% trans 'user.bundle.change.failed.body' %}", "error");
+      return;
+    }
+    body.type = bundleType;
+    body.class = bundleClass;
+    body.runtime = bundleRuntime;
     var workflowLimit = document.getElementById("user-bundle-change-workflow-limit").value;
+    if (workflowLimit !== "") {
+      body.workflowNumberLimit = workflowLimit;
+    }
     var operationLimit = document.getElementById("user-bundle-change-operation-limit").value;
+    if (operationLimit !== "") {
+      body.workflowOperationLimit = operationLimit;
+    }
     var databaseLimit = document.getElementById("user-bundle-change-database-limit").value;
+    if (databaseLimit !== "") {
+      body.databaseNumberLimit = databaseLimit;
+    }
     var databaseDataLimit = document.getElementById("user-bundle-change-database-data-limit").value;
+    if (databaseDataLimit !== "") {
+      body.databaseDataLimit = databaseDataLimit;
+    }
     var price = document.getElementById("user-bundle-change-price").value;
+    if (price !== "") {
+      body.price = price;
+    }
     Swal.fire({
       title: "{% trans 'user.bundle.change.submit.title' %}",
       text: "{% trans 'user.bundle.change.submit.body' %}",
@@ -171,12 +206,10 @@
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        let request = new HttpRequest("https://team.taskwolf.net/v1/user/bundle/change/", "POST",
-          [], {user: "{{user}}", type: bundleType, class: bundleClass, runtime: bundleRuntime,
-          workflowNumberLimit: workflowLimit, workflowOperationLimit: operationLimit,
-          databaseNumberLimit: databaseLimit, databaseDataLimit: databaseDataLimit, price: price});
+        let request = new HttpRequest("https://team.taskwolf.net/v1/user/bundle/change/", "POST", [], body);
         request.send(function (status, responseText) {
-          Swal.fire("{% trans 'user.bundle.change.successful.title' %}", "{% trans 'user.bundle.change.successful.body' %}", "success").then(success => window.location.reload());
+          Swal.fire("{% trans 'user.bundle.change.successful.title' %}", "{% trans 'user.bundle.change.successful.body' %}", "success")
+            .then(success => window.location.href = "/user/{{user}}/bundle/");
         });
       }
     });
@@ -188,6 +221,7 @@
     } else if (content === "{% trans 'user.bundle.change.type.professional' %}") {
       return "PROFESSIONAL";
     }
+    return "";
   }
 
   function findBundleClass(content) {
@@ -210,6 +244,7 @@
     } else if (content === "{% trans 'user.bundle.change.runtime.yearly' %}") {
       return "YEARLY";
     }
+    return "";
   }
 
   function displayLoader() {

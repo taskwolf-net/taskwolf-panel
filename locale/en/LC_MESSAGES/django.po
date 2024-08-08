@@ -380,6 +380,10 @@ msgid "user.bundle.change.successful.title"
 msgstr "Changes completed!"
 msgid "user.bundle.change.successful.body"
 msgstr "The customer's package was successfully modified"
+msgid "user.bundle.change.failed.title"
+msgstr "Change failed!"
+msgid "user.bundle.change.failed.body"
+msgstr "Please fill in all dropdowns to change the package"
 
 # USER - PAYMENT
 msgid "user.payment.headline"

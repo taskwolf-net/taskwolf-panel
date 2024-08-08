@@ -378,6 +378,10 @@ msgid "user.bundle.change.successful.title"
 msgstr "Änderungen abgeschlossen!"
 msgid "user.bundle.change.successful.body"
 msgstr "Das Paket des Kunden wurde erfolgreich geändert"
+msgid "user.bundle.change.failed.title"
+msgstr "Änderung fehlgeschlagen!"
+msgid "user.bundle.change.failed.body"
+msgstr "Bitte füllen Sie alle Dropdowns aus, um das Paket zu ändern"
 
 # USER - PAYMENT
 msgid "user.payment.headline"
