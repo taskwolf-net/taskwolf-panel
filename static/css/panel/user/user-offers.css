@@ -1,0 +1,94 @@
+#user-offers-wrapper {
+  width: min(1200px, 95%);
+  margin: auto;
+}
+
+#user-offers-container .nav-tabs {
+  width: min(1200px, 100%);
+  margin: 40px auto 75px auto;
+  border: none;
+}
+
+#user-offers-container .nav-link {
+  border: none;
+  transition-duration: 0.3s;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#user-offers-container .nav-link {
+  color: white;
+}
+
+#user-offers-container .nav-link-active {
+  color: #8fc0f1;
+  border-bottom: 2px #8fc0f1 solid;
+}
+
+#user-offers-empty {
+  padding: 30px;
+  border-radius: 5px;
+}
+
+#user-offers-empty {
+  background-color: #131820;
+  border: 1px #2b3441 solid;
+}
+
+#user-offers {
+  padding: 30px;
+  border-radius: 5px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+#user-offers {
+  background-color: #131820;
+  border: 1px #2b3441 solid;
+}
+
+#user-offer-list {
+  width: min(1000px, 100%);
+  position: relative;
+  list-style-type: none;
+  padding: 0;
+  margin: auto;
+}
+
+#user-offer-list li {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  font-size: 18px;
+}
+
+#user-offer-list li {
+  border-bottom: 1px #717171 solid;
+}
+
+#user-offer-list li:last-child {
+  border-bottom: none;
+}
+
+#user-offer-list li div {
+  padding: 3%;
+  width: 20%;
+  text-align: left;
+}
+
+#user-offer-list li div {
+  border-right: 1px #717171 solid;
+}
+
+#user-offer-list li div:last-child {
+  border-right: none;
+}
+
+#user-offer-list li div span {
+  line-break: anywhere;
+}

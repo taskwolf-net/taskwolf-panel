@@ -32,9 +32,9 @@ async def userPayment(request, id):
     'user': id})
 
 @authentication_required
-async def userOffer(request, id):
-  return render(request, 'user/user-offer.html', {'title': 'Taskwolf - User',
-    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-offer.css'],
+async def userOffers(request, id):
+  return render(request, 'user/user-offers.html', {'title': 'Taskwolf - User',
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-offers.css'],
      'user': id})
 
 @authentication_required
