@@ -6,57 +6,57 @@
     {% include 'panel-header.html' %}
     {% include 'panel-sidebar.html' %}
     <div class="sidebar-influenced">
-      <div id="user-payment-container">
-        <div id="user-payment-wrapper" class="d-none">
+      <div id="entity-payment-container">
+        <div id="entity-payment-wrapper" class="d-none">
           <div>
             <ul class="nav nav-tabs">
-              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/general/">{% trans 'user.tab.general' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/bundle/">{% trans 'user.tab.bundle' %}</a></li>
-              <li class="nav-item"><a class="nav-link nav-link-active" href="/user/{{user}}/payment/">{% trans 'user.tab.payment' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/offers/">{% trans 'user.tab.offer' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/termination/">{% trans 'user.tab.termination' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/{{type}}/{{entity}}/general/">{% trans 'entity.tab.general' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/{{type}}/{{entity}}/bundle/">{% trans 'entity.tab.bundle' %}</a></li>
+              <li class="nav-item"><a class="nav-link nav-link-active" href="/{{type}}/{{entity}}/payment/">{% trans 'entity.tab.payment' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/{{type}}/{{entity}}/offers/">{% trans 'entity.tab.offer' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/{{type}}/{{entity}}/termination/">{% trans 'entity.tab.termination' %}</a></li>
             </ul>
           </div>
-          <div id="user-payments" class="d-none">
-            <h3 class="fw-bold mb-4">{% trans 'user.payment.headline' %}</h3>
-            <ul id="user-payment-description">
+          <div id="entity-payments" class="d-none">
+            <h3 class="fw-bold mb-4">{% trans 'entity.payment.headline' %}</h3>
+            <ul id="entity-payment-description">
               <li>
                 <div>
-                  <span class="me-2">{% trans 'user.payment.time' %}</span>
+                  <span class="me-2">{% trans 'entity.payment.time' %}</span>
                   <i class="fa-regular fa-calendar-days"></i>
                 </div>
               </li>
               <li>
                 <div>
-                  <span class="me-2">{% trans 'user.payment.amount' %}</span>
+                  <span class="me-2">{% trans 'entity.payment.amount' %}</span>
                   <i class="fa-solid fa-coins"></i>
                 </div>
               </li>
               <li>
                 <div>
-                  <span class="me-2">{% trans 'user.payment.method' %}</span>
+                  <span class="me-2">{% trans 'entity.payment.method' %}</span>
                   <i class="fa-solid fa-money-check"></i>
                 </div>
               </li>
               <li>
                 <div>
-                  <span class="me-2">{% trans 'user.payment.status' %}</span>
+                  <span class="me-2">{% trans 'entity.payment.status' %}</span>
                   <i class="fa-solid fa-bars-progress"></i>
                 </div>
               </li>
               <li>
                 <div>
-                  <span class="me-2">{% trans 'user.payment.invoice' %}</span>
+                  <span class="me-2">{% trans 'entity.payment.invoice' %}</span>
                   <i class="fa-solid fa-file-invoice"></i>
                 </div>
               </li>
             </ul>
-            <ul id="user-payment-list">
+            <ul id="entity-payment-list">
             </ul>
           </div>
-          <div id="user-payment-unavailable" class="d-none">
-            <h4 class="fw-bold mb-4">{% trans 'user.payment.unavailable.headline' %}</h4>
-            <p class="mb-3">{% trans 'user.payment.unavailable.description' %}</p>
+          <div id="entity-payment-unavailable" class="d-none">
+            <h4 class="fw-bold mb-4">{% trans 'entity.payment.unavailable.headline' %}</h4>
+            <p class="mb-3">{% trans 'entity.payment.unavailable.description' %}</p>
           </div>
         </div>
       </div>
@@ -69,14 +69,14 @@
     displayLoader()
     fetchBundle(function (bundle) {
       if (bundle.found === false) {
-        document.getElementById("user-payment-unavailable").classList.remove("d-none");
+        document.getElementById("entity-payment-unavailable").classList.remove("d-none");
         removeLoader();
         return;
       }
       fetchPayments(function (payments) {
         removeLoader();
         if (payments.found === false) {
-          document.getElementById("user-payment-unavailable").classList.remove("d-none");
+          document.getElementById("entity-payment-unavailable").classList.remove("d-none");
           return;
         }
         displayPayments(payments.payments);
@@ -88,10 +88,10 @@
     if (payments.length === 0) {
       var emptyElement = document.createElement("b");
       emptyElement.classList.add("mb-0");
-      emptyElement.innerHTML = "{% trans 'user.payment.empty' %}";
-      document.getElementById("user-payment-disclaimer").appendChild(emptyElement);
-      document.getElementById("user-payments").classList.add("d-none");
-      var descriptionElement = document.getElementById("user-payment-disclaimer-description");
+      emptyElement.innerHTML = "{% trans 'entity.payment.empty' %}";
+      document.getElementById("entity-payment-disclaimer").appendChild(emptyElement);
+      document.getElementById("entity-payments").classList.add("d-none");
+      var descriptionElement = document.getElementById("entity-payment-disclaimer-description");
       descriptionElement.classList.remove("mb-0");
       descriptionElement.classList.add("mb-5");
       return;
@@ -101,7 +101,7 @@
       displayPayment(payment.time, payment.amount, payment.method,
         payment.status, payment.invoice);
     }
-    document.getElementById("user-payments").classList.remove("d-none");
+    document.getElementById("entity-payments").classList.remove("d-none");
   }
 
   function displayPayment(time, amount, method, status, invoice) {
@@ -111,7 +111,7 @@
     entry.appendChild(createPaymentMethodElement(method));
     entry.appendChild(createPaymentStatusElement(status));
     entry.appendChild(createPaymentInvoiceButton(invoice));
-    document.getElementById("user-payment-list").appendChild(entry);
+    document.getElementById("entity-payment-list").appendChild(entry);
   }
 
   function createPaymentMethodElement(method) {
@@ -132,7 +132,7 @@
     cardIcon.classList.add("fa-solid", "fa-credit-card", "me-2");
     cardElement.appendChild(cardIcon);
     var cardName = document.createElement("span");
-    cardName.innerHTML = " ({% trans 'user.payment.method.card' %})";
+    cardName.innerHTML = " ({% trans 'entity.payment.method.card' %})";
     cardElement.appendChild(cardName);
     return cardElement;
   }
@@ -153,14 +153,14 @@
     statusContainer.classList.add("text-center");
     var statusElement = document.createElement("span");
     if (status === "succeeded") {
-      statusElement.innerHTML = "{% trans 'user.payment.status.successful' %}";
-      statusElement.classList.add("user-payment-status-successful");
+      statusElement.innerHTML = "{% trans 'entity.payment.status.successful' %}";
+      statusElement.classList.add("entity-payment-status-successful");
     } else if (status === "canceled") {
-      statusElement.innerHTML = "{% trans 'user.payment.status.failed' %}";
-      statusElement.classList.add("user-payment-status-failed");
+      statusElement.innerHTML = "{% trans 'entity.payment.status.failed' %}";
+      statusElement.classList.add("entity-payment-status-failed");
     } else {
-      statusElement.innerHTML = "{% trans 'user.payment.status.pending' %}";
-      statusElement.classList.add("user-payment-status-pending");
+      statusElement.innerHTML = "{% trans 'entity.payment.status.pending' %}";
+      statusElement.classList.add("entity-payment-status-pending");
     }
     statusContainer.appendChild(statusElement);
     return statusContainer;
@@ -170,8 +170,8 @@
     var invoiceContainer = document.createElement("div");
     invoiceContainer.classList.add("text-center", "py-0");
     var invoiceButton = document.createElement("button");
-    invoiceButton.classList.add("btn", "btn-primary", "user-payment-invoice");
-    invoiceButton.innerHTML = "{% trans 'user.payment.invoice.download' %}";
+    invoiceButton.classList.add("btn", "btn-primary", "entity-payment-invoice");
+    invoiceButton.innerHTML = "{% trans 'entity.payment.invoice.download' %}";
     invoiceButton.onclick = function (event) {
       window.open(invoiceDownloadLink);
     }
@@ -189,16 +189,16 @@
   }
 
   function fetchPayments(callback) {
-    let request = new HttpRequest("https://team.taskwolf.net/v1/user/payments/find/", "POST",
-      [], {user: "{{user}}"});
+    let request = new HttpRequest("https://team.taskwolf.net/v1/entity/payments/find/", "POST",
+      [], {entity: "{{entity}}"});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));
     });
   }
 
   function fetchBundle(callback) {
-    let request = new HttpRequest("https://team.taskwolf.net/v1/user/bundle/find/", "POST",
-      [], {user: "{{user}}"});
+    let request = new HttpRequest("https://team.taskwolf.net/v1/entity/bundle/find/", "POST",
+      [], {entity: "{{entity}}"});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));
     });
@@ -207,12 +207,12 @@
   function displayLoader() {
     var loader = document.createElement("div");
     loader.classList.add("loader");
-    document.getElementById("user-payment-container").appendChild(loader);
+    document.getElementById("entity-payment-container").appendChild(loader);
   }
 
   function removeLoader() {
-    document.getElementById("user-payment-container")
+    document.getElementById("entity-payment-container")
       .removeChild(document.getElementsByClassName("loader")[0]);
-    document.getElementById("user-payment-wrapper").classList.remove("d-none");
+    document.getElementById("entity-payment-wrapper").classList.remove("d-none");
   }
 </script>

@@ -10,11 +10,11 @@
         <div id="user-general-wrapper" class="d-none">
           <div>
             <ul class="nav nav-tabs">
-              <li class="nav-item"><a class="nav-link nav-link-active" href="/user/{{user}}/general/">{% trans 'user.tab.general' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/bundle/">{% trans 'user.tab.bundle' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/payment/">{% trans 'user.tab.payment' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/offers/">{% trans 'user.tab.offer' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/termination/">{% trans 'user.tab.termination' %}</a></li>
+              <li class="nav-item"><a class="nav-link nav-link-active" href="/user/{{user}}/general/">{% trans 'entity.tab.general' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/bundle/">{% trans 'entity.tab.bundle' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/payment/">{% trans 'entity.tab.payment' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/offers/">{% trans 'entity.tab.offer' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/termination/">{% trans 'entity.tab.termination' %}</a></li>
             </ul>
             <div id="user-general-content">
               <div class="user-general-side">
@@ -126,13 +126,13 @@
 
   function findPackageName(bundle) {
     if (bundle.type === "TRIAL") {
-      return "{% trans 'user.bundle.free' %}";
+      return "{% trans 'entity.bundle.free' %}";
     } else if (bundle.type === "PROFESSIONAL") {
-      return "{% trans 'user.bundle.professional' %}";
+      return "{% trans 'entity.bundle.professional' %}";
     } else if (bundle.type === "TEAM") {
-      return "{% trans 'user.bundle.team' %}";
+      return "{% trans 'entity.bundle.team' %}";
     } else if (bundle.type === "ENTERPRISE") {
-      return "{% trans 'user.bundle.enterprise' %}";
+      return "{% trans 'entity.bundle.enterprise' %}";
     }
   }
 
@@ -140,21 +140,21 @@
     if (bundle.class === "NONE") {
       return "";
     } else if (bundle.class === "BEGINNER") {
-      return "{% trans 'user.bundle.beginner' %}";
+      return "{% trans 'entity.bundle.beginner' %}";
     } else if (bundle.class === "ADVANCED") {
-      return "{% trans 'user.bundle.advanced' %}";
+      return "{% trans 'entity.bundle.advanced' %}";
     } else if (bundle.class === "EXPERT") {
-      return "{% trans 'user.bundle.expert' %}";
+      return "{% trans 'entity.bundle.expert' %}";
     }
   }
 
   function findPackageRuntime(bundle) {
     if (bundle.runtime === "WEEKLY") {
-      return "1 {% trans 'user.bundle.runtime.week' %}";
+      return "1 {% trans 'entity.bundle.runtime.week' %}";
     } else if (bundle.runtime === "MONTHLY") {
-      return "1 {% trans 'user.bundle.runtime.month' %}";
+      return "1 {% trans 'entity.bundle.runtime.month' %}";
     } else if (bundle.runtime === "YEARLY") {
-      return "1 {% trans 'user.bundle.runtime.year' %}";
+      return "1 {% trans 'entity.bundle.runtime.year' %}";
     }
   }
 
@@ -269,8 +269,8 @@
   }
 
   function fetchBundle(callback) {
-    let request = new HttpRequest("https://team.taskwolf.net/v1/user/bundle/find/", "POST",
-      [], {user: "{{user}}"});
+    let request = new HttpRequest("https://team.taskwolf.net/v1/entity/bundle/find/", "POST",
+      [], {entity: "{{user}}"});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));
     });

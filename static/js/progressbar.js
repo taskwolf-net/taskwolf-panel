@@ -2022,7 +2022,7 @@
         }
       }, opts, true);  // Use recursive extend
 
-      // If user specifies e.g. svgStyle or text style, the whole object
+      // If entity specifies e.g. svgStyle or text style, the whole object
       // should replace the defaults to make working with styles easier
       if (utils.isObject(opts) && opts.svgStyle !== undefined) {
         this._opts.svgStyle = opts.svgStyle;

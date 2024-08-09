@@ -1,15 +1,15 @@
-#user-termination-wrapper {
+#entity-termination-wrapper {
   width: min(1200px, 95%);
   margin: auto;
 }
 
-#user-termination-container .nav-tabs {
+#entity-termination-container .nav-tabs {
   width: min(1200px, 100%);
   margin: 40px auto 75px auto;
   border: none;
 }
 
-#user-termination-container .nav-link {
+#entity-termination-container .nav-link {
   border: none;
   transition-duration: 0.3s;
   padding-left: 10px;
@@ -19,26 +19,26 @@
   margin-right: 5px;
 }
 
-#user-termination-container .nav-link {
+#entity-termination-container .nav-link {
   color: white;
 }
 
-#user-termination-container .nav-link-active {
+#entity-termination-container .nav-link-active {
   color: #8fc0f1;
   border-bottom: 2px #8fc0f1 solid;
 }
 
-#user-termination-process, #user-termination-not-possible, #user-termination-done {
+#entity-termination-process, #entity-termination-not-possible, #entity-termination-done {
   padding: 30px;
   border-radius: 5px;
 }
 
-#user-termination-process {
+#entity-termination-process {
   margin-top: 50px;
   margin-bottom: 50px;
 }
 
-#user-termination-process, #user-termination-not-possible, #user-termination-done {
+#entity-termination-process, #entity-termination-not-possible, #entity-termination-done {
   background-color: #131820;
   border: 1px #2b3441 solid;
 }

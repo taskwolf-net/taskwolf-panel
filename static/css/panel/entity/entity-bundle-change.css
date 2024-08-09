@@ -1,9 +1,9 @@
-#user-bundle-change-wrapper {
+#entity-bundle-change-wrapper {
   width: min(1200px, 95%);
   margin: auto;
 }
 
-#user-bundle-change-back {
+#entity-bundle-change-back {
   margin-top: 5vh;
   margin-bottom: 5vh;
   width: 52px;
@@ -15,21 +15,21 @@
   font-size: 25px;
 }
 
-#user-bundle-change-back:hover {
+#entity-bundle-change-back:hover {
   background-color: #212937;
 }
 
-#user-bundle-change-process {
+#entity-bundle-change-process {
   padding: 30px;
   border-radius: 5px;
 }
 
-#user-bundle-change-process {
+#entity-bundle-change-process {
   background-color: #131820;
   border: 1px #2b3441 solid;
 }
 
-#user-bundle-change-process-data {
+#entity-bundle-change-process-data {
   width: min(400px, 100%);
   margin: auto;
 }

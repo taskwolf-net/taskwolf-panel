@@ -1,0 +1,315 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body class="dark">
+    {% include 'panel-header.html' %}
+    {% include 'panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="entity-bundle-container">
+        <div id="entity-bundle-wrapper" class="d-none">
+          <div>
+            <ul class="nav nav-tabs">
+              <li class="nav-item"><a class="nav-link" href="/{{type}}/{{entity}}/general/">{% trans 'entity.tab.general' %}</a></li>
+              <li class="nav-item"><a class="nav-link nav-link-active" href="/{{type}}/{{entity}}/bundle/">{% trans 'entity.tab.bundle' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/{{type}}/{{entity}}/payment/">{% trans 'entity.tab.payment' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/{{type}}/{{entity}}/offers/">{% trans 'entity.tab.offer' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/{{type}}/{{entity}}/termination/">{% trans 'entity.tab.termination' %}</a></li>
+            </ul>
+          </div>
+          <div id="entity-bundle-information">
+            <h3 class="fw-bold mb-4">{% trans 'entity.bundle.headline' %}</h3>
+            <ul id="entity-bundle-information-entries">
+              <li class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-solid fa-box-archive"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.type' %}</span>
+                </div>
+                <span id="entity-bundle-information-type"></span>
+              </li>
+              <div id="entity-bundle-information-divider-class" class="entity-bundle-information-divider"></div>
+              <li id="entity-bundle-information-entry-class" class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.class' %}</span>
+                </div>
+                <span id="entity-bundle-information-class"></span>
+              </li>
+              <div class="entity-bundle-information-divider"></div>
+              <li class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-solid fa-coins"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.price' %}</span>
+                </div>
+                <span id="entity-bundle-information-price"></span>
+              </li>
+              <div class="entity-bundle-information-divider"></div>
+              <li class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-regular fa-clock"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.runtime' %}</span>
+                </div>
+                <span id="entity-bundle-information-runtime"></span>
+              </li>
+              <div class="entity-bundle-information-divider"></div>
+              <li class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-solid fa-unlock"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.workflow.access' %}</span>
+                </div>
+                <span id="entity-bundle-information-workflow-access"></span>
+              </li>
+              <div class="entity-bundle-information-divider"></div>
+              <li class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-solid fa-hashtag"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.workflow.number' %}</span>
+                </div>
+                <span id="entity-bundle-information-workflow-number"></span>
+              </li>
+              <div class="entity-bundle-information-divider"></div>
+              <li class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-solid fa-microchip"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.workflow.operation' %}</span>
+                </div>
+                <span id="entity-bundle-information-workflow-operation"></span>
+              </li>
+              <div class="entity-bundle-information-divider"></div>
+              <li class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-solid fa-unlock"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.template.access' %}</span>
+                </div>
+                <span id="entity-bundle-information-template-access"></span>
+              </li>
+              <div class="entity-bundle-information-divider"></div>
+              <li class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-solid fa-unlock"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.database.access' %}</span>
+                </div>
+                <span id="entity-bundle-information-database-access"></span>
+              </li>
+              <div class="entity-bundle-information-divider"></div>
+              <li class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-solid fa-hashtag"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.database.number' %}</span>
+                </div>
+                <span id="entity-bundle-information-database-number"></span>
+              </li>
+              <div class="entity-bundle-information-divider"></div>
+              <li class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-solid fa-database"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.database.data' %}</span>
+                </div>
+                <span id="entity-bundle-information-database-data"></span>
+              </li>
+              <div class="entity-bundle-information-divider"></div>
+              <li class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-solid fa-unlock"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.webhook.access' %}</span>
+                </div>
+                <span id="entity-bundle-information-webhook-access"></span>
+              </li>
+              <div class="entity-bundle-information-divider"></div>
+              <li class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-solid fa-hashtag"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.webhook.number' %}</span>
+                </div>
+                <span id="entity-bundle-information-webhook-number"></span>
+              </li>
+              <div class="entity-bundle-information-divider"></div>
+              <li class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-solid fa-unlock"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.organization.access' %}</span>
+                </div>
+                <span id="entity-bundle-information-organization-access"><i class='fa-solid fa-xmark'></i></span>
+              </li>
+              <div class="entity-bundle-information-divider"></div>
+              <li class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-solid fa-unlock"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.device.access' %}</span>
+                </div>
+                <span id="entity-bundle-information-device-access"></span>
+              </li>
+              <div class="entity-bundle-information-divider"></div>
+              <li class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-solid fa-unlock"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.account.access' %}</span>
+                </div>
+                <span id="entity-bundle-information-account-access"></span>
+              </li>
+              <div class="entity-bundle-information-divider"></div>
+              <li class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-solid fa-hashtag"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.account.number' %}</span>
+                </div>
+                <span id="entity-bundle-information-account-number"></span>
+              </li>
+            </ul>
+          </div>
+          <div id="entity-bundle-unavailable" class="d-none">
+            <h4 class="fw-bold mb-4">{% trans 'entity.bundle.unavailable.headline' %}</h4>
+            <p class="mb-3">{% trans 'entity.bundle.unavailable.description' %}</p>
+          </div>
+          <button type="button" id="entity-bundle-change" class="btn btn-primary d-block px-5 my-5 mx-auto">{% trans 'entity.bundle.change' %}</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  $(document).ready(function() {
+    displayLoader();
+    fetchBundle(function (bundle) {
+      removeLoader();
+      if (bundle.found === false) {
+        document.getElementById("entity-bundle-unavailable").classList.remove("d-none");
+        document.getElementById("entity-bundle-information").classList.add("d-none");
+        return;
+      }
+      displayGeneralInformation(bundle);
+    });
+  });
+
+  function displayGeneralInformation(bundle) {
+    document.getElementById("entity-bundle-information-type").innerHTML =
+      findPackageName(bundle);
+    $(document.getElementById("entity-bundle-information-entry-class"))
+      .toggleClass("d-none", bundle.class === "NONE");
+    $(document.getElementById("entity-bundle-information-divider-class"))
+      .toggleClass("d-none", bundle.class === "NONE");
+    document.getElementById("entity-bundle-information-class").innerHTML =
+      findPackageClass(bundle);
+    document.getElementById("entity-bundle-information-price").innerHTML =
+      bundle.price + " €";
+    document.getElementById("entity-bundle-information-runtime").innerHTML =
+      findPackageRuntime(bundle);
+    document.getElementById("entity-bundle-information-workflow-access").innerHTML =
+      bundle.workflowAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+    document.getElementById("entity-bundle-information-workflow-number").innerHTML =
+      bundle.workflowNumberLimit < 0 ? "{% trans 'entity.bundle.unlimited' %}" : bundle.workflowNumberLimit;
+    document.getElementById("entity-bundle-information-workflow-operation").innerHTML =
+      bundle.workflowOperationLimit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    document.getElementById("entity-bundle-information-template-access").innerHTML =
+      true ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+    document.getElementById("entity-bundle-information-database-access").innerHTML =
+      bundle.databaseAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+    document.getElementById("entity-bundle-information-database-number").innerHTML =
+      bundle.databaseNumberLimit < 0 ? "{% trans 'entity.bundle.unlimited' %}" : bundle.databaseNumberLimit;
+    document.getElementById("entity-bundle-information-database-data").innerHTML =
+      bundle.databaseDataLimit + " GB";
+    document.getElementById("entity-bundle-information-webhook-access").innerHTML =
+      bundle.webhookAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+    document.getElementById("entity-bundle-information-webhook-number").innerHTML =
+      bundle.webhookNumberLimit < 0 ? "{% trans 'entity.bundle.unlimited' %}" : bundle.webhookNumberLimit;
+    document.getElementById("entity-bundle-information-device-access").innerHTML =
+      bundle.deviceAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+    document.getElementById("entity-bundle-information-account-access").innerHTML =
+      bundle.accountsAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+    document.getElementById("entity-bundle-information-account-number").innerHTML =
+      bundle.accountsNumberLimit < 0 ? "{% trans 'entity.bundle.unlimited' %}" : bundle.accountsNumberLimit;
+  }
+
+  function findPackageName(bundle) {
+    if (bundle.type === "TRIAL") {
+      return "{% trans 'entity.bundle.free' %}";
+    } else if (bundle.type === "PROFESSIONAL") {
+      return "{% trans 'entity.bundle.professional' %}";
+    } else if (bundle.type === "TEAM") {
+      return "{% trans 'entity.bundle.team' %}";
+    } else if (bundle.type === "ENTERPRISE") {
+      return "{% trans 'entity.bundle.enterprise' %}";
+    }
+  }
+
+  function findPackageClass(bundle) {
+    if (bundle.class === "NONE") {
+      return "";
+    } else if (bundle.class === "BEGINNER") {
+      return "{% trans 'entity.bundle.beginner' %}";
+    } else if (bundle.class === "ADVANCED") {
+      return "{% trans 'entity.bundle.advanced' %}";
+    } else if (bundle.class === "EXPERT") {
+      return "{% trans 'entity.bundle.expert' %}";
+    }
+  }
+
+  function findPackageRuntime(bundle) {
+    if (bundle.runtime === "WEEKLY") {
+      return "1 {% trans 'entity.bundle.runtime.week' %}";
+    } else if (bundle.runtime === "MONTHLY") {
+      return "1 {% trans 'entity.bundle.runtime.month' %}";
+    } else if (bundle.runtime === "YEARLY") {
+      return "1 {% trans 'entity.bundle.runtime.year' %}";
+    }
+  }
+
+  document.getElementById("entity-bundle-change").onclick = function (event) {
+    window.location.href = "/{{type}}/{{entity}}/bundle/change/";
+  }
+
+  function fetchBundle(callback) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/entity/bundle/find/", "POST",
+      [], {entity: "{{entity}}"});
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText));
+    });
+  }
+
+  function displayLoader() {
+    var loader = document.createElement("div");
+    loader.classList.add("loader");
+    document.getElementById("entity-bundle-container").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("entity-bundle-container")
+      .removeChild(document.getElementsByClassName("loader")[0]);
+    document.getElementById("entity-bundle-wrapper").classList.remove("d-none");
+  }
+</script>

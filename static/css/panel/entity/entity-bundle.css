@@ -1,15 +1,15 @@
-#user-bundle-wrapper {
+#entity-bundle-wrapper {
   width: min(1200px, 95%);
   margin: auto;
 }
 
-#user-bundle-container .nav-tabs {
+#entity-bundle-container .nav-tabs {
   width: min(1200px, 100%);
   margin: 40px auto 75px auto;
   border: none;
 }
 
-#user-bundle-container .nav-link {
+#entity-bundle-container .nav-link {
   border: none;
   transition-duration: 0.3s;
   padding-left: 10px;
@@ -19,38 +19,38 @@
   margin-right: 5px;
 }
 
-#user-bundle-container .nav-link {
+#entity-bundle-container .nav-link {
   color: white;
 }
 
-#user-bundle-container .nav-link-active {
+#entity-bundle-container .nav-link-active {
   color: #8fc0f1;
   border-bottom: 2px #8fc0f1 solid;
 }
 
-#user-bundle-unavailable {
+#entity-bundle-unavailable {
   padding: 30px;
   border-radius: 5px;
 }
 
-#user-bundle-unavailable {
+#entity-bundle-unavailable {
   background-color: #131820;
   border: 1px #2b3441 solid;
 }
 
-#user-bundle-information {
+#entity-bundle-information {
   padding: 30px;
   border-radius: 5px;
   margin-top: 50px;
   margin-bottom: 50px;
 }
 
-#user-bundle-information {
+#entity-bundle-information {
   background-color: #131820;
   border: 1px #2b3441 solid;
 }
 
-#user-bundle-information-entries {
+#entity-bundle-information-entries {
   list-style-type: none;
   padding: 0;
   width: min(800px, 100%);
@@ -58,24 +58,24 @@
   border-radius: 5px;
 }
 
-#user-bundle-information-entries {
+#entity-bundle-information-entries {
   border: 1px #596066 solid;
 }
 
-.user-bundle-information-entry {
+.entity-bundle-information-entry {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
 }
 
-.user-bundle-information-entry-description {
+.entity-bundle-information-entry-description {
   display: flex;
   align-items: center;
   width: 75%;
 }
 
-.user-bundle-information-entry-icon {
+.entity-bundle-information-entry-icon {
   width: 24px;
   height: 24px;
   display: flex;
@@ -84,11 +84,11 @@
   margin-right: 15px;
 }
 
-.user-bundle-information-divider {
+.entity-bundle-information-divider {
   width: 100%;
   height: 0;
 }
 
-.user-bundle-information-divider {
+.entity-bundle-information-divider {
   border-bottom: 1px #596066 solid;
 }

@@ -1,15 +1,15 @@
-#user-payment-wrapper {
+#entity-payment-wrapper {
   width: min(1200px, 95%);
   margin: auto;
 }
 
-#user-payment-wrapper .nav-tabs {
+#entity-payment-wrapper .nav-tabs {
   width: min(1200px, 100%);
   margin: 40px auto 75px auto;
   border: none;
 }
 
-#user-payment-wrapper .nav-link {
+#entity-payment-wrapper .nav-link {
   border: none;
   transition-duration: 0.3s;
   padding-left: 10px;
@@ -19,38 +19,38 @@
   margin-right: 5px;
 }
 
-#user-payment-wrapper .nav-link {
+#entity-payment-wrapper .nav-link {
   color: white;
 }
 
-#user-payment-wrapper .nav-link-active {
+#entity-payment-wrapper .nav-link-active {
   color: #8fc0f1;
   border-bottom: 2px #8fc0f1 solid;
 }
 
-#user-payment-unavailable {
+#entity-payment-unavailable {
   padding: 30px;
   border-radius: 5px;
 }
 
-#user-payment-unavailable {
+#entity-payment-unavailable {
   background-color: #131820;
   border: 1px #2b3441 solid;
 }
 
-#user-payments {
+#entity-payments {
   padding: 30px;
   border-radius: 5px;
   margin-top: 50px;
   margin-bottom: 50px;
 }
 
-#user-payments {
+#entity-payments {
   background-color: #131820;
   border: 1px #2b3441 solid;
 }
 
-#user-payment-list {
+#entity-payment-list {
   width: min(1000px, 100%);
   position: relative;
   list-style-type: none;
@@ -58,7 +58,7 @@
   margin: auto;
 }
 
-#user-payment-list li {
+#entity-payment-list li {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -67,33 +67,33 @@
   font-size: 18px;
 }
 
-#user-payment-list li {
+#entity-payment-list li {
   border-bottom: 1px #717171 solid;
 }
 
-#user-payment-list li:last-child {
+#entity-payment-list li:last-child {
   border-bottom: none;
 }
 
-#user-payment-list li div {
+#entity-payment-list li div {
   padding: 3%;
   width: 20%;
   text-align: left;
 }
 
-#user-payment-list li div {
+#entity-payment-list li div {
   border-right: 1px #717171 solid;
 }
 
-#user-payment-list li div:last-child {
+#entity-payment-list li div:last-child {
   border-right: none;
 }
 
-#user-payment-list li div span {
+#entity-payment-list li div span {
   line-break: anywhere;
 }
 
-#user-payment-description {
+#entity-payment-description {
   width: min(1000px, 100%);
   position: relative;
   list-style-type: none;
@@ -105,80 +105,80 @@
   flex-direction: row;
 }
 
-#user-payment-description li {
+#entity-payment-description li {
   width: 20%;
   padding: 2% 3%;
   font-weight: bold;
   font-size: 20px;
 }
 
-#user-payment-description li {
+#entity-payment-description li {
   border-right: 1px #717171 solid;
 }
 
-#user-payment-description li:last-child {
+#entity-payment-description li:last-child {
   border-right: none;
 }
 
-.user-payment-status-successful, .user-payment-status-failed, .user-payment-status-pending {
+.entity-payment-status-successful, .entity-payment-status-failed, .entity-payment-status-pending {
   padding: 10px;
   border-radius: 5px;
   line-break: auto !important;
 }
 
-.user-payment-status-successful {
+.entity-payment-status-successful {
   border: 2px #42a94b solid;
   background-color: #d7f8da;
   color: #1f721c;
 }
 
-.user-payment-status-failed {
+.entity-payment-status-failed {
   border: 2px #a94242 solid;
   background-color: #f8d7da;
   color: #721c24;
 }
 
-.user-payment-status-pending {
+.entity-payment-status-pending {
   border: 2px #a99442 solid;
   background-color: #f8f1d7;
   color: #72571c;
 }
 
 @media (max-width: 1100px) {
-  #user-payment-description li {
+  #entity-payment-description li {
     font-size: .8em;
   }
 
-  #user-payment-list li div span {
+  #entity-payment-list li div span {
     font-size: .8em;
   }
 
-  .user-payment-status-successful, .user-payment-status-failed, .user-payment-status-pending {
+  .entity-payment-status-successful, .entity-payment-status-failed, .entity-payment-status-pending {
     padding: 5px;
   }
 
-  .user-payment-invoice {
+  .entity-payment-invoice {
     font-size: .7em !important;
   }
 }
 
 @media (max-width: 900px) {
-  .user-payment-invoice {
+  .entity-payment-invoice {
     font-size: .6em !important;
     padding: .2rem .4rem !important;
   }
 }
 
 @media (max-width: 500px) {
-  #user-payment-description li {
+  #entity-payment-description li {
     font-size: .6em;
   }
 
-  #user-payment-list li div span {
+  #entity-payment-list li div span {
     font-size: .6em;
   }
 
-  .user-payment-invoice {
+  .entity-payment-invoice {
     padding: .12rem .24rem !important;
   }
 }

@@ -1,15 +1,15 @@
-#user-offers-wrapper {
+#entity-offers-wrapper {
   width: min(1200px, 95%);
   margin: auto;
 }
 
-#user-offers-container .nav-tabs {
+#entity-offers-container .nav-tabs {
   width: min(1200px, 100%);
   margin: 40px auto 75px auto;
   border: none;
 }
 
-#user-offers-container .nav-link {
+#entity-offers-container .nav-link {
   border: none;
   transition-duration: 0.3s;
   padding-left: 10px;
@@ -19,38 +19,38 @@
   margin-right: 5px;
 }
 
-#user-offers-container .nav-link {
+#entity-offers-container .nav-link {
   color: white;
 }
 
-#user-offers-container .nav-link-active {
+#entity-offers-container .nav-link-active {
   color: #8fc0f1;
   border-bottom: 2px #8fc0f1 solid;
 }
 
-#user-offers-empty {
+#entity-offers-empty {
   padding: 30px;
   border-radius: 5px;
 }
 
-#user-offers-empty {
+#entity-offers-empty {
   background-color: #131820;
   border: 1px #2b3441 solid;
 }
 
-#user-offers {
+#entity-offers {
   padding: 30px;
   border-radius: 5px;
   margin-top: 50px;
   margin-bottom: 50px;
 }
 
-#user-offers {
+#entity-offers {
   background-color: #131820;
   border: 1px #2b3441 solid;
 }
 
-#user-offer-list {
+#entity-offer-list {
   width: min(1000px, 100%);
   position: relative;
   list-style-type: none;
@@ -58,7 +58,7 @@
   margin: auto;
 }
 
-#user-offer-list li {
+#entity-offer-list li {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -67,28 +67,28 @@
   font-size: 18px;
 }
 
-#user-offer-list li {
+#entity-offer-list li {
   border-bottom: 1px #717171 solid;
 }
 
-#user-offer-list li:last-child {
+#entity-offer-list li:last-child {
   border-bottom: none;
 }
 
-#user-offer-list li div {
+#entity-offer-list li div {
   padding: 3%;
   width: 20%;
   text-align: left;
 }
 
-#user-offer-list li div {
+#entity-offer-list li div {
   border-right: 1px #717171 solid;
 }
 
-#user-offer-list li div:last-child {
+#entity-offer-list li div:last-child {
   border-right: none;
 }
 
-#user-offer-list li div span {
+#entity-offer-list li div span {
   line-break: anywhere;
 }

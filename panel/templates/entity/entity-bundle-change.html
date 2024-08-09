@@ -1,0 +1,301 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body class="dark">
+    {% include 'panel-header.html' %}
+    {% include 'panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="entity-bundle-change-container">
+        <div id="entity-bundle-change-wrapper" class="d-none">
+          <button id="entity-bundle-change-back"><i class="fa-solid fa-arrow-left-long"></i></button>
+          <div id="entity-bundle-change-process" class="mb-5">
+            <h4 class="fw-bold mb-4">{% trans 'entity.bundle.change.headline' %}</h4>
+            <p class="mb-5">{% trans 'entity.bundle.change.description' %}</p>
+            <div id="entity-bundle-change-process-data">
+              <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'entity.bundle.change.type' %}</label>
+                <div class="dropdown">
+                  <button id="entity-bundle-change-type" class="btn btn-secondary dropdown-toggle bg-dark w-100" type="button" data-bs-toggle="dropdown">
+                    {% trans 'entity.bundle.change.type' %}
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-dark w-100">
+                    <li id="entity-bundle-change-type-trial" class="dropdown-item entity-bundle-change-type-entry">{% trans 'entity.bundle.change.type.trial' %}</li>
+                    <li id="entity-bundle-change-type-professional" class="dropdown-item entity-bundle-change-type-entry">{% trans 'entity.bundle.change.type.professional' %}</li>
+                    <li id="entity-bundle-change-type-team" class="dropdown-item entity-bundle-change-type-entry">{% trans 'entity.bundle.change.type.team' %}</li>
+                    <li id="entity-bundle-change-type-enterprise" class="dropdown-item entity-bundle-change-type-entry">{% trans 'entity.bundle.change.type.enterprise' %}</li>
+                  </ul>
+                </div>
+              </div>
+              <div id="entity-bundle-change-class-container" class="form-outline mb-3 d-none">
+                <label class="form-label">{% trans 'entity.bundle.change.class' %}</label>
+                <div class="dropdown">
+                  <button id="entity-bundle-change-class" class="btn btn-secondary dropdown-toggle bg-dark w-100" type="button" data-bs-toggle="dropdown">
+                    {% trans 'entity.bundle.change.class' %}
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-dark w-100">
+                    <li id="entity-bundle-change-class-beginner" class="dropdown-item entity-bundle-change-class-entry">{% trans 'entity.bundle.change.class.beginner' %}</li>
+                    <li id="entity-bundle-change-class-advanced" class="dropdown-item entity-bundle-change-class-entry">{% trans 'entity.bundle.change.class.advanced' %}</li>
+                    <li id="entity-bundle-change-class-expert" class="dropdown-item entity-bundle-change-class-entry">{% trans 'entity.bundle.change.class.expert' %}</li>
+                  </ul>
+                </div>
+              </div>
+              <div id="entity-bundle-change-runtime-container" class="form-outline mb-3 d-none">
+                <label class="form-label">{% trans 'entity.bundle.change.runtime' %}</label>
+                <div class="dropdown">
+                  <button id="entity-bundle-change-runtime" class="btn btn-secondary dropdown-toggle bg-dark w-100" type="button" data-bs-toggle="dropdown">
+                    {% trans 'entity.bundle.change.runtime' %}
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-dark w-100">
+                    <li id="entity-bundle-change-runtime-weekly" class="dropdown-item entity-bundle-change-runtime-entry">{% trans 'entity.bundle.change.runtime.weekly' %}</li>
+                    <li class="dropdown-item entity-bundle-change-runtime-entry">{% trans 'entity.bundle.change.runtime.monthly' %}</li>
+                    <li class="dropdown-item entity-bundle-change-runtime-entry">{% trans 'entity.bundle.change.runtime.yearly' %}</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'entity.bundle.change.workflow.limit' %}</label>
+                <input id="entity-bundle-change-workflow-limit" class="form-control" placeholder="{% trans 'entity.bundle.change.workflow.limit' %}">
+              </div>
+              <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'entity.bundle.change.operation.limit' %}</label>
+                <input id="entity-bundle-change-operation-limit" class="form-control" placeholder="{% trans 'entity.bundle.change.operation.limit' %}">
+              </div>
+              <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'entity.bundle.change.database.limit' %}</label>
+                <input id="entity-bundle-change-database-limit" class="form-control" placeholder="{% trans 'entity.bundle.change.database.limit' %}">
+              </div>
+              <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'entity.bundle.change.database.data.limit' %}</label>
+                <input id="entity-bundle-change-database-data-limit" class="form-control" placeholder="{% trans 'entity.bundle.change.database.data.limit' %}">
+              </div>
+              <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'entity.bundle.change.price' %}</label>
+                <input id="entity-bundle-change-price" class="form-control" placeholder="{% trans 'entity.bundle.change.price' %}">
+              </div>
+            </div>
+            <button type="button" id="entity-bundle-change" class="btn btn-danger d-block px-5 mt-5 mx-auto">{% trans 'entity.bundle.change' %}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  $(document).ready(function() {
+    displayLoader();
+    fetchBundle(function (bundle) {
+      displayBundleChange(bundle);
+      removeLoader();
+    });
+  });
+
+  function displayBundleChange(bundle) {
+    displayBundleTypeSelect(bundle);
+    displayBundleClassSelect(bundle);
+    prepareDropdown("entity-bundle-change-runtime", "entity-bundle-change-runtime-entry",
+      function (value) {return findBundleRuntime(value) === bundle.runtime}, () => {});
+    fillInputFields(bundle);
+  }
+
+  function displayBundleTypeSelect(bundle) {
+    prepareDropdown("entity-bundle-change-type", "entity-bundle-change-type-entry",
+      function (value) {return findBundleType(value) === bundle.type}, onBundleTypeSelect);
+    if ("{{type}}" === "user") {
+      document.getElementById("entity-bundle-change-type-team").classList.add("d-none");
+      document.getElementById("entity-bundle-change-type-enterprise").classList.add("d-none");
+      if (bundle.type === "PROFESSIONAL") {
+        document.getElementById("entity-bundle-change-type-trial").classList.add("d-none");
+      }
+    } else if ("{{type}}" === "organization") {
+      document.getElementById("entity-bundle-change-type-trial").classList.add("d-none");
+      document.getElementById("entity-bundle-change-type-professional").classList.add("d-none");
+      if (bundle.type === "ENTERPRISE") {
+        document.getElementById("entity-bundle-change-type-team").classList.add("d-none");
+      }
+    }
+  }
+
+  function onBundleTypeSelect(type) {
+    resetBundleClass();
+    resetBundleRuntime();
+    if (type !== "{% trans 'entity.bundle.change.type.trial' %}") {
+      document.getElementById("entity-bundle-change-runtime-weekly").classList.add("d-none");
+    } else {
+      document.getElementById("entity-bundle-change-runtime-weekly").classList.remove("d-none");
+    }
+    if (type === "{% trans 'entity.bundle.change.type.trial' %}" || type === "{% trans 'entity.bundle.change.type.enterprise' %}") {
+      document.getElementById("entity-bundle-change-class-container").classList.add("d-none");
+      document.getElementById("entity-bundle-change-runtime-container").classList.remove("d-none");
+    } else {
+      document.getElementById("entity-bundle-change-class-container").classList.remove("d-none");
+      document.getElementById("entity-bundle-change-runtime-container").classList.add("d-none");
+    }
+  }
+
+  function displayBundleClassSelect(bundle) {
+    prepareDropdown("entity-bundle-change-class", "entity-bundle-change-class-entry",
+      (value) => {return findBundleClass(value) === bundle.class}, onBundleClassSelect);
+    if (bundle.class === "ADVANCED") {
+      document.getElementById("entity-bundle-change-class-beginner").classList.add("d-none");
+    } else if (bundle.class === "EXPERT") {
+      document.getElementById("entity-bundle-change-class-beginner").classList.add("d-none");
+      document.getElementById("entity-bundle-change-class-advanced").classList.add("d-none");
+    }
+  }
+
+  function onBundleClassSelect(type) {
+    resetBundleRuntime();
+    document.getElementById("entity-bundle-change-runtime-container").classList.remove("d-none");
+  }
+
+  function resetBundleClass() {
+    var classButton = document.getElementById("entity-bundle-change-class");
+    classButton.innerHTML = "{% trans 'entity.bundle.change.class' %}";
+    classButton.classList.remove("fw-bold");
+  }
+
+  function resetBundleRuntime() {
+    var runtimeButton = document.getElementById("entity-bundle-change-runtime");
+    runtimeButton.innerHTML = "{% trans 'entity.bundle.change.runtime' %}";
+    runtimeButton.classList.remove("fw-bold");
+  }
+
+  function prepareDropdown(buttonId, entryId, initialSelect, onSelect) {
+    var button = document.getElementById(buttonId);
+    var dropdownElements = document.getElementsByClassName(entryId);
+    for (let i = 0; i < dropdownElements.length; i++) {
+      let dropdownElement = dropdownElements[i];
+      dropdownElement.onclick = function (event) {
+        var value = dropdownElement.innerHTML;
+        button.classList.add("fw-bold");
+        button.innerHTML = value;
+        onSelect(value);
+      }
+      if (initialSelect(dropdownElement.innerHTML)) {
+        dropdownElement.click();
+      }
+    }
+  }
+
+  function fillInputFields(bundle) {
+    if (!bundle.found) {
+      return;
+    }
+    document.getElementById("entity-bundle-change-workflow-limit").value =
+      bundle.workflowNumberLimit;
+    document.getElementById("entity-bundle-change-operation-limit").value =
+      bundle.workflowOperationLimit;
+    document.getElementById("entity-bundle-change-database-limit").value =
+      bundle.databaseNumberLimit;
+    document.getElementById("entity-bundle-change-database-data-limit").value =
+      bundle.databaseDataLimit;
+    document.getElementById("entity-bundle-change-price").value = bundle.price;
+  }
+
+  function fetchBundle(callback) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/entity/bundle/find/", "POST",
+      [], {entity: "{{entity}}"});
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText));
+    });
+  }
+
+  document.getElementById("entity-bundle-change-back").onclick = function (event) {
+    window.location.href = "/{{type}}/{{entity}}/bundle/";
+  }
+
+  document.getElementById("entity-bundle-change").onclick = function (event) {
+    var body = {entity: "{{entity}}"};
+    var bundleType = findBundleType(document.getElementById("entity-bundle-change-type").innerHTML);
+    var bundleClass = findBundleClass(document.getElementById("entity-bundle-change-class").innerHTML);
+    var bundleRuntime = findBundleRuntime(document.getElementById("entity-bundle-change-runtime").innerHTML);
+    if (bundleType === "" || bundleRuntime === "" || (bundleType !== "TRIAL" && bundleClass === "NONE")) {
+      Swal.fire("{% trans 'entity.bundle.change.failed.title' %}", "{% trans 'entity.bundle.change.failed.body' %}", "error");
+      return;
+    }
+    body.type = bundleType;
+    body.class = bundleClass;
+    body.runtime = bundleRuntime;
+    var workflowLimit = document.getElementById("entity-bundle-change-workflow-limit").value;
+    if (workflowLimit !== "") {
+      body.workflowNumberLimit = workflowLimit;
+    }
+    var operationLimit = document.getElementById("entity-bundle-change-operation-limit").value;
+    if (operationLimit !== "") {
+      body.workflowOperationLimit = operationLimit;
+    }
+    var databaseLimit = document.getElementById("entity-bundle-change-database-limit").value;
+    if (databaseLimit !== "") {
+      body.databaseNumberLimit = databaseLimit;
+    }
+    var databaseDataLimit = document.getElementById("entity-bundle-change-database-data-limit").value;
+    if (databaseDataLimit !== "") {
+      body.databaseDataLimit = databaseDataLimit;
+    }
+    var price = document.getElementById("entity-bundle-change-price").value;
+    if (price !== "") {
+      body.price = price;
+    }
+    Swal.fire({
+      title: "{% trans 'entity.bundle.change.submit.title' %}",
+      text: "{% trans 'entity.bundle.change.submit.body' %}",
+      icon: "warning",
+      confirmButtonColor: "#dc3545",
+      showCancelButton: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        let request = new HttpRequest("https://team.taskwolf.net/v1/entity/bundle/change/", "POST", [], body);
+        request.send(function (status, responseText) {
+          Swal.fire("{% trans 'entity.bundle.change.successful.title' %}", "{% trans 'entity.bundle.change.successful.body' %}", "success")
+            .then(success => window.location.href = "/{{type}}/{{entity}}/bundle/");
+        });
+      }
+    });
+  }
+
+  function findBundleType(content) {
+    if (content === "{% trans 'entity.bundle.change.type.trial' %}") {
+      return "TRIAL";
+    } else if (content === "{% trans 'entity.bundle.change.type.professional' %}") {
+      return "PROFESSIONAL";
+    }
+    return "";
+  }
+
+  function findBundleClass(content) {
+    if (content === "{% trans 'entity.bundle.change.class.beginner' %}") {
+      return "BEGINNER";
+    } else if (content === "{% trans 'entity.bundle.change.class.advanced' %}") {
+      return "ADVANCED";
+    } else if (content === "{% trans 'entity.bundle.change.class.expert' %}") {
+      return "EXPERT";
+    } else {
+      return "NONE";
+    }
+  }
+
+  function findBundleRuntime(content) {
+    if (content === "{% trans 'entity.bundle.change.runtime.weekly' %}") {
+      return "WEEKLY";
+    } else if (content === "{% trans 'entity.bundle.change.runtime.monthly' %}") {
+      return "MONTHLY";
+    } else if (content === "{% trans 'entity.bundle.change.runtime.yearly' %}") {
+      return "YEARLY";
+    }
+    return "";
+  }
+
+  function displayLoader() {
+    var loader = document.createElement("div");
+    loader.classList.add("loader");
+    document.getElementById("entity-bundle-change-container").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("entity-bundle-change-container")
+      .removeChild(document.getElementsByClassName("loader")[0]);
+    document.getElementById("entity-bundle-change-wrapper").classList.remove("d-none");
+  }
+</script>

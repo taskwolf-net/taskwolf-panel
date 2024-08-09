@@ -15,30 +15,30 @@ async def userGeneral(request, id):
 
 @authentication_required
 async def userBundle(request, id):
-  return render(request, 'user/user-bundle.html', {'title': 'Taskwolf - User',
-    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-bundle.css'],
-     'user': id})
+  return render(request, 'entity/entity-bundle.html', {'title': 'Taskwolf - User',
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/entity/entity-bundle.css'],
+     'entity': id, "type": "user"})
 
 @authentication_required
 async def userBundleChange(request, id):
-  return render(request, 'user/user-bundle-change.html', {'title': 'Taskwolf - User',
-   'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-bundle-change.css'],
-    'user': id})
+  return render(request, 'entity/entity-bundle-change.html', {'title': 'Taskwolf - User',
+   'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/entity/entity-bundle-change.css'],
+    'entity': id, "type": "user"})
 
 @authentication_required
 async def userPayment(request, id):
-  return render(request, 'user/user-payment.html', {'title': 'Taskwolf - User',
-    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-payment.css'],
-    'user': id})
+  return render(request, 'entity/entity-payment.html', {'title': 'Taskwolf - User',
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/entity/entity-payment.css'],
+    'entity': id, "type": "user"})
 
 @authentication_required
 async def userOffers(request, id):
-  return render(request, 'user/user-offers.html', {'title': 'Taskwolf - User',
-    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-offers.css'],
-     'user': id})
+  return render(request, 'entity/entity-offers.html', {'title': 'Taskwolf - User',
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/entity/entity-offers.css'],
+     'entity': id, "type": "user"})
 
 @authentication_required
 async def userTermination(request, id):
-  return render(request, 'user/user-termination.html', {'title': 'Taskwolf - User',
-    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-termination.css'],
-     'user': id})
+  return render(request, 'entity/entity-termination.html', {'title': 'Taskwolf - User',
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/entity/entity-termination.css'],
+     'entity': id, "type": "user"})
