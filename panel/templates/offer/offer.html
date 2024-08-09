@@ -1,0 +1,350 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body class="dark">
+    {% include 'panel-header.html' %}
+    {% include 'panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="offer-container">
+        <div id="offer-wrapper" class="d-none">
+          <button id="offer-back"><i class="fa-solid fa-arrow-left-long"></i></button>
+          <div id="offer-information">
+            <h3 class="fw-bold mb-4">{% trans 'offer.headline' %}</h3>
+            <ul id="offer-information-entries">
+              <li class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-solid fa-box-archive"></i>
+                  </div>
+                  <span>{% trans 'offer.type' %}</span>
+                </div>
+                <span id="offer-information-type"></span>
+              </li>
+              <div id="offer-information-divider-class" class="offer-information-divider"></div>
+              <li id="offer-information-entry-class" class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                  </div>
+                  <span>{% trans 'offer.class' %}</span>
+                </div>
+                <span id="offer-information-class"></span>
+              </li>
+              <div class="offer-information-divider"></div>
+              <li class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-solid fa-coins"></i>
+                  </div>
+                  <span>{% trans 'offer.price' %}</span>
+                </div>
+                <span id="offer-information-price"></span>
+              </li>
+              <div class="offer-information-divider"></div>
+              <li class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-regular fa-clock"></i>
+                  </div>
+                  <span>{% trans 'offer.runtime' %}</span>
+                </div>
+                <span id="offer-information-runtime"></span>
+              </li>
+              <div class="offer-information-divider"></div>
+              <li class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-solid fa-unlock"></i>
+                  </div>
+                  <span>{% trans 'offer.workflow.access' %}</span>
+                </div>
+                <span id="offer-information-workflow-access"></span>
+              </li>
+              <div class="offer-information-divider"></div>
+              <li class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-solid fa-hashtag"></i>
+                  </div>
+                  <span>{% trans 'offer.workflow.number' %}</span>
+                </div>
+                <span id="offer-information-workflow-number"></span>
+              </li>
+              <div class="offer-information-divider"></div>
+              <li class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-solid fa-microchip"></i>
+                  </div>
+                  <span>{% trans 'offer.workflow.operation' %}</span>
+                </div>
+                <span id="offer-information-workflow-operation"></span>
+              </li>
+              <div class="offer-information-divider"></div>
+              <li class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-solid fa-unlock"></i>
+                  </div>
+                  <span>{% trans 'offer.template.access' %}</span>
+                </div>
+                <span id="offer-information-template-access"></span>
+              </li>
+              <div class="offer-information-divider"></div>
+              <li class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-solid fa-unlock"></i>
+                  </div>
+                  <span>{% trans 'offer.database.access' %}</span>
+                </div>
+                <span id="offer-information-database-access"></span>
+              </li>
+              <div class="offer-information-divider"></div>
+              <li class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-solid fa-hashtag"></i>
+                  </div>
+                  <span>{% trans 'offer.database.number' %}</span>
+                </div>
+                <span id="offer-information-database-number"></span>
+              </li>
+              <div class="offer-information-divider"></div>
+              <li class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-solid fa-database"></i>
+                  </div>
+                  <span>{% trans 'offer.database.data' %}</span>
+                </div>
+                <span id="offer-information-database-data"></span>
+              </li>
+              <div class="offer-information-divider"></div>
+              <li class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-solid fa-unlock"></i>
+                  </div>
+                  <span>{% trans 'offer.webhook.access' %}</span>
+                </div>
+                <span id="offer-information-webhook-access"></span>
+              </li>
+              <div class="offer-information-divider"></div>
+              <li class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-solid fa-hashtag"></i>
+                  </div>
+                  <span>{% trans 'offer.webhook.number' %}</span>
+                </div>
+                <span id="offer-information-webhook-number"></span>
+              </li>
+              <div class="offer-information-divider"></div>
+              <li class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-solid fa-unlock"></i>
+                  </div>
+                  <span>{% trans 'offer.organization.access' %}</span>
+                </div>
+                <span id="offer-information-organization-access"></span>
+              </li>
+              <div class="offer-information-divider"></div>
+              <li class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-solid fa-user"></i>
+                  </div>
+                  <span>{% trans 'offer.organization.member' %}</span>
+                </div>
+                <span id="offer-information-organization-member"></span>
+              </li>
+              <div class="offer-information-divider"></div>
+              <li class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-solid fa-user"></i>
+                  </div>
+                  <span>{% trans 'offer.organization.team' %}</span>
+                </div>
+                <span id="offer-information-organization-team"></span>
+              </li>
+              <div class="offer-information-divider"></div>
+              <li class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-solid fa-unlock"></i>
+                  </div>
+                  <span>{% trans 'offer.device.access' %}</span>
+                </div>
+                <span id="offer-information-device-access"></span>
+              </li>
+              <div class="offer-information-divider"></div>
+              <li class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-solid fa-unlock"></i>
+                  </div>
+                  <span>{% trans 'offer.account.access' %}</span>
+                </div>
+                <span id="offer-information-account-access"></span>
+              </li>
+              <div class="offer-information-divider"></div>
+              <li class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-solid fa-hashtag"></i>
+                  </div>
+                  <span>{% trans 'offer.account.number' %}</span>
+                </div>
+                <span id="offer-information-account-number"></span>
+              </li>
+            </ul>
+            <button type="button" id="offer-withdraw" class="btn btn-danger d-block px-5 mt-5 mx-auto d-none">{% trans 'offer.withdraw' %}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  $(document).ready(function() {
+    displayLoader();
+    fetchOffer(function (offer) {
+      displayGeneralInformation(offer);
+      removeLoader();
+    });
+  });
+
+  function displayGeneralInformation(offer) {
+    if (offer.status === "PENDING") {
+      document.getElementById("offer-withdraw").classList.remove("d-none");
+    }
+    document.getElementById("offer-information-type").innerHTML =
+      findPackageName(offer);
+    $(document.getElementById("offer-information-entry-class"))
+      .toggleClass("d-none", offer.class === "NONE");
+    $(document.getElementById("offer-information-divider-class"))
+      .toggleClass("d-none", offer.class === "NONE");
+    document.getElementById("offer-information-class").innerHTML =
+      findPackageClass(offer);
+    document.getElementById("offer-information-price").innerHTML =
+      offer.price + " €";
+    document.getElementById("offer-information-runtime").innerHTML =
+      findPackageRuntime(offer);
+    document.getElementById("offer-information-workflow-access").innerHTML =
+      offer.workflowAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+    document.getElementById("offer-information-workflow-number").innerHTML =
+      offer.workflowNumberLimit < 0 ? "{% trans 'offer.unlimited' %}" : offer.workflowNumberLimit;
+    document.getElementById("offer-information-workflow-operation").innerHTML =
+      offer.workflowOperationLimit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    document.getElementById("offer-information-template-access").innerHTML =
+      true ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+    document.getElementById("offer-information-database-access").innerHTML =
+      offer.databaseAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+    document.getElementById("offer-information-database-number").innerHTML =
+      offer.databaseNumberLimit < 0 ? "{% trans 'offer.unlimited' %}" : offer.databaseNumberLimit;
+    document.getElementById("offer-information-database-data").innerHTML =
+      offer.databaseDataLimit + " GB";
+    document.getElementById("offer-information-webhook-access").innerHTML =
+      offer.webhookAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+    document.getElementById("offer-information-webhook-number").innerHTML =
+      offer.webhookNumberLimit < 0 ? "{% trans 'offer.unlimited' %}" : offer.webhookNumberLimit;
+    document.getElementById("offer-information-organization-access").innerHTML =
+      offer.organizationAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+    document.getElementById("offer-information-organization-member").innerHTML =
+      offer.organizationMemberLimit < 0 ? "{% trans 'offer.unlimited' %}" : offer.organizationMemberLimit;
+    document.getElementById("offer-information-organization-team").innerHTML =
+      offer.organizationTeamLimit < 0 ? "{% trans 'offer.unlimited' %}" : offer.organizationTeamLimit;
+    document.getElementById("offer-information-device-access").innerHTML =
+      offer.deviceAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+    document.getElementById("offer-information-account-access").innerHTML =
+      offer.accountsAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+    document.getElementById("offer-information-account-number").innerHTML =
+      offer.accountsNumberLimit < 0 ? "{% trans 'offer.unlimited' %}" : offer.accountsNumberLimit;
+  }
+
+  function findPackageName(bundle) {
+    if (bundle.type === "TRIAL") {
+      return "{% trans 'offer.free' %}";
+    } else if (bundle.type === "PROFESSIONAL") {
+      return "{% trans 'offer.professional' %}";
+    } else if (bundle.type === "TEAM") {
+      return "{% trans 'offer.team' %}";
+    } else if (bundle.type === "ENTERPRISE") {
+      return "{% trans 'offer.enterprise' %}";
+    }
+  }
+
+  function findPackageClass(bundle) {
+    if (bundle.class === "NONE") {
+      return "";
+    } else if (bundle.class === "BEGINNER") {
+      return "{% trans 'offer.beginner' %}";
+    } else if (bundle.class === "ADVANCED") {
+      return "{% trans 'offer.advanced' %}";
+    } else if (bundle.class === "EXPERT") {
+      return "{% trans 'offer.expert' %}";
+    }
+  }
+
+  function findPackageRuntime(bundle) {
+    if (bundle.runtime === "WEEKLY") {
+      return "1 {% trans 'offer.runtime.week' %}";
+    } else if (bundle.runtime === "MONTHLY") {
+      return "1 {% trans 'offer.runtime.month' %}";
+    } else if (bundle.runtime === "YEARLY") {
+      return "1 {% trans 'offer.runtime.year' %}";
+    }
+  }
+
+  document.getElementById("offer-back").onclick = function (event) {
+    returnPage();
+  }
+
+  document.getElementById("offer-withdraw").onclick = function (event) {
+    Swal.fire({
+      title: "{% trans 'offer.withdraw.title' %}",
+      text: "{% trans 'offer.withdraw.body' %}",
+      icon: "warning",
+      confirmButtonColor: "#dc3545",
+      showCancelButton: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        let request = new HttpRequest("https://team.taskwolf.net/v1/offer/withdraw/", "POST",
+          [], {offer: "{{offer}}"});
+        request.send(function (status, responseText) {
+          Swal.fire("{% trans 'offer.withdraw.successful.title' %}", "{% trans 'offer.withdraw.successful.body' %}", "success")
+            .then(returnPage);
+        });
+      }
+    });
+  }
+
+  function returnPage() {
+    window.location = document.referrer;
+  }
+
+  function fetchOffer(callback) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/offer/find/", "POST",
+      [], {offer: "{{offer}}"});
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText));
+    });
+  }
+
+  function displayLoader() {
+    var loader = document.createElement("div");
+    loader.classList.add("loader");
+    document.getElementById("offer-container").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("offer-container")
+      .removeChild(document.getElementsByClassName("loader")[0]);
+    document.getElementById("offer-wrapper").classList.remove("d-none");
+  }
+</script>
