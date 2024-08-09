@@ -157,7 +157,27 @@
                   </div>
                   <span>{% trans 'entity.bundle.organization.access' %}</span>
                 </div>
-                <span id="entity-bundle-information-organization-access"><i class='fa-solid fa-xmark'></i></span>
+                <span id="entity-bundle-information-organization-access"></span>
+              </li>
+              <div class="entity-bundle-information-divider"></div>
+              <li class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-solid fa-user"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.organization.member' %}</span>
+                </div>
+                <span id="entity-bundle-information-organization-member"></span>
+              </li>
+              <div class="entity-bundle-information-divider"></div>
+              <li class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-solid fa-user"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.organization.team' %}</span>
+                </div>
+                <span id="entity-bundle-information-organization-team"></span>
               </li>
               <div class="entity-bundle-information-divider"></div>
               <li class="entity-bundle-information-entry">
@@ -247,6 +267,12 @@
       bundle.webhookAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
     document.getElementById("entity-bundle-information-webhook-number").innerHTML =
       bundle.webhookNumberLimit < 0 ? "{% trans 'entity.bundle.unlimited' %}" : bundle.webhookNumberLimit;
+    document.getElementById("entity-bundle-information-organization-access").innerHTML =
+      bundle.organizationAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+    document.getElementById("entity-bundle-information-organization-member").innerHTML =
+      bundle.organizationMemberLimit < 0 ? "{% trans 'entity.bundle.unlimited' %}" : bundle.organizationMemberLimit;
+    document.getElementById("entity-bundle-information-organization-team").innerHTML =
+      bundle.organizationTeamLimit < 0 ? "{% trans 'entity.bundle.unlimited' %}" : bundle.organizationTeamLimit;
     document.getElementById("entity-bundle-information-device-access").innerHTML =
       bundle.deviceAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
     document.getElementById("entity-bundle-information-account-access").innerHTML =

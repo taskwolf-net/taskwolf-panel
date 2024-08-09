@@ -69,6 +69,14 @@
                 <label class="form-label">{% trans 'entity.bundle.change.database.data.limit' %}</label>
                 <input id="entity-bundle-change-database-data-limit" class="form-control" placeholder="{% trans 'entity.bundle.change.database.data.limit' %}">
               </div>
+              <div id="entity-bundle-change-organization-member-limit-container" class="form-outline mb-3 d-none">
+                <label class="form-label">{% trans 'entity.bundle.change.organization.member.limit' %}</label>
+                <input id="entity-bundle-change-organization-member-limit" class="form-control" placeholder="{% trans 'entity.bundle.change.organization.member.limit' %}">
+              </div>
+              <div id="entity-bundle-change-organization-team-limit-container" class="form-outline mb-3 d-none">
+                <label class="form-label">{% trans 'entity.bundle.change.organization.team.limit' %}</label>
+                <input id="entity-bundle-change-organization-team-limit" class="form-control" placeholder="{% trans 'entity.bundle.change.organization.team.limit' %}">
+              </div>
               <div class="form-outline mb-3">
                 <label class="form-label">{% trans 'entity.bundle.change.price' %}</label>
                 <input id="entity-bundle-change-price" class="form-control" placeholder="{% trans 'entity.bundle.change.price' %}">
@@ -111,6 +119,8 @@
     } else if ("{{type}}" === "organization") {
       document.getElementById("entity-bundle-change-type-trial").classList.add("d-none");
       document.getElementById("entity-bundle-change-type-professional").classList.add("d-none");
+      document.getElementById("entity-bundle-change-organization-member-limit-container").classList.remove("d-none");
+      document.getElementById("entity-bundle-change-organization-team-limit-container").classList.remove("d-none");
       if (bundle.type === "ENTERPRISE") {
         document.getElementById("entity-bundle-change-type-team").classList.add("d-none");
       }
@@ -192,6 +202,12 @@
     document.getElementById("entity-bundle-change-database-data-limit").value =
       bundle.databaseDataLimit;
     document.getElementById("entity-bundle-change-price").value = bundle.price;
+    if ("{{type}}" === "organization") {
+      document.getElementById("entity-bundle-change-organization-member-limit").value =
+        bundle.organizationMemberLimit;
+      document.getElementById("entity-bundle-change-organization-team-limit").value =
+        bundle.organizationTeamLimit;
+    }
   }
 
   function fetchBundle(callback) {
@@ -233,6 +249,14 @@
     var databaseDataLimit = document.getElementById("entity-bundle-change-database-data-limit").value;
     if (databaseDataLimit !== "") {
       body.databaseDataLimit = databaseDataLimit;
+    }
+    var organizationMemberLimit = document.getElementById("entity-bundle-change-organization-member-limit").value;
+    if (organizationMemberLimit !== "" && "{{type}}" === "organization") {
+      body.organizationMemberLimit = organizationMemberLimit;
+    }
+    var organizationTeamLimit = document.getElementById("entity-bundle-change-organization-team-limit").value;
+    if (organizationTeamLimit !== "" && "{{type}}" === "organization") {
+      body.organizationTeamLimit = organizationTeamLimit;
     }
     var price = document.getElementById("entity-bundle-change-price").value;
     if (price !== "") {
