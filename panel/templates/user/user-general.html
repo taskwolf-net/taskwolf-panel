@@ -26,16 +26,16 @@
                   <div id="user-general-profile-language"><span class="fw-bold">{% trans 'user.general.profile.language' %}:</span></div>
                 </div>
                 <div class="user-general-section">
-                  <h4 class="fw-bold mb-4">{% trans 'user.general.ticket.headline' %}</h4>
-                  <div id="user-general-ticket-list-description">
-                    <span>{% trans 'user.general.ticket.name' %}</span>
-                    <span class="text-center">{% trans 'user.general.ticket.type' %}</span>
-                    <span class="text-center">{% trans 'user.general.ticket.status' %}</span>
+                  <h4 class="fw-bold mb-4">{% trans 'user.general.organization.headline' %}</h4>
+                  <div id="user-general-organization-list-description">
+                    <span>{% trans 'user.general.organization.name' %}</span>
+                    <span class="text-center">{% trans 'user.general.organization.role' %}</span>
+                    <span class="text-center">{% trans 'user.general.organization.access' %}</span>
                   </div>
-                  <ul id="user-general-ticket-list">
+                  <ul id="user-general-organization-list">
                   </ul>
-                  <div id="user-general-ticket-empty" class="text-center d-none">
-                    <span>{% trans 'user.general.ticket.empty' %}</span>
+                  <div id="user-general-organization-empty" class="text-center d-none">
+                    <span>{% trans 'user.general.organization.empty' %}</span>
                   </div>
                 </div>
               </div>
@@ -51,16 +51,16 @@
                   <div id="user-general-bundle-unavailable" class="d-none"><span>{% trans 'user.general.bundle.unavailable' %}</span></div>
                 </div>
                 <div class="user-general-section">
-                  <h4 class="fw-bold mb-4">{% trans 'user.general.organization.headline' %}</h4>
-                  <div id="user-general-organization-list-description">
-                    <span>{% trans 'user.general.organization.name' %}</span>
-                    <span class="text-center">{% trans 'user.general.organization.role' %}</span>
-                    <span class="text-center">{% trans 'user.general.organization.access' %}</span>
+                  <h4 class="fw-bold mb-4">{% trans 'user.general.ticket.headline' %}</h4>
+                  <div id="user-general-ticket-list-description">
+                    <span>{% trans 'user.general.ticket.name' %}</span>
+                    <span class="text-center">{% trans 'user.general.ticket.type' %}</span>
+                    <span class="text-center">{% trans 'user.general.ticket.status' %}</span>
                   </div>
-                  <ul id="user-general-organization-list">
+                  <ul id="user-general-ticket-list">
                   </ul>
-                  <div id="user-general-organization-empty" class="text-center d-none">
-                    <span>{% trans 'user.general.organization.empty' %}</span>
+                  <div id="user-general-ticket-empty" class="text-center d-none">
+                    <span>{% trans 'user.general.ticket.empty' %}</span>
                   </div>
                 </div>
               </div>
@@ -246,7 +246,7 @@
     viewButton.classList.add("btn", "btn-primary");
     viewButton.innerHTML = "{% trans 'user.general.organization.view' %}";
     viewButton.onclick = function (event) {
-      window.location.href = "/organization/" + organization.id + "/";
+      window.location.href = "/organization/" + organization.id + "/general/";
     }
     organizationElement.appendChild(createOrganizationCell(viewButton, "center"));
     return organizationElement;

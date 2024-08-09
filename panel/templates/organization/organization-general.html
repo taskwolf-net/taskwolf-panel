@@ -1,0 +1,245 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body class="dark">
+    {% include 'panel-header.html' %}
+    {% include 'panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="organization-general-container">
+        <div id="organization-general-wrapper" class="d-none">
+          <div>
+            <ul class="nav nav-tabs">
+              <li class="nav-item"><a class="nav-link nav-link-active" href="/organization/{{organization}}/general/">{% trans 'entity.tab.general' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/organization/{{organization}}/bundle/">{% trans 'entity.tab.bundle' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/organization/{{organization}}/payment/">{% trans 'entity.tab.payment' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/organization/{{organization}}/offers/">{% trans 'entity.tab.offer' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/organization/{{organization}}/termination/">{% trans 'entity.tab.termination' %}</a></li>
+            </ul>
+            <div id="organization-general-content">
+              <div class="organization-general-side">
+                <div class="organization-general-section">
+                  <h4 class="fw-bold mb-4">{% trans 'organization.general.profile.headline' %}</h4>
+                  <div id="organization-general-profile-id" class="mb-1"><span class="fw-bold">{% trans 'organization.general.profile.id' %}: </span></div>
+                  <div id="organization-general-profile-name" class="mb-1"><span class="fw-bold">{% trans 'organization.general.profile.name' %}: </span></div>
+                  <div id="organization-general-profile-owner" class="mb-1"><span class="fw-bold">{% trans 'organization.general.profile.owner' %}: </span></div>
+                </div>
+                <div class="organization-general-section">
+                  <h4 class="fw-bold mb-4">{% trans 'organization.general.member.headline' %}</h4>
+                  <div id="organization-general-member-list-description">
+                    <span>{% trans 'organization.general.member.name' %}</span>
+                    <span class="text-center">{% trans 'organization.general.member.role' %}</span>
+                    <span class="text-center">{% trans 'organization.general.member.access' %}</span>
+                  </div>
+                  <ul id="organization-general-member-list">
+                  </ul>
+                </div>
+              </div>
+              <div class="organization-general-side">
+                <div class="organization-general-section">
+                  <h4 class="fw-bold mb-4">{% trans 'organization.general.bundle.headline' %}</h4>
+                  <div id="organization-general-bundle-content">
+                    <div id="organization-general-bundle-type" class="mb-1"><span class="fw-bold">{% trans 'organization.general.bundle.type' %}: </span></div>
+                    <div id="organization-general-bundle-class" class="mb-1"><span class="fw-bold">{% trans 'organization.general.bundle.class' %}: </span></div>
+                    <div id="organization-general-bundle-runtime" class="mb-1"><span class="fw-bold">{% trans 'organization.general.bundle.runtime' %}: </span></div>
+                    <div id="organization-general-bundle-price"><span class="fw-bold">{% trans 'organization.general.bundle.price' %}: </span></div>
+                  </div>
+                </div>
+                <div class="organization-general-section">
+                  <h4 class="fw-bold mb-4">{% trans 'organization.general.team.headline' %}</h4>
+                  <div id="organization-general-team-list-description">
+                    <span>{% trans 'organization.general.team.name' %}</span>
+                    <span class="text-center">{% trans 'organization.general.team.members' %}</span>
+                  </div>
+                  <ul id="organization-general-team-list">
+                  </ul>
+                  <div id="organization-general-team-empty" class="text-center d-none">
+                    <span>{% trans 'organization.general.team.empty' %}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  $(document).ready(function() {
+    displayLoader();
+    fetchOrganization(function (organization) {
+      if (organization.found === false) {
+        return;
+      }
+      fetchBundle(function (bundle) {
+        removeLoader();
+        displayGeneralInformation(organization, bundle);
+      });
+    });
+  });
+
+  function displayGeneralInformation(organization, bundle) {
+    displayProfileInformation(organization);
+    displayBundleInformation(bundle);
+    displayMemberInformation(organization);
+    displayTeamInformation(organization);
+  }
+
+  function displayProfileInformation(organization) {
+    document.getElementById("organization-general-profile-id").innerHTML += organization.id;
+    document.getElementById("organization-general-profile-name").innerHTML += organization.name;
+    document.getElementById("organization-general-profile-owner").innerHTML += organization.owner;
+  }
+
+  function displayBundleInformation(bundle) {
+    if (bundle.found === false) {
+      return;
+    }
+    document.getElementById("organization-general-bundle-type").innerHTML += findPackageName(bundle);
+    if (bundle.class === "NONE") {
+      document.getElementById("organization-general-bundle-class").classList.add("d-none");
+    } else {
+      document.getElementById("organization-general-bundle-class").innerHTML += findPackageClass(bundle);
+    }
+    document.getElementById("organization-general-bundle-runtime").innerHTML += findPackageRuntime(bundle);
+    document.getElementById("organization-general-bundle-price").innerHTML += bundle.price + " €";
+  }
+
+  function findPackageName(bundle) {
+    if (bundle.type === "TRIAL") {
+      return "{% trans 'entity.bundle.free' %}";
+    } else if (bundle.type === "PROFESSIONAL") {
+      return "{% trans 'entity.bundle.professional' %}";
+    } else if (bundle.type === "TEAM") {
+      return "{% trans 'entity.bundle.team' %}";
+    } else if (bundle.type === "ENTERPRISE") {
+      return "{% trans 'entity.bundle.enterprise' %}";
+    }
+  }
+
+  function findPackageClass(bundle) {
+    if (bundle.class === "NONE") {
+      return "";
+    } else if (bundle.class === "BEGINNER") {
+      return "{% trans 'entity.bundle.beginner' %}";
+    } else if (bundle.class === "ADVANCED") {
+      return "{% trans 'entity.bundle.advanced' %}";
+    } else if (bundle.class === "EXPERT") {
+      return "{% trans 'entity.bundle.expert' %}";
+    }
+  }
+
+  function findPackageRuntime(bundle) {
+    if (bundle.runtime === "WEEKLY") {
+      return "1 {% trans 'entity.bundle.runtime.week' %}";
+    } else if (bundle.runtime === "MONTHLY") {
+      return "1 {% trans 'entity.bundle.runtime.month' %}";
+    } else if (bundle.runtime === "YEARLY") {
+      return "1 {% trans 'entity.bundle.runtime.year' %}";
+    }
+  }
+
+  function displayMemberInformation(organization) {
+    for (var i = 0; i < organization.members.length; i++) {
+      document.getElementById("organization-general-member-list")
+        .appendChild(createMemberEntry(organization.members[i]));
+    }
+  }
+
+  function createMemberEntry(member) {
+    var memberElement = document.createElement("li");
+    var nameElement = document.createElement("p");
+    nameElement.innerHTML = member.name;
+    memberElement.appendChild(createMemberCell(nameElement, "start"));
+    var roleElement = document.createElement("p");
+    roleElement.classList.add("organization-general-member-role");
+    if (member.role === "OWNER") {
+      roleElement.innerHTML = "{% trans 'user.general.organization.owner' %}";
+      roleElement.classList.add("organization-general-member-owner");
+    } else if (member.role === "MEMBER") {
+      roleElement.innerHTML = "{% trans 'user.general.organization.member' %}";
+      roleElement.classList.add("organization-general-member-member");
+    }
+    memberElement.appendChild(createMemberCell(roleElement, "center"));
+    var viewButton = document.createElement("button");
+    viewButton.classList.add("btn", "btn-primary");
+    viewButton.innerHTML = "{% trans 'user.general.organization.view' %}";
+    viewButton.onclick = function (event) {
+      window.location.href = "/user/" + member.id + "/general/";
+    }
+    memberElement.appendChild(createMemberCell(viewButton, "center"));
+    return memberElement;
+  }
+
+  function createMemberCell(content, position) {
+    var cell = document.createElement("div");
+    cell.classList.add("organization-general-member-cell", "text-" + position);
+    content.classList.add("mb-0");
+    cell.appendChild(content);
+    return cell;
+  }
+
+  function displayTeamInformation(organization) {
+    for (var i = 0; i < organization.teams.length; i++) {
+      document.getElementById("organization-general-team-list")
+        .appendChild(createTeamEntry(organization.teams[i]));
+    }
+    if (organization.teams.length === 0) {
+      document.getElementById("organization-general-team-empty")
+        .classList.remove("d-none");
+      document.getElementById("organization-general-team-list")
+        .classList.add("d-none");
+      document.getElementById("organization-general-team-list-description")
+        .classList.add("d-none");
+    }
+  }
+
+  function createTeamEntry(team) {
+    var teamElement = document.createElement("li");
+    var nameElement = document.createElement("p");
+    nameElement.innerHTML = team.name;
+    teamElement.appendChild(createTeamCell(nameElement, "start"));
+    var memberElement = document.createElement("p");
+    memberElement.innerHTML = team.members;
+    teamElement.appendChild(createTeamCell(memberElement, "center"));
+    return teamElement;
+  }
+
+  function createTeamCell(content, position) {
+    var cell = document.createElement("div");
+    cell.classList.add("organization-general-team-cell", "text-" + position);
+    content.classList.add("mb-0");
+    cell.appendChild(content);
+    return cell;
+  }
+
+  function fetchOrganization(callback) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/organization/find/", "POST",
+      [], {organization: "{{organization}}"});
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText));
+    });
+  }
+
+  function fetchBundle(callback) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/entity/bundle/find/", "POST",
+      [], {entity: "{{organization}}"});
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText));
+    });
+  }
+
+  function displayLoader() {
+    var loader = document.createElement("div");
+    loader.classList.add("loader");
+    document.getElementById("organization-general-container").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("organization-general-container")
+      .removeChild(document.getElementsByClassName("loader")[0]);
+    document.getElementById("organization-general-wrapper").classList.remove("d-none");
+  }
+</script>
