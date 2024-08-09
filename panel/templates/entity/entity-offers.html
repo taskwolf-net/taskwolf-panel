@@ -93,7 +93,7 @@
     var statusContainer = document.createElement("div");
     statusContainer.classList.add("text-center");
     var statusElement = document.createElement("span");
-    if (status === "READY") {
+    if (status === "PENDING") {
       statusElement.innerHTML = "{% trans 'entity.offers.status.pending' %}";
       statusElement.classList.add("entity-offer-status-pending");
     } else if (status === "ACCEPTED") {
