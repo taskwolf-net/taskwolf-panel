@@ -37,7 +37,12 @@
               </li>
               <li>
                 <div>
-                  <span class="me-2">{% trans 'entity.offers.status' %}</span>
+                  <span class="text-center me-2">{% trans 'entity.offers.status' %}</span>
+                </div>
+              </li>
+              <li>
+                <div>
+                  <span class="text-center me-2">{% trans 'entity.offers.access' %}</span>
                 </div>
               </li>
             </ul>
@@ -72,21 +77,34 @@
     }
     for (var i = 0; i < offers.length; i++) {
       var offer = offers[i];
-      displayOffer(offer.type, offer.runtime, offer.price, offer.status);
+      displayOffer(offer.id, offer.type, offer.runtime, offer.price, offer.status);
     }
     document.getElementById("entity-offers").classList.remove("d-none");
   }
 
-  function displayOffer(type, runtime, price, status) {
+  function displayOffer(id, type, runtime, price, status) {
     var entry = document.createElement('li');
-    appendOfferCell(entry, "type", type === "PROFESSIONAL" ?
-      "{% trans 'entity.bundle.professional' %}" : "", "span");
+    appendOfferCell(entry, "type", findOfferType(type), "span");
     appendOfferCell(entry, "runtime", runtime === "MONTHLY" ?
       "1 {% trans 'entity.bundle.runtime.month' %}" :
       "1 {% trans 'entity.bundle.runtime.year' %}", "span");
     appendOfferCell(entry, "price", price + " €", "span");
     entry.appendChild(createOfferStatusElement(status));
+    entry.appendChild(createOfferViewButton(id));
     document.getElementById("entity-offer-list").appendChild(entry);
+  }
+
+  function findOfferType(type) {
+    if (type === "TRIAL") {
+      return "{% trans 'entity.bundle.free' %}";
+    } else if (type === "PROFESSIONAL") {
+      return "{% trans 'entity.bundle.professional' %}";
+    } else if (type === "TEAM") {
+      return "{% trans 'entity.bundle.team' %}";
+    } else if (type === "ENTERPRISE") {
+      return "{% trans 'entity.bundle.enterprise' %}";
+    }
+    return "";
   }
 
   function createOfferStatusElement(status) {
@@ -108,6 +126,19 @@
     }
     statusContainer.appendChild(statusElement);
     return statusContainer;
+  }
+
+  function createOfferViewButton(id) {
+    var invoiceContainer = document.createElement("div");
+    invoiceContainer.classList.add("text-center", "py-0");
+    var invoiceButton = document.createElement("button");
+    invoiceButton.classList.add("btn", "btn-primary", "entity-payment-invoice");
+    invoiceButton.innerHTML = "{% trans 'entity.payment.invoice.download' %}";
+    invoiceButton.onclick = function (event) {
+      window.location.href = "/offer/" + id + "/";
+    }
+    invoiceContainer.appendChild(invoiceButton);
+    return invoiceContainer;
   }
 
   function appendOfferCell(entry, identifier, information, elementType) {
