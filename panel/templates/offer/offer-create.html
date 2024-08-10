@@ -192,7 +192,7 @@
 
   function calculateOfferPrice() {
     var body = buildOfferRequestBody();
-    if (body === {}) {
+    if (body === null) {
       return;
     }
     let request = new HttpRequest("https://team.taskwolf.net/v1/offer/price/suggestion/", "POST", [], body);
@@ -249,7 +249,7 @@
 
   function createOffer(price) {
     var body = buildOfferRequestBody();
-    if (body === {}) {
+    if (body === null) {
       return;
     }
     body.target = "{{target}}";
@@ -266,9 +266,9 @@
     var bundleType = findBundleType(document.getElementById("offer-create-type").innerHTML);
     var bundleClass = findBundleClass(document.getElementById("offer-create-class").innerHTML);
     var bundleRuntime = findBundleRuntime(document.getElementById("offer-create-runtime").innerHTML);
-    if (bundleType === "" || bundleRuntime === "" || (bundleType !== "TRIAL" && bundleClass === "NONE")) {
+    if (bundleType === "" || bundleRuntime === "" || ((bundleType === "PROFESSIONAL" || bundleType === "TEAM") && bundleClass === "NONE")) {
       Swal.fire("{% trans 'offer.create.failed.title' %}", "{% trans 'offer.create.failed.body' %}", "error");
-      return {};
+      return null;
     }
     body.type = bundleType;
     body.class = bundleClass;
