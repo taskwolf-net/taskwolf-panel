@@ -9,4 +9,5 @@ urlpatterns = [
   path('', include('whitelist.urls')),
   path('', include('verification.urls')),
   path('', include('panel.urls')),
+  path('', include('settings.urls')),
 ]

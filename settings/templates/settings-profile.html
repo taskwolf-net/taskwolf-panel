@@ -1,0 +1,45 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body class="dark">
+    {% include 'settings-header.html' %}
+    <div class="settings-container">
+      {% include 'settings-sidebar.html' %}
+      <div class="sidebar-influenced">
+        <div class="settings-content">
+          <h1 class="settings-headline">{% trans 'settings.profile.headline' %}</h1>
+          <form>
+            <div class="form-outline mb-4">
+              <label for="settings-profile-name" class="form-label">{% trans 'settings.profile.name' %}</label>
+              <input id="settings-profile-name" type="name" class="form-control" placeholder="{% trans 'settings.profile.name' %}">
+              <button id="settings-profile-update-button" type="button" class="btn btn-success mt-4">{% trans 'settings.profile.name.update' %}</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  $(document).ready(function() {
+    displayCurrentUsername();
+  });
+
+  function displayCurrentUsername() {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/settings/profile/username/", "GET",
+      []);
+    request.send(function (status, responseText) {
+      document.getElementById("settings-profile-name").value = JSON.parse(responseText).username;
+    });
+  }
+
+  document.getElementById("settings-profile-update-button").onclick = function(event) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/settings/profile/username/change/", "POST",
+      [], {username: document.getElementById("settings-profile-name").value});
+    request.send(function (status, responseText) {
+      Swal.fire("{% trans 'settings.profile.name.changed.title' %}", "{% trans 'settings.profile.name.changed.body' %}", "success");
+    });
+  };
+</script>

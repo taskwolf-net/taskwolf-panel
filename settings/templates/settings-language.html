@@ -1,0 +1,53 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body class="dark">
+    {% include 'settings-header.html' %}
+    <div class="settings-container">
+      {% include 'settings-sidebar.html' %}
+      <div class="sidebar-influenced">
+        <div class="settings-content">
+          <h1 class="settings-headline">{% trans 'settings.language.headline' %}</h1>
+          <div id="settings-language-container">
+            <div class="settings-language">
+              <h4 class="mb-4">{% trans 'settings.language.english' %}</h4>
+              <input id="settings-language-en" class="settings-language-flag" src="{% static 'img/languages/en.png' %}" type="image"/>
+            </div>
+            <div class="settings-language">
+              <h4 class="mb-4">{% trans 'settings.language.german' %}</h4>
+              <input id="settings-language-de" class="settings-language-flag" src="{% static 'img/languages/de.png' %}" type="image"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  $(document).ready(function() {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/settings/language/", "GET",
+      []);
+    request.send(function (status, responseText) {
+      var language = JSON.parse(responseText).language;
+      document.getElementById("settings-language-" + language).classList.add("settings-language-selected");
+    });
+  });
+
+  document.getElementById("settings-language-en").onclick = function(event) {
+    changeLanguage("en");
+  }
+
+  document.getElementById("settings-language-de").onclick = function(event) {
+    changeLanguage("de");
+  }
+
+  function changeLanguage(code) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/settings/language/change/", "POST",
+      [], {language: code});
+    request.send(function (status, responseText) {
+      window.location.reload();
+    });
+  }
+</script>
