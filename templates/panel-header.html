@@ -31,7 +31,7 @@
     window.location.href = "/dashboard/";
   };
   document.getElementById('logout-button').onclick = function() {
-    Cookie.destroy("token");
+    Cookie.destroy("panel-token");
     Cookie.destroy("taskwolf-organization-target");
     window.location.href = "/";
   };

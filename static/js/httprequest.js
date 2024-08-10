@@ -8,7 +8,7 @@ class HttpRequest {
 
   send(callback) {
     this.headers.push({key: "Content-Type", value: "application/json"});
-    var token = Cookie.find("token");
+    var token = Cookie.find("panel-token");
     if (token !== null) {
       this.headers.push({key: "Authorization", value: "Bearer " + token});
     }

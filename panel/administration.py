@@ -20,7 +20,7 @@ def administrator_required(function):
   return authentication
 
 async def hasAdministrationPermission(request):
-  token = request.COOKIES.get('token')
+  token = request.COOKIES.get('panel-token')
   if (token is None):
     return False
   headers = {"Authorization": "Bearer " + token}

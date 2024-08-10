@@ -19,7 +19,7 @@ def authentication_required(function):
   return authentication
 
 async def isAuthenticated(request):
-  token = request.COOKIES.get('token')
+  token = request.COOKIES.get('panel-token')
   if (token is None):
     return False
   headers = {}
@@ -35,7 +35,7 @@ async def isAuthenticated(request):
   return False
 
 async def applyLanguage(request):
-  token = request.COOKIES.get('token')
+  token = request.COOKIES.get('panel-token')
   if (token is None):
     translation.activate("en")
     return False
