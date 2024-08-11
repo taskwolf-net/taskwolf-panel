@@ -9,6 +9,32 @@
       <div id="sale-container">
         <h1 id="sale-headline"></h1>
         <hr class="hr border-white my-4"/>
+        <div id="sale-customer-information">
+          <h4 class="fw-bold mb-4">{% trans 'sale.customer.information' %}</h4>
+          <div class="d-flex justify-content-center">
+            <div class="text-start">
+              <p class="mb-0 fw-bold">{% trans 'sale.customer.email' %}: </p>
+              <p class="mb-0 fw-bold">{% trans 'sale.customer.first.name' %}: </p>
+              <p class="mb-0 fw-bold">{% trans 'sale.customer.last.name' %}: </p>
+              <p id="sale-customer-phone-number-prefix" class="mb-0 fw-bold">{% trans 'sale.customer.phone.number' %}: </p>
+              <p id="sale-customer-country-prefix" class="mb-0 fw-bold">{% trans 'sale.customer.country' %}: </p>
+              <p id="sale-customer-company-name-prefix" class="mb-0 fw-bold">{% trans 'sale.customer.company.name' %}: </p>
+              <p id="sale-customer-company-size-prefix" class="mb-0 fw-bold">{% trans 'sale.customer.company.size' %}: </p>
+              <p id="sale-customer-company-role-prefix" class="mb-0 fw-bold">{% trans 'sale.customer.company.role' %}: </p>
+            </div>
+            <div class="text-end ms-4">
+              <p id="sale-customer-email" class="mb-0"></p>
+              <p id="sale-customer-first-name" class="mb-0"></p>
+              <p id="sale-customer-last-name" class="mb-0"></p>
+              <p id="sale-customer-phone-number" class="mb-0"></p>
+              <p id="sale-customer-country" class="mb-0"></p>
+              <p id="sale-customer-company-name" class="mb-0"></p>
+              <p id="sale-customer-company-size" class="mb-0"></p>
+              <p id="sale-customer-company-role" class="mb-0"></p>
+            </div>
+          </div>
+        </div>
+        <hr class="hr border-white my-4"/>
         <ul id="sale-messages">
         </ul>
         <div id="sale-operations">
@@ -40,10 +66,47 @@
 
   function displaySale() {
     document.getElementById("sale-headline").innerHTML = sale.title;
+    displayCustomerInformation()
     for (var i = 0; i < sale.messages.length; i++) {
       displayMessage(sale.messages[i]);
     }
     displayAnswerField();
+  }
+
+  function displayCustomerInformation() {
+    document.getElementById("sale-customer-email").innerHTML = sale.sender;
+    document.getElementById("sale-customer-first-name").innerHTML = sale.firstName;
+    document.getElementById("sale-customer-last-name").innerHTML = sale.lastName;
+    if (sale.phoneNumber !== "") {
+      document.getElementById("sale-customer-phone-number").innerHTML = sale.phoneNumber;
+    } else {
+      document.getElementById("sale-customer-phone-number").classList.add("d-none");
+      document.getElementById("sale-customer-phone-number-prefix").classList.add("d-none");
+    }
+    if (sale.country !== "") {
+      document.getElementById("sale-customer-country").innerHTML = sale.country;
+    } else {
+      document.getElementById("sale-customer-country").classList.add("d-none");
+      document.getElementById("sale-customer-country-prefix").classList.add("d-none");
+    }
+    if (sale.companyName !== "") {
+      document.getElementById("sale-customer-company-name").innerHTML = sale.companyName;
+    } else {
+      document.getElementById("sale-customer-company-name").classList.add("d-none");
+      document.getElementById("sale-customer-company-name-prefix").classList.add("d-none");
+    }
+    if (sale.companySize !== "") {
+      document.getElementById("sale-customer-company-size").innerHTML = sale.companySize;
+    } else {
+      document.getElementById("sale-customer-company-size").classList.add("d-none");
+      document.getElementById("sale-customer-company-size-prefix").classList.add("d-none");
+    }
+    if (sale.companyRole !== "") {
+      document.getElementById("sale-customer-company-role").innerHTML = sale.companyRole;
+    } else {
+      document.getElementById("sale-customer-company-role").classList.add("d-none");
+      document.getElementById("sale-customer-company-role-prefix").classList.add("d-none");
+    }
   }
 
   function displayMessage(message) {
@@ -103,13 +166,13 @@
     messageDescription.appendChild(messageAuthor);
     messageDescription.appendChild(document.createElement("br"));
     messageDescription.appendChild(document.createElement("br"));
-    var messageDate = document.createElement("label");
+    var messageDate = document.createElement("p");
     messageDate.classList.add("sale-message-date");
     messageDate.innerHTML = date;
     messageDescription.appendChild(messageDate);
     messageDescription.appendChild(document.createElement("br"));
     messageContainer.appendChild(messageDescription);
-    var messageTime = document.createElement("label");
+    var messageTime = document.createElement("p");
     messageTime.classList.add("sale-message-time");
     messageTime.innerHTML = time;
     messageDescription.appendChild(messageTime);
