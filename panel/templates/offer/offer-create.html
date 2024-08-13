@@ -21,7 +21,7 @@
                   </button>
                   <ul class="dropdown-menu dropdown-menu-dark w-100">
                     <li id="offer-create-type-trial" class="dropdown-item offer-create-type-entry">{% trans 'offer.create.type.trial' %}</li>
-                    <li id="offer-create-type-professional" class="dropdown-item offer-create-type-entry">{% trans 'offer.create.type.professional' %}</li>
+                    <li id="offer-create-type-individual" class="dropdown-item offer-create-type-entry">{% trans 'offer.create.type.individual' %}</li>
                     <li id="offer-create-type-team" class="dropdown-item offer-create-type-entry">{% trans 'offer.create.type.team' %}</li>
                     <li id="offer-create-type-enterprise" class="dropdown-item offer-create-type-entry">{% trans 'offer.create.type.enterprise' %}</li>
                   </ul>
@@ -106,12 +106,12 @@
     if ("{{type}}" === "user") {
       document.getElementById("offer-create-type-team").classList.add("d-none");
       document.getElementById("offer-create-type-enterprise").classList.add("d-none");
-      if (bundle.type === "PROFESSIONAL") {
+      if (bundle.type === "INDIVIDUAL") {
         document.getElementById("offer-create-type-trial").classList.add("d-none");
       }
     } else if ("{{type}}" === "organization") {
       document.getElementById("offer-create-type-trial").classList.add("d-none");
-      document.getElementById("offer-create-type-professional").classList.add("d-none");
+      document.getElementById("offer-create-type-individual").classList.add("d-none");
       document.getElementById("offer-create-organization-member-limit-container").classList.remove("d-none");
       document.getElementById("offer-create-organization-team-limit-container").classList.remove("d-none");
       if (bundle.type === "ENTERPRISE") {
@@ -266,7 +266,7 @@
     var bundleType = findBundleType(document.getElementById("offer-create-type").innerHTML);
     var bundleClass = findBundleClass(document.getElementById("offer-create-class").innerHTML);
     var bundleRuntime = findBundleRuntime(document.getElementById("offer-create-runtime").innerHTML);
-    if (bundleType === "" || bundleRuntime === "" || ((bundleType === "PROFESSIONAL" || bundleType === "TEAM") && bundleClass === "NONE")) {
+    if (bundleType === "" || bundleRuntime === "" || ((bundleType === "INDIVIDUAL" || bundleType === "TEAM") && bundleClass === "NONE")) {
       Swal.fire("{% trans 'offer.create.failed.title' %}", "{% trans 'offer.create.failed.body' %}", "error");
       return null;
     }
@@ -303,8 +303,8 @@
   function findBundleType(content) {
     if (content === "{% trans 'offer.create.type.trial' %}") {
       return "TRIAL";
-    } else if (content === "{% trans 'offer.create.type.professional' %}") {
-      return "PROFESSIONAL";
+    } else if (content === "{% trans 'offer.create.type.individual' %}") {
+      return "INDIVIDUAL";
     } else if (content === "{% trans 'offer.create.type.team' %}") {
       return "TEAM";
     } else if (content === "{% trans 'offer.create.type.enterprise' %}") {

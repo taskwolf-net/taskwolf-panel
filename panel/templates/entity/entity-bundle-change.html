@@ -21,7 +21,7 @@
                   </button>
                   <ul class="dropdown-menu dropdown-menu-dark w-100">
                     <li id="entity-bundle-change-type-trial" class="dropdown-item entity-bundle-change-type-entry">{% trans 'entity.bundle.change.type.trial' %}</li>
-                    <li id="entity-bundle-change-type-professional" class="dropdown-item entity-bundle-change-type-entry">{% trans 'entity.bundle.change.type.professional' %}</li>
+                    <li id="entity-bundle-change-type-individual" class="dropdown-item entity-bundle-change-type-entry">{% trans 'entity.bundle.change.type.individual' %}</li>
                     <li id="entity-bundle-change-type-team" class="dropdown-item entity-bundle-change-type-entry">{% trans 'entity.bundle.change.type.team' %}</li>
                     <li id="entity-bundle-change-type-enterprise" class="dropdown-item entity-bundle-change-type-entry">{% trans 'entity.bundle.change.type.enterprise' %}</li>
                   </ul>
@@ -113,12 +113,12 @@
     if ("{{type}}" === "user") {
       document.getElementById("entity-bundle-change-type-team").classList.add("d-none");
       document.getElementById("entity-bundle-change-type-enterprise").classList.add("d-none");
-      if (bundle.type === "PROFESSIONAL") {
+      if (bundle.type === "INDIVIDUAL") {
         document.getElementById("entity-bundle-change-type-trial").classList.add("d-none");
       }
     } else if ("{{type}}" === "organization") {
       document.getElementById("entity-bundle-change-type-trial").classList.add("d-none");
-      document.getElementById("entity-bundle-change-type-professional").classList.add("d-none");
+      document.getElementById("entity-bundle-change-type-individual").classList.add("d-none");
       document.getElementById("entity-bundle-change-organization-member-limit-container").classList.remove("d-none");
       document.getElementById("entity-bundle-change-organization-team-limit-container").classList.remove("d-none");
       if (bundle.type === "ENTERPRISE") {
@@ -282,8 +282,8 @@
   function findBundleType(content) {
     if (content === "{% trans 'entity.bundle.change.type.trial' %}") {
       return "TRIAL";
-    } else if (content === "{% trans 'entity.bundle.change.type.professional' %}") {
-      return "PROFESSIONAL";
+    } else if (content === "{% trans 'entity.bundle.change.type.individual' %}") {
+      return "INDIVIDUAL";
     } else if (content === "{% trans 'entity.bundle.change.type.team' %}") {
       return "TEAM";
     } else if (content === "{% trans 'entity.bundle.change.type.enterprise' %}") {

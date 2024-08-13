@@ -284,8 +284,8 @@
   function findPackageName(bundle) {
     if (bundle.type === "TRIAL") {
       return "{% trans 'entity.bundle.free' %}";
-    } else if (bundle.type === "PROFESSIONAL") {
-      return "{% trans 'entity.bundle.professional' %}";
+    } else if (bundle.type === "INDIVIDUAL") {
+      return "{% trans 'entity.bundle.individual' %}";
     } else if (bundle.type === "TEAM") {
       return "{% trans 'entity.bundle.team' %}";
     } else if (bundle.type === "ENTERPRISE") {

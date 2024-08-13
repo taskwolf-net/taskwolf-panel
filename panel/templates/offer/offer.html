@@ -270,8 +270,8 @@
   function findPackageName(bundle) {
     if (bundle.type === "TRIAL") {
       return "{% trans 'offer.free' %}";
-    } else if (bundle.type === "PROFESSIONAL") {
-      return "{% trans 'offer.professional' %}";
+    } else if (bundle.type === "INDIVIDUAL") {
+      return "{% trans 'offer.individual' %}";
     } else if (bundle.type === "TEAM") {
       return "{% trans 'offer.team' %}";
     } else if (bundle.type === "ENTERPRISE") {
