@@ -179,8 +179,8 @@
   }
 
   function fetchBundle(callback) {
-    let request = new HttpRequest("https://team.taskwolf.net/v1/user/bundle/find/", "POST",
-      [], {user: "{{target}}"});
+    let request = new HttpRequest("https://team.taskwolf.net/v1/entity/bundle/find/", "POST",
+      [], {entity: "{{target}}"});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));
     });
