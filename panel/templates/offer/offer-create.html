@@ -62,6 +62,10 @@
                 <input id="offer-create-operation-limit" class="form-control" placeholder="{% trans 'offer.create.operation.limit' %}">
               </div>
               <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'offer.create.process.limit' %}</label>
+                <input id="offer-create-process-limit" class="form-control" placeholder="{% trans 'offer.create.process.limit' %}">
+              </div>
+              <div class="form-outline mb-3">
                 <label class="form-label">{% trans 'offer.create.database.limit' %}</label>
                 <input id="offer-create-database-limit" class="form-control" placeholder="{% trans 'offer.create.database.limit' %}">
               </div>
@@ -280,6 +284,10 @@
     var operationLimit = document.getElementById("offer-create-operation-limit").value;
     if (operationLimit !== "") {
       body.workflowOperationLimit = operationLimit;
+    }
+    var processLimit = document.getElementById("offer-create-process-limit").value;
+    if (processLimit !== "") {
+      body.processNumberLimit = processLimit;
     }
     var databaseLimit = document.getElementById("offer-create-database-limit").value;
     if (databaseLimit !== "") {

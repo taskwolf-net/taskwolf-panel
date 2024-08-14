@@ -105,6 +105,26 @@
                   <div class="entity-bundle-information-entry-icon">
                     <i class="fa-solid fa-unlock"></i>
                   </div>
+                  <span>{% trans 'entity.bundle.process.access' %}</span>
+                </div>
+                <span id="entity-bundle-information-process-access"></span>
+              </li>
+              <div class="entity-bundle-information-divider"></div>
+              <li class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-solid fa-hashtag"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.process.number' %}</span>
+                </div>
+                <span id="entity-bundle-information-process-number"></span>
+              </li>
+              <div class="entity-bundle-information-divider"></div>
+              <li class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-solid fa-unlock"></i>
+                  </div>
                   <span>{% trans 'entity.bundle.database.access' %}</span>
                 </div>
                 <span id="entity-bundle-information-database-access"></span>
@@ -257,6 +277,10 @@
       bundle.workflowOperationLimit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     document.getElementById("entity-bundle-information-template-access").innerHTML =
       true ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+    document.getElementById("entity-bundle-information-process-access").innerHTML =
+      bundle.processAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+    document.getElementById("entity-bundle-information-process-number").innerHTML =
+      bundle.processNumberLimit < 0 ? "{% trans 'entity.bundle.unlimited' %}" : bundle.processNumberLimit;
     document.getElementById("entity-bundle-information-database-access").innerHTML =
       bundle.databaseAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
     document.getElementById("entity-bundle-information-database-number").innerHTML =

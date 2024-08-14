@@ -97,6 +97,26 @@
                   <div class="offer-information-entry-icon">
                     <i class="fa-solid fa-unlock"></i>
                   </div>
+                  <span>{% trans 'offer.process.access' %}</span>
+                </div>
+                <span id="offer-information-process-access"></span>
+              </li>
+              <div class="offer-information-divider"></div>
+              <li class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-solid fa-hashtag"></i>
+                  </div>
+                  <span>{% trans 'offer.process.number' %}</span>
+                </div>
+                <span id="offer-information-process-number"></span>
+              </li>
+              <div class="offer-information-divider"></div>
+              <li class="offer-information-entry">
+                <div class="offer-information-entry-description">
+                  <div class="offer-information-entry-icon">
+                    <i class="fa-solid fa-unlock"></i>
+                  </div>
                   <span>{% trans 'offer.database.access' %}</span>
                 </div>
                 <span id="offer-information-database-access"></span>
@@ -243,6 +263,10 @@
       offer.workflowOperationLimit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     document.getElementById("offer-information-template-access").innerHTML =
       true ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+    document.getElementById("offer-information-process-access").innerHTML =
+      offer.processAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
+    document.getElementById("offer-information-process-number").innerHTML =
+      offer.processNumberLimit < 0 ? "{% trans 'offer.unlimited' %}" : offer.processNumberLimit;
     document.getElementById("offer-information-database-access").innerHTML =
       offer.databaseAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
     document.getElementById("offer-information-database-number").innerHTML =

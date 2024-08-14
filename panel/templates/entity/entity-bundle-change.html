@@ -62,6 +62,10 @@
                 <input id="entity-bundle-change-operation-limit" class="form-control" placeholder="{% trans 'entity.bundle.change.operation.limit' %}">
               </div>
               <div class="form-outline mb-3">
+                <label class="form-label">{% trans 'entity.bundle.change.process.limit' %}</label>
+                <input id="entity-bundle-change-process-limit" class="form-control" placeholder="{% trans 'entity.bundle.change.process.limit' %}">
+              </div>
+              <div class="form-outline mb-3">
                 <label class="form-label">{% trans 'entity.bundle.change.database.limit' %}</label>
                 <input id="entity-bundle-change-database-limit" class="form-control" placeholder="{% trans 'entity.bundle.change.database.limit' %}">
               </div>
@@ -197,6 +201,8 @@
       bundle.workflowNumberLimit;
     document.getElementById("entity-bundle-change-operation-limit").value =
       bundle.workflowOperationLimit;
+    document.getElementById("entity-bundle-change-process-limit").value =
+      bundle.processNumberLimit;
     document.getElementById("entity-bundle-change-database-limit").value =
       bundle.databaseNumberLimit;
     document.getElementById("entity-bundle-change-database-data-limit").value =
@@ -241,6 +247,10 @@
     var operationLimit = document.getElementById("entity-bundle-change-operation-limit").value;
     if (operationLimit !== "") {
       body.workflowOperationLimit = operationLimit;
+    }
+    var processLimit = document.getElementById("entity-bundle-change-process-limit").value;
+    if (processLimit !== "") {
+      body.processNumberLimit = processLimit;
     }
     var databaseLimit = document.getElementById("entity-bundle-change-database-limit").value;
     if (databaseLimit !== "") {
