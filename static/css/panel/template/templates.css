@@ -1,0 +1,138 @@
+#templates-headline {
+  text-align: center;
+  margin-top: 3%;
+  font-weight: bold;
+}
+
+#templates-header {
+  width: min(calc(1500px - 15vw), 95%);
+  margin: auto;
+  margin-top: 3%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#templates-search-box {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 5px;
+}
+
+#templates-search-box {
+  background-color: #202428;
+}
+
+#templates-search-box input {
+  flex-grow: 2;
+  border: none;
+  border-radius: 5px;
+}
+
+#templates-search-box input {
+  background-color: #202428;
+  color: white;
+}
+
+#templates-search-box input:focus{
+  box-shadow: 0 0 0 rgb(255, 255, 255);
+}
+
+#templates-search-box button {
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+#templates-search-box button {
+  background-color: #202428;
+  color: #9b9b9b;
+}
+
+#templates-list {
+  width: min(calc(2000px - 15vw), 95%);
+  list-style-type: none;
+  margin: 2% auto;
+  padding: 0;
+  align-items: stretch;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 50px;
+  row-gap: 50px;
+}
+
+.template-entry {
+  height: 350px;
+  border: 1px solid #7f7f7f;
+  border-radius: 10px;
+  padding: 10px;
+  transition-duration: 0.3s;
+}
+
+.template-entry:hover {
+  scale: 1.05;
+}
+
+.template-workflow {
+  padding: 50px 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.template-workflow {
+  background-color: #202428;
+}
+
+.template-workflow-arrow {
+  font-size: 42px;
+  transform: scale(1.5);
+  height: 64px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.template-entry b {
+  display: block;
+  margin-bottom: 5%;
+}
+
+.template-entry span {
+  display: block;
+}
+
+#templates-empty {
+  display: none;
+  width: 100%;
+  text-align: center;
+  margin-top: 2%;
+}
+
+@media (max-width: 1500px) {
+  #templates-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 1200px) {
+  #templates-header {
+    display: block;
+  }
+
+  #templates-modules-dropdown {
+    margin: 20px auto 20px;
+    width: fit-content;
+  }
+
+  #templates-search-box {
+    width: 100%;
+  }
+
+  #templates-list {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

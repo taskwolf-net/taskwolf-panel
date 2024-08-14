@@ -1,0 +1,116 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body>
+    {% include 'panel-header.html' %}
+    {% include 'panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="template-wrapper">
+        <h1 id="template-headline">{% trans 'template.headline' %}</h1>
+        <div class="d-flex align-items-center mt-5 mb-5">
+          <div class="template-separator"></div>
+          <span class="text-center text-secondary text-nowrap fw-bold">{% trans 'template.preview' %}</span>
+          <div class="template-separator"></div>
+        </div>
+        <div id="template-preview" class="template-section">
+        </div>
+        <div class="d-flex align-items-center mt-5 mb-5">
+          <div class="template-separator"></div>
+          <span class="text-center text-secondary text-nowrap fw-bold">{% trans 'template.workflow' %}</span>
+          <div class="template-separator"></div>
+        </div>
+        <ul id="template-workflow" class="template-section">
+        </ul>
+        <div class="d-flex align-items-center mt-5 mb-5">
+          <div class="template-separator"></div>
+          <span class="text-center text-secondary text-nowrap fw-bold">{% trans 'template.description' %}</span>
+          <div class="template-separator"></div>
+        </div>
+        <div id="template-description" class="template-section">
+        </div>
+        <div class="d-flex align-items-center mt-5 mb-5">
+          <div class="template-separator"></div>
+        </div>
+        <button type="button" id="template-publish" class="btn btn-primary d-block mx-auto my-5 px-5">{% trans 'template.publish' %}</button>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  $(document).ready(function() {
+    displayWorkflowComponent("TRIGGER", true);
+    displayWorkflowComponent("ACTION", true);
+    if ("{{template}}" === "") {
+      return;
+    }
+    fetchTemplateData(function(template) {
+      displayTemplate(template);
+    });
+  });
+
+  function fetchTemplateData(callback) {
+    let language = new HttpRequest("https://team.taskwolf.net/v1/settings/language/",
+      "GET", []);
+    language.send(function (languageStatus, languageResponseText) {
+      var language = JSON.parse(languageResponseText).language;
+      let templateRequest = new HttpRequest(
+        "https://api.taskwolf.net/v1/template/find/unauthorized/" + language + "/",
+        "POST", [], {template: "{{template}}"});
+      templateRequest.send(function (templateStatus, templateResponseText) {
+        callback(JSON.parse(templateResponseText));
+      });
+    });
+  }
+
+  function displayTemplate(template) {
+    updateTemplatePreview(template.trigger, template.actions);
+  }
+
+  function updateTemplatePreview(trigger, actions) {
+    var previewElement = document.getElementById("template-preview");
+    previewElement.innerHTML = "";
+    previewElement.appendChild(createWorkflowElement(trigger, actions));
+  }
+
+  function createWorkflowElement(trigger, actions) {
+    var workflowElement = document.createElement("div");
+    workflowElement.classList.add("template-workflow");
+    workflowElement.appendChild(createLogoElement(trigger));
+    for (var i = 0; i < actions.length; i++) {
+      workflowElement.appendChild(createArrowElement());
+      workflowElement.appendChild(createLogoElement(actions[i]));
+    }
+    return workflowElement;
+  }
+
+  function createLogoElement(module) {
+    var logoElement = document.createElement("img");
+    logoElement.src = "https://taskwolf.net/static/img/applications/" + module.moduleLogo;
+    logoElement.width = 64;
+    logoElement.height = 64;
+    return logoElement;
+  }
+
+  function createArrowElement() {
+    var arrow = document.createElement("span");
+    arrow.classList.add("template-workflow-arrow");
+    arrow.innerHTML = "&#10132;";
+    return arrow;
+  }
+
+  function displayWorkflowComponent(type, required) {
+    var componentElement = document.createElement("li");
+    var typeElement = document.getElementById("b");
+    typeElement.classList.add("template-workflow-component-type");
+    typeElement.innerHTML = type === "TRIGGER" ?
+      "{% trans 'template.workflow.component.trigger' %}" :
+      "{% trans 'template.workflow.component.action' %}";
+    componentElement.appendChild(typeElement);
+    //TODO: DISPLAY MODULE SELECTION
+    //TODO: DISPLAY EVENT SELECTION
+    //TODO: DISPLAY COMPONENT DELETION (IF NOT REQUIRED)
+    document.getElementById("template-workflow").appendChild(componentElement);
+  }
+</script>
