@@ -53,14 +53,14 @@
           </div>
           <ul id="template-description-languages" class="nav nav-tabs" role="tablist">
             <li class="nav-item" style="width: calc(50%);" role="presentation">
-              <button id="template-description-language-english" type="button" role="tab" class="nav-link" data-bs-toggle="tab" data-bs-target="#template-description-content-english-pane" aria-controls="template-description-content-english-pane" aria-selected="false" tabindex="-1">{% trans 'template.description.english' %}</button>
+              <button id="template-description-language-english" type="button" role="tab" class="nav-link active" data-bs-toggle="tab" data-bs-target="#template-description-content-english-pane" aria-controls="template-description-content-english-pane" aria-selected="false" tabindex="-1">{% trans 'template.description.english' %}</button>
             </li>
             <li class="nav-item" style="width: calc(50%);" role="presentation">
-              <button id="template-description-language-german" type="button" role="tab" class="nav-link active" data-bs-toggle="tab" data-bs-target="#template-description-content-german-pane" aria-controls="template-description-content-german-pane" aria-selected="true">{% trans 'template.description.german' %}</button>
+              <button id="template-description-language-german" type="button" role="tab" class="nav-link" data-bs-toggle="tab" data-bs-target="#template-description-content-german-pane" aria-controls="template-description-content-german-pane" aria-selected="true">{% trans 'template.description.german' %}</button>
             </li>
           </ul>
           <div id="template-description-content" class="tab-content">
-            <div id="template-description-content-english-pane" class="tab-pane fade" role="tabpanel" aria-labelledby="template-description-language-english">
+            <div id="template-description-content-english-pane" class="tab-pane fade active show" role="tabpanel" aria-labelledby="template-description-language-english">
               <div class="form-outline mb-4">
                 <label for="template-description-content-english-title" class="form-label">{% trans 'template.description.title' %}</label>
                 <input type="text" id="template-description-content-english-title" class="form-control" placeholder="{% trans 'template.description.title' %}" oninput="checkPublishability()">
@@ -70,7 +70,7 @@
                 <textarea id="template-description-content-english-body" class="form-control" placeholder="{% trans 'template.description.body' %}" oninput="checkPublishability()" rows="3"></textarea>
               </div>
             </div>
-            <div id="template-description-content-german-pane" class="tab-pane fade active show" role="tabpanel" aria-labelledby="template-description-language-german">
+            <div id="template-description-content-german-pane" class="tab-pane fade" role="tabpanel" aria-labelledby="template-description-language-german">
               <div class="form-outline mb-4">
                 <label for="template-description-content-german-title" class="form-label">{% trans 'template.description.title' %}</label>
                 <input type="text" id="template-description-content-german-title" class="form-control" placeholder="{% trans 'template.description.title' %}" oninput="checkPublishability()">
