@@ -38,9 +38,9 @@
   });
 
   function fetchTemplatesData(callback) {
-    let language = new HttpRequest("https://team.taskwolf.net/v1/settings/language/",
+    let languageRequest = new HttpRequest("https://team.taskwolf.net/v1/settings/language/",
       "GET", []);
-    language.send(function (languageStatus, languageResponseText) {
+    languageRequest.send(function (languageStatus, languageResponseText) {
       var language = JSON.parse(languageResponseText).language;
       let templatesRequest = new HttpRequest(
         "https://api.taskwolf.net/v1/templates/all/unauthorized/" + language + "/",

@@ -7,7 +7,16 @@
     {% include 'panel-sidebar.html' %}
     <div class="sidebar-influenced">
       <div id="template-wrapper">
-        <h1 id="template-headline">{% trans 'template.headline' %}</h1>
+        <div id="template-header">
+          <div class="w-25 text-start">
+            <button id="template-delete" type="button" class="btn btn-danger">{% trans 'template.delete' %}</button>
+          </div>
+          <div>
+            <h1 id="template-headline">{% trans 'template.headline' %}</h1>
+          </div>
+          <div class="w-25 text-end">
+          </div>
+        </div>
         <div class="d-flex align-items-center mt-5 mb-5">
           <div class="template-separator"></div>
           <span class="text-center text-secondary text-nowrap fw-bold">{% trans 'template.preview' %}</span>
@@ -20,55 +29,122 @@
           <span class="text-center text-secondary text-nowrap fw-bold">{% trans 'template.workflow' %}</span>
           <div class="template-separator"></div>
         </div>
-        <ul id="template-workflow" class="template-section">
-        </ul>
+        <div class="template-section">
+          <ul id="template-workflow">
+          </ul>
+          <div class="template-workflow-add-action">
+            <i id="template-workflow-add-action-button" class="fa fa-plus"></i>
+          </div>
+        </div>
         <div class="d-flex align-items-center mt-5 mb-5">
           <div class="template-separator"></div>
           <span class="text-center text-secondary text-nowrap fw-bold">{% trans 'template.description' %}</span>
           <div class="template-separator"></div>
         </div>
-        <div id="template-description" class="template-section">
+        <div class="template-section">
+          <div class="dropdown w-25 mx-auto text-center mb-5">
+            <button id="template-access-type-dropdown-button" class="btn btn-secondary w-100 dropdown-button dropdown-toggle" type="button" data-bs-toggle="dropdown">
+              {% trans 'template.access.type' %}
+            </button>
+            <ul id="template-access-type-dropdown-list" class="dropdown-menu dropdown-menu-dark w-100">
+              <li><a id="template-access-type-free" class="dropdown-item">{% trans 'template.access.type.free' %}</a></li>
+              <li><a id="template-access-type-chargeable" class="dropdown-item">{% trans 'template.access.type.chargeable' %}</a></li>
+            </ul>
+          </div>
+          <ul id="template-description-languages" class="nav nav-tabs" role="tablist">
+            <li class="nav-item" style="width: calc(50%);" role="presentation">
+              <button id="template-description-language-english" type="button" role="tab" class="nav-link" data-bs-toggle="tab" data-bs-target="#template-description-content-english-pane" aria-controls="template-description-content-english-pane" aria-selected="false" tabindex="-1">{% trans 'template.description.english' %}</button>
+            </li>
+            <li class="nav-item" style="width: calc(50%);" role="presentation">
+              <button id="template-description-language-german" type="button" role="tab" class="nav-link active" data-bs-toggle="tab" data-bs-target="#template-description-content-german-pane" aria-controls="template-description-content-german-pane" aria-selected="true">{% trans 'template.description.german' %}</button>
+            </li>
+          </ul>
+          <div id="template-description-content" class="tab-content">
+            <div id="template-description-content-english-pane" class="tab-pane fade" role="tabpanel" aria-labelledby="template-description-language-english">
+              <div class="form-outline mb-4">
+                <label for="template-description-content-english-title" class="form-label">{% trans 'template.description.title' %}</label>
+                <input type="text" id="template-description-content-english-title" class="form-control" placeholder="{% trans 'template.description.title' %}" oninput="checkPublishability()">
+              </div>
+              <div class="form-outline">
+                <label for="template-description-content-english-body" class="form-label">{% trans 'template.description.body' %}</label>
+                <textarea id="template-description-content-english-body" class="form-control" placeholder="{% trans 'template.description.body' %}" oninput="checkPublishability()" rows="3"></textarea>
+              </div>
+            </div>
+            <div id="template-description-content-german-pane" class="tab-pane fade active show" role="tabpanel" aria-labelledby="template-description-language-german">
+              <div class="form-outline mb-4">
+                <label for="template-description-content-german-title" class="form-label">{% trans 'template.description.title' %}</label>
+                <input type="text" id="template-description-content-german-title" class="form-control" placeholder="{% trans 'template.description.title' %}" oninput="checkPublishability()">
+              </div>
+              <div class="form-outline">
+                <label for="template-description-content-german-body" class="form-label">{% trans 'template.description.body' %}</label>
+                <textarea id="template-description-content-german-body" class="form-control" placeholder="{% trans 'template.description.body' %}" oninput="checkPublishability()" rows="3"></textarea>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="d-flex align-items-center mt-5 mb-5">
           <div class="template-separator"></div>
         </div>
-        <button type="button" id="template-publish" class="btn btn-primary d-block mx-auto my-5 px-5">{% trans 'template.publish' %}</button>
+        <button type="button" id="template-publish" class="btn btn-primary d-block mx-auto my-5 px-5 disabled">{% trans 'template.publish' %}</button>
       </div>
     </div>
   </body>
 </html>
 
 <script>
+  var language;
+  var trigger = {};
+  var actions = [];
+  var accessType = "";
+
   $(document).ready(function() {
-    displayWorkflowComponent("TRIGGER", true);
-    displayWorkflowComponent("ACTION", true);
-    if ("{{template}}" === "") {
-      return;
-    }
-    fetchTemplateData(function(template) {
-      displayTemplate(template);
+    let languageRequest = new HttpRequest("https://team.taskwolf.net/v1/settings/language/",
+      "GET", []);
+    languageRequest.send(function (languageStatus, languageResponseText) {
+      language = JSON.parse(languageResponseText).language;
+      if ("{{template}}" === "") {
+        displayWorkflowComponent("TRIGGER", {}, true);
+        displayWorkflowComponent("ACTION", {}, true);
+        document.getElementById("template-delete").classList.add("d-none");
+        return;
+      }
+      fetchTemplateData(language, function(template) {
+        displayTemplate(template);
+      });
     });
   });
 
-  function fetchTemplateData(callback) {
-    let language = new HttpRequest("https://team.taskwolf.net/v1/settings/language/",
-      "GET", []);
-    language.send(function (languageStatus, languageResponseText) {
-      var language = JSON.parse(languageResponseText).language;
-      let templateRequest = new HttpRequest(
-        "https://api.taskwolf.net/v1/template/find/unauthorized/" + language + "/",
-        "POST", [], {template: "{{template}}"});
-      templateRequest.send(function (templateStatus, templateResponseText) {
-        callback(JSON.parse(templateResponseText));
-      });
+  function fetchTemplateData(language, callback) {
+    let templateRequest = new HttpRequest(
+      "https://api.taskwolf.net/v1/template/find/unauthorized/" + language + "/",
+      "POST", [], {template: "{{template}}"});
+    templateRequest.send(function (templateStatus, templateResponseText) {
+      callback(JSON.parse(templateResponseText));
     });
   }
 
   function displayTemplate(template) {
-    updateTemplatePreview(template.trigger, template.actions);
+    displayWorkflowComponent("TRIGGER", template.trigger, true);
+    for (var i = 0; i < template.actions.length; i++) {
+      displayWorkflowComponent("ACTION", template.actions[i], true);
+    }
+    accessType = template.accessType;
+    document.getElementById("template-access-type-dropdown-button").innerHTML =
+      template.accessType === "FREE" ? "{% trans 'template.access.type.free' %}" :
+        "{% trans 'template.access.type.chargeable' %}";
+    document.getElementById("template-description-content-english-title").value =
+      template.untranslatedNames[0];
+    document.getElementById("template-description-content-english-body").value =
+      template.untranslatedDescriptions[0];
+    document.getElementById("template-description-content-german-title").value =
+      template.untranslatedNames[1];
+    document.getElementById("template-description-content-german-body").value =
+      template.untranslatedDescriptions[1];
+    updateTemplatePreview();
+    checkPublishability();
   }
 
-  function updateTemplatePreview(trigger, actions) {
+  function updateTemplatePreview() {
     var previewElement = document.getElementById("template-preview");
     previewElement.innerHTML = "";
     previewElement.appendChild(createWorkflowElement(trigger, actions));
@@ -85,11 +161,20 @@
     return workflowElement;
   }
 
-  function createLogoElement(module) {
+  function createLogoElement(component) {
+    if (component.moduleLogo === undefined) {
+      var emptyContainer = document.createElement("i");
+      emptyContainer.classList.add("template-workflow-component",
+        "d-flex", "justify-content-center", "align-items-center",
+        "bg-light", "text-dark");
+      var emptyElement = document.createElement("h2");
+      emptyElement.classList.add("fa", "fa-question", "mb-0")
+      emptyContainer.appendChild(emptyElement);
+      return emptyContainer;
+    }
     var logoElement = document.createElement("img");
-    logoElement.src = "https://taskwolf.net/static/img/applications/" + module.moduleLogo;
-    logoElement.width = 64;
-    logoElement.height = 64;
+    logoElement.classList.add("template-workflow-component");
+    logoElement.src = "https://taskwolf.net/static/img/applications/" + component.moduleLogo;
     return logoElement;
   }
 
@@ -100,17 +185,309 @@
     return arrow;
   }
 
-  function displayWorkflowComponent(type, required) {
+  function displayWorkflowComponent(type, data, required) {
+    if (type === "ACTION") {
+      actions.push(data);
+    } else {
+      trigger = data;
+    }
+    updateTemplatePreview();
     var componentElement = document.createElement("li");
-    var typeElement = document.getElementById("b");
+    componentElement.appendChild(createWorkflowComponentType(type));
+    var selectedModule;
+    var eventElement = createWorkflowComponentEventElement(type, () => data,
+      () => selectedModule);
+    componentElement.appendChild(createWorkflowComponentModuleElement(type, data,
+      eventElement, (module) => selectedModule = module));
+    componentElement.appendChild(eventElement);
+    if (!required && type === "ACTION") {
+      componentElement.appendChild(createWorkflowComponentRemoveElement(() => data,
+        componentElement));
+    }
+    document.getElementById("template-workflow").appendChild(componentElement);
+  }
+
+  function createWorkflowComponentType(type) {
+    var typeElement = document.createElement("b");
     typeElement.classList.add("template-workflow-component-type");
     typeElement.innerHTML = type === "TRIGGER" ?
       "{% trans 'template.workflow.component.trigger' %}" :
       "{% trans 'template.workflow.component.action' %}";
-    componentElement.appendChild(typeElement);
-    //TODO: DISPLAY MODULE SELECTION
-    //TODO: DISPLAY EVENT SELECTION
-    //TODO: DISPLAY COMPONENT DELETION (IF NOT REQUIRED)
-    document.getElementById("template-workflow").appendChild(componentElement);
+    return typeElement;
+  }
+
+  function createWorkflowComponentModuleElement(type, data, eventElement, callback) {
+    var moduleElement = document.createElement("button");
+    moduleElement.classList.add("template-workflow-component-module-button",
+      "btn", "btn-secondary");
+    displayWorkflowComponentModuleName(data, moduleElement);
+    moduleElement.onclick = function (event) {
+      openModuleMenu(function (module) {
+        callback(module);
+        moduleElement.innerHTML = module.name;
+        eventElement.innerHTML = "{% trans 'template.workflow.component.event' %}";
+        eventElement.classList.remove("disabled");
+      });
+    }
+    return moduleElement;
+  }
+
+  function displayWorkflowComponentModuleName(data, element) {
+    if (data.module === undefined) {
+      element.innerHTML = "{% trans 'template.workflow.component.module' %}";
+      return;
+    }
+    fetchAllModules(language, function (modules) {
+      element.innerHTML = modules.filter((module) => module.id === data.module)[0].name;
+    });
+  }
+
+  function createWorkflowComponentEventElement(type, data, selectedModule) {
+    var eventElement = document.createElement("button");
+    eventElement.classList.add("template-workflow-component-event-button",
+      "btn", "btn-secondary", "disabled");
+    displayWorkflowComponentEventName(type, data, eventElement);
+    eventElement.onclick = function () {
+      openEventMenu(selectedModule(), type, function (event) {
+        eventElement.innerHTML = event.name;
+        var index = type === "ACTION" ? actions.indexOf(data()) : -1;
+        data().module = selectedModule().id;
+        data().moduleLogo = selectedModule().logo;
+        data().type = event.identifier;
+        if (type === "TRIGGER") {
+          trigger = data();
+        } else {
+          actions.splice(index, 1, data());
+        }
+        updateTemplatePreview();
+        checkPublishability();
+      });
+    }
+    return eventElement;
+  }
+
+  function displayWorkflowComponentEventName(type, data, element) {
+    if (data().type === undefined) {
+      element.innerHTML = "{% trans 'template.workflow.component.event' %}";
+      return;
+    }
+    fetchComponents(language, type, data().module, function (events) {
+      element.innerHTML = events.filter((event) => event.identifier ===  data().type)[0].name;
+    });
+    element.classList.remove("disabled");
+  }
+
+  function createWorkflowComponentRemoveElement(data, componentElement) {
+    var removeElement = document.createElement("i");
+    removeElement.classList.add("template-workflow-component-remove-button",
+      "fa", "fa-xmark");
+    removeElement.onclick = function (event) {
+      document.getElementById("template-workflow").removeChild(componentElement);
+      actions.splice(actions.indexOf(data()), 1);
+      updateTemplatePreview();
+      checkPublishability();
+    }
+    return removeElement;
+  }
+
+  function openModuleMenu(callback) {
+    fetchAllModules(language, function (modules) {
+      var content = document.createElement("div");
+      content.classList.add("template-workflow-component-module-content");
+      var text = document.createElement("p");
+      text.innerText = "{% trans 'template.workflow.component.module.body' %}";
+      content.appendChild(text);
+      content.appendChild(createModuleSearch(modules, callback));
+      Swal.fire({
+        title: "{% trans 'template.workflow.component.module.title' %}",
+        html: content,
+        showConfirmButton: false,
+        showCancelButton: true,
+      });
+    });
+  }
+
+  function createModuleSearch(modules, callback) {
+    var search = document.createElement("div");
+    search.classList.add("template-workflow-component-module-search", "pt-3");
+    var input = document.createElement("input");
+    input.placeholder = "{% trans 'template.workflow.component.module' %}";
+    search.appendChild(input);
+    var moduleList = document.createElement("ul");
+    fillModuleSearchList(modules, callback, moduleList, "");
+    input.oninput = function (event) {
+      moduleList.innerHTML = "";
+      fillModuleSearchList(modules, callback, moduleList, event.target.value);
+    }
+    search.appendChild(moduleList);
+    return search;
+  }
+
+  function fillModuleSearchList(modules, callback, moduleList, search) {
+    for (var i = 0; i < modules.length; i++) {
+      let module = modules[i];
+      if (search === "" || module.name.toLowerCase().includes(search.toLowerCase())) {
+        var moduleElement = createApplicationEntry(module.name, module.logo,
+          "template-workflow-component-module-entry");
+        moduleElement.role = "button";
+        moduleElement.onclick = function (event) {
+          Swal.close();
+          callback(module);
+        }
+        moduleList.appendChild(moduleElement);
+      }
+    }
+  }
+
+  function openEventMenu(module, type, callback) {
+    fetchComponents(language, type, module.id, function (events) {
+      var content = document.createElement("div");
+      content.classList.add("template-workflow-component-event-content");
+      var text = document.createElement("p");
+      text.innerText = "{% trans 'template.workflow.component.event.body' %}";
+      content.appendChild(text);
+      content.appendChild(createEventSearch(module, events, callback));
+      Swal.fire({
+        title: "{% trans 'template.workflow.component.event.title' %}",
+        html: content,
+        showConfirmButton: false,
+        showCancelButton: true,
+      });
+    });
+  }
+
+  function createEventSearch(module, events, callback) {
+    var search = document.createElement("div");
+    search.classList.add("template-workflow-component-event-search", "pt-3");
+    var input = document.createElement("input");
+    input.placeholder = "{% trans 'template.workflow.component.event' %}";
+    search.appendChild(input);
+    var eventList = document.createElement("ul");
+    fillEventSearchList(module, events, callback, eventList, "");
+    input.oninput = function (event) {
+      eventList.innerHTML = "";
+      fillEventSearchList(module, events, callback, eventList, event.target.value);
+    }
+    search.appendChild(eventList);
+    return search;
+  }
+
+  function fillEventSearchList(module, events, callback, eventList, search) {
+    for (var i = 0; i < events.length; i++) {
+      let event = events[i];
+      if (search === "" || event.name.toLowerCase().includes(search.toLowerCase())) {
+        var eventElement = createApplicationEntry(event.name, module.logo,
+          "template-workflow-component-event-entry");
+        eventElement.role = "button";
+        eventElement.onclick = function () {
+          Swal.close();
+          callback(event);
+        }
+        eventList.appendChild(eventElement);
+      }
+    }
+  }
+
+  function createApplicationEntry(name, logo, prefix) {
+    var applicationElement = document.createElement("li");
+    applicationElement.classList.add(prefix);
+    var applicationInformationContainer = document.createElement("div");
+    applicationInformationContainer.classList.add(prefix + "-information");
+    var applicationIconElement = document.createElement("img");
+    applicationIconElement.classList.add(prefix + "-icon");
+    applicationIconElement.src = "https://taskwolf.net/static/img/applications/" + logo;
+    applicationInformationContainer.appendChild(applicationIconElement);
+    var applicationNameElement = document.createElement("span");
+    applicationNameElement.classList.add(prefix + "-name");
+    applicationNameElement.innerHTML = name;
+    applicationInformationContainer.appendChild(applicationNameElement);
+    applicationElement.appendChild(applicationInformationContainer);
+    return applicationElement;
+  }
+
+  document.getElementById("template-workflow-add-action-button").onclick = function (event) {
+    displayWorkflowComponent("ACTION", {}, false);
+    checkPublishability();
+  }
+
+  document.getElementById("template-access-type-free").onclick = function (event) {
+    document.getElementById("template-access-type-dropdown-button")
+      .innerHTML = "{% trans 'template.access.type.free' %}";
+    accessType = "FREE";
+    checkPublishability();
+  }
+
+  document.getElementById("template-access-type-chargeable").onclick = function (event) {
+    document.getElementById("template-access-type-dropdown-button")
+      .innerHTML = "{% trans 'template.access.type.chargeable' %}";
+    accessType = "CHARGEABLE";
+    checkPublishability();
+  }
+
+  function checkPublishability() {
+    var valid = trigger !== {} && accessType !== "" &&
+      document.getElementById("template-description-content-english-title").value !== "" &&
+      document.getElementById("template-description-content-english-body").value !== "" &&
+      document.getElementById("template-description-content-german-title").value !== "" &&
+      document.getElementById("template-description-content-german-body").value !== "";
+    for (var i = 0; i < actions.length; i++) {
+      if (Object.keys(actions[i]).length === 0) {
+        valid = false;
+        break;
+      }
+    }
+    if (valid) {
+      document.getElementById("template-publish").classList.remove("disabled");
+    } else {
+      document.getElementById("template-publish").classList.add("disabled");
+    }
+  }
+
+  function fetchAllModules(language, callback) {
+    let request = new HttpRequest(
+      "https://api.taskwolf.net/v1/modules/all/unauthorized/" + language + "/",
+      "GET", []);
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText).modules);
+    });
+  }
+
+  function fetchComponents(language, type, module, callback) {
+    let request = new HttpRequest(
+      "https://api.taskwolf.net/v1/components/find/unauthorized/" + language + "/",
+      "POST", [], {module: module, componentType: type});
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText).components);
+    });
+  }
+
+  document.getElementById("template-publish").onclick = function (event) {
+    var url = "https://team.taskwolf.net/v1/template/" +
+      ("{{template}}" === "" ? "create" : "update") + "/";
+    var body = {};
+    if ("{{template}}" !== "") {
+      body.template = "{{template}}";
+    }
+    body.names = {english: document.getElementById("template-description-content-english-title").value,
+      german: document.getElementById("template-description-content-german-title").value};
+    body.descriptions = {english: document.getElementById("template-description-content-english-body").value,
+      german: document.getElementById("template-description-content-german-body").value};
+    body.trigger = trigger;
+    body.actions = actions;
+    body.accessType = accessType;
+    let request = new HttpRequest(url, "POST", [], body);
+    request.send(function (status, responseText) {
+      Swal.fire("{% trans 'template.publish.successful.title' %}", "{% trans 'template.publish.successful.body' %}", "success")
+        .then(success => window.location.href = "/templates/");
+    });
+  }
+
+  document.getElementById("template-delete").onclick = function (event) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/template/delete/",
+      "POST", [], {template: "{{template}}"});
+    request.send(function (status, responseText) {
+      Swal.fire("{% trans 'template.delete.successful.title' %}", "{% trans 'template.delete.successful.body' %}", "success")
+        .then(success => window.location.href = "/templates/");
+    });
   }
 </script>

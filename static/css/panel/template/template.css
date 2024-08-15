@@ -3,10 +3,23 @@
   margin: auto;
 }
 
+#template-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
 #template-headline {
   text-align: center;
-  margin-top: 3%;
   font-weight: bold;
+}
+
+#template-delete {
+  margin-left: 20px;
 }
 
 .template-separator {
@@ -24,7 +37,6 @@
 }
 
 #template-preview {
-  height: 350px;
   border: 1px solid #7f7f7f;
   border-radius: 10px;
   padding: 10px;
@@ -33,7 +45,6 @@
 
 .template-workflow {
   padding: 50px 10px;
-  margin-bottom: 10px;
   border-radius: 10px;
   display: flex;
   flex-direction: row;
@@ -42,6 +53,12 @@
 
 .template-workflow {
   background-color: #202428;
+}
+
+.template-workflow-component {
+  width: 64px;
+  height: 64px;
+  border-radius: 25%;
 }
 
 .template-workflow-arrow {
@@ -55,4 +72,167 @@
 #template-workflow {
   list-style-type: none;
   padding: 0;
+}
+
+#template-workflow li {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #7f7f7f;
+}
+
+.template-workflow-component-type {
+  width: 30%;
+}
+
+.template-workflow-component-module-button, .template-workflow-component-event-button {
+  width: calc(30% - 2 * 20px);
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.template-workflow-component-module-search ul, .template-workflow-component-event-search ul {
+  width: min(260px, 100%);
+  margin: 20px auto auto;
+  padding: 0;
+  list-style-type: none;
+  max-height: calc(57px * 3 - 5px);
+  overflow: auto;
+}
+
+.template-workflow-component-module-entry, .template-workflow-component-event-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  transition-duration: 0.2s;
+}
+
+.template-workflow-component-module-entry:last-child, .template-workflow-component-event-entry:last-child {
+  margin-bottom: 0;
+}
+
+.template-workflow-component-module-entry:hover, .template-workflow-component-event-entry:hover {
+  background-color: #424b53;
+}
+
+.template-workflow-component-module-entry-information, .template-workflow-component-event-entry-information {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.template-workflow-component-module-entry-icon, .template-workflow-component-event-entry-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 25%;
+}
+
+.template-workflow-component-module-entry-name, .template-workflow-component-event-entry-name {
+  margin-left: 20px;
+  font-size: 18px;
+  text-align: left;
+}
+
+.template-workflow-component-module-content input, .template-workflow-component-event-content input {
+  background-color: transparent;
+  border-radius: 5px;
+  box-shadow: none;
+  outline: none;
+  padding: 10px !important;
+}
+
+.template-workflow-component-module-content input, .template-workflow-component-event-content input {
+  border: 1px solid white;
+  color: white;
+}
+
+.template-workflow-component-module-content input::placeholder, .template-workflow-component-event-content input::placeholder {
+  color: #a5a5a5;
+}
+
+.template-workflow-component-remove-button {
+  font-size: 25px;
+  margin-left: auto;
+  margin-right: 0;
+  color: #dc3545;
+  transition-duration: 0.1s;
+}
+
+.template-workflow-component-remove-button:hover {
+  color: #be2d3b;
+}
+
+.template-workflow-add-action {
+  width: 100%;
+  text-align: center;
+  margin-top: 2%;
+}
+
+.template-workflow-add-action i {
+  font-size: 22px;
+  border-radius: 50%;
+  padding: 15px;
+  transition-duration: 0.4s;
+}
+
+.template-workflow-add-action i {
+  background-color: #5c616a;
+}
+
+.template-workflow-add-action i:hover{
+  background-color: #3c3f45;
+}
+
+#template-description-languages {
+  width: 100%;
+  margin: auto auto 3%;
+}
+
+#template-description-languages .nav {
+  border: none !important;
+}
+
+#template-description-languages .nav-link {
+  color: white;
+  width: 100%;
+  border: none !important;
+  border-bottom: 3px solid #1d2633 !important;
+}
+
+#template-description-languages .nav-item .active {
+  background-color: #0d1117;
+  border-width: 3px;
+  border-style: solid;
+  border-image: linear-gradient(to right, #5374ab, #d5d779) 1 !important;
+}
+
+#template-description-content {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+input[type=text], textarea {
+  background-color: #0d1117 !important;
+  color: white !important;
+  -webkit-text-fill-color: white;
+  border: 1px solid #7f7f7f !important;
+}
+
+input[type=text]::placeholder, textarea::placeholder {
+  color: #7f7f7f !important;
+  -webkit-text-fill-color: #7f7f7f;
+}
+
+input[type=text]:-webkit-autofill,
+input[type=text]:-webkit-autofill:hover,
+input[type=text]:-webkit-autofill:focus,
+input[type=text]:-webkit-autofill:active{
+  -webkit-background-clip: text;
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 20px 20px #23232329;
 }
