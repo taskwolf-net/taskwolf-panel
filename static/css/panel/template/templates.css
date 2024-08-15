@@ -72,7 +72,7 @@
 }
 
 .template-entry:hover {
-  scale: 1.05;
+  background-color: #12171e;
 }
 
 .template-workflow {
@@ -99,6 +99,10 @@
 .template-entry b {
   display: block;
   margin-bottom: 5%;
+}
+
+.template-entry img {
+  border-radius: 25%;
 }
 
 .template-entry span {
