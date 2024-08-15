@@ -220,7 +220,7 @@
     var moduleElement = document.createElement("button");
     moduleElement.classList.add("template-workflow-component-module-button",
       "btn", "btn-secondary");
-    displayWorkflowComponentModuleName(data, moduleElement);
+    displayWorkflowComponentModuleName(data, moduleElement, callback);
     moduleElement.onclick = function (event) {
       openModuleMenu(function (module) {
         callback(module);
@@ -232,13 +232,15 @@
     return moduleElement;
   }
 
-  function displayWorkflowComponentModuleName(data, element) {
+  function displayWorkflowComponentModuleName(data, element, callback) {
     if (data.module === undefined) {
       element.innerHTML = "{% trans 'template.workflow.component.module' %}";
       return;
     }
     fetchAllModules(language, function (modules) {
-      element.innerHTML = modules.filter((module) => module.id === data.module)[0].name;
+      var module = modules.filter((module) => module.id === data.module)[0];
+      element.innerHTML = module.name;
+      callback(module);
     });
   }
 
