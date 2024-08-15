@@ -1,5 +1,5 @@
 #template-wrapper {
-  width: min(1000px, 95%);
+  width: min(1000px, 100%);
   margin: auto;
 }
 
@@ -93,6 +93,30 @@
   margin-right: 20px;
 }
 
+.template-workflow-component-remove-button {
+  font-size: 25px;
+  margin-left: auto;
+  margin-right: 0;
+  color: #dc3545;
+  transition-duration: 0.1s;
+}
+
+.template-workflow-component-remove-button:hover {
+  color: #be2d3b;
+}
+
+@media (max-width: 1200px) {
+  .template-workflow-component-type {
+    width: 15%;
+  }
+
+  .template-workflow-component-module-button, .template-workflow-component-event-button {
+    width: calc(40% - 2 * 10px);
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
 .template-workflow-component-module-search ul, .template-workflow-component-event-search ul {
   width: min(260px, 100%);
   margin: 20px auto auto;
@@ -153,18 +177,6 @@
 
 .template-workflow-component-module-content input::placeholder, .template-workflow-component-event-content input::placeholder {
   color: #a5a5a5;
-}
-
-.template-workflow-component-remove-button {
-  font-size: 25px;
-  margin-left: auto;
-  margin-right: 0;
-  color: #dc3545;
-  transition-duration: 0.1s;
-}
-
-.template-workflow-component-remove-button:hover {
-  color: #be2d3b;
 }
 
 .template-workflow-add-action {
