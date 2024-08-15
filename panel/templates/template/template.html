@@ -126,7 +126,7 @@
   function displayTemplate(template) {
     displayWorkflowComponent("TRIGGER", template.trigger, true);
     for (var i = 0; i < template.actions.length; i++) {
-      displayWorkflowComponent("ACTION", template.actions[i], true);
+      displayWorkflowComponent("ACTION", template.actions[i], i === 0);
     }
     accessType = template.accessType;
     document.getElementById("template-access-type-dropdown-button").innerHTML =
