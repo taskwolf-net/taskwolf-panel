@@ -704,6 +704,8 @@ msgid "templates.create"
 msgstr "CREATE"
 msgid "templates.empty"
 msgstr "Unfortunately no templates could be found."
+msgid "templates.load.more"
+msgstr "LOAD MORE"
 
 # TEMPLATE
 msgid "template.headline"

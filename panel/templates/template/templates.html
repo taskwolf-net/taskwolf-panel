@@ -6,21 +6,24 @@
     {% include 'panel-header.html' %}
     {% include 'panel-sidebar.html' %}
     <div class="sidebar-influenced">
-      <div id="templates-wrapper">
-        <h1 id="templates-headline">{% trans 'templates.headline' %}</h1>
-        <div id="templates-header">
-          <div id="templates-search-box">
-            <input id="templates-search-input" placeholder="{% trans 'templates.search' %}" type="text" class="form-control" value="" autocomplete="off">
-            <button type="button">
-              <i class="fa fa-search"></i>
-            </button>
+      <div id="templates-container">
+        <div id="templates-wrapper" class="d-none">
+          <h1 id="templates-headline">{% trans 'templates.headline' %}</h1>
+          <div id="templates-header">
+            <div id="templates-search-box">
+              <input id="templates-search-input" placeholder="{% trans 'templates.search' %}" type="text" class="form-control" value="" autocomplete="off">
+              <button type="button">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+            <button type="button" id="template-create" class="btn btn-primary ms-4 px-5">{% trans 'templates.create' %}</button>
           </div>
-          <button type="button" id="template-create" class="btn btn-primary ms-4 px-5">{% trans 'templates.create' %}</button>
-        </div>
-        <ul id="templates-list">
-        </ul>
-        <div id="templates-empty">
-          <b id="templates-empty-headline">{% trans 'templates.empty' %}</b>
+          <ul id="templates-list">
+          </ul>
+          <button id="templates-load-more" type="button" class="btn btn-outline-success d-block mx-auto px-5 mt-5 d-none">{% trans 'templates.load.more' %} +</button>
+          <div id="templates-empty" class="d-none">
+            <b id="templates-empty-headline">{% trans 'templates.empty' %}</b>
+          </div>
         </div>
       </div>
     </div>
@@ -28,53 +31,70 @@
 </html>
 
 <script>
-  var templates;
-  var templatesCurrentNameFilter = "";
+  var language;
+  var totalPages = 0;
+  var loadedPages = 0;
+  var currentPageState = "";
+  var currentSearch = "";
 
   $(document).ready(function() {
-    fetchTemplatesData(function() {
-      displayTemplates();
+    displayLoader();
+    fetchLanguage(function (result) {
+      language = result;
+      fetchMoreTemplates(function (templates) {
+        displayTemplates(templates);
+        removeLoader();
+      });
     });
   });
 
-  function fetchTemplatesData(callback) {
-    let languageRequest = new HttpRequest("https://team.taskwolf.net/v1/settings/language/",
-      "GET", []);
-    languageRequest.send(function (languageStatus, languageResponseText) {
-      var language = JSON.parse(languageResponseText).language;
-      let templatesRequest = new HttpRequest(
-        "https://api.taskwolf.net/v1/templates/all/unauthorized/" + language + "/",
-        "GET", []);
-      templatesRequest.send(function (templatesStatus, templatesResponseText) {
-        templates = JSON.parse(templatesResponseText).templates;
-        callback();
-      });
+  function updateTemplates() {
+    document.getElementById("templates-list").innerHTML = "";
+    loadedPages = 0;
+    currentPageState = "";
+    fetchMoreTemplates(function (templates) {
+      displayTemplates(templates);
     });
   }
 
-  function displayTemplates() {
-    document.getElementById("templates-list").innerHTML = "";
+  function fetchLanguage(callback) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/settings/language/", "GET", []);
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText).language);
+    });
+  }
+
+  function fetchMoreTemplates(callback) {
+    let request = new HttpRequest("https://api.taskwolf.net/v1/templates/load/unauthorized/" + language + "/",
+      "POST", [], {pageState: currentPageState, module: "", search: currentSearch});
+    request.send(function (status, responseText) {
+      var result = JSON.parse(responseText);
+      currentPageState = result.page;
+      totalPages = result.pageNumber;
+      loadedPages++;
+      callback(result.templates);
+    });
+  }
+
+  function displayTemplates(templates) {
     var displayedEntries = 0;
     for (var i = 0; i < templates.length; i++) {
       var entry = templates[i];
-      if(!(shouldDisplayTemplateEntry(entry))) {
-        continue;
-      }
       displayTemplate(entry.id, entry.name, entry.description, entry.trigger,
         entry.actions);
       displayedEntries++;
     }
     if (displayedEntries === 0) {
-      document.getElementById("templates-empty").style.display = "block";
+      document.getElementById("templates-empty").classList.remove("d-none");
+      document.getElementById("templates-load-more").classList.add("d-none");
     } else {
-      document.getElementById("templates-empty").style.display = "none";
+      document.getElementById("templates-empty").classList.add("d-none");
+      if (loadedPages < totalPages) {
+        document.getElementById("templates-load-more").classList.remove("d-none");
+      } else {
+        document.getElementById("templates-load-more").classList.add("d-none");
+      }
     }
-  }
-
-  function shouldDisplayTemplateEntry(entry) {
-    return templatesCurrentNameFilter.length === 0 ||
-      entry.name.toLowerCase().includes(templatesCurrentNameFilter.toLowerCase()) ||
-      entry.description.toLowerCase().includes(templatesCurrentNameFilter.toLowerCase());
   }
 
   function displayTemplate(id, name, description, trigger, actions) {
@@ -121,11 +141,28 @@
   }
 
   document.getElementById("templates-search-input").oninput = function(event) {
-    templatesCurrentNameFilter = event.target.value;
-    displayTemplates();
+    currentSearch = event.target.value;
+    updateTemplates();
   };
+
+  document.getElementById("templates-load-more").onclick = function (event) {
+    fetchMoreTemplates(function (templates) {
+      displayTemplates(templates);
+    });
+  }
 
   document.getElementById("template-create").onclick = function (event) {
     window.location.href = "/template/create/"
+  }
+
+  function displayLoader() {
+    var loader = document.createElement("div");
+    loader.classList.add("loader");
+    document.getElementById("templates-container").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("templates-container").removeChild(document.getElementsByClassName("loader")[0]);
+    document.getElementById("templates-wrapper").classList.remove("d-none");
   }
 </script>

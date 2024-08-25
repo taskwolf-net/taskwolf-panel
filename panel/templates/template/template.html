@@ -133,13 +133,13 @@
       template.accessType === "FREE" ? "{% trans 'template.access.type.free' %}" :
         "{% trans 'template.access.type.chargeable' %}";
     document.getElementById("template-description-content-english-title").value =
-      template.untranslatedNames[0];
+      template.englishName;
     document.getElementById("template-description-content-english-body").value =
-      template.untranslatedDescriptions[0];
+      template.englishDescription;
     document.getElementById("template-description-content-german-title").value =
-      template.untranslatedNames[1];
+      template.germanName;
     document.getElementById("template-description-content-german-body").value =
-      template.untranslatedDescriptions[1];
+      template.germanDescription;
     updateTemplatePreview();
     checkPublishability();
   }
@@ -470,10 +470,10 @@
     if ("{{template}}" !== "") {
       body.template = "{{template}}";
     }
-    body.names = {english: document.getElementById("template-description-content-english-title").value,
-      german: document.getElementById("template-description-content-german-title").value};
-    body.descriptions = {english: document.getElementById("template-description-content-english-body").value,
-      german: document.getElementById("template-description-content-german-body").value};
+    body.englishName = document.getElementById("template-description-content-english-title").value;
+    body.englishDescription = document.getElementById("template-description-content-english-body").value;
+    body.germanName = document.getElementById("template-description-content-german-title").value;
+    body.germanDescription = document.getElementById("template-description-content-german-body").value;
     body.trigger = trigger;
     body.actions = actions;
     body.accessType = accessType;

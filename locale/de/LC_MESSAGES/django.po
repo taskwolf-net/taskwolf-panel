@@ -703,6 +703,8 @@ msgid "templates.create"
 msgstr "ERSTELLEN"
 msgid "templates.empty"
 msgstr "Leider konnten keine Vorlagen gefunden werden."
+msgid "templates.load.more"
+msgstr "MEHR LADEN"
 
 # TEMPLATE
 msgid "template.headline"
