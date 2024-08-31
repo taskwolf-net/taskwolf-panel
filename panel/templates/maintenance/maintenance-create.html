@@ -1,0 +1,90 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body>
+    {% include 'panel-header.html' %}
+    {% include 'panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="maintenance-wrapper">
+        <h1 id="maintenance-headline" class="mb-5">{% trans 'maintenance.create.headline' %}</h1>
+        <div class="maintenance-divider my-5"></div>
+        <div>
+          <div class="form-outline mb-3">
+            <label class="form-label">{% trans 'maintenance.create.description' %}</label>
+            <input id="maintenance-description" class="form-control" placeholder="{% trans 'maintenance.create.description' %}">
+          </div>
+          <div class="d-flex align-items-center">
+            <div class="form-outline mb-3 w-100">
+              <label class="form-label">{% trans 'maintenance.create.date' %}</label>
+              <input id="maintenance-date" class="form-control" type="date">
+            </div>
+            <div class="form-outline mb-3 w-100 mx-3">
+              <label class="form-label">{% trans 'maintenance.create.time' %}</label>
+              <input id="maintenance-time" class="form-control" type="time">
+            </div>
+            <div class="form-outline mb-3 w-100">
+              <label class="form-label">{% trans 'maintenance.create.duration' %}</label>
+              <input id="maintenance-duration" class="form-control" placeholder="{% trans 'maintenance.create.duration' %}">
+            </div>
+          </div>
+        </div>
+        <div class="maintenance-divider my-5"></div>
+        <button type="button" id="maintenance-create" class="btn btn-primary d-block mx-auto mt-5 px-5 disabled">{% trans 'maintenance.create' %}</button>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  document.getElementById("maintenance-date").oninput = function (event) {
+    checkCreatability();
+  }
+
+  document.getElementById("maintenance-time").oninput = function (event) {
+    checkCreatability();
+  }
+
+  document.getElementById("maintenance-duration").oninput = function (event) {
+    checkCreatability();
+  }
+
+  function checkCreatability() {
+    var createButton = document.getElementById("maintenance-create");
+    if (isCreatable()) {
+      createButton.classList.remove("disabled");
+      return;
+    }
+    createButton.classList.add("disabled");
+  }
+
+  function isCreatable() {
+    if (document.getElementById("maintenance-date").value === "") {
+      return false;
+    }
+    if (document.getElementById("maintenance-time").value === "") {
+      return false;
+    }
+    if (document.getElementById("maintenance-duration").value === "") {
+      return false;
+    }
+    return true;
+  }
+
+  document.getElementById("maintenance-create").onclick = function (event) {
+    var description = document.getElementById("maintenance-description").value;
+    var dateContent = new Date(document.getElementById("maintenance-date").value);
+    var date = dateContent.getTime();
+    var timeContent = document.getElementById("maintenance-time").value.split(":");
+    var time = timeContent[0] * 1000 * 60 * 60 + timeContent[1] * 1000 * 60 +
+      dateContent.getTimezoneOffset() * 1000 * 60;
+    var duration = parseInt(document.getElementById("maintenance-duration").value) * 1000 * 60;
+    let request = new HttpRequest("https://team.taskwolf.net/v1/maintenance/create/", "POST",
+      [], {description: description, startTime: date + time, duration: duration});
+    request.send(function (status, responseText) {
+      Swal.fire("{% trans 'maintenance.create.successful.title' %}",
+        "{% trans 'maintenance.create.successful.body' %}", "success")
+        .then(success => window.location.href = "/maintenance/");
+    });
+  }
+</script>

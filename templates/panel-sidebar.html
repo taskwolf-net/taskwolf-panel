@@ -23,6 +23,9 @@
       <li id="templates-sidebar-item" class="sidebar-item d-none">
         <a href="/templates/" class="sidebar-link nav-link {% if 'template' in request.path %}sidebar-active{% endif %}" aria-current="page"><i class="sidebar-icon fa fa-sheet-plastic" aria-hidden="true"></i>{% trans 'panel.sidebar.templates' %}</a>
       </li>
+      <li id="maintenance-sidebar-item" class="sidebar-item d-none">
+        <a href="/maintenance/" class="sidebar-link nav-link {% if 'maintenance' in request.path %}sidebar-active{% endif %}" aria-current="page"><i class="sidebar-icon fa fa-wrench" aria-hidden="true"></i>{% trans 'panel.sidebar.maintenance' %}</a>
+      </li>
       <li id="administration-sidebar-item" class="sidebar-item d-none">
         <a href="/administration/" class="sidebar-link nav-link {% if 'administration' in request.path or 'group' in request.path or 'member' in request.path %}sidebar-active{% endif %}" aria-current="page"><i class="sidebar-icon fa fa-building-columns" aria-hidden="true"></i>{% trans 'panel.sidebar.administrator' %}</a>
       </li>
@@ -38,6 +41,7 @@
       if (JSON.parse(responseText).hasPermission === true) {
         document.getElementById("users-sidebar-item").classList.remove("d-none");
         document.getElementById("templates-sidebar-item").classList.remove("d-none");
+        document.getElementById("maintenance-sidebar-item").classList.remove("d-none");
         document.getElementById("administration-sidebar-item").classList.remove("d-none");
       }
     });

@@ -1,0 +1,96 @@
+#maintenance-wrapper {
+  width: min(1000px, 100%);
+  margin: auto;
+}
+
+#maintenance-headline {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 10vh;
+}
+
+.maintenance-divider {
+  width: 100%;
+  height: 0;
+  border-bottom: 1px #596066 solid;
+}
+
+#maintenance-list {
+  list-style-type: none;
+  padding: 0;
+  width: 95%;
+  margin: auto;
+}
+
+#maintenance-list:last-child {
+  margin-bottom: 0 !important;
+}
+
+.maintenance-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #5b5b5b;
+  margin-bottom: 25px;
+  transition-duration: 0.2s;
+}
+
+.maintenance-icon {
+  height: fit-content;
+  margin: 0 30px 0 15px;
+}
+
+.maintenance-status {
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  width: fit-content;
+}
+
+.maintenance-status-running {
+  border: 2px #42a94b solid;
+  background-color: #d7f8da;
+  color: #1f721c;
+}
+
+.maintenance-status-scheduled {
+  border: 2px #a99442 solid;
+  background-color: #f8f1d7;
+  color: #72571c;
+}
+
+.maintenance-settings-button {
+  background-color: transparent;
+  border: none;
+  float: right;
+  width: 100% !important;
+  color: white;
+}
+
+.maintenance-settings-dropdown {
+  padding: 10px !important;
+}
+
+.maintenance-settings-dropdown-entry {
+  padding: 10px !important;
+  border-radius: 4px;
+  border: none !important;
+}
+
+.maintenance-settings-dropdown-entry:hover {
+  background-color: #464b54 !important;
+}
+
+.maintenance-settings-dropdown-entry i {
+  width: 20px;
+}
+
+.maintenance-settings-dropdown-entry label {
+  margin-left: 20px;
+}
+
+#maintenance-create {
+  margin-top: 5vh;
+}

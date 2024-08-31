@@ -1,0 +1,207 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body>
+    {% include 'panel-header.html' %}
+    {% include 'panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="maintenance-container">
+        <div id="maintenance-wrapper" class="d-none">
+          <h1 id="maintenance-headline" class="mb-5">{% trans 'maintenance.headline' %}</h1>
+          <div class="maintenance-divider my-5"></div>
+          <ul id="maintenance-list">
+          </ul>
+          <div id="maintenance-empty" class="text-center d-none">
+            <span>{% trans 'maintenance.empty' %}</span>
+          </div>
+          <div class="maintenance-divider my-5"></div>
+          <button type="button" id="maintenance-create" class="btn btn-primary d-block mx-auto mt-5 px-5">{% trans 'maintenance.create' %}</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  $(document).ready(function() {
+    displayLoader();
+    fetchMaintenance(function (maintenace) {
+      displayMaintenance(maintenace);
+      removeLoader();
+    });
+  });
+
+  function displayMaintenance(maintenace) {
+    for (var i = 0; i < maintenace.length; i++) {
+      var entry = maintenace[i];
+      displayMaintenanceEntry(entry.id, entry.startTime, entry.duration, entry.status);
+    }
+    if (maintenace.length === 0) {
+      document.getElementById("maintenance-empty").classList.remove("d-none");
+    }
+  }
+
+  function displayMaintenanceEntry(id, startTime, duration, status) {
+    var entryElement = document.createElement("div");
+    entryElement.classList.add("maintenance-entry");
+    var prefixElement = document.createElement("div");
+    prefixElement.classList.add("d-flex", "align-items-center");
+    var iconElement = document.createElement("h2");
+    iconElement.classList.add("maintenance-icon", "fa-solid", "fa-screwdriver-wrench");
+    prefixElement.appendChild(iconElement);
+    var informationElement = document.createElement("div");
+    var statusElement = document.createElement("p");
+    statusElement.classList.add("maintenance-status");
+    if (status === "RUNNING") {
+      statusElement.innerHTML = "{% trans 'maintenance.running' %}";
+      statusElement.classList.add("maintenance-status-running");
+    } else if (status === "SCHEDULED") {
+      statusElement.innerHTML = "{% trans 'maintenance.scheduled' %}";
+      statusElement.classList.add("maintenance-status-scheduled");
+    }
+    informationElement.appendChild(statusElement);
+    var timeElement = document.createElement("p");
+    timeElement.classList.add("mb-0");
+    timeElement.innerHTML = new Date(startTime).toLocaleString();
+    informationElement.appendChild(timeElement);
+    var durationElement = document.createElement("p");
+    durationElement.classList.add("mb-0");
+    durationElement.innerHTML = (duration / (1000 * 60)) + " minutes";
+    informationElement.appendChild(durationElement);
+    prefixElement.appendChild(informationElement);
+    entryElement.appendChild(prefixElement);
+    var entrySuffix = document.createElement("div");
+    entrySuffix.classList.add("d-flex", "align-items-center");
+    if (startTime - new Date().getTime() < 1000 * 60 * 60 * 24) {
+      entrySuffix.appendChild(createCountDownElement(startTime, duration));
+    }
+    var settingsButton = document.createElement("button");
+    settingsButton.type = "button";
+    settingsButton.classList.add("maintenance-settings-button", "fa-solid",
+      "fa-ellipsis-vertical");
+    settingsButton.setAttribute("data-bs-toggle", "dropdown");
+    settingsButton.setAttribute("aria-expanded", "false");
+    entrySuffix.appendChild(settingsButton);
+    var dropdownButtons = [];
+    if (status === "SCHEDULED") {
+      dropdownButtons.push({icon: "fa-trash",
+        content: "{% trans 'maintenance.settings.delete' %}",
+        color: "text-danger", click: () => deleteMaintenance(id)});
+    }
+    if (status === "RUNNING") {
+      dropdownButtons.push({icon: "fa-check",
+        content: "{% trans 'maintenance.settings.finish' %}",
+        color: "text-success", click: () => finishMaintenance(id)});
+    }
+    var dropdown = createMaintenanceSettingsDropdown(dropdownButtons);
+    entrySuffix.appendChild(dropdown);
+    entryElement.appendChild(entrySuffix);
+    document.getElementById("maintenance-list").appendChild(entryElement);
+  }
+
+  function createCountDownElement(startTime, duration) {
+    var countDownElement = document.createElement("span");
+    countDownElement.classList.add("mx-5", "text-nowrap", "fw-bold");
+    updateCountDownElement(startTime, duration, countDownElement, true);
+    setInterval(function () {
+      updateCountDownElement(startTime, duration, countDownElement, false);
+    }, 1000);
+    return countDownElement;
+  }
+
+  function updateCountDownElement(startTime, duration, countDownElement, initial) {
+    var timeDifference = new Date().getTime() - startTime;
+    if (Math.abs(timeDifference) < 1000 && !initial) {
+      window.location.reload();
+      return;
+    }
+    countDownElement.innerHTML = "T" + (timeDifference > 0 ? " + " : " - ") +
+      new Date(Math.abs(timeDifference)).toISOString().slice(11,19);
+    if (timeDifference < 0) {
+      countDownElement.classList.add("text-secondary");
+    }
+    if (timeDifference >= 0 && timeDifference <= duration) {
+      countDownElement.classList.remove("text-secondary");
+      countDownElement.classList.add("text-success");
+    }
+    if (timeDifference > duration) {
+      countDownElement.classList.remove("text-success");
+      countDownElement.classList.add("text-danger");
+    }
+  }
+
+  function createMaintenanceSettingsDropdown(buttons) {
+    var dropdown = document.createElement("ul");
+    dropdown.classList.add("maintenance-settings-dropdown", "dropdown-menu", "bg-dark");
+    for (var i = 0; i < buttons.length; i++) {
+      var button = buttons[i];
+      dropdown.appendChild(createMaintenanceSettingsDropdownButton(dropdown, button.icon,
+        button.content, button.color, button.click));
+    }
+    return dropdown;
+  }
+
+  function createMaintenanceSettingsDropdownButton(dropdown, icon, content, color, click) {
+    var dropdownEntry = document.createElement("li");
+    dropdownEntry.classList.add("maintenance-settings-dropdown-entry", "dropdown-item");
+    var dropdownEntryIcon = document.createElement("i");
+    dropdownEntryIcon.classList.add("fa-solid", icon);
+    dropdownEntry.appendChild(dropdownEntryIcon);
+    var dropdownEntryLabel = document.createElement("label");
+    dropdownEntryLabel.innerText = content;
+    dropdownEntry.appendChild(dropdownEntryLabel);
+    if (color !== undefined) {
+      dropdownEntryIcon.classList.add(color);
+      dropdownEntryLabel.classList.add(color);
+    }
+    dropdownEntry.onclick = function (event) {
+      $(dropdown).dropdown('toggle');
+      click();
+    };
+    return dropdownEntry;
+  }
+
+  function fetchMaintenance(callback) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/maintenance/find/", "GET", []);
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText).maintenance);
+    });
+  }
+
+  function deleteMaintenance(id) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/maintenance/delete/", "POST",
+      [], {maintenance: id});
+    request.send(function (status, responseText) {
+      Swal.fire("{% trans 'maintenance.delete.successful.title' %}",
+        "{% trans 'maintenance.delete.successful.body' %}", "success")
+        .then(success => window.location.reload());
+    });
+  }
+
+  function finishMaintenance(id) {
+    let request = new HttpRequest("https://team.taskwolf.net/v1/maintenance/finish/", "POST",
+      [], {maintenance: id});
+    request.send(function (status, responseText) {
+      Swal.fire("{% trans 'maintenance.finish.successful.title' %}",
+        "{% trans 'maintenance.finish.successful.body' %}", "success")
+        .then(success => window.location.reload());
+    });
+  }
+
+  document.getElementById("maintenance-create").onclick = function (event) {
+    window.location.href = "/maintenance/create/";
+  }
+
+  function displayLoader() {
+    var loader = document.createElement("div");
+    loader.classList.add("loader");
+    document.getElementById("maintenance-container").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("maintenance-container")
+      .removeChild(document.getElementsByClassName("loader")[0]);
+    document.getElementById("maintenance-wrapper").classList.remove("d-none");
+  }
+</script>
