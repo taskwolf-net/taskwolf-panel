@@ -14,6 +14,12 @@ async def userGeneral(request, id):
     'user': id})
 
 @authentication_required
+async def userMail(request, id):
+  return render(request, 'user/user-mail.html', {'title': 'Taskwolf - Mail',
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-mail.css'],
+    'user': id})
+
+@authentication_required
 async def userBundle(request, id):
   return render(request, 'entity/entity-bundle.html', {'title': 'Taskwolf - User',
     'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/entity/entity-bundle.css'],

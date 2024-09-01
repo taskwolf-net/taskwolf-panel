@@ -278,6 +278,18 @@ msgstr "ANSEHEN"
 msgid "user.general.organization.empty"
 msgstr "Der Nutzer ist kein Mitglied einer Organisation"
 
+# USER - MAIL
+msgid "user.mail.headline"
+msgstr "MAILS"
+msgid "user.mail.empty"
+msgstr "Es konnten keine Mails gefunden werden."
+msgid "user.mail.settings.resend"
+msgstr "Erneut senden"
+msgid "mail.resend.successful.title"
+msgstr "Mail erneut gesendet"
+msgid "mail.resend.successful.body"
+msgstr "Die E-Mail wurde erneut an den Kunden gesendet"
+
 # ORGANIZATION - GENERAL
 msgid "organization.general.profile.headline"
 msgstr "PROFIL"
@@ -323,6 +335,8 @@ msgstr "Die Organisation hat keine Teams"
 # ENTITY
 msgid "entity.tab.general"
 msgstr "ALLGEMEIN"
+msgid "entity.tab.mail"
+msgstr "MAILS"
 msgid "entity.tab.bundle"
 msgstr "PAKET"
 msgid "entity.tab.payment"

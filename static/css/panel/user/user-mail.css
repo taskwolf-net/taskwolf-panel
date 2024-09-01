@@ -1,0 +1,98 @@
+#user-mail-wrapper {
+  width: min(1200px, 95%);
+  margin: auto;
+}
+
+#user-mail-container .nav-tabs {
+  width: min(1200px, 100%);
+  margin: 40px auto 75px auto;
+  border: none;
+}
+
+#user-mail-container .nav-link {
+  border: none;
+  transition-duration: 0.3s;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#user-mail-container .nav-link {
+  color: white;
+}
+
+#user-mail-container .nav-link-active {
+  color: #8fc0f1;
+  border-bottom: 2px #8fc0f1 solid;
+}
+
+#user-mails {
+  padding: 30px;
+  border-radius: 5px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+#user-mails {
+  background-color: #131820;
+  border: 1px #2b3441 solid;
+}
+
+#user-mail-list {
+  list-style-type: none;
+  padding: 0;
+  width: 95%;
+  margin: auto;
+}
+
+#user-mail-list:last-child {
+  margin-bottom: 0 !important;
+}
+
+.user-mail-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #5b5b5b;
+  margin-bottom: 25px;
+  transition-duration: 0.2s;
+}
+
+.user-mail-icon {
+  height: fit-content;
+  margin: 0 30px 0 15px;
+}
+
+.user-mail-settings-button {
+  background-color: transparent;
+  border: none;
+  float: right;
+  width: 100% !important;
+  color: white;
+}
+
+.user-mail-settings-dropdown {
+  padding: 10px !important;
+}
+
+.user-mail-settings-dropdown-entry {
+  padding: 10px !important;
+  border-radius: 4px;
+  border: none !important;
+}
+
+.user-mail-settings-dropdown-entry:hover {
+  background-color: #464b54 !important;
+}
+
+.user-mail-settings-dropdown-entry i {
+  width: 20px;
+}
+
+.user-mail-settings-dropdown-entry label {
+  margin-left: 20px;
+}

@@ -11,6 +11,7 @@ urlpatterns = [
   path('sale/<str:id>/', sale.sale),
   path('users/', user.users),
   path('user/<str:id>/general/', user.userGeneral),
+  path('user/<str:id>/mails/', user.userMail),
   path('user/<str:id>/bundle/', user.userBundle),
   path('user/<str:id>/bundle/change/', user.userBundleChange),
   path('user/<str:id>/payment/', user.userPayment),
