@@ -79,7 +79,7 @@
     var time = timeContent[0] * 1000 * 60 * 60 + timeContent[1] * 1000 * 60 +
       dateContent.getTimezoneOffset() * 1000 * 60;
     var duration = parseInt(document.getElementById("maintenance-duration").value) * 1000 * 60;
-    let request = new HttpRequest("https://team.taskwolf.net/v1/maintenance/create/", "POST",
+    let request = new HttpRequest("https://team.dulno.com/v1/maintenance/create/", "POST",
       [], {description: description, startTime: date + time, duration: duration});
     request.send(function (status, responseText) {
       Swal.fire("{% trans 'maintenance.create.successful.title' %}",

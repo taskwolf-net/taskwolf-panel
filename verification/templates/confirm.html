@@ -32,7 +32,7 @@
       Swal.fire("Completion failed!", "The selected password is not strong enough", "error");
       return;
     }
-    let request = new HttpRequest("https://team.taskwolf.net/v1/verification/complete/", "POST", [],
+    let request = new HttpRequest("https://team.dulno.com/v1/verification/complete/", "POST", [],
       {member: "{{member}}", token: "{{token}}", password: document.getElementById("password").value});
     request.send(function (status, responseText) {
       window.location.href = "/";

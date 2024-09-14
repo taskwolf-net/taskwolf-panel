@@ -57,7 +57,7 @@
   }
 
   function fetchStatisticsData(callback) {
-    let request = new HttpRequest("https://team.taskwolf.net/v1/statistics/", "GET", []);
+    let request = new HttpRequest("https://team.dulno.com/v1/statistics/", "GET", []);
     request.send(function (status, responseText) {
       statistics = JSON.parse(responseText);
       callback();

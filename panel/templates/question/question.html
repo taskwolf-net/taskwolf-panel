@@ -30,7 +30,7 @@
   });
 
   function fetchQuestionData(callback) {
-    let request = new HttpRequest("https://team.taskwolf.net/v1/question/find/", "POST", [],
+    let request = new HttpRequest("https://team.dulno.com/v1/question/find/", "POST", [],
       {question: "{{question}}"});
     request.send(function (status, responseText) {
       question = JSON.parse(responseText);
@@ -57,7 +57,7 @@
   function displayAnswerField() {
     var answerField = document.createElement("div");
     answerField.id = "question-answer-field";
-    displayEntry(true, "Taskwolf", "", "", answerField);
+    displayEntry(true, "Dulno", "", "", answerField);
     var quill = new Quill('#question-answer-field', {
       modules: {
         toolbar: [
@@ -80,16 +80,16 @@
     });
   }
 
-  function displayEntry(taskwolfWritten, author, date, time, contentElement) {
+  function displayEntry(dulnoWritten, author, date, time, contentElement) {
     var messageContainer = document.createElement("li");
     messageContainer.classList.add("question-message-container");
     var messageDescription = document.createElement("div");
     messageDescription.classList.add("question-message-description")
-    if (taskwolfWritten) {
-      var taskwolfPicture = document.createElement("img");
-      taskwolfPicture.classList.add("question-message-profile-picture");
-      taskwolfPicture.src = "{% static 'img/taskwolf-profile-picture.png' %}";
-      messageDescription.appendChild(taskwolfPicture);
+    if (dulnoWritten) {
+      var dulnoPicture = document.createElement("img");
+      dulnoPicture.classList.add("question-message-profile-picture");
+      dulnoPicture.src = "{% static 'img/dulno-profile-picture.png' %}";
+      messageDescription.appendChild(dulnoPicture);
     } else {
       var userPicture = document.createElement("i");
       userPicture.classList.add("question-message-profile-icon", "fa-regular", "fa-user");
@@ -129,7 +129,7 @@
 
   document.getElementById("question-message-add").onclick = function(event) {
     var message = document.getElementById("question-answer-field").firstElementChild.innerHTML;
-    let request = new HttpRequest("https://team.taskwolf.net/v1/question/answer/", "POST", [],
+    let request = new HttpRequest("https://team.dulno.com/v1/question/answer/", "POST", [],
       {question: question.id, message: message});
     request.send(function (status, responseText) {
       Swal.fire("{% trans 'question.message.add.successful.title' %}", "{% trans 'question.message.add.successful.body' %}", "success").then(success => window.location.reload());
@@ -145,7 +145,7 @@
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        let request = new HttpRequest("https://team.taskwolf.net/v1/question/delete/", "POST", [],
+        let request = new HttpRequest("https://team.dulno.com/v1/question/delete/", "POST", [],
           {question: question.id});
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'question.delete.successful.title' %}", "{% trans 'question.delete.successful.body' %}", "success").then(success => window.location.href = "/questions/");

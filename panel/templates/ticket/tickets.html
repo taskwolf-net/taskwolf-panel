@@ -63,7 +63,7 @@
   });
 
   function fetchTicketsData(callback) {
-    let request = new HttpRequest("https://team.taskwolf.net/v1/tickets/find/", "GET", []);
+    let request = new HttpRequest("https://team.dulno.com/v1/tickets/find/", "GET", []);
     request.send(function (status, responseText) {
       tickets = JSON.parse(responseText).tickets;
       callback();

@@ -19,11 +19,11 @@ async def login(request):
   authenticated = await isAuthenticated(request)
   if (authenticated):
     return await dashboard(request)
-  return render(request, 'login.html', {'title': 'Taskwolf - Login',
+  return render(request, 'login.html', {'title': 'Dulno - Login',
     'css': ['css/verification/login.css']})
 
 @verification_page
 async def confirm(request, member, token):
-  return render(request, 'confirm.html', {'title': "Taskwolf - Confirmation",
+  return render(request, 'confirm.html', {'title': "Dulno - Confirmation",
     'css': ['css/verification/confirm.css'],
     'member': member, 'token': token})

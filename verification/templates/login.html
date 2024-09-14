@@ -29,12 +29,12 @@
   });
 
   document.getElementById('login').onclick = function(event) {
-    let request = new HttpRequest("https://team.taskwolf.net/v1/verification/login/", "POST", [],
+    let request = new HttpRequest("https://team.dulno.com/v1/verification/login/", "POST", [],
       {email: document.getElementById("email").value, password: document.getElementById("password").value});
     request.send(function (status, responseText) {
       if (status == 200) {
         Cookie.create("panel-token", JSON.parse(responseText).apiKey, 60 * 60);
-        Cookie.destroy("taskwolf-organization-target");
+        Cookie.destroy("dulno-organization-target");
         window.location.href = "/dashboard/";
       } else {
         Swal.fire("Authentication failed!", "The password entered is incorrect!", "error");

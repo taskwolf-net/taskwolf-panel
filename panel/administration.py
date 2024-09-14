@@ -36,19 +36,19 @@ async def hasAdministrationPermission(request):
 @authentication_required
 @administrator_required
 async def administration(request):
-  return render(request, 'administration/administration.html', {'title': 'Taskwolf - Administration',
+  return render(request, 'administration/administration.html', {'title': 'Dulno - Administration',
     'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/administration/administration.css']})
 
 @authentication_required
 @administrator_required
 async def group(request, name):
-  return render(request, 'administration/group.html', {'title': 'Taskwolf - Administration - Group',
+  return render(request, 'administration/group.html', {'title': 'Dulno - Administration - Group',
     'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/administration/group.css'],
     'group': name})
 
 @authentication_required
 @administrator_required
 async def member(request, id):
-  return render(request, 'administration/member.html', {'title': 'Taskwolf - Administration - Member',
+  return render(request, 'administration/member.html', {'title': 'Dulno - Administration - Member',
     'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/administration/member.css'],
     'member': id})

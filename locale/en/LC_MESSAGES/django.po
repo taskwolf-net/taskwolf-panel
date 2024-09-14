@@ -559,7 +559,7 @@ msgstr "Termination successful"
 msgid "entity.termination.process.successful.body"
 msgstr "You have successfully terminated the package"
 msgid "entity.termination.not.possible.description"
-msgstr "You cannot terminate the package. This is because the customer is using the free trial version of Taskwolf. This expires fully automatically after one week."
+msgstr "You cannot terminate the package. This is because the customer is using the free trial version of Dulno. This expires fully automatically after one week."
 msgid "entity.termination.done.description"
 msgstr "The package have already been cancelled. The package expires on %s."
 
@@ -949,7 +949,7 @@ msgstr "Language"
 
 # PROFILE
 msgid "settings.profile.title"
-msgstr "Profile Settings - Taskwolf"
+msgstr "Profile Settings - Dulno"
 msgid "settings.profile.headline"
 msgstr "Profile Settings"
 msgid "settings.profile.name"
@@ -963,7 +963,7 @@ msgstr "Username has been successfully changed!"
 
 # ACCOUNT
 msgid "settings.account.title"
-msgstr "Account Settings - Taskwolf"
+msgstr "Account Settings - Dulno"
 msgid "settings.account.headline"
 msgstr "Account Settings"
 msgid "settings.account.password.headline"
@@ -995,7 +995,7 @@ msgstr "The password has been successfully changed!"
 
 # LANGUAGE
 msgid "settings.language.title"
-msgstr "Language Settings - Taskwolf"
+msgstr "Language Settings - Dulno"
 msgid "settings.language.headline"
 msgstr "Language Settings"
 msgid "settings.language.english"

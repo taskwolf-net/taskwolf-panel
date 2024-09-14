@@ -98,7 +98,7 @@
   var accessType = "";
 
   $(document).ready(function() {
-    let languageRequest = new HttpRequest("https://team.taskwolf.net/v1/settings/language/",
+    let languageRequest = new HttpRequest("https://team.dulno.com/v1/settings/language/",
       "GET", []);
     languageRequest.send(function (languageStatus, languageResponseText) {
       language = JSON.parse(languageResponseText).language;
@@ -116,7 +116,7 @@
 
   function fetchTemplateData(language, callback) {
     let templateRequest = new HttpRequest(
-      "https://api.taskwolf.net/v1/template/find/unauthorized/" + language + "/",
+      "https://api.dulno.com/v1/template/find/unauthorized/" + language + "/",
       "POST", [], {template: "{{template}}"});
     templateRequest.send(function (templateStatus, templateResponseText) {
       callback(JSON.parse(templateResponseText));
@@ -174,7 +174,7 @@
     }
     var logoElement = document.createElement("img");
     logoElement.classList.add("template-workflow-component");
-    logoElement.src = "https://taskwolf.net/static/img/applications/" + component.moduleLogo;
+    logoElement.src = "https://dulno.com/static/img/applications/" + component.moduleLogo;
     return logoElement;
   }
 
@@ -397,7 +397,7 @@
     applicationInformationContainer.classList.add(prefix + "-information");
     var applicationIconElement = document.createElement("img");
     applicationIconElement.classList.add(prefix + "-icon");
-    applicationIconElement.src = "https://taskwolf.net/static/img/applications/" + logo;
+    applicationIconElement.src = "https://dulno.com/static/img/applications/" + logo;
     applicationInformationContainer.appendChild(applicationIconElement);
     var applicationNameElement = document.createElement("span");
     applicationNameElement.classList.add(prefix + "-name");
@@ -447,7 +447,7 @@
 
   function fetchAllModules(language, callback) {
     let request = new HttpRequest(
-      "https://api.taskwolf.net/v1/modules/all/unauthorized/" + language + "/",
+      "https://api.dulno.com/v1/modules/all/unauthorized/" + language + "/",
       "GET", []);
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText).modules);
@@ -456,7 +456,7 @@
 
   function fetchComponents(language, type, module, callback) {
     let request = new HttpRequest(
-      "https://api.taskwolf.net/v1/components/find/unauthorized/" + language + "/",
+      "https://api.dulno.com/v1/components/find/unauthorized/" + language + "/",
       "POST", [], {module: module, componentType: type});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText).components);
@@ -464,7 +464,7 @@
   }
 
   document.getElementById("template-publish").onclick = function (event) {
-    var url = "https://team.taskwolf.net/v1/template/" +
+    var url = "https://team.dulno.com/v1/template/" +
       ("{{template}}" === "" ? "create" : "update") + "/";
     var body = {};
     if ("{{template}}" !== "") {
@@ -485,7 +485,7 @@
   }
 
   document.getElementById("template-delete").onclick = function (event) {
-    let request = new HttpRequest("https://team.taskwolf.net/v1/template/delete/",
+    let request = new HttpRequest("https://team.dulno.com/v1/template/delete/",
       "POST", [], {template: "{{template}}"});
     request.send(function (status, responseText) {
       Swal.fire("{% trans 'template.delete.successful.title' %}", "{% trans 'template.delete.successful.body' %}", "success")

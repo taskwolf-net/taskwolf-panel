@@ -192,7 +192,7 @@
   }
 
   function fetchPayments(callback) {
-    let request = new HttpRequest("https://team.taskwolf.net/v1/entity/payments/find/", "POST",
+    let request = new HttpRequest("https://team.dulno.com/v1/entity/payments/find/", "POST",
       [], {entity: "{{entity}}"});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));
@@ -200,7 +200,7 @@
   }
 
   function fetchBundle(callback) {
-    let request = new HttpRequest("https://team.taskwolf.net/v1/entity/bundle/find/", "POST",
+    let request = new HttpRequest("https://team.dulno.com/v1/entity/bundle/find/", "POST",
       [], {entity: "{{entity}}"});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));

@@ -4,7 +4,7 @@ from base.authentication import authentication_required, isAuthenticated
 
 @authentication_required
 async def templates(request):
-  return render(request, 'template/templates.html', {'title': 'Taskwolf - Templates',
+  return render(request, 'template/templates.html', {'title': 'Dulno - Templates',
     'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/template/templates.css']})
 
 @authentication_required
@@ -13,6 +13,6 @@ async def templateCreate(request):
 
 @authentication_required
 async def template(request, id):
-  return render(request, 'template/template.html', {'title': 'Taskwolf - Template',
+  return render(request, 'template/template.html', {'title': 'Dulno - Template',
     'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/template/template.css'],
     'template': id})

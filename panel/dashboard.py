@@ -4,5 +4,5 @@ from base.authentication import authentication_required, isAuthenticated
 
 @authentication_required
 async def dashboard(request):
-  return render(request, 'dashboard/dashboard.html', {'title': 'Taskwolf - Dashboard',
+  return render(request, 'dashboard/dashboard.html', {'title': 'Dulno - Dashboard',
     'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/dashboard/dashboard.css']})

@@ -61,7 +61,7 @@
       Swal.fire("{% trans 'settings.account.password.insecure.title' %}", "{% trans 'settings.account.password.insecure.body' %}", "error");
       return;
     }
-    let request = new HttpRequest("https://team.taskwolf.net/v1/settings/account/password/change/", "POST",
+    let request = new HttpRequest("https://team.dulno.com/v1/settings/account/password/change/", "POST",
       [], {currentPassword: currentPasswordElement.value, newPassword: newPasswordElement.value});
     request.send(function (status, responseText) {
       var response = JSON.parse(responseText);

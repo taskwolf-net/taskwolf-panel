@@ -51,6 +51,6 @@ async def applyLanguage(request):
 def applyWhitelistKey(request, headers):
   if (not settings.WHITELIST):
     return
-  whitelistKey = request.COOKIES.get('taskwolf-whitelist-key')
+  whitelistKey = request.COOKIES.get('dulno-whitelist-key')
   if (whitelistKey != None):
     headers["WHITELIST-KEY"] = whitelistKey

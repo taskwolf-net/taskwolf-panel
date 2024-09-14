@@ -56,7 +56,7 @@
   });
 
   function fetchSaleData(callback) {
-    let request = new HttpRequest("https://team.taskwolf.net/v1/sale/find/", "POST", [],
+    let request = new HttpRequest("https://team.dulno.com/v1/sale/find/", "POST", [],
       {sale: "{{sale}}"});
     request.send(function (status, responseText) {
       sale = JSON.parse(responseText);
@@ -120,7 +120,7 @@
   function displayAnswerField() {
     var answerField = document.createElement("div");
     answerField.id = "sale-answer-field";
-    displayEntry(true, "Taskwolf", "", "", answerField);
+    displayEntry(true, "Dulno", "", "", answerField);
     var quill = new Quill('#sale-answer-field', {
       modules: {
         toolbar: [
@@ -143,16 +143,16 @@
     });
   }
 
-  function displayEntry(taskwolfWritten, author, date, time, contentElement) {
+  function displayEntry(dulnoWritten, author, date, time, contentElement) {
     var messageContainer = document.createElement("li");
     messageContainer.classList.add("sale-message-container");
     var messageDescription = document.createElement("div");
     messageDescription.classList.add("sale-message-description")
-    if (taskwolfWritten) {
-      var taskwolfPicture = document.createElement("img");
-      taskwolfPicture.classList.add("sale-message-profile-picture");
-      taskwolfPicture.src = "{% static 'img/taskwolf-profile-picture.png' %}";
-      messageDescription.appendChild(taskwolfPicture);
+    if (dulnoWritten) {
+      var dulnoPicture = document.createElement("img");
+      dulnoPicture.classList.add("sale-message-profile-picture");
+      dulnoPicture.src = "{% static 'img/dulno-profile-picture.png' %}";
+      messageDescription.appendChild(dulnoPicture);
     } else {
       var userPicture = document.createElement("i");
       userPicture.classList.add("sale-message-profile-icon", "fa-regular", "fa-user");
@@ -192,7 +192,7 @@
 
   document.getElementById("sale-message-add").onclick = function(event) {
     var message = document.getElementById("sale-answer-field").firstElementChild.innerHTML;
-    let request = new HttpRequest("https://team.taskwolf.net/v1/sale/answer/", "POST", [],
+    let request = new HttpRequest("https://team.dulno.com/v1/sale/answer/", "POST", [],
       {sale: sale.id, message: message});
     request.send(function (status, responseText) {
       Swal.fire("{% trans 'sale.message.add.successful.title' %}", "{% trans 'sale.message.add.successful.body' %}", "success").then(success => window.location.reload());
@@ -208,7 +208,7 @@
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        let request = new HttpRequest("https://team.taskwolf.net/v1/sale/delete/", "POST", [],
+        let request = new HttpRequest("https://team.dulno.com/v1/sale/delete/", "POST", [],
           {sale: sale.id});
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'sale.delete.successful.title' %}", "{% trans 'sale.delete.successful.body' %}", "success").then(success => window.location.href = "/sales/");

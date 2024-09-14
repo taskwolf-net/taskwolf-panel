@@ -558,7 +558,7 @@ msgstr "Kündigung erfolgreich"
 msgid "entity.termination.process.successful.body"
 msgstr "Sie haben das Paket erfolgreich gekündigt"
 msgid "entity.termination.not.possible.description"
-msgstr "Sie können das Paket nicht kündigen. Das liegt daran, dass der Kunde die kostenlose Testversion von Taskwolf benutzen. Diese läuft nach einer Woche vollautomatisch ab."
+msgstr "Sie können das Paket nicht kündigen. Das liegt daran, dass der Kunde die kostenlose Testversion von Dulno benutzen. Diese läuft nach einer Woche vollautomatisch ab."
 msgid "entity.termination.done.description"
 msgstr "Das Paket wurde bereits gekündigt. Das Paket läuft am %s aus."
 
@@ -948,7 +948,7 @@ msgstr "Sprache"
 
 # PROFILE
 msgid "settings.profile.title"
-msgstr "Profileinstellungen - Taskwolf"
+msgstr "Profileinstellungen - Dulno"
 msgid "settings.profile.headline"
 msgstr "Profileinstellungen"
 msgid "settings.profile.name"
@@ -962,7 +962,7 @@ msgstr "Dein Profilname wurde erfolgreich aktualisiert!"
 
 # ACCOUNT
 msgid "settings.account.title"
-msgstr "Kontoeinstellungen - Taskwolf"
+msgstr "Kontoeinstellungen - Dulno"
 msgid "settings.account.headline"
 msgstr "Kontoeinstellungen"
 msgid "settings.account.password.headline"
@@ -994,7 +994,7 @@ msgstr "Dein Passwort wurde erfolgreich geändert!"
 
 # LANGUAGE
 msgid "settings.language.title"
-msgstr "Spracheinstellungen - Taskwolf"
+msgstr "Spracheinstellungen - Dulno"
 msgid "settings.language.headline"
 msgstr "Spracheinstellungen"
 msgid "settings.language.english"

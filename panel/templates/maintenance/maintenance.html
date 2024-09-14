@@ -163,14 +163,14 @@
   }
 
   function fetchMaintenance(callback) {
-    let request = new HttpRequest("https://team.taskwolf.net/v1/maintenance/find/", "GET", []);
+    let request = new HttpRequest("https://team.dulno.com/v1/maintenance/find/", "GET", []);
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText).maintenance);
     });
   }
 
   function deleteMaintenance(id) {
-    let request = new HttpRequest("https://team.taskwolf.net/v1/maintenance/delete/", "POST",
+    let request = new HttpRequest("https://team.dulno.com/v1/maintenance/delete/", "POST",
       [], {maintenance: id});
     request.send(function (status, responseText) {
       Swal.fire("{% trans 'maintenance.delete.successful.title' %}",
@@ -180,7 +180,7 @@
   }
 
   function finishMaintenance(id) {
-    let request = new HttpRequest("https://team.taskwolf.net/v1/maintenance/finish/", "POST",
+    let request = new HttpRequest("https://team.dulno.com/v1/maintenance/finish/", "POST",
       [], {maintenance: id});
     request.send(function (status, responseText) {
       Swal.fire("{% trans 'maintenance.finish.successful.title' %}",
