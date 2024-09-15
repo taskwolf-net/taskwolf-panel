@@ -38,6 +38,7 @@
                   <div id="user-general-organization-empty" class="text-center d-none">
                     <span>{% trans 'user.general.organization.empty' %}</span>
                   </div>
+                  <button type="button" id="user-general-organization-create" class="btn btn-primary d-block mx-auto mt-4 px-5">{% trans 'user.general.organization.create' %}</button>
                 </div>
               </div>
               <div class="user-general-side">
@@ -259,6 +260,30 @@
     content.classList.add("mb-0");
     cell.appendChild(content);
     return cell;
+  }
+
+  document.getElementById("user-general-organization-create").onclick = function (event) {
+    var organizationCreateForm = document.createElement("div");
+    organizationCreateForm.classList.add("swal2-content");
+    var organizationCreateDescription = document.createElement("p");
+    organizationCreateDescription.innerText = "{% trans 'user.general.organization.create.body' %}";
+    organizationCreateForm.appendChild(organizationCreateDescription);
+    var organizationCreateName = document.createElement("input");
+    organizationCreateName.placeholder = "{% trans 'user.general.organization.create.name' %}";
+    organizationCreateForm.appendChild(organizationCreateName);
+    Swal.fire({
+      title: "{% trans 'user.general.organization.create.title' %}",
+      html: organizationCreateForm,
+      showCancelButton: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        let request = new HttpRequest("https://team.dulno.com/v1/organization/create/", "POST", [],
+          {owner: "{{user}}", name: organizationCreateName.value});
+        request.send(function (status, responseText) {
+          Swal.fire("{% trans 'user.general.organization.create.successful.title' %}", "{% trans 'user.general.organization.create.successful.body' %}", "success").then(success => window.location.reload());
+        });
+      }
+    });
   }
 
   function fetchUser(callback) {

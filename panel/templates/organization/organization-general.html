@@ -44,6 +44,7 @@
                     <div id="organization-general-bundle-runtime" class="mb-1"><span class="fw-bold">{% trans 'organization.general.bundle.runtime' %}: </span></div>
                     <div id="organization-general-bundle-price"><span class="fw-bold">{% trans 'organization.general.bundle.price' %}: </span></div>
                   </div>
+                  <div id="organization-general-bundle-unavailable" class="text-center d-none"><span>{% trans 'user.general.bundle.unavailable' %}</span></div>
                 </div>
                 <div class="organization-general-section">
                   <h4 class="fw-bold mb-4">{% trans 'organization.general.team.headline' %}</h4>
@@ -95,6 +96,8 @@
 
   function displayBundleInformation(bundle) {
     if (bundle.found === false) {
+      document.getElementById("organization-general-bundle-unavailable").classList.remove("d-none");
+      document.getElementById("organization-general-bundle-content").classList.add("d-none");
       return;
     }
     document.getElementById("organization-general-bundle-type").innerHTML += findPackageName(bundle);
