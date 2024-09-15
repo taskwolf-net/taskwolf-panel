@@ -127,7 +127,8 @@
 
   function createLogoElement(module) {
     var logoElement = document.createElement("img");
-    logoElement.src = "https://dulno.com/static/img/applications/" + module.moduleLogo;
+    logoElement.src = "https://dulno.com/static/img/applications/" +
+      module.moduleLogo.split(".")[0] + ".webp";
     logoElement.width = 64;
     logoElement.height = 64;
     return logoElement;

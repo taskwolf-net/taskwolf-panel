@@ -100,11 +100,11 @@
     document.getElementById("user-general-profile-email").innerHTML += user.email;
     var languageElement = document.getElementById("user-general-profile-language");
     if (user.language.toUpperCase() === "EN") {
-      languageElement.innerHTML += "<img class='user-general-profile-language mx-2' src='https://dulno.com/static/img/languages/en.png'>";
+      languageElement.innerHTML += "<img class='user-general-profile-language mx-2' src='https://dulno.com/static/img/languages/en.webp'>";
       languageElement.innerHTML += "({% trans 'user.general.profile.language.en' %})";
     }
     if (user.language.toUpperCase() === "DE") {
-      languageElement.innerHTML += "<img class='user-general-profile-language mx-2' src='https://dulno.com/static/img/languages/de.png' %}'>";
+      languageElement.innerHTML += "<img class='user-general-profile-language mx-2' src='https://dulno.com/static/img/languages/de.webp' %}'>";
       languageElement.innerHTML += "({% trans 'user.general.profile.language.de' %})";
     }
   }

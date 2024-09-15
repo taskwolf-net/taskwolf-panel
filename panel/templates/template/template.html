@@ -174,7 +174,8 @@
     }
     var logoElement = document.createElement("img");
     logoElement.classList.add("template-workflow-component");
-    logoElement.src = "https://dulno.com/static/img/applications/" + component.moduleLogo;
+    logoElement.src = "https://dulno.com/static/img/applications/" +
+      component.moduleLogo.split(".")[0] + ".webp";
     return logoElement;
   }
 
@@ -397,7 +398,8 @@
     applicationInformationContainer.classList.add(prefix + "-information");
     var applicationIconElement = document.createElement("img");
     applicationIconElement.classList.add(prefix + "-icon");
-    applicationIconElement.src = "https://dulno.com/static/img/applications/" + logo;
+    applicationIconElement.src = "https://dulno.com/static/img/applications/" +
+      logo.split(".")[0] + ".webp";
     applicationInformationContainer.appendChild(applicationIconElement);
     var applicationNameElement = document.createElement("span");
     applicationNameElement.classList.add(prefix + "-name");
