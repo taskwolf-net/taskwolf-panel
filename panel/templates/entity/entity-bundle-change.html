@@ -217,6 +217,8 @@
     if (!bundle.found) {
       return;
     }
+    document.getElementById("entity-bundle-change-expiration").value =
+      Math.ceil(Number(bundle.expiration - Date.now()) / (1000 * 60 * 60 * 24)).toString();
     document.getElementById("entity-bundle-change-workflow-limit").value =
       bundle.workflowNumberLimit;
     document.getElementById("entity-bundle-change-operation-limit").value =

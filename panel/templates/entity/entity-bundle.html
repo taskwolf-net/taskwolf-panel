@@ -291,7 +291,7 @@
     $(document.getElementById("entity-bundle-information-divider-expiration"))
       .toggleClass("d-none", bundle.runtime !== "UNBOUND");
     document.getElementById("entity-bundle-information-expiration").innerHTML =
-      Math.ceil(Number(bundle.expiration) / (1000 * 60 * 60 * 24)).toString();
+      Math.ceil(Number(bundle.expiration - Date.now()) / (1000 * 60 * 60 * 24)).toString();
     document.getElementById("entity-bundle-information-workflow-access").innerHTML =
       bundle.workflowAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
     document.getElementById("entity-bundle-information-workflow-number").innerHTML =

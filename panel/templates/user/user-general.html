@@ -125,7 +125,7 @@
     }
     if (bundle.runtime === "UNBOUND") {
       document.getElementById("user-general-bundle-expiration").innerHTML +=
-        Math.ceil(Number(bundle.expiration) / (1000 * 60 * 60 * 24)).toString() +
+        Math.ceil(Number(bundle.expiration - Date.now()) / (1000 * 60 * 60 * 24)).toString() +
         " {% trans 'user.general.bundle.expiration.days' %}";
       document.getElementById("user-general-bundle-expiration").classList.remove("d-none");
     } else {
