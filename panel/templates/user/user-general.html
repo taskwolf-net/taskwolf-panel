@@ -47,7 +47,8 @@
                   <div id="user-general-bundle-content">
                     <div id="user-general-bundle-type" class="mb-1"><span class="fw-bold">{% trans 'user.general.bundle.type' %}: </span></div>
                     <div id="user-general-bundle-class" class="mb-1"><span class="fw-bold">{% trans 'user.general.bundle.class' %}: </span></div>
-                    <div id="user-general-bundle-runtime" class="mb-1"><span class="fw-bold">{% trans 'user.general.bundle.runtime' %}: </span></div>
+                    <div id="user-general-bundle-runtime" class="mb-1 d-none"><span class="fw-bold">{% trans 'user.general.bundle.runtime' %}: </span></div>
+                    <div id="user-general-bundle-expiration" class="mb-1 d-none"><span class="fw-bold">{% trans 'user.general.bundle.expiration' %}: </span></div>
                     <div id="user-general-bundle-price"><span class="fw-bold">{% trans 'user.general.bundle.price' %}: </span></div>
                   </div>
                   <div id="user-general-bundle-unavailable" class="d-none"><span>{% trans 'user.general.bundle.unavailable' %}</span></div>
@@ -122,7 +123,15 @@
     } else {
       document.getElementById("user-general-bundle-class").innerHTML += findPackageClass(bundle);
     }
-    document.getElementById("user-general-bundle-runtime").innerHTML += findPackageRuntime(bundle);
+    if (bundle.runtime === "UNBOUND") {
+      document.getElementById("user-general-bundle-expiration").innerHTML +=
+        Math.ceil(Number(bundle.expiration) / (1000 * 60 * 60 * 24)).toString() +
+        " {% trans 'user.general.bundle.expiration.days' %}";
+      document.getElementById("user-general-bundle-expiration").classList.remove("d-none");
+    } else {
+      document.getElementById("user-general-bundle-runtime").innerHTML += findPackageRuntime(bundle);
+      document.getElementById("user-general-bundle-runtime").classList.remove("d-none");
+    }
     document.getElementById("user-general-bundle-price").innerHTML += bundle.price + " €";
   }
 

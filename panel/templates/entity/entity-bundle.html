@@ -52,8 +52,8 @@
                 </div>
                 <span id="entity-bundle-information-price"></span>
               </li>
-              <div class="entity-bundle-information-divider"></div>
-              <li class="entity-bundle-information-entry">
+              <div id="entity-bundle-information-divider-runtime" class="entity-bundle-information-divider"></div>
+              <li id="entity-bundle-information-entry-runtime" class="entity-bundle-information-entry">
                 <div class="entity-bundle-information-entry-description">
                   <div class="entity-bundle-information-entry-icon">
                     <i class="fa-regular fa-clock"></i>
@@ -61,6 +61,16 @@
                   <span>{% trans 'entity.bundle.runtime' %}</span>
                 </div>
                 <span id="entity-bundle-information-runtime"></span>
+              </li>
+              <div id="entity-bundle-information-divider-expiration" class="entity-bundle-information-divider"></div>
+              <li id="entity-bundle-information-entry-expiration" class="entity-bundle-information-entry">
+                <div class="entity-bundle-information-entry-description">
+                  <div class="entity-bundle-information-entry-icon">
+                    <i class="fa-regular fa-clock"></i>
+                  </div>
+                  <span>{% trans 'entity.bundle.expiration' %}</span>
+                </div>
+                <span id="entity-bundle-information-expiration"></span>
               </li>
               <div class="entity-bundle-information-divider"></div>
               <li class="entity-bundle-information-entry">
@@ -270,8 +280,18 @@
       findPackageClass(bundle);
     document.getElementById("entity-bundle-information-price").innerHTML =
       bundle.price + " €";
+    $(document.getElementById("entity-bundle-information-entry-runtime"))
+      .toggleClass("d-none", bundle.runtime === "UNBOUND");
+    $(document.getElementById("entity-bundle-information-divider-runtime"))
+      .toggleClass("d-none", bundle.runtime === "UNBOUND");
     document.getElementById("entity-bundle-information-runtime").innerHTML =
       findPackageRuntime(bundle);
+    $(document.getElementById("entity-bundle-information-entry-expiration"))
+      .toggleClass("d-none", bundle.runtime !== "UNBOUND");
+    $(document.getElementById("entity-bundle-information-divider-expiration"))
+      .toggleClass("d-none", bundle.runtime !== "UNBOUND");
+    document.getElementById("entity-bundle-information-expiration").innerHTML =
+      Math.ceil(Number(bundle.expiration) / (1000 * 60 * 60 * 24)).toString();
     document.getElementById("entity-bundle-information-workflow-access").innerHTML =
       bundle.workflowAccess ? "<i class='fa-solid fa-check'></i>" : "<i class='fa-solid fa-xmark'></i>";
     document.getElementById("entity-bundle-information-workflow-number").innerHTML =

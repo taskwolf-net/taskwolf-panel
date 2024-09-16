@@ -50,8 +50,13 @@
                     <li id="entity-bundle-change-runtime-weekly" class="dropdown-item entity-bundle-change-runtime-entry">{% trans 'entity.bundle.change.runtime.weekly' %}</li>
                     <li class="dropdown-item entity-bundle-change-runtime-entry">{% trans 'entity.bundle.change.runtime.monthly' %}</li>
                     <li class="dropdown-item entity-bundle-change-runtime-entry">{% trans 'entity.bundle.change.runtime.yearly' %}</li>
+                    <li class="dropdown-item entity-bundle-change-runtime-entry">{% trans 'entity.bundle.change.runtime.unbound' %}</li>
                   </ul>
                 </div>
+              </div>
+              <div id="entity-bundle-change-expiration-container" class="form-outline mb-3 d-none">
+                <label class="form-label">{% trans 'entity.bundle.change.expiration' %}</label>
+                <input id="entity-bundle-change-expiration" class="form-control" placeholder="{% trans 'entity.bundle.change.expiration' %}">
               </div>
               <div class="form-outline mb-3">
                 <label class="form-label">{% trans 'entity.bundle.change.workflow.limit' %}</label>
@@ -106,8 +111,7 @@
   function displayBundleChange(bundle) {
     displayBundleTypeSelect(bundle);
     displayBundleClassSelect(bundle);
-    prepareDropdown("entity-bundle-change-runtime", "entity-bundle-change-runtime-entry",
-      function (value) {return findBundleRuntime(value) === bundle.runtime}, () => {});
+    displayBundleRuntimeSelect(bundle);
     fillInputFields(bundle);
   }
 
@@ -164,6 +168,20 @@
     document.getElementById("entity-bundle-change-runtime-container").classList.remove("d-none");
   }
 
+  function displayBundleRuntimeSelect(bundle) {
+    prepareDropdown("entity-bundle-change-runtime", "entity-bundle-change-runtime-entry",
+      function (value) {return findBundleRuntime(value) === bundle.runtime}, onBundleRuntimeSelect);
+  }
+
+  function onBundleRuntimeSelect(runtime) {
+    var expirationElement = document.getElementById("entity-bundle-change-expiration-container");
+    if (runtime === "{% trans 'entity.bundle.change.runtime.unbound' %}") {
+      expirationElement.classList.remove("d-none");
+    } else {
+      expirationElement.classList.add("d-none");
+    }
+  }
+
   function resetBundleClass() {
     var classButton = document.getElementById("entity-bundle-change-class");
     classButton.innerHTML = "{% trans 'entity.bundle.change.class' %}";
@@ -174,6 +192,8 @@
     var runtimeButton = document.getElementById("entity-bundle-change-runtime");
     runtimeButton.innerHTML = "{% trans 'entity.bundle.change.runtime' %}";
     runtimeButton.classList.remove("fw-bold");
+    document.getElementById("entity-bundle-change-expiration-container")
+      .classList.add("d-none");
   }
 
   function prepareDropdown(buttonId, entryId, initialSelect, onSelect) {
@@ -240,6 +260,10 @@
     body.type = bundleType;
     body.class = bundleClass;
     body.runtime = bundleRuntime;
+    var expiration = document.getElementById("entity-bundle-change-expiration").value;
+    if (expiration !== "") {
+      body.expiration = parseInt(expiration) * 1000 * 60 * 60 * 24;
+    }
     var workflowLimit = document.getElementById("entity-bundle-change-workflow-limit").value;
     if (workflowLimit !== "") {
       body.workflowNumberLimit = workflowLimit;
@@ -321,6 +345,8 @@
       return "MONTHLY";
     } else if (content === "{% trans 'entity.bundle.change.runtime.yearly' %}") {
       return "YEARLY";
+    } else if (content === "{% trans 'entity.bundle.change.runtime.unbound' %}") {
+      return "UNBOUND";
     }
     return "";
   }
