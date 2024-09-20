@@ -89,8 +89,8 @@
     var entry = document.createElement('li');
     appendOfferCell(entry, "type", findOfferType(type), "span");
     appendOfferCell(entry, "runtime", runtime === "MONTHLY" ?
-      "1 {% trans 'entity.bundle.runtime.month' %}" :
-      "1 {% trans 'entity.bundle.runtime.year' %}", "span");
+      "{% trans 'entity.bundle.runtime.month' %}" :
+      "{% trans 'entity.bundle.runtime.year' %}", "span");
     appendOfferCell(entry, "price", price + " €", "span");
     entry.appendChild(createOfferStatusElement(status));
     entry.appendChild(createOfferViewButton(id));
