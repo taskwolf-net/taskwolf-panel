@@ -6,9 +6,8 @@
 }
 
 #sales-header {
-  width: min(calc(2000px - 15vw), 95%);
-  margin: auto;
-  margin-top: 2%;
+  width: min(1500px, 95%);
+  margin: 5vh auto auto;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -31,8 +31,8 @@ input:-webkit-autofill:active{
 #sale-headline {
   text-align: center;
   font-weight: bold;
-  margin-top: 2%;
-  margin-bottom: 2%;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
 }
 
 #sale-customer-information {
