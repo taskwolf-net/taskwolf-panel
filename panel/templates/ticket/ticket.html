@@ -7,13 +7,15 @@
     {% include 'panel-sidebar.html' %}
     <div class="sidebar-influenced">
       <div id="ticket-container">
-        <h1 id="ticket-headline"></h1>
-        <hr class="hr border-white my-4"/>
-        <ul id="ticket-messages">
-        </ul>
-        <div id="ticket-operations">
-          <button type="button" id="ticket-message-add" class="btn btn-primary disabled">{% trans 'ticket.message.add' %}</button>
-          <button type="button" id="ticket-delete" class="btn btn-danger">{% trans 'ticket.delete' %}</button>
+        <div id="ticket-wrapper" class="d-none">
+          <h1 id="ticket-headline"></h1>
+          <hr class="hr border-white my-4"/>
+          <ul id="ticket-messages">
+          </ul>
+          <div id="ticket-operations">
+            <button type="button" id="ticket-message-add" class="btn btn-primary disabled">{% trans 'ticket.message.add' %}</button>
+            <button type="button" id="ticket-delete" class="btn btn-danger">{% trans 'ticket.delete' %}</button>
+          </div>
         </div>
       </div>
     </div>
@@ -22,12 +24,26 @@
 
 <script>
   var ticket;
+  let username;
 
   $(document).ready(function() {
-    fetchTicketsData(function() {
-      displayTicket();
+    displayLoader();
+    fetchUsername(function () {
+      fetchTicketsData(function() {
+        displayTicket();
+        removeLoader();
+      });
     });
   });
+
+  function fetchUsername(callback) {
+    let request = new HttpRequest("https://team.dulno.com/v1/settings/profile/username/", "GET",
+      []);
+    request.send(function (status, responseText) {
+      username = JSON.parse(responseText).username;
+      callback();
+    });
+  }
 
   function fetchTicketsData(callback) {
     let request = new HttpRequest("https://team.dulno.com/v1/ticket/find/", "POST", [],
@@ -87,7 +103,7 @@
   function displayAnswerField() {
     var answerField = document.createElement("div");
     answerField.id = "ticket-answer-field";
-    displayEntry(true, "Dulno", "", "", answerField);
+    displayEntry(true, username, "", "", answerField);
     var quill = new Quill('#ticket-answer-field', {
       modules: {
         toolbar: [
@@ -114,11 +130,13 @@
     var messageContainer = document.createElement("li");
     messageContainer.classList.add("ticket-message-container");
     var messageDescription = document.createElement("div");
-    messageDescription.classList.add("ticket-message-description")
+    messageDescription.classList.add("ticket-message-description");
+    messageDescription.appendChild(document.createElement("br"));
+    messageDescription.appendChild(document.createElement("br"));
     if (dulnoWritten) {
       var dulnoPicture = document.createElement("img");
       dulnoPicture.classList.add("ticket-message-profile-picture");
-      dulnoPicture.src = "https://dulno.com/static/img/logo.webp";
+      dulnoPicture.src = "https://dulno.com/static/img/logo-light.webp";
       messageDescription.appendChild(dulnoPicture);
     } else {
       var userPicture = document.createElement("i");
@@ -128,6 +146,7 @@
     messageDescription.appendChild(document.createElement("br"));
     messageDescription.appendChild(document.createElement("br"));
     var messageAuthor = document.createElement("b");
+    messageAuthor.classList.add("ticket-message-author");
     messageAuthor.classList.add("ticket-message-author");
     messageAuthor.innerHTML = author;
     messageDescription.appendChild(messageAuthor);
@@ -143,6 +162,7 @@
     messageTime.classList.add("ticket-message-time");
     messageTime.innerHTML = time;
     messageDescription.appendChild(messageTime);
+    messageDescription.appendChild(document.createElement("br"));
     messageDescription.appendChild(document.createElement("br"));
     messageDescription.appendChild(document.createElement("br"));
     messageContainer.appendChild(messageDescription);
@@ -182,5 +202,16 @@
         });
       }
     });
+  }
+
+  function displayLoader() {
+    let loader = document.createElement("div");
+    loader.classList.add("loader");
+    document.getElementById("ticket-container").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("ticket-container").removeChild(document.getElementsByClassName("loader")[0]);
+    document.getElementById("ticket-wrapper").classList.remove("d-none");
   }
 </script>
