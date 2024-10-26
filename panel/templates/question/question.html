@@ -7,13 +7,15 @@
     {% include 'panel-sidebar.html' %}
     <div class="sidebar-influenced">
       <div id="question-container">
-        <h1 id="question-headline"></h1>
-        <hr class="hr border-white my-4"/>
-        <ul id="question-messages">
-        </ul>
-        <div id="question-operations">
-          <button type="button" id="question-message-add" class="btn btn-primary disabled">{% trans 'question.message.add' %}</button>
-          <button type="button" id="question-delete" class="btn btn-danger">{% trans 'question.delete' %}</button>
+        <div id="question-wrapper" class="d-none">
+          <h1 id="question-headline"></h1>
+          <hr class="hr border-white my-4"/>
+          <ul id="question-messages">
+          </ul>
+          <div id="question-operations">
+            <button type="button" id="question-message-add" class="btn btn-primary disabled">{% trans 'question.message.add' %}</button>
+            <button type="button" id="question-delete" class="btn btn-danger">{% trans 'question.delete' %}</button>
+          </div>
         </div>
       </div>
     </div>
@@ -22,12 +24,26 @@
 
 <script>
   var question;
+  let username;
 
   $(document).ready(function() {
-    fetchQuestionData(function() {
-      displayQuestion();
+    displayLoader();
+    fetchUsername(function () {
+      fetchQuestionData(function() {
+        displayQuestion();
+        removeLoader();
+      });
     });
   });
+
+  function fetchUsername(callback) {
+    let request = new HttpRequest("https://team.dulno.com/v1/settings/profile/username/", "GET",
+      []);
+    request.send(function (status, responseText) {
+      username = JSON.parse(responseText).username;
+      callback();
+    });
+  }
 
   function fetchQuestionData(callback) {
     let request = new HttpRequest("https://team.dulno.com/v1/question/find/", "POST", [],
@@ -57,7 +73,7 @@
   function displayAnswerField() {
     var answerField = document.createElement("div");
     answerField.id = "question-answer-field";
-    displayEntry(true, "Dulno", "", "", answerField);
+    displayEntry(true, username, "", "", answerField);
     var quill = new Quill('#question-answer-field', {
       modules: {
         toolbar: [
@@ -84,7 +100,9 @@
     var messageContainer = document.createElement("li");
     messageContainer.classList.add("question-message-container");
     var messageDescription = document.createElement("div");
-    messageDescription.classList.add("question-message-description")
+    messageDescription.classList.add("question-message-description");
+    messageDescription.appendChild(document.createElement("br"));
+    messageDescription.appendChild(document.createElement("br"));
     if (dulnoWritten) {
       var dulnoPicture = document.createElement("img");
       dulnoPicture.classList.add("question-message-profile-picture");
@@ -152,5 +170,16 @@
         });
       }
     });
+  }
+
+  function displayLoader() {
+    let loader = document.createElement("div");
+    loader.classList.add("loader");
+    document.getElementById("question-container").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("question-container").removeChild(document.getElementsByClassName("loader")[0]);
+    document.getElementById("question-wrapper").classList.remove("d-none");
   }
 </script>
