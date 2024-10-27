@@ -8,13 +8,16 @@
     <div class="sidebar-influenced">
       <div id="question-container">
         <div id="question-wrapper" class="d-none">
-          <h1 id="question-headline"></h1>
+          <div id="question-header">
+            <button id="question-page-back"><i class="fa-solid fa-arrow-left-long"></i></button>
+            <h1 id="question-headline" class="fw-bold text-center mb-0"></h1>
+          </div>
           <hr class="hr border-white my-4"/>
           <ul id="question-messages">
           </ul>
           <div id="question-operations">
             <button type="button" id="question-message-add" class="btn btn-primary disabled">{% trans 'question.message.add' %}</button>
-            <button type="button" id="question-delete" class="btn btn-danger">{% trans 'question.delete' %}</button>
+            <button type="button" id="question-close" class="btn btn-danger d-none">{% trans 'question.close' %}</button>
           </div>
         </div>
       </div>
@@ -56,6 +59,9 @@
 
   function displayQuestion() {
     document.getElementById("question-headline").innerHTML = question.title;
+    if (question.status === "OPEN") {
+      document.getElementById("question-close").classList.remove("d-none");
+    }
     for (var i = 0; i < question.messages.length; i++) {
       displayMessage(question.messages[i]);
     }
@@ -154,22 +160,26 @@
     });
   }
 
-  document.getElementById("question-delete").onclick = function(event) {
+  document.getElementById("question-close").onclick = function(event) {
     Swal.fire({
-      title: "{% trans 'question.delete.title' %}",
-      text: "{% trans 'question.delete.body' %}",
+      title: "{% trans 'question.close.title' %}",
+      text: "{% trans 'question.close.body' %}",
       icon: "warning",
       confirmButtonColor: "#dc3545",
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        let request = new HttpRequest("https://team.dulno.com/v1/question/delete/", "POST", [],
+        let request = new HttpRequest("https://team.dulno.com/v1/question/close/", "POST", [],
           {question: question.id});
         request.send(function (status, responseText) {
-          Swal.fire("{% trans 'question.delete.successful.title' %}", "{% trans 'question.delete.successful.body' %}", "success").then(success => window.location.href = "/questions/");
+          Swal.fire("{% trans 'question.close.successful.title' %}", "{% trans 'question.close.successful.body' %}", "success").then(success => window.location.href = "/questions/");
         });
       }
     });
+  }
+
+  document.getElementById("question-page-back").onclick = function (event) {
+    window.location.href = "/questions/";
   }
 
   function displayLoader() {

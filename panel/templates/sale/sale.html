@@ -8,7 +8,10 @@
     <div class="sidebar-influenced">
       <div id="sale-container">
         <div id="sale-wrapper" class="d-none">
-          <h1 id="sale-headline"></h1>
+          <div id="sale-header">
+            <button id="sale-page-back"><i class="fa-solid fa-arrow-left-long"></i></button>
+            <h1 id="sale-headline" class="fw-bold text-center mb-0"></h1>
+          </div>
           <hr class="hr border-white my-4"/>
           <div id="sale-customer-information">
             <h4 class="fw-bold mb-4">{% trans 'sale.customer.information' %}</h4>
@@ -40,7 +43,7 @@
           </ul>
           <div id="sale-operations">
             <button type="button" id="sale-message-add" class="btn btn-primary disabled">{% trans 'sale.message.add' %}</button>
-            <button type="button" id="sale-delete" class="btn btn-danger">{% trans 'sale.delete' %}</button>
+            <button type="button" id="sale-close" class="btn btn-danger d-none">{% trans 'sale.close' %}</button>
           </div>
         </div>
       </div>
@@ -82,6 +85,9 @@
 
   function displaySale() {
     document.getElementById("sale-headline").innerHTML = sale.title;
+    if (sale.status === "OPEN") {
+      document.getElementById("sale-close").classList.remove("d-none");
+    }
     displayCustomerInformation()
     for (var i = 0; i < sale.messages.length; i++) {
       displayMessage(sale.messages[i]);
@@ -217,22 +223,26 @@
     });
   }
 
-  document.getElementById("sale-delete").onclick = function(event) {
+  document.getElementById("sale-close").onclick = function(event) {
     Swal.fire({
-      title: "{% trans 'sale.delete.title' %}",
-      text: "{% trans 'sale.delete.body' %}",
+      title: "{% trans 'sale.close.title' %}",
+      text: "{% trans 'sale.close.body' %}",
       icon: "warning",
       confirmButtonColor: "#dc3545",
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        let request = new HttpRequest("https://team.dulno.com/v1/sale/delete/", "POST", [],
+        let request = new HttpRequest("https://team.dulno.com/v1/sale/close/", "POST", [],
           {sale: sale.id});
         request.send(function (status, responseText) {
-          Swal.fire("{% trans 'sale.delete.successful.title' %}", "{% trans 'sale.delete.successful.body' %}", "success").then(success => window.location.href = "/sales/");
+          Swal.fire("{% trans 'sale.close.successful.title' %}", "{% trans 'sale.close.successful.body' %}", "success").then(success => window.location.href = "/sales/");
         });
       }
     });
+  }
+
+  document.getElementById("sale-page-back").onclick = function (event) {
+    window.location.href = "/sales/";
   }
 
   function displayLoader() {

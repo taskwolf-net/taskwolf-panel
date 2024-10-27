@@ -28,11 +28,38 @@ input:-webkit-autofill:active{
   color: white;
 }
 
-#sale-headline {
-  text-align: center;
-  font-weight: bold;
+#sale-header {
+  display: flex;
+  align-items: center;
+  position: relative;
   margin-top: 5vh;
   margin-bottom: 5vh;
+}
+
+#sale-headline {
+  position: absolute;
+  width: calc(100% - 130px);
+  margin-left: 65px;
+  margin-right: 65px;
+  z-index: 1;
+}
+
+#sale-page-back {
+  width: 52px;
+  height: 52px;
+  border: none;
+  background-color: transparent;
+  border-radius: 50%;
+  font-size: 25px;
+  z-index: 10;
+}
+
+#sale-page-back {
+  color: #b5b5b5;
+}
+
+#sale-page-back:hover {
+  background-color: #212937;
 }
 
 #sale-customer-information {
@@ -190,6 +217,6 @@ input:-webkit-autofill:active{
 
 }
 
-#sale-delete {
+#sale-close {
   margin-left: auto;
 }

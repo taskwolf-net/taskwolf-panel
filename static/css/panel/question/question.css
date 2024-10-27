@@ -28,11 +28,38 @@ input:-webkit-autofill:active{
   color: white;
 }
 
-#question-headline {
-  text-align: center;
-  font-weight: bold;
+#question-header {
+  display: flex;
+  align-items: center;
+  position: relative;
   margin-top: 5vh;
   margin-bottom: 5vh;
+}
+
+#question-headline {
+  position: absolute;
+  width: calc(100% - 130px);
+  margin-left: 65px;
+  margin-right: 65px;
+  z-index: 1;
+}
+
+#question-page-back {
+  width: 52px;
+  height: 52px;
+  border: none;
+  background-color: transparent;
+  border-radius: 50%;
+  font-size: 25px;
+  z-index: 10;
+}
+
+#question-page-back {
+  color: #b5b5b5;
+}
+
+#question-page-back:hover {
+  background-color: #212937;
 }
 
 #question-messages {
@@ -181,6 +208,6 @@ input:-webkit-autofill:active{
 
 }
 
-#question-delete {
+#question-close {
   margin-left: auto;
 }
