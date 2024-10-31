@@ -25,6 +25,7 @@
                   <div id="user-general-profile-name" class="mb-1"><span class="fw-bold">{% trans 'user.general.profile.name' %}: </span></div>
                   <div id="user-general-profile-email" class="mb-1"><span class="fw-bold">{% trans 'user.general.profile.email' %}: </span></div>
                   <div id="user-general-profile-language"><span class="fw-bold">{% trans 'user.general.profile.language' %}:</span></div>
+                  <div id="user-general-profile-join-date"><span class="fw-bold">{% trans 'user.general.profile.join.date' %}: </span></div>
                 </div>
                 <div class="user-general-section">
                   <h4 class="fw-bold mb-4">{% trans 'user.general.organization.headline' %}</h4>
@@ -109,6 +110,7 @@
       languageElement.innerHTML += "<img class='user-general-profile-language mx-2' src='https://dulno.com/static/img/languages/de.webp' %}'>";
       languageElement.innerHTML += "({% trans 'user.general.profile.language.de' %})";
     }
+    document.getElementById("user-general-profile-join-date").innerHTML += new Date(user.joinDate).toLocaleString();
   }
 
   function displayBundleInformation(bundle) {
