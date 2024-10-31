@@ -11,7 +11,7 @@
           <div class="w-25 text-start">
             <button id="template-delete" type="button" class="btn btn-danger">{% trans 'template.delete' %}</button>
           </div>
-          <div>
+          <div id="template-headline-wrapper">
             <h1 id="template-headline">{% trans 'template.headline' %}</h1>
           </div>
           <div class="w-25 text-end">
@@ -42,7 +42,7 @@
           <div class="template-separator"></div>
         </div>
         <div class="template-section">
-          <div class="dropdown w-25 mx-auto text-center mb-5">
+          <div id="template-access-type" class="dropdown mx-auto text-center mb-5">
             <button id="template-access-type-dropdown-button" class="btn btn-secondary w-100 dropdown-button dropdown-toggle" type="button" data-bs-toggle="dropdown">
               {% trans 'template.access.type' %}
             </button>
@@ -198,9 +198,13 @@
     var selectedModule;
     var eventElement = createWorkflowComponentEventElement(type, () => data,
       () => selectedModule);
-    componentElement.appendChild(createWorkflowComponentModuleElement(type, data,
+    var componentSelectElement = document.createElement("div");
+    componentSelectElement.classList.add("template-workflow-component-specifications",
+      "d-flex", "flex-md-row", "flex-column");
+    componentSelectElement.appendChild(createWorkflowComponentModuleElement(type, data,
       eventElement, (module) => selectedModule = module));
-    componentElement.appendChild(eventElement);
+    componentSelectElement.appendChild(eventElement);
+    componentElement.appendChild(componentSelectElement);
     if (!required && type === "ACTION") {
       componentElement.appendChild(createWorkflowComponentRemoveElement(() => data,
         componentElement));
@@ -220,7 +224,7 @@
   function createWorkflowComponentModuleElement(type, data, eventElement, callback) {
     var moduleElement = document.createElement("button");
     moduleElement.classList.add("template-workflow-component-module-button",
-      "btn", "btn-secondary");
+      "btn", "btn-secondary", "w-75", "mx-auto", "mx-md-4", "mb-3", "mb-md-0");
     displayWorkflowComponentModuleName(data, moduleElement, callback);
     moduleElement.onclick = function (event) {
       openModuleMenu(function (module) {
@@ -248,7 +252,7 @@
   function createWorkflowComponentEventElement(type, data, selectedModule) {
     var eventElement = document.createElement("button");
     eventElement.classList.add("template-workflow-component-event-button",
-      "btn", "btn-secondary", "disabled");
+      "btn", "btn-secondary", "w-75", "mx-auto", "mx-md-4", "disabled");
     displayWorkflowComponentEventName(type, data, eventElement);
     eventElement.onclick = function () {
       openEventMenu(selectedModule(), type, function (event) {

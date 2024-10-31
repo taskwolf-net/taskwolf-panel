@@ -9,13 +9,25 @@
   align-items: center;
   position: relative;
   width: 100%;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
 }
 
 #template-headline {
   text-align: center;
   font-weight: bold;
+}
+
+@media (max-width: 450px) {
+  #template-header {
+    margin-bottom: 15vh;
+  }
+
+  #template-headline-wrapper {
+    position: absolute;
+    top: 10vh;
+    width: 100%;
+  }
 }
 
 #template-delete {
@@ -34,6 +46,12 @@
   width: calc(100% - 80px);
   margin-left: auto;
   margin-right: auto;
+}
+
+@media (max-width: 800px) {
+  .template-section {
+    width: calc(90%);
+  }
 }
 
 #template-preview {
@@ -87,10 +105,8 @@
   width: 30%;
 }
 
-.template-workflow-component-module-button, .template-workflow-component-event-button {
-  width: calc(30% - 2 * 20px);
-  margin-left: 20px;
-  margin-right: 20px;
+.template-workflow-component-specifications {
+  width: 60%;
 }
 
 .template-workflow-component-remove-button {
@@ -110,10 +126,18 @@
     width: 15%;
   }
 
-  .template-workflow-component-module-button, .template-workflow-component-event-button {
-    width: calc(40% - 2 * 10px);
-    margin-left: 10px;
-    margin-right: 10px;
+  .template-workflow-component-specifications {
+    width: 80%;
+  }
+}
+
+@media (max-width: 575px) {
+  .template-workflow-component-type {
+    width: 35%;
+  }
+
+  .template-workflow-component-specifications {
+    width: 60%;
   }
 }
 
@@ -182,7 +206,7 @@
 .template-workflow-add-action {
   width: 100%;
   text-align: center;
-  margin-top: 2%;
+  margin-top: 2vh;
 }
 
 .template-workflow-add-action i {
@@ -200,9 +224,13 @@
   background-color: #3c3f45;
 }
 
+#template-access-type {
+  width: min(250px, 100%);
+}
+
 #template-description-languages {
   width: 100%;
-  margin: auto auto 3%;
+  margin: auto auto 4vh;
 }
 
 #template-description-languages .nav {
