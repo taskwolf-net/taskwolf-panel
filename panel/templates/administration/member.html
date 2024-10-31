@@ -12,8 +12,8 @@
             <div class="w-25 text-start">
               <button id="member-delete" type="button" class="btn btn-danger">{% trans 'panel.member.delete' %}</button>
             </div>
-            <div>
-              <h1 id="member-headline"></h1>
+            <div id="member-headline-wrapper">
+              <h1 id="member-headline" class="mx-2"></h1>
             </div>
             <div class="w-25 text-end">
             </div>
@@ -22,7 +22,7 @@
             <h2>{% trans 'panel.member.group.headline' %}</h2>
           </div>
           <div id="member-group-dropdown" class="dropdown">
-            <button id="member-group-dropdown-button" class="btn btn-secondary dropdown-toggle bg-dark my-4" type="button" data-bs-toggle="dropdown">
+            <button id="member-group-dropdown-button" class="btn btn-secondary dropdown-toggle bg-dark mt-4 mb-5" type="button" data-bs-toggle="dropdown">
               {% trans 'panel.member.group' %}
             </button>
             <ul id="member-group-dropdown-list" class="dropdown-menu dropdown-menu-dark">

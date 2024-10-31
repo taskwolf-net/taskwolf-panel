@@ -1,7 +1,6 @@
 #member-wrapper {
-  width: min(calc(1500px - 15vw), 95%);
+  width: min(1200px, 95%);
   text-align: center;
-  margin-top: 2%;
   margin-left: auto;
   margin-right: auto;
   color: white;
@@ -13,8 +12,8 @@
   align-items: center;
   position: relative;
   width: 100%;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
 }
 
 #member-headline {
@@ -25,7 +24,7 @@
 #member-group-header {
   border-bottom: 2px #4a4a4a solid;
   padding-bottom: 5px;
-  margin-bottom: 1%;
+  margin-bottom: 2vh;
   text-align: left;
 }
 
@@ -62,7 +61,7 @@
   display: flex;
   border-bottom: 2px #4a4a4a solid;
   padding-bottom: 5px;
-  margin-bottom: 1%;
+  margin-bottom: 2vh;
 }
 
 #member-permission-add {
@@ -89,6 +88,18 @@
 
 .member-permission-remove:hover {
   background-color: #293548;
+}
+
+@media (max-width: 650px) {
+  #member-header {
+    margin-bottom: 15vh;
+  }
+
+  #member-headline-wrapper {
+    position: absolute;
+    top: 10vh;
+    width: 100%;
+  }
 }
 
 @media (max-width: 575px) {
