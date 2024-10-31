@@ -19,7 +19,7 @@ async def login(request):
   authenticated = await isAuthenticated(request)
   if (authenticated):
     return await dashboard(request)
-  return render(request, 'login.html', {'title': 'Dulno - Login',
+  return render(request, 'login.html', {'title': 'Panel - Dulno',
     'css': ['css/verification/login.css']})
 
 @verification_page
