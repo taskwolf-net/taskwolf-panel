@@ -76,30 +76,7 @@
 }
 
 @media (max-width: 575px) {
-  #header-space {
-    height: 57px;
-  }
-
-  #navbar-logo-container {
-    text-align: center;
-    margin: 0;
-  }
-
-  #profile-button-container {
-    margin: 0;
-  }
-
-  #profile-button-wrapper {
-    width: 48px;
-    height: 48px;
-  }
-
-  #profile-button {
-    font-size: 24px;
-  }
-
-  #sidebar-button {
-    top: 15px;
-    right: 30px;
+  #navbar-logo {
+    display: none;
   }
 }
