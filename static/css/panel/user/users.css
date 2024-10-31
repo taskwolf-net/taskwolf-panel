@@ -31,6 +31,11 @@
   color: white;
 }
 
+#users-search-box input::placeholder {
+  color: #828282 !important;
+  -webkit-text-fill-color: #828282;
+}
+
 #users-search-box input:focus{
   box-shadow: 0 0 0 rgb(255, 255, 255);
 }
@@ -40,4 +45,5 @@
   color: #9b9b9b;
   border: none;
   border-radius: 5px;
+  padding: 10px;
 }

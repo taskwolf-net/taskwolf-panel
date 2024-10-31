@@ -14,6 +14,11 @@ input {
   color: white !important;
 }
 
+input::placeholder {
+  color: #828282 !important;
+  -webkit-text-fill-color: #828282;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,

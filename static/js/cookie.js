@@ -1,43 +1,54 @@
-var Cookie = {
+let Cookie = {
   findAll: function () {
-    var pairs = document.cookie.split(";");
-    var cookies = {};
-    for (var i = 0; i < pairs.length; i++){
-      var pair = pairs[i].split("=");
-      cookies[(pair[0]+'').trim()] = unescape(pair.slice(1).join('='));
+    let pairs = document.cookie.split(";");
+    let cookies = {};
+    for (let i = 0; i < pairs.length; i++){
+      let pair = pairs[i].split("=");
+      cookies[(pair[0]+'').trim()] = unescape(pair.slice(1).join("="));
     }
     return cookies;
   },
 
   find: function (name) {
-    var cookie = null,
+    let cookie = null,
       list = this.findAll();
-    _.each(list, function (value, key) {
-      if (key === name) cookie = value;
-    });
+    let keys = Object.keys(list);
+    for (let i = 0; i < keys.length; i++) {
+      let key = keys[i];
+      if (key === name) {
+        cookie = list[key];
+      }
+    }
     return cookie;
   },
 
   create: function (name, value, time) {
-    var today = new Date(),
-      offset = (typeof time == 'undefined') ? (1000 * 60 * 60 * 24) : (time * 1000),
-      expires_at = new Date(today.getTime() + offset);
+    this.create(name, value, time, "." + location.host);
+  },
 
-    var cookie = _.map({
+  create: function (name, value, time, domain) {
+    let today = new Date(),
+      offset = (typeof time == "undefined") ? (1000 * 60 * 60 * 24) : (time * 1000),
+      expires_at = new Date(today.getTime() + offset);
+    let content = {
       name: escape(value),
       expires: expires_at.toGMTString(),
-      path: '/',
-      domain: location.host,
+      path: "/",
+      domain: domain,
       secure: true,
-    }, function (value, key) {
-      return [(key == 'name') ? name : key, value].join('=');
-    }).join(';');
-
+    };
+    let cookie = Object.keys(content).map(function(key) {
+      return [(key === "name") ? name : key, content[key]].join("=");
+    }).join(";");
     document.cookie = cookie;
     return this;
   },
 
   destroy: function (name) {
     this.create(name, "", -1);
+  },
+
+  destroy: function (name, domain) {
+    this.create(name, "", -1, domain);
   }
 };
