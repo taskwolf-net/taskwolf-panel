@@ -2,32 +2,32 @@
 {% load i18n %}
 <div class="bg-dark collapse collapse-horizontal" id="sidebar">
   <div id="sidebar-content">
-    <ul id="panel-sidebar-items" class="navbar-nav ml-auto mt-4 h-100 d-flex align-items-center">
-      <li class="sidebar-item {% if request.path == '/dashboard/' or request.path == '/' %}sidebar-active{% endif %}">
-        <a href="/dashboard/" class="sidebar-link nav-link" aria-current="page"><i class="sidebar-icon fa fa-home" aria-hidden="true"></i>{% trans 'panel.sidebar.dashboard' %}</a>
+    <ul id="panel-sidebar-items" class="navbar-nav ml-auto h-100 d-flex align-items-center">
+      <li class="sidebar-item mt-3 {% if request.path == '/dashboard/' or request.path == '/' %}sidebar-active{% endif %}">
+        <a href="/dashboard/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">house</span><span>{% trans 'panel.sidebar.dashboard' %}</span></a>
       </li>
       <li class="sidebar-divider"></li>
       <li class="sidebar-item {% if 'ticket' in request.path %}sidebar-active{% endif %}">
-        <a href="/tickets/" class="sidebar-link nav-link" aria-current="page"><i class="sidebar-icon fa fa-ticket" aria-hidden="true"></i>{% trans 'panel.sidebar.tickets' %}</a>
+        <a href="/tickets/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">confirmation_number</span><span>{% trans 'panel.sidebar.tickets' %}</span></a>
       </li>
       <li class="sidebar-item {% if 'question' in request.path %}sidebar-active{% endif %}">
-        <a href="/questions/" class="sidebar-link nav-link" aria-current="page"><i class="sidebar-icon fa fa-handshake-angle" aria-hidden="true"></i>{% trans 'panel.sidebar.questions' %}</a>
+        <a href="/questions/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">support_agent</span><span>{% trans 'panel.sidebar.questions' %}</span></a>
       </li>
       <li class="sidebar-item {% if 'sale' in request.path %}sidebar-active{% endif %}">
-        <a href="/sales/" class="sidebar-link nav-link" aria-current="page"><i class="sidebar-icon fa fa-arrow-trend-up" aria-hidden="true"></i>{% trans 'panel.sidebar.sales' %}</a>
+        <a href="/sales/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">monitoring</span><span>{% trans 'panel.sidebar.sales' %}</span></a>
       </li>
       <li class="sidebar-divider"></li>
       <li id="users-sidebar-item" class="sidebar-item d-none {% if 'user' in request.path %}sidebar-active{% endif %}">
-        <a href="/users/" class="sidebar-link nav-link" aria-current="page"><i class="sidebar-icon fa fa-user" aria-hidden="true"></i>{% trans 'panel.sidebar.users' %}</a>
+        <a href="/users/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">person</span><span>{% trans 'panel.sidebar.users' %}</span></a>
       </li>
       <li id="templates-sidebar-item" class="sidebar-item d-none {% if 'template' in request.path %}sidebar-active{% endif %}">
-        <a href="/templates/" class="sidebar-link nav-link" aria-current="page"><i class="sidebar-icon fa fa-sheet-plastic" aria-hidden="true"></i>{% trans 'panel.sidebar.templates' %}</a>
+        <a href="/templates/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">draft</span><span>{% trans 'panel.sidebar.templates' %}</span></a>
       </li>
       <li id="maintenance-sidebar-item" class="sidebar-item d-none {% if 'maintenance' in request.path %}sidebar-active{% endif %}">
-        <a href="/maintenance/" class="sidebar-link nav-link" aria-current="page"><i class="sidebar-icon fa fa-wrench" aria-hidden="true"></i>{% trans 'panel.sidebar.maintenance' %}</a>
+        <a href="/maintenance/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">build</span><span>{% trans 'panel.sidebar.maintenance' %}</span></a>
       </li>
       <li id="administration-sidebar-item" class="sidebar-item d-none {% if 'administration' in request.path or 'group' in request.path or 'member' in request.path %}sidebar-active{% endif %}">
-        <a href="/administration/" class="sidebar-link nav-link" aria-current="page"><i class="sidebar-icon fa fa-building-columns" aria-hidden="true"></i>{% trans 'panel.sidebar.administrator' %}</a>
+        <a href="/administration/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">account_balance</span><span>{% trans 'panel.sidebar.administrator' %}</span></a>
       </li>
     </ul>
   </div>
@@ -44,6 +44,13 @@
         document.getElementById("maintenance-sidebar-item").classList.remove("d-none");
         document.getElementById("administration-sidebar-item").classList.remove("d-none");
       }
+    });
+  });
+
+  document.fonts.ready.then(function() {
+    const icons = document.querySelectorAll('.material-symbols-outlined');
+    icons.forEach(icon => {
+      icon.classList.add('loaded');
     });
   });
 </script>
