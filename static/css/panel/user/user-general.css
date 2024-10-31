@@ -19,8 +19,12 @@
   margin-right: 5px;
 }
 
-#user-general-container .nav-link {
+.dark #user-general-container .nav-link {
   color: white;
+}
+
+.light #user-general-container .nav-link {
+  color: black;
 }
 
 #user-general-container .nav-link-active {
@@ -44,9 +48,14 @@
   border-radius: 5px;
 }
 
-.user-general-section {
+.dark .user-general-section {
   background-color: #131820;
   border: 1px #2b3441 solid;
+}
+
+.light .user-general-section {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
 }
 
 .user-general-profile-language {

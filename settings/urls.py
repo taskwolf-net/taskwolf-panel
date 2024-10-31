@@ -6,4 +6,5 @@ urlpatterns = [
   path('settings/profile/', settings.profileSettings),
   path('settings/account/', settings.accountSettings),
   path('settings/language/', settings.languageSettings),
+  path('settings/theme/', settings.themeSettings),
 ]

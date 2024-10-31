@@ -24,9 +24,14 @@
   border-radius: 5px;
 }
 
-#offer-unavailable {
+.dark #offer-unavailable {
   background-color: #131820;
   border: 1px #2b3441 solid;
+}
+
+.light #offer-unavailable {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
 }
 
 #offer-information {
@@ -35,9 +40,14 @@
   margin-bottom: 5vh;
 }
 
-#offer-information {
+.dark #offer-information {
   background-color: #131820;
   border: 1px #2b3441 solid;
+}
+
+.light #offer-information {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
 }
 
 #offer-information-entries {

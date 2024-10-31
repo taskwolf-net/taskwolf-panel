@@ -19,8 +19,12 @@
   margin-right: 5px;
 }
 
-#entity-termination-container .nav-link {
+.dark #entity-termination-container .nav-link {
   color: white;
+}
+
+.light #entity-termination-container .nav-link {
+  color: black;
 }
 
 #entity-termination-container .nav-link-active {
@@ -38,7 +42,12 @@
   margin-bottom: 50px;
 }
 
-#entity-termination-process, #entity-termination-not-possible, #entity-termination-done {
+.dark #entity-termination-process, .dark #entity-termination-not-possible, .dark #entity-termination-done {
   background-color: #131820;
   border: 1px #2b3441 solid;
+}
+
+.light #entity-termination-process, .light #entity-termination-not-possible, .light #entity-termination-done {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
 }

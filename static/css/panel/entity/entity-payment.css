@@ -19,8 +19,12 @@
   margin-right: 5px;
 }
 
-#entity-payment-wrapper .nav-link {
+.dark #entity-payment-wrapper .nav-link {
   color: white;
+}
+
+.light #entity-payment-wrapper .nav-link {
+  color: black;
 }
 
 #entity-payment-wrapper .nav-link-active {
@@ -33,9 +37,14 @@
   border-radius: 5px;
 }
 
-#entity-payment-unavailable {
+.dark #entity-payment-unavailable {
   background-color: #131820;
   border: 1px #2b3441 solid;
+}
+
+.light #entity-payment-unavailable {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
 }
 
 #entity-payments {
@@ -45,9 +54,14 @@
   margin-bottom: 50px;
 }
 
-#entity-payments {
+.dark #entity-payments {
   background-color: #131820;
   border: 1px #2b3441 solid;
+}
+
+.light #entity-payments {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
 }
 
 #entity-payment-list {

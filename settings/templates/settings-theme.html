@@ -1,0 +1,43 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body class="dark" data-bs-theme="dark">
+    {% include 'settings-header.html' %}
+    <div class="settings-container">
+      {% include 'settings-sidebar.html' %}
+      <div class="sidebar-influenced">
+        <div class="settings-content">
+          <h1 class="settings-headline">{% trans 'settings.theme.headline' %}</h1>
+          <div id="settings-theme-container">
+            <button id="settings-theme-dark" class="settings-theme">
+              <i class="fa-regular fa-moon settings-theme-icon"></i>
+              <h4>{% trans 'settings.theme.dark' %}</h4>
+            </button>
+            <button  id="settings-theme-light" class="settings-theme">
+              <i class="fa-regular fa-lightbulb settings-theme-icon"></i>
+              <h4>{% trans 'settings.theme.light' %}</h4>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  $(document).ready(function() {
+    let theme = Cookie.find("dulno-theme");
+    document.getElementById("settings-theme-" + theme).classList.add("settings-theme-selected");
+  });
+
+  document.getElementById("settings-theme-dark").onclick = function(event) {
+    Cookie.create("dulno-theme", "dark", 60 * 60 * 24 * 365, ".dulno.com");
+    window.location.reload();
+  }
+
+  document.getElementById("settings-theme-light").onclick = function(event) {
+    Cookie.create("dulno-theme", "light", 60 * 60 * 24 * 365, ".dulno.com");
+    window.location.reload();
+  }
+</script>

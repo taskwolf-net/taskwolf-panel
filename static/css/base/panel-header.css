@@ -5,9 +5,18 @@
   height: 70px;
   display: flex;
   align-items: center;
+}
+
+.dark #navbar {
   color: white;
   background-color: #212529;
   border-bottom: 1px #4a4a4a solid;
+}
+
+.light #navbar {
+  color: black;
+  background-color: #f8f9fa;
+  border-bottom: 1px #c8c8c8 solid;
 }
 
 #navbar-content {
@@ -29,8 +38,12 @@
   font-size: 28px;
 }
 
-#sidebar-button {
+.dark #sidebar-button {
   color: white;
+}
+
+.light #sidebar-button {
+  color: black;
 }
 
 #navbar-logo {
@@ -48,8 +61,12 @@
   padding: 10px;
 }
 
-#profile-button-wrapper:hover {
+.dark #profile-button-wrapper:hover {
   background-color: #30363b;
+}
+
+.light #profile-button-wrapper:hover {
+  background-color: #cccccc;
 }
 
 #profile-picture {
@@ -61,8 +78,12 @@
   padding-left: 10px;
 }
 
-#profile-picture, #profile-picture-arrow {
+.dark #profile-picture, .dark #profile-picture-arrow {
   color: white;
+}
+
+.light #profile-picture, .light #profile-picture-arrow {
+  color: black;
 }
 
 #profile-button-wrapper::after {

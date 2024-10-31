@@ -19,8 +19,12 @@
   margin-right: 5px;
 }
 
-#organization-general-container .nav-link {
+.dark #organization-general-container .nav-link {
   color: white;
+}
+
+.light #organization-general-container .nav-link {
+  color: black;
 }
 
 #organization-general-container .nav-link-active {
@@ -44,9 +48,14 @@
   border-radius: 5px;
 }
 
-.organization-general-section {
+.dark .organization-general-section {
   background-color: #131820;
   border: 1px #2b3441 solid;
+}
+
+.light .organization-general-section {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
 }
 
 #organization-general-member-list-description {

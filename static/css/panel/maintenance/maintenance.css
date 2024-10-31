@@ -72,7 +72,6 @@
   border: none;
   float: right;
   width: 100% !important;
-  color: white;
 }
 
 .maintenance-settings-dropdown {
@@ -83,10 +82,6 @@
   padding: 10px !important;
   border-radius: 4px;
   border: none !important;
-}
-
-.maintenance-settings-dropdown-entry:hover {
-  background-color: #464b54 !important;
 }
 
 .maintenance-settings-dropdown-entry i {

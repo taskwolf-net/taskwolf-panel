@@ -116,7 +116,7 @@
 
   document.getElementById("administration-group-add").onclick = function (event) {
     var groupAddForm = document.createElement("div");
-    groupAddForm.classList.add("swal2-content");
+    groupAddForm.classList.add("administration-group-add-content");
     var groupAddDescription = document.createElement("p");
     groupAddDescription.innerText = "{% trans 'panel.administration.group.add.body' %}";
     groupAddForm.appendChild(groupAddDescription);

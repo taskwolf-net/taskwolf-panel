@@ -17,3 +17,8 @@ async def accountSettings(request):
 async def languageSettings(request):
   return render(request, 'settings-language.html', {'title': gettext('settings.language.title'),
     'css': ['css/base/settings-header.css', 'css/base/settings-sidebar.css', 'css/base/settings.css', 'css/settings/settings-language.css']})
+
+@authentication_required
+async def themeSettings(request):
+  return render(request, 'settings-theme.html', {'title': gettext('settings.theme.title'),
+    'css': ['css/base/settings-header.css', 'css/base/settings-sidebar.css', 'css/base/settings.css', 'css/settings/settings-theme.css']})

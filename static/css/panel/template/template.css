@@ -69,8 +69,12 @@
   justify-content: center;
 }
 
-.template-workflow {
+.dark .template-workflow {
   background-color: #202428;
+}
+
+.light .template-workflow {
+  background-color: #d0d0d0;
 }
 
 .template-workflow-component {
@@ -164,8 +168,12 @@
   margin-bottom: 0;
 }
 
-.template-workflow-component-module-entry:hover, .template-workflow-component-event-entry:hover {
+.dark .template-workflow-component-module-entry:hover, .dark .template-workflow-component-event-entry:hover {
   background-color: #424b53;
+}
+
+.light .template-workflow-component-module-entry:hover, .light .template-workflow-component-event-entry:hover {
+  background-color: #bebebe;
 }
 
 .template-workflow-component-module-entry-information, .template-workflow-component-event-entry-information {
@@ -199,6 +207,11 @@
   color: white;
 }
 
+.template-workflow-component-module-content input, .template-workflow-component-event-content input {
+  border: 1px solid black;
+  color: black;
+}
+
 .template-workflow-component-module-content input::placeholder, .template-workflow-component-event-content input::placeholder {
   color: #a5a5a5;
 }
@@ -216,12 +229,20 @@
   transition-duration: 0.4s;
 }
 
-.template-workflow-add-action i {
+.dark .template-workflow-add-action i {
   background-color: #5c616a;
 }
 
-.template-workflow-add-action i:hover{
+.dark .template-workflow-add-action i:hover{
   background-color: #3c3f45;
+}
+
+.light .template-workflow-add-action i {
+  background-color: #99a2b0;
+}
+
+.light .template-workflow-add-action i:hover{
+  background-color: #666a73;
 }
 
 #template-access-type {
@@ -238,17 +259,32 @@
 }
 
 #template-description-languages .nav-link {
-  color: white;
   width: 100%;
   border: none !important;
+}
+
+.dark #template-description-languages .nav-link {
+  color: white;
   border-bottom: 3px solid #1d2633 !important;
 }
 
+.light #template-description-languages .nav-link {
+  color: black;
+  border-bottom: 3px solid #c5c5c5 !important;
+}
+
 #template-description-languages .nav-item .active {
-  background-color: #0d1117;
   border-width: 3px;
   border-style: solid;
   border-image: linear-gradient(to right, #5374ab, #d5d779) 1 !important;
+}
+
+.dark #template-description-languages .nav-item .active {
+  background-color: #0d1117;
+}
+
+.light #template-description-languages .nav-item .active {
+  background-color: #fafafa;
 }
 
 #template-description-content {
@@ -256,16 +292,28 @@
   margin-right: 20px;
 }
 
-input[type=text], textarea {
+.dark input[type=text], .dark textarea  {
   background-color: #0d1117 !important;
   color: white !important;
   -webkit-text-fill-color: white;
-  border: 1px solid #7f7f7f !important;
+  border: 1px solid #cecece !important;
 }
 
-input[type=text]::placeholder, textarea::placeholder {
-  color: #7f7f7f !important;
-  -webkit-text-fill-color: #7f7f7f;
+.dark input[type=text]::placeholder, .dark textarea::placeholder {
+  color: #828282 !important;
+  -webkit-text-fill-color: #828282;
+}
+
+.light input[type=text], .light textarea {
+  background-color: #eaeaea !important;
+  color: black !important;
+  -webkit-text-fill-color: black;
+  border: 1px solid #4c4c4c !important;
+}
+
+.light input[type=text]::placeholder, .light textarea::placeholder {
+  color: #949494 !important;
+  -webkit-text-fill-color: #949494;
 }
 
 input[type=text]:-webkit-autofill,

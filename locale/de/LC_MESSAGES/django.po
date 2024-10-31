@@ -975,6 +975,8 @@ msgid "settings.sidebar.personalization"
 msgstr "Personalisierung"
 msgid "settings.sidebar.language"
 msgstr "Sprache"
+msgid "settings.sidebar.theme"
+msgstr "Aussehen"
 
 # PROFILE
 msgid "settings.profile.title"
@@ -1031,3 +1033,13 @@ msgid "settings.language.english"
 msgstr "Englisch"
 msgid "settings.language.german"
 msgstr "Deutsch"
+
+# THEME
+msgid "settings.theme.title"
+msgstr "Aussehen Einstellungen - Dulno"
+msgid "settings.theme.headline"
+msgstr "Aussehen Einstellungen"
+msgid "settings.theme.dark"
+msgstr "Dunkel"
+msgid "settings.theme.light"
+msgstr "Hell"

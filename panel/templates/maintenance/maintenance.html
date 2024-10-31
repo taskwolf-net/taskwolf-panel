@@ -133,7 +133,7 @@
 
   function createMaintenanceSettingsDropdown(buttons) {
     var dropdown = document.createElement("ul");
-    dropdown.classList.add("maintenance-settings-dropdown", "dropdown-menu", "bg-dark");
+    dropdown.classList.add("maintenance-settings-dropdown", "dropdown-menu");
     for (var i = 0; i < buttons.length; i++) {
       var button = buttons[i];
       dropdown.appendChild(createMaintenanceSettingsDropdownButton(dropdown, button.icon,

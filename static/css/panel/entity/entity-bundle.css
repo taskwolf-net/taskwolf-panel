@@ -19,8 +19,12 @@
   margin-right: 5px;
 }
 
-#entity-bundle-container .nav-link {
+.dark #entity-bundle-container .nav-link {
   color: white;
+}
+
+.light #entity-bundle-container .nav-link {
+  color: black;
 }
 
 #entity-bundle-container .nav-link-active {
@@ -33,9 +37,14 @@
   border-radius: 5px;
 }
 
-#entity-bundle-unavailable {
+.dark #entity-bundle-unavailable {
   background-color: #131820;
   border: 1px #2b3441 solid;
+}
+
+.light #entity-bundle-unavailable {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
 }
 
 #entity-bundle-information {
@@ -45,9 +54,14 @@
   margin-bottom: 50px;
 }
 
-#entity-bundle-information {
+.dark #entity-bundle-information {
   background-color: #131820;
   border: 1px #2b3441 solid;
+}
+
+.light #entity-bundle-information {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
 }
 
 #entity-bundle-information-entries {

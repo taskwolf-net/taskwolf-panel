@@ -24,9 +24,14 @@
   border-radius: 5px;
 }
 
-#entity-bundle-change-process {
+.dark #entity-bundle-change-process {
   background-color: #131820;
   border: 1px #2b3441 solid;
+}
+
+.light #entity-bundle-change-process {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
 }
 
 #entity-bundle-change-process-data {

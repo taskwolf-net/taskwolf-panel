@@ -19,8 +19,12 @@
   margin-right: 5px;
 }
 
-#entity-offers-container .nav-link {
+.dark #entity-offers-container .nav-link {
   color: white;
+}
+
+.light #entity-offers-container .nav-link {
+  color: black;
 }
 
 #entity-offers-container .nav-link-active {
@@ -33,9 +37,14 @@
   border-radius: 5px;
 }
 
-#entity-offers-empty {
+.dark #entity-offers-empty {
   background-color: #131820;
   border: 1px #2b3441 solid;
+}
+
+.light #entity-offers-empty {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
 }
 
 #entity-offers {
@@ -45,11 +54,15 @@
   margin-bottom: 50px;
 }
 
-#entity-offers {
+.dark #entity-offers {
   background-color: #131820;
   border: 1px #2b3441 solid;
 }
 
+.light #entity-offers {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
+}
 
 #entity-offers-description {
   width: min(1000px, 100%);

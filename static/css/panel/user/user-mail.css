@@ -19,8 +19,12 @@
   margin-right: 5px;
 }
 
-#user-mail-container .nav-link {
+.dark #user-mail-container .nav-link {
   color: white;
+}
+
+.light #user-mail-container .nav-link {
+  color: black;
 }
 
 #user-mail-container .nav-link-active {
@@ -35,9 +39,14 @@
   margin-bottom: 50px;
 }
 
-#user-mails {
+.dark #user-mails {
   background-color: #131820;
   border: 1px #2b3441 solid;
+}
+
+.light #user-mails {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
 }
 
 #user-mail-list {
@@ -72,7 +81,6 @@
   border: none;
   float: right;
   width: 100% !important;
-  color: white;
 }
 
 .user-mail-settings-dropdown {

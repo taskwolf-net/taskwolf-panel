@@ -20,8 +20,12 @@
   border-radius: 5px;
 }
 
-#templates-search-box {
+.dark #templates-search-box {
   background-color: #202428;
+}
+
+.light #templates-search-box {
+  background-color: #d8d8d8;
 }
 
 #templates-search-box input {
@@ -35,9 +39,14 @@
   -webkit-text-fill-color: #828282;
 }
 
-#templates-search-box input {
+.dark #templates-search-box input {
   background-color: #202428;
   color: white;
+}
+
+.light #templates-search-box input {
+  background-color: #d8d8d8;
+  color: black;
 }
 
 #templates-search-box input:focus{
@@ -50,9 +59,14 @@
   padding: 10px;
 }
 
-#templates-search-box button {
+.dark #templates-search-box button {
   background-color: #202428;
   color: #9b9b9b;
+}
+
+.light #templates-search-box button {
+  background-color: #d8d8d8;
+  color: #545454;
 }
 
 #templates-list {
@@ -75,8 +89,12 @@
   transition-duration: 0.3s;
 }
 
-.template-entry:hover {
+.dark .template-entry:hover {
   background-color: #12171e;
+}
+
+.light .template-entry:hover {
+  background-color: #efefef;
 }
 
 .template-workflow {
@@ -88,8 +106,12 @@
   justify-content: center;
 }
 
-.template-workflow {
+.dark .template-workflow {
   background-color: #202428;
+}
+
+.light .template-workflow {
+  background-color: #d8d8d8;
 }
 
 .template-workflow-arrow {
