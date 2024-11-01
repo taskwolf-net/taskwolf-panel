@@ -71,6 +71,10 @@
   transition-duration: 0.2s;
 }
 
+.user-mail-entry-prefix {
+  max-width: calc(100% - 50px);
+}
+
 .user-mail-icon {
   height: fit-content;
   margin: 0 30px 0 15px;
@@ -99,4 +103,10 @@
 
 .user-mail-settings-dropdown-entry label {
   margin-left: 20px;
+}
+
+@media (max-width: 575px) {
+  .user-mail-icon {
+    display: none  !important;
+  }
 }

@@ -28,7 +28,7 @@
                   <h4 class="fw-bold mb-4">{% trans 'organization.general.member.headline' %}</h4>
                   <div id="organization-general-member-list-description">
                     <span>{% trans 'organization.general.member.name' %}</span>
-                    <span class="text-center">{% trans 'organization.general.member.role' %}</span>
+                    <span id="organization-general-member-list-description-role" class="text-center">{% trans 'organization.general.member.role' %}</span>
                     <span class="text-center">{% trans 'organization.general.member.access' %}</span>
                   </div>
                   <ul id="organization-general-member-list">
@@ -174,7 +174,9 @@
       roleElement.innerHTML = "{% trans 'user.general.organization.member' %}";
       roleElement.classList.add("organization-general-member-member");
     }
-    memberElement.appendChild(createMemberCell(roleElement, "center"));
+    var roleCell = createMemberCell(roleElement, "center");
+    roleCell.classList.add("organization-general-member-role");
+    memberElement.appendChild(roleCell);
     var viewButton = document.createElement("button");
     viewButton.classList.add("btn", "btn-primary");
     viewButton.innerHTML = "{% trans 'user.general.organization.view' %}";

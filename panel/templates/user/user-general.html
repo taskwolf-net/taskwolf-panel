@@ -31,7 +31,7 @@
                   <h4 class="fw-bold mb-4">{% trans 'user.general.organization.headline' %}</h4>
                   <div id="user-general-organization-list-description">
                     <span>{% trans 'user.general.organization.name' %}</span>
-                    <span class="text-center">{% trans 'user.general.organization.role' %}</span>
+                    <span id="user-general-organization-list-description-role" class="text-center">{% trans 'user.general.organization.role' %}</span>
                     <span class="text-center">{% trans 'user.general.organization.access' %}</span>
                   </div>
                   <ul id="user-general-organization-list">
@@ -58,7 +58,7 @@
                   <h4 class="fw-bold mb-4">{% trans 'user.general.ticket.headline' %}</h4>
                   <div id="user-general-ticket-list-description">
                     <span>{% trans 'user.general.ticket.name' %}</span>
-                    <span class="text-center">{% trans 'user.general.ticket.type' %}</span>
+                    <span id="user-general-ticket-list-description-type" class="text-center">{% trans 'user.general.ticket.type' %}</span>
                     <span class="text-center">{% trans 'user.general.ticket.status' %}</span>
                   </div>
                   <ul id="user-general-ticket-list">
@@ -200,7 +200,9 @@
       typeElement.innerHTML = "{% trans 'user.general.ticket.bug' %}";
       typeElement.classList.add("user-general-ticket-bug");
     }
-    ticketElement.appendChild(createTicketCell(typeElement, "center"));
+    var typeCell = createTicketCell(typeElement, "center");
+    typeCell.classList.add("user-general-ticket-type");
+    ticketElement.appendChild(typeCell);
     var statusElement = document.createElement("p");
     statusElement.classList.add("user-general-ticket-badge");
     if (ticket.status === "OPEN") {
@@ -254,7 +256,9 @@
       roleElement.innerHTML = "{% trans 'user.general.organization.member' %}";
       roleElement.classList.add("user-general-organization-member");
     }
-    organizationElement.appendChild(createOrganizationCell(roleElement, "center"));
+    var roleCell = createOrganizationCell(roleElement, "center");
+    roleCell.classList.add("user-general-organization-role");
+    organizationElement.appendChild(roleCell);
     var viewButton = document.createElement("button");
     viewButton.classList.add("btn", "btn-primary");
     viewButton.innerHTML = "{% trans 'user.general.organization.view' %}";

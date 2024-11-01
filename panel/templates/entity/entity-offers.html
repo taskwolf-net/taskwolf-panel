@@ -22,35 +22,37 @@
           </div>
           <div id="entity-offers" class="d-none">
             <h3 class="fw-bold mb-4">{% trans 'entity.offers.headline' %}</h3>
-            <ul id="entity-offers-description">
-              <li>
-                <div>
-                  <span class="me-2">{% trans 'entity.offers.type' %}</span>
-                </div>
-              </li>
-              <li>
-                <div>
-                  <span class="me-2">{% trans 'entity.offers.runtime' %}</span>
-                </div>
-              </li>
-              <li>
-                <div>
-                  <span class="me-2">{% trans 'entity.offers.price' %}</span>
-                </div>
-              </li>
-              <li>
-                <div>
-                  <span class="text-center me-2">{% trans 'entity.offers.status' %}</span>
-                </div>
-              </li>
-              <li>
-                <div>
-                  <span class="text-center me-2">{% trans 'entity.offers.access' %}</span>
-                </div>
-              </li>
-            </ul>
-            <ul id="entity-offer-list">
-            </ul>
+            <div id="entity-offers-content">
+              <ul id="entity-offers-description">
+                <li>
+                  <div>
+                    <span class="me-2">{% trans 'entity.offers.type' %}</span>
+                  </div>
+                </li>
+                <li id="entity-offers-description-runtime">
+                  <div>
+                    <span class="me-2">{% trans 'entity.offers.runtime' %}</span>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <span class="me-2">{% trans 'entity.offers.price' %}</span>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <span class="text-center me-2">{% trans 'entity.offers.status' %}</span>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <span class="text-center me-2">{% trans 'entity.offers.access' %}</span>
+                  </div>
+                </li>
+              </ul>
+              <ul id="entity-offer-list">
+              </ul>
+            </div>
             <button type="button" class="btn btn-primary d-block px-5 mt-5 mx-auto" onclick="location.href='/{{type}}/{{entity}}/offer/create/'">{% trans 'entity.offers.create' %}</button>
           </div>
           <div id="entity-offers-empty" class="d-none">
@@ -135,7 +137,7 @@
     var invoiceContainer = document.createElement("div");
     invoiceContainer.classList.add("text-center", "py-0");
     var invoiceButton = document.createElement("button");
-    invoiceButton.classList.add("btn", "btn-primary", "entity-payment-invoice");
+    invoiceButton.classList.add("btn", "btn-primary", "entity-offer-view");
     invoiceButton.innerHTML = "{% trans 'entity.payment.invoice.download' %}";
     invoiceButton.onclick = function (event) {
       window.location.href = "/offer/" + id + "/";
@@ -146,6 +148,7 @@
 
   function appendOfferCell(entry, identifier, information, elementType) {
     var div = document.createElement("div");
+    div.classList.add("entity-offers-entry-" + identifier);
     var element = document.createElement(elementType);
     element.innerText = information;
     div.appendChild(element);

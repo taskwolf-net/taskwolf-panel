@@ -229,3 +229,13 @@
     width: 100%;
   }
 }
+
+@media (max-width: 575px) {
+  #user-general-ticket-list-description-type, .user-general-ticket-type, #user-general-organization-list-description-role, .user-general-organization-role {
+    display: none;
+  }
+
+  #user-general-ticket-list-description span, .user-general-ticket-cell, #user-general-organization-list-description span, .user-general-organization-cell {
+    width: 48%;
+  }
+}

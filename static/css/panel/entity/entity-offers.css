@@ -52,6 +52,7 @@
   border-radius: 5px;
   margin-top: 50px;
   margin-bottom: 50px;
+  position: relative;
 }
 
 .dark #entity-offers {
@@ -65,11 +66,8 @@
 }
 
 #entity-offers-description {
-  width: min(1000px, 100%);
-  position: relative;
   list-style-type: none;
-  margin: auto;
-  margin-top: 1%;
+  margin: 1% auto auto;
   border-bottom: 2px #717171 solid;
   padding: 0;
   display: flex;
@@ -91,9 +89,15 @@
   border-right: none;
 }
 
-#entity-offer-list {
+#entity-offers-content {
   width: min(1000px, 100%);
+  margin: auto;
+  overflow-x: auto;
   position: relative;
+  padding-bottom: 10px;
+}
+
+#entity-offer-list {
   list-style-type: none;
   padding: 0;
   margin: auto;
@@ -162,4 +166,44 @@
   border: 2px #a94242 solid;
   background-color: #f8d7da;
   color: #721c24;
+}
+
+@media (max-width: 1250px) {
+  #entity-offers-description li div i {
+    display: none;
+  }
+}
+
+@media (max-width: 1200px) {
+  #entity-offers-description-runtime, .entity-offers-entry-runtime {
+    display: none;
+  }
+
+  #entity-offers-description li, #entity-offer-list li div {
+    width: 25%;
+  }
+}
+
+@media (max-width: 1000px) {
+  #entity-offers-description li {
+    font-size: .8em;
+  }
+
+  #entity-offer-list li div span {
+    font-size: .8em;
+  }
+
+  .entity-offer-status-pending, .entity-offer-status-accepted, .entity-offer-status-declined, .entity-offer-status-withdrawn {
+    padding: 5px;
+  }
+
+  .entity-offer-view {
+    font-size: .7em !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #entity-offer-list, #entity-offers-description {
+    width: 500px;
+  }
 }
