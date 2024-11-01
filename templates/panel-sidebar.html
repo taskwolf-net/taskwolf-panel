@@ -35,17 +35,23 @@
 
 <script>
   $(document).ready(function() {
-    let request = new HttpRequest("https://team.dulno.com/v1/member/has/permission/", "POST", [],
-      {permission: "administrator"});
-    request.send(function (status, responseText) {
-      if (JSON.parse(responseText).hasPermission === true) {
-        document.getElementById("users-sidebar-item").classList.remove("d-none");
-        document.getElementById("templates-sidebar-item").classList.remove("d-none");
-        document.getElementById("maintenance-sidebar-item").classList.remove("d-none");
-        document.getElementById("administration-sidebar-item").classList.remove("d-none");
-      }
-    });
+    displayRestrictedSidebarItem("users-sidebar-item", "users");
+    displayRestrictedSidebarItem("templates-sidebar-item", "templates");
+    displayRestrictedSidebarItem("maintenance-sidebar-item", "maintenance");
+    displayRestrictedSidebarItem("administration-sidebar-item", "administration");
   });
+
+  function displayRestrictedSidebarItem(itemIdentifier, permission) {
+    $(document).ready(function() {
+      let request = new HttpRequest("https://team.dulno.com/v1/member/has/permission/", "POST", [],
+        {permission: permission});
+      request.send(function (status, responseText) {
+        if (JSON.parse(responseText).hasPermission === true) {
+          document.getElementById(itemIdentifier).classList.remove("d-none");
+        }
+      });
+    });
+  }
 
   document.fonts.ready.then(function() {
     const icons = document.querySelectorAll('.material-symbols-outlined');
