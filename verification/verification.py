@@ -27,3 +27,14 @@ async def confirm(request, member, token):
   return render(request, 'confirm.html', {'title': "Dulno - Confirmation",
     'css': ['css/verification/confirm.css'],
     'member': member, 'token': token})
+
+@verification_page
+async def passwordResetRequest(request):
+  return render(request, 'password-reset-request.html', {'title': "Password reset - Dulno",
+    'css': ['css/verification/password-reset-request.css']})
+
+@verification_page
+async def passwordResetComplete(request, member, token):
+  return render(request, 'password-reset-complete.html', {'title': "Password reset - Dulno",
+    'css': ['css/verification/password-reset-complete.css'],
+    'member': member, 'token': token})

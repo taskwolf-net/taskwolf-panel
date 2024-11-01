@@ -1,0 +1,28 @@
+{% load static %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body class="dark" data-bs-theme="dark">
+    <div id="email-change">
+      <div class="success-icon-wrapper">
+        <div class="success-icon">
+          <div class="success-icon__tip"></div>
+          <div class="success-icon__long"></div>
+        </div>
+      </div>
+      <h1 id="email-change-headline">Email change completed</h1>
+      <p id="email-change-description">You have successfully changed your account email. You can now continue with the login.</p>
+      <button id="email-change-continue" type="button" class="btn btn-primary d-block px-5 mt-5 mx-auto">CONTINUE</button>
+    </div>
+  </body>
+</html>
+
+<script>
+  document.getElementById("email-change-continue").onclick = function (event) {
+    let request = new HttpRequest("https://team.dulno.com/v1/settings/account/email/change/complete/", "POST",
+      [], {member: "{{member}}", token: "{{token}}"});
+    request.send(function (status, responseText) {
+      Cookie.destroy("panel-token");
+      window.location.href = "/";
+    });
+  };
+</script>

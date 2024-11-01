@@ -33,6 +33,20 @@
             </form>
             <button id="settings-account-password-button" type="button" class="btn btn-success">{% trans 'settings.account.password.submit' %}</button>
           </div>
+          <div id="settings-account-email-container">
+            <h3 id="settings-account-email-headline">{% trans 'settings.account.email.headline' %}</h3>
+            <form>
+              <div class="form-outline mb-4">
+                <label for="settings-account-password" class="form-label">{% trans 'settings.account.email.password' %}</label>
+                <input id="settings-account-password" type="password" class="form-control" placeholder="{% trans 'settings.account.email.password' %}">
+              </div>
+              <div class="form-outline mb-4">
+                <label for="settings-account-email" class="form-label">{% trans 'settings.account.email.new.email' %}</label>
+                <input id="settings-account-email" type="email" class="form-control" placeholder="{% trans 'settings.account.email.new.email' %}">
+              </div>
+            </form>
+            <button id="settings-account-email-button" type="button" class="btn btn-success">{% trans 'settings.account.email.change' %}</button>
+          </div>
         </div>
       </div>
     </div>
@@ -74,6 +88,30 @@
       newPasswordElement.value = "";
       newPasswordRepetitionElement.value = "";
       updatePasswordProgress();
+    });
+  };
+
+  document.getElementById("settings-account-email-button").onclick = function(event) {
+    let passwordElement = document.getElementById("settings-account-password");
+    let emailElement = document.getElementById("settings-account-email");
+    if (passwordElement.value === "" || emailElement.value === "") {
+      return;
+    }
+    let request = new HttpRequest("https://team.dulno.com/v1/settings/account/email/change/request/", "POST",
+      [], {password: passwordElement.value, newEmail: emailElement.value});
+    request.send(function (status, responseText) {
+      let response = JSON.parse(responseText);
+      if (response.success === false) {
+        if (response.errorCode === 1000) {
+          Swal.fire("{% trans 'settings.account.email.wrong.password.title' %}", "{% trans 'settings.account.email.wrong.password.body' %}", "error");
+        } else if (response.errorCode === 1001) {
+          Swal.fire("{% trans 'settings.account.email.exists.title' %}", "{% trans 'settings.account.email.exists.body' %}", "error");
+        }
+      } else {
+        Swal.fire("{% trans 'settings.account.email.successful.title' %}", "{% trans 'settings.account.email.successful.body' %}", "success");
+      }
+      passwordElement.value = "";
+      emailElement.value = "";
     });
   };
 
