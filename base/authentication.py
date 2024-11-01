@@ -4,9 +4,9 @@ import asyncio
 import requests
 import json
 import jwt
-from verification import verification
 from django.utils import translation
 from django.conf import settings
+from django.shortcuts import redirect
 
 def authentication_required(function):
   @wraps(function)
@@ -15,7 +15,7 @@ def authentication_required(function):
     if (authenticated):
       await applyLanguage(request)
       return await function(request, *args, **kwargs)
-    return await verification.login(request)
+    return redirect("/")
   return authentication
 
 async def isAuthenticated(request):

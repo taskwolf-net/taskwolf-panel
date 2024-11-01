@@ -1,5 +1,5 @@
 @media (min-width: 620px) {
-  body {
+  #login-container {
     width: 100vw;
     height: 100vh;
     background: linear-gradient(90deg, #7152b0, #5277b0);

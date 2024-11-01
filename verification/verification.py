@@ -20,7 +20,7 @@ async def login(request):
   if (authenticated):
     return await dashboard(request)
   return render(request, 'login.html', {'title': 'Panel - Dulno',
-    'css': ['css/verification/login.css']})
+    'css': ['css/base/2fa.css', 'css/verification/login.css']})
 
 @verification_page
 async def confirm(request, member, token):

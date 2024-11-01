@@ -7,4 +7,5 @@ urlpatterns = [
   path('settings/account/', settings.accountSettings),
   path('settings/language/', settings.languageSettings),
   path('settings/theme/', settings.themeSettings),
+  path('settings/2fa/', settings.twoFactorAuthenticationSettings),
 ]
