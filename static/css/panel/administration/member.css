@@ -85,8 +85,12 @@
   transition-duration: 0.5s;
 }
 
-.member-permission-remove:hover {
+.dark .member-permission-remove:hover {
   background-color: #293548;
+}
+
+.light .member-permission-remove:hover {
+  background-color: #d8d8d8;
 }
 
 @media (max-width: 650px) {
@@ -107,13 +111,24 @@
   }
 }
 
-.swal-content__input {
-  color: white;
-  background-color: #34435a;
+.member-permission-add-content input {
+  background-color: transparent;
   border-radius: 5px;
-  border-color: white !important;
+  box-shadow: none;
+  outline: none;
+  padding: 10px !important;
 }
 
-.swal-content__input::placeholder {
+.dark .member-permission-add-content input {
+  border: 1px solid white;
+  color: white;
+}
+
+.light .member-permission-add-content input {
+  border: 1px solid black;
+  color: black;
+}
+
+.member-permission-add-content input::placeholder {
   color: #a5a5a5;
 }

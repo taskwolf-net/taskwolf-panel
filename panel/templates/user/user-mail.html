@@ -85,7 +85,7 @@
     entrySuffix.appendChild(settingsButton);
     var dropdown = createMailSettingsDropdown([{icon: "fa-arrows-rotate",
       content: "{% trans 'user.mail.settings.resend' %}",
-      color: "text-light", click: () => resendMail(id)}]);
+      click: () => resendMail(id)}]);
     entrySuffix.appendChild(dropdown);
     entryElement.appendChild(entrySuffix);
     document.getElementById("user-mail-list").appendChild(entryElement);
@@ -93,16 +93,16 @@
 
   function createMailSettingsDropdown(buttons) {
     var dropdown = document.createElement("ul");
-    dropdown.classList.add("user-mail-settings-dropdown", "dropdown-menu", "bg-dark");
+    dropdown.classList.add("user-mail-settings-dropdown", "dropdown-menu");
     for (var i = 0; i < buttons.length; i++) {
       var button = buttons[i];
       dropdown.appendChild(createMailSettingsDropdownButton(dropdown, button.icon,
-        button.content, button.color, button.click));
+        button.content, button.click));
     }
     return dropdown;
   }
 
-  function createMailSettingsDropdownButton(dropdown, icon, content, color, click) {
+  function createMailSettingsDropdownButton(dropdown, icon, content, click) {
     var dropdownEntry = document.createElement("li");
     dropdownEntry.classList.add("user-mail-settings-dropdown-entry", "dropdown-item");
     var dropdownEntryIcon = document.createElement("i");
@@ -111,10 +111,6 @@
     var dropdownEntryLabel = document.createElement("label");
     dropdownEntryLabel.innerText = content;
     dropdownEntry.appendChild(dropdownEntryLabel);
-    if (color !== undefined) {
-      dropdownEntryIcon.classList.add(color);
-      dropdownEntryLabel.classList.add(color);
-    }
     dropdownEntry.onclick = function (event) {
       $(dropdown).dropdown('toggle');
       click();

@@ -9,14 +9,25 @@
   width: 52px;
   height: 52px;
   border: none;
-  color: #b5b5b5;
   background-color: transparent;
   border-radius: 50%;
   font-size: 25px;
 }
 
-#offer-create-back:hover {
+.dark #offer-create-back {
+  color: #b5b5b5;
+}
+
+.light #offer-create-back {
+  color: #656565;
+}
+
+.dark #offer-create-back:hover {
   background-color: #212937;
+}
+
+.light #offer-create-back:hover {
+  background-color: #d3d3d3;
 }
 
 #offer-create-process {
@@ -39,15 +50,28 @@
   margin: auto;
 }
 
-input {
+.dark input {
   background-color: #0d1117 !important;
   color: white !important;
-  border-radius: 4px !important;
+  -webkit-text-fill-color: white;
+  border: 1px solid #cecece !important;
 }
 
-input::placeholder {
+.dark input::placeholder {
   color: #828282 !important;
   -webkit-text-fill-color: #828282;
+}
+
+.light input {
+  background-color: #eaeaea !important;
+  color: black !important;
+  -webkit-text-fill-color: black;
+  border: 1px solid #4c4c4c !important;
+}
+
+.light input::placeholder {
+  color: #949494 !important;
+  -webkit-text-fill-color: #949494;
 }
 
 input:-webkit-autofill,
@@ -55,7 +79,6 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active{
   -webkit-background-clip: text;
-  -webkit-text-fill-color: #ffffff;
   transition: background-color 5000s ease-in-out 0s;
   box-shadow: inset 0 0 20px 20px #23232329;
 }

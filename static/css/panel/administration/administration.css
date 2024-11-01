@@ -68,7 +68,7 @@
   font-weight: bold;
 }
 
-.administration-group-add input {
+.administration-group-add-content input {
   background-color: transparent;
   border-radius: 5px;
   box-shadow: none;
@@ -76,16 +76,16 @@
   padding: 10px !important;
 }
 
-.dark .administration-group-add input {
+.dark .administration-group-add-content input {
   border: 1px solid white;
   color: white;
 }
 
-.light .administration-group-add input {
+.light .administration-group-add-content input {
   border: 1px solid black;
   color: black;
 }
 
-.administration-group-add input::placeholder {
+.administration-group-add-content input::placeholder {
   color: #a5a5a5;
 }

@@ -96,8 +96,12 @@
   transition-duration: 0.2s;
 }
 
-#user-general-ticket-list li:hover {
+.dark #user-general-ticket-list li:hover {
   background-color: #1c232f;
+}
+
+.light #user-general-ticket-list li:hover {
+  background-color: #b9b9b9;
 }
 
 .user-general-ticket-cell {
@@ -110,26 +114,47 @@
   padding: 10px;
   border-radius: 5px;
   font-weight: bold;
+  color: white !important;
 }
 
-.user-general-ticket-request {
+.dark .user-general-ticket-request {
   background-color: #2d6ba9;
   border: 2px #3986d3 solid;
 }
 
-.user-general-ticket-bug {
+.light .user-general-ticket-request {
+  background-color: #3785d3;
+  border: 2px #48a4ff solid;
+}
+
+.dark .user-general-ticket-bug {
   background-color: #b46b2f;
   border: 2px #d98442 solid;
 }
 
-.user-general-ticket-open {
+.light .user-general-ticket-bug {
+  background-color: #e5883b;
+  border: 2px #ff9a4f solid;
+}
+
+.dark .user-general-ticket-open {
   background-color: #2e9827;
   border: 2px #3aaf32 solid;
 }
 
-.user-general-ticket-closed {
+.light .user-general-ticket-open {
+  background-color: #3fd036;
+  border: 2px #4cff42 solid;
+}
+
+.dark .user-general-ticket-closed {
   background-color: #b63030;
   border: 2px #dc3838 solid;
+}
+
+.light .user-general-ticket-closed {
+  background-color: #de3c3c;
+  border: 2px #ff3e3e solid;
 }
 
 #user-general-organization-list-description {
@@ -176,8 +201,17 @@
 }
 
 .user-general-organization-owner {
+  color: white !important;
+}
+
+.dark .user-general-organization-owner {
   background-color: #a92d2d;
   border: 2px #d33939 solid;
+}
+
+.light .user-general-organization-owner {
+  background-color: #d83b3b;
+  border: 2px #ff4242 solid;
 }
 
 .user-general-organization-member {
@@ -186,7 +220,7 @@
   color: black;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
   #user-general-content {
     display: block;
   }

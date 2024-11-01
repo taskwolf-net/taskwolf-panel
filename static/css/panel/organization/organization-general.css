@@ -102,8 +102,17 @@
 }
 
 .organization-general-member-owner {
+  color: white !important;
+}
+
+.dark .organization-general-member-owner {
   background-color: #a92d2d;
   border: 2px #d33939 solid;
+}
+
+.light .organization-general-member-owner {
+  background-color: #d83b3b;
+  border: 2px #ff4242 solid;
 }
 
 .organization-general-member-member {
@@ -147,7 +156,7 @@
   width: calc(100% / 2);
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
   #organization-general-content {
     display: block;
   }

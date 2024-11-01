@@ -22,40 +22,42 @@
           </div>
           <div id="entity-payments" class="d-none">
             <h3 class="fw-bold mb-4">{% trans 'entity.payment.headline' %}</h3>
-            <ul id="entity-payment-description">
-              <li>
-                <div>
-                  <span class="me-2">{% trans 'entity.payment.time' %}</span>
-                  <i class="fa-regular fa-calendar-days"></i>
-                </div>
-              </li>
-              <li>
-                <div>
-                  <span class="me-2">{% trans 'entity.payment.amount' %}</span>
-                  <i class="fa-solid fa-coins"></i>
-                </div>
-              </li>
-              <li>
-                <div>
-                  <span class="me-2">{% trans 'entity.payment.method' %}</span>
-                  <i class="fa-solid fa-money-check"></i>
-                </div>
-              </li>
-              <li>
-                <div>
-                  <span class="me-2">{% trans 'entity.payment.status' %}</span>
-                  <i class="fa-solid fa-bars-progress"></i>
-                </div>
-              </li>
-              <li>
-                <div>
-                  <span class="me-2">{% trans 'entity.payment.invoice' %}</span>
-                  <i class="fa-solid fa-file-invoice"></i>
-                </div>
-              </li>
-            </ul>
-            <ul id="entity-payment-list">
-            </ul>
+            <div id="entity-payment-content">
+              <ul id="entity-payment-description">
+                <li>
+                  <div>
+                    <span class="me-2">{% trans 'entity.payment.time' %}</span>
+                    <i class="fa-regular fa-calendar-days"></i>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <span class="me-2">{% trans 'entity.payment.amount' %}</span>
+                    <i class="fa-solid fa-coins"></i>
+                  </div>
+                </li>
+                <li id="entity-payment-description-method">
+                  <div>
+                    <span class="me-2">{% trans 'entity.payment.method' %}</span>
+                    <i class="fa-solid fa-money-check"></i>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <span class="me-2">{% trans 'entity.payment.status' %}</span>
+                    <i class="fa-solid fa-bars-progress"></i>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <span class="me-2">{% trans 'entity.payment.invoice' %}</span>
+                    <i class="fa-solid fa-file-invoice"></i>
+                  </div>
+                </li>
+              </ul>
+              <ul id="entity-payment-list">
+              </ul>
+            </div>
           </div>
           <div id="entity-payment-unavailable" class="d-none">
             <h4 class="fw-bold mb-4">{% trans 'entity.payment.unavailable.headline' %}</h4>
@@ -111,7 +113,9 @@
     var entry = document.createElement('li');
     appendPaymentCell(entry, "time", time, "span");
     appendPaymentCell(entry, "amount", amount + " €", "span");
-    entry.appendChild(createPaymentMethodElement(method));
+    var methodElement = createPaymentMethodElement(method);
+    methodElement.classList.add("entity-payment-entry-method");
+    entry.appendChild(methodElement);
     entry.appendChild(createPaymentStatusElement(status));
     entry.appendChild(createPaymentInvoiceButton(invoice));
     document.getElementById("entity-payment-list").appendChild(entry);

@@ -136,7 +136,7 @@
 
   document.getElementById("group-member-add").onclick = function (event) {
     var content = document.createElement("div");
-    content.classList.add("swal2-content");
+    content.classList.add("group-member-add-content");
     var text = document.createElement("p");
     text.innerText = "{% trans 'panel.group.member.add.body' %}";
     content.appendChild(text);
@@ -184,7 +184,7 @@
 
   document.getElementById("group-permission-add").onclick = function (event) {
     var content = document.createElement("div");
-    content.classList.add("swal2-content");
+    content.classList.add("group-permission-add-content");
     var text = document.createElement("p");
     text.innerText = "{% trans 'panel.group.permission.add.body' %}";
     content.appendChild(text);
@@ -226,7 +226,7 @@
 
   document.getElementById("group-rename").onclick = function(event) {
     var content = document.createElement("div");
-    content.classList.add("swal2-content");
+    content.classList.add("group-rename-content");
     var text = document.createElement("p");
     text.innerText = "{% trans 'panel.group.rename.body' %}";
     content.appendChild(text);

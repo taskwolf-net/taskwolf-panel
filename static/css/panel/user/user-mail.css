@@ -93,10 +93,6 @@
   border: none !important;
 }
 
-.user-mail-settings-dropdown-entry:hover {
-  background-color: #464b54 !important;
-}
-
 .user-mail-settings-dropdown-entry i {
   width: 20px;
 }
