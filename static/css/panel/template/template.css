@@ -202,12 +202,12 @@
   padding: 10px !important;
 }
 
-.template-workflow-component-module-content input, .template-workflow-component-event-content input {
+.dark .template-workflow-component-module-content input, .dark .template-workflow-component-event-content input {
   border: 1px solid white;
   color: white;
 }
 
-.template-workflow-component-module-content input, .template-workflow-component-event-content input {
+.light .template-workflow-component-module-content input, .light .template-workflow-component-event-content input {
   border: 1px solid black;
   color: black;
 }
