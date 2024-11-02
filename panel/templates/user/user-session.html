@@ -1,0 +1,199 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body class="dark" data-bs-theme="dark">
+    {% include 'panel-header.html' %}
+    {% include 'panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="user-session-container">
+        <div id="user-session-wrapper" class="d-none">
+          <div>
+            <ul class="nav nav-tabs">
+              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/general/">{% trans 'entity.tab.general' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/mails/">{% trans 'entity.tab.mail' %}</a></li>
+              <li class="nav-item"><a class="nav-link nav-link-active" href="/user/{{user}}/sessions/">{% trans 'entity.tab.session' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/bundle/">{% trans 'entity.tab.bundle' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/payment/">{% trans 'entity.tab.payment' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/offers/">{% trans 'entity.tab.offer' %}</a></li>
+              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/termination/">{% trans 'entity.tab.termination' %}</a></li>
+            </ul>
+          </div>
+          <div id="user-sessions">
+            <h4 class="fw-bold mb-4">{% trans 'user.session.headline' %}</h4>
+            <ul id="user-session-list">
+            </ul>
+            <div id="user-session-empty" class="text-center d-none">
+              <span>{% trans 'user.session.empty' %}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  $(document).ready(function() {
+    displayLoader();
+    fetchSessions(function (sessions) {
+      displaySessions(sessions);
+      removeLoader();
+    });
+  });
+
+  function displaySessions(sessions) {
+    for (let i = 0; i < sessions.length; i++) {
+      let session = sessions[i];
+      displaySession(session.id, session.platform, session.country, session.city,
+        session.openTime, session.status);
+    }
+    if (sessions.length === 0) {
+      document.getElementById("user-session-empty").classList.remove("d-none");
+    }
+  }
+
+  function displaySession(id, platform, country, city, openTime, status) {
+    let entry = document.createElement("li");
+    entry.classList.add("d-flex", "justify-content-between", "align-items-center");
+    let entryPrefix = document.createElement("div");
+    entryPrefix.classList.add("d-flex", "align-items-center");
+    let entryIconContainer = document.createElement("div");
+    entryIconContainer.classList.add("user-session-icon");
+    let entryIcon = document.createElement("h2");
+    entryIcon.classList.add("fa-solid");
+    if (platform === "WINDOWS" || platform === "LINUX" || platform === "MAC") {
+      entryIcon.classList.add("fa-computer");
+    }
+    if (platform === "ANDROID" || platform === "IOS") {
+      entryIcon.classList.add("fa-mobile-screen-button");
+    }
+    entryIconContainer.appendChild(entryIcon);
+    entryPrefix.appendChild(entryIconContainer);
+    let entryDescription = document.createElement("div");
+    let entryPlatform = document.createElement("b");
+    entryPlatform.classList.add("mb-0");
+    entryPlatform.innerHTML = platform;
+    entryDescription.appendChild(entryPlatform);
+    let entryLocation = document.createElement("p");
+    entryLocation.classList.add("mb-0");
+    entryLocation.innerHTML = city + ", " + country;
+    entryDescription.appendChild(entryLocation);
+    let entryOpenTime = document.createElement("p");
+    entryOpenTime.classList.add("mb-0");
+    entryOpenTime.innerHTML = new Date(openTime).toLocaleString();
+    entryDescription.appendChild(entryOpenTime);
+    entryPrefix.appendChild(entryDescription);
+    entry.appendChild(entryPrefix);
+    let entrySuffix = document.createElement("div");
+    entrySuffix.classList.add("d-flex", "align-items-center");
+    entrySuffix.appendChild(createSessionStatusBatch(status));
+    if (status === "ACTIVE") {
+      entrySuffix.appendChild(createSessionSettingsButton(id));
+    }
+    entry.appendChild(entrySuffix);
+    document.getElementById("user-session-list").appendChild(entry);
+  }
+
+  function createSessionStatusBatch(status) {
+    let statusElement = document.createElement("span");
+    statusElement.classList.add("user-session-status");
+    if (status === "ACTIVE") {
+      statusElement.innerHTML = "{% trans 'user.session.active' %}";
+      statusElement.classList.add("user-session-active");
+    } else {
+      statusElement.innerHTML = "{% trans 'user.session.closed' %}";
+      statusElement.classList.add("user-session-closed");
+    }
+    return statusElement;
+  }
+
+  function createSessionSettingsButton(id) {
+    let settingsDiv = document.createElement("div");
+    settingsDiv.classList.add("user-session-settings");
+    let settingsButton = document.createElement("button");
+    settingsButton.type = "button";
+    settingsButton.classList.add("user-session-settings-button", "fa-solid",
+      "fa-ellipsis-vertical");
+    settingsButton.setAttribute("data-bs-toggle", "dropdown");
+    settingsButton.setAttribute("aria-expanded", "false");
+    settingsDiv.appendChild(settingsButton);
+    let dropdown = createSessionSettingsDropdown([
+      {icon: "fa-circle-xmark", content: "{% trans 'user.session.close' %}",
+        color: "text-danger", click: function() {closeSession(id)}}
+    ]);
+    settingsDiv.appendChild(dropdown);
+    return settingsDiv;
+  }
+
+  function createSessionSettingsDropdown(buttons) {
+    let dropdown = document.createElement("ul");
+    dropdown.classList.add("user-session-settings-dropdown", "dropdown-menu");
+    for (let i = 0; i < buttons.length; i++) {
+      let button = buttons[i];
+      dropdown.appendChild(createSessionSettingsDropdownButton(dropdown, button.icon,
+        button.content, button.color, button.click));
+    }
+    return dropdown;
+  }
+
+  function createSessionSettingsDropdownButton(dropdown, icon, content, color, click) {
+    let dropdownEntry = document.createElement("li");
+    dropdownEntry.classList.add("user-session-settings-dropdown-entry", "dropdown-item");
+    let dropdownEntryIcon = document.createElement("i");
+    dropdownEntryIcon.classList.add("fa-solid", icon);
+    dropdownEntry.appendChild(dropdownEntryIcon);
+    let dropdownEntryLabel = document.createElement("label");
+    dropdownEntryLabel.innerText = content;
+    dropdownEntry.appendChild(dropdownEntryLabel);
+    if (color !== undefined) {
+      dropdownEntryIcon.classList.add(color);
+      dropdownEntryLabel.classList.add(color);
+    }
+    dropdownEntry.onclick = function (event) {
+      $(dropdown).dropdown('toggle');
+      click();
+    };
+    return dropdownEntry;
+  }
+
+  function closeSession(id) {
+    Swal.fire({
+      title: "{% trans 'user.session.close.title' %}",
+      text: "{% trans 'user.session.close.body' %}",
+      icon: "warning",
+      confirmButtonColor: "#dc3545",
+      showCancelButton: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        let request = new HttpRequest("https://team.dulno.com/v1/user/session/close/", "POST",
+          [], {user: "{{user}}", session: id});
+        request.send(function (status, responseText) {
+          Swal.fire("{% trans 'user.session.close.successful.title' %}",
+            "{% trans 'user.session.close.successful.body' %}", "success")
+            .then(success => window.location.reload());
+        });
+      }
+    });
+  }
+
+  function fetchSessions(callback) {
+    let request = new HttpRequest("https://team.dulno.com/v1/user/sessions/", "POST",
+      [], {user: "{{user}}"});
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText).sessions);
+    });
+  }
+
+  function displayLoader() {
+    var loader = document.createElement("div");
+    loader.classList.add("loader");
+    document.getElementById("user-session-container").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("user-session-container")
+      .removeChild(document.getElementsByClassName("loader")[0]);
+    document.getElementById("user-session-wrapper").classList.remove("d-none");
+  }
+</script>
