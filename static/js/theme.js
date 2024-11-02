@@ -3,10 +3,10 @@ window.addEventListener('load', function () {
   if (url === "") {
     return;
   }
-  if (Cookie.find("dulno-theme") == null) {
-    Cookie.create("dulno-theme", "dark", 60 * 60 * 24 * 365, ".dulno.com");
+  if (Cookie.find("dulno-panel-theme") == null) {
+    Cookie.create("dulno-panel-theme", "dark", 60 * 60 * 24 * 365, ".dulno.com");
   }
-  let theme = Cookie.find("dulno-theme");
+  let theme = Cookie.find("dulno-panel-theme");
   var logoSource;
   if (theme === "dark") {
     document.body.classList.add("dark");
