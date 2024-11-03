@@ -37,7 +37,11 @@
   var isSidebarShown;
 
   window.onload = function() {
-    isSidebarShown = window.innerWidth > 575;
+    if (sessionStorage.getItem("dulno-sidebar") === null) {
+      sessionStorage.setItem("dulno-sidebar", "true");
+    }
+    let sidebarSetting = sessionStorage.getItem("dulno-sidebar").toLowerCase() === "true";
+    isSidebarShown = window.innerWidth > 575 && sidebarSetting;
     if (isSidebarShown) {
       document.getElementById("sidebar").classList.add("show");
     }
@@ -47,6 +51,7 @@
 
   document.getElementById('sidebar-button').onclick = function() {
     isSidebarShown = !isSidebarShown;
+    sessionStorage.setItem("dulno-sidebar", isSidebarShown);
     updateSidebarSpacing();
     updateSidebarButtonIcon();
   };
