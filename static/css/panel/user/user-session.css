@@ -1,0 +1,151 @@
+#user-session-wrapper {
+  width: min(1200px, 95%);
+  margin: auto;
+}
+
+#user-session-container .nav-tabs {
+  width: min(1200px, 100%);
+  margin: 40px auto 75px auto;
+  border: none;
+}
+
+#user-session-container .nav-link {
+  border: none;
+  transition-duration: 0.3s;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.dark #user-session-container .nav-link {
+  color: white;
+}
+
+.light #user-session-container .nav-link {
+  color: black;
+}
+
+#user-session-container .nav-link-active {
+  color: #8fc0f1;
+  border-bottom: 2px #8fc0f1 solid;
+}
+
+#user-sessions {
+  padding: 30px;
+  border-radius: 5px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.dark #user-sessions {
+  background-color: #131820;
+  border: 1px #2b3441 solid;
+}
+
+.light #user-sessions {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
+}
+
+#user-session-list {
+  list-style-type: none;
+  padding: 0;
+  width: 95%;
+  margin: auto;
+}
+
+#user-session-list li {
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.dark #user-session-list li {
+  background-color: #131820;
+  border: 1px #2b3441 solid;
+}
+
+.light #user-session-list li {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
+}
+
+.user-session-icon {
+  width: 40px;
+  text-align: center;
+  margin-right: 40px;
+  margin-left: 20px;
+}
+
+@media (max-width: 650px) {
+  .user-session-icon {
+    margin-right: 20px;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .user-session-icon {
+    display: none !important;
+  }
+}
+
+.user-session-status {
+  border-radius: 5px;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.user-session-active {
+  border: 2px #42a94b solid;
+  background-color: #d7f8da;
+  color: #1f721c;
+}
+
+.user-session-closed {
+  border: 2px #a94242 solid;
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.user-session-settings {
+  width: fit-content;
+  margin-left: 15px;
+}
+
+.user-session-settings-button {
+  background-color: transparent;
+  border: none;
+  float: right;
+  width: 100% !important;
+}
+
+.dark .user-session-settings-button {
+  color: white;
+}
+
+.light .user-session-settings-button {
+  color: black;
+}
+
+.user-session-settings-dropdown {
+  padding: 10px !important;
+}
+
+.user-session-settings-dropdown-entry {
+  padding: 10px !important;
+  border-radius: 5px !important;
+  border: none !important;
+  margin-bottom: 0 !important;
+  background-color: transparent !important;
+}
+
+.user-session-settings-dropdown-entry i {
+  width: 20px;
+}
+
+.user-session-settings-dropdown-entry label {
+  margin-left: 20px;
+}
