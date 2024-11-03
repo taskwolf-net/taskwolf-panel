@@ -22,12 +22,12 @@
               <span>{% trans 'questions.title' %}</span>
             </div>
           </li>
-          <li>
+          <li id="questions-table-description-sender">
             <div>
               <span>{% trans 'questions.sender' %}</span>
             </div>
           </li>
-          <li>
+          <li id="questions-table-description-date">
             <div>
               <span>{% trans 'questions.date' %}</span>
             </div>
@@ -36,8 +36,8 @@
         <ul id="questions-list">
         </ul>
         <div id="questions-loader"></div>
-        <div id="questions-empty">
-          <span id="questions-empty-headline">{% trans 'questions.empty.headline' %}</span>
+        <div id="questions-empty" class="d-none">
+          <p id="questions-empty-headline" class="mb-sm-1 mb-3">{% trans 'questions.empty.headline' %}</p>
           <span>{% trans 'questions.empty.text' %}</span>
         </div>
       </div>
@@ -77,9 +77,7 @@
       displayedQuestions++;
     }
     if (displayedQuestions === 0) {
-      document.getElementById("questions-empty").style.display = "flex";
-    } else {
-      document.getElementById("questions-empty").style.display = "none";
+      document.getElementById("questions-empty").classList.remove("d-none");
     }
   }
 
@@ -115,6 +113,7 @@
 
   function appendQuestionsCell(entry, identifier, information, elementType) {
     var div = document.createElement("div");
+    div.classList.add("question-entry-" + identifier);
     var element = document.createElement(elementType);
     element.innerText = information;
     element.classList.add("questions-list-" + identifier);

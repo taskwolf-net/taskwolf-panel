@@ -1,7 +1,7 @@
 #sales-headline {
   text-align: center;
   font-weight: bold;
-  margin-top: 2%;
+  margin-top: 5vh;
 }
 
 #sales-header {
@@ -63,12 +63,6 @@
 .light #sales-search-box button {
   background-color: #d8d8d8;
   color: #545454;
-}
-
-@media (max-width: 400px) {
-  #sales-header {
-    margin-bottom: 5%;
-  }
 }
 
 #sales-list {
@@ -152,30 +146,79 @@
   color: #232323;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 1200px) {
   #sales-table-description li {
-    font-size: .8em;
+    width: 30%;
   }
 
-  #sales-list li div span {
-    font-size: .8em;
+  #sales-table-description-title {
+    width: 40% !important;
+  }
+
+  #sales-list li div {
+    width: 30%;
+  }
+
+  .sale-entry-title {
+    width: 40% !important;
+  }
+}
+
+@media (max-width: 900px) {
+  #sales-table-description li {
+    width: 40%;
+  }
+
+  #sales-table-description-title {
+    width: 60% !important;
+  }
+
+  #sales-table-description-sender {
+    display: none;
+  }
+
+  #sales-list li div {
+    width: 40%;
+  }
+
+  .sale-entry-title {
+    width: 60% !important;
+  }
+
+  .sale-entry-sender {
+    display: none !important;
+  }
+}
+
+@media (max-width: 500px) {
+  #sales-table-description-title {
+    width: 100% !important;
+  }
+
+  #sales-table-description-date {
+    display: none;
+  }
+
+  .sale-entry-title {
+    width: 100% !important;
+  }
+
+  .sale-entry-date {
+    display: none !important;
   }
 }
 
 #sales-empty {
-  display: none;
   flex-flow: wrap;
   justify-content: center;
   text-align: center;
-  margin-top: 5%;
-  white-space: pre;
+  margin-top: 6vh;
 }
 
 #sales-empty-headline {
   font-size: 20px;
   font-weight: bold;
   width: 100%;
-  margin-bottom: 1%;
 }
 
 #sales-empty-link {

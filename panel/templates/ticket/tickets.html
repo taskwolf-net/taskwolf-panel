@@ -41,8 +41,8 @@
         <ul id="tickets-list">
         </ul>
         <div id="tickets-loader"></div>
-        <div id="tickets-empty">
-          <span id="tickets-empty-headline">{% trans 'tickets.empty.headline' %}</span>
+        <div id="tickets-empty" class="d-none">
+          <p id="tickets-empty-headline" class="mb-sm-1 mb-3">{% trans 'tickets.empty.headline' %}</p>
           <span>{% trans 'tickets.empty.text' %}</span>
         </div>
       </div>
@@ -89,9 +89,7 @@
       displayedTickets++;
     }
     if (displayedTickets === 0) {
-      document.getElementById("tickets-empty").style.display = "flex";
-    } else {
-      document.getElementById("tickets-empty").style.display = "none";
+      document.getElementById("tickets-empty").classList.remove("d-none");
     }
   }
 
