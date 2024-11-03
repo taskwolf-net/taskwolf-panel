@@ -8,13 +8,13 @@
       </li>
       <li class="sidebar-divider"></li>
       <li id="tickets-sidebar-item" class="sidebar-item {% if 'ticket' in request.path %}sidebar-active{% endif %}">
-        <a href="/tickets/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">confirmation_number</span><span class="d-flex justify-content-between align-items-center w-100">{% trans 'panel.sidebar.tickets' %}<span id="tickets-sidebar-count" class="badge text-bg-secondary me-3">-</span></span></a>
+        <a href="/tickets/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">confirmation_number</span><span class="d-flex justify-content-between align-items-center w-100">{% trans 'panel.sidebar.tickets' %}<h6 id="tickets-sidebar-count" class="px-3 py-1 rounded-3 text-bg-secondary me-2 mb-0">-</h6></span></a>
       </li>
       <li id="questions-sidebar-item" class="sidebar-item {% if 'question' in request.path %}sidebar-active{% endif %}">
-        <a href="/questions/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">support_agent</span><span class="d-flex justify-content-between align-items-center w-100">{% trans 'panel.sidebar.questions' %}<span id="questions-sidebar-count" class="badge text-bg-secondary me-3">-</span></span></a>
+        <a href="/questions/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">support_agent</span><span class="d-flex justify-content-between align-items-center w-100">{% trans 'panel.sidebar.questions' %}<h6 id="questions-sidebar-count" class="px-3 py-1 rounded-3 text-bg-secondary me-2 mb-0">-</h6></span></a>
       </li>
       <li id="sales-sidebar-item" class="sidebar-item {% if 'sale' in request.path %}sidebar-active{% endif %}">
-        <a href="/sales/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">monitoring</span><span class="d-flex justify-content-between align-items-center w-100">{% trans 'panel.sidebar.sales' %}<span id="sales-sidebar-count" class="badge text-bg-secondary me-3">-</span></span></a>
+        <a href="/sales/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">monitoring</span><span class="d-flex justify-content-between align-items-center w-100">{% trans 'panel.sidebar.sales' %}<h6 id="sales-sidebar-count" class="px-3 py-1 rounded-3 text-bg-secondary me-2 mb-0">-</h6></span></a>
       </li>
       <li class="sidebar-divider"></li>
       <li id="users-sidebar-item" class="sidebar-item d-none {% if 'user' in request.path %}sidebar-active{% endif %}">
