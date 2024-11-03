@@ -7,6 +7,7 @@ import jwt
 from django.utils import translation
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.utils.translation import gettext
 from base.authentication import authentication_required, isAuthenticated, applyWhitelistKey
 from . import dashboard
 
@@ -36,19 +37,19 @@ async def hasAdministrationPermission(request):
 @authentication_required
 @administrator_required
 async def administration(request):
-  return render(request, 'administration/administration.html', {'title': 'Dulno - Administration',
+  return render(request, 'administration/administration.html', {'title': gettext("panel.administration.title"),
     'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/administration/administration.css']})
 
 @authentication_required
 @administrator_required
 async def group(request, name):
-  return render(request, 'administration/group.html', {'title': 'Dulno - Administration - Group',
+  return render(request, 'administration/group.html', {'title': gettext("panel.group.title"),
     'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/administration/group.css'],
     'group': name})
 
 @authentication_required
 @administrator_required
 async def member(request, id):
-  return render(request, 'administration/member.html', {'title': 'Dulno - Administration - Member',
+  return render(request, 'administration/member.html', {'title': gettext("panel.member.title"),
     'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/administration/member.css'],
     'member': id})

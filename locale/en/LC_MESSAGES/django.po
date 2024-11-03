@@ -60,6 +60,8 @@ msgid "panel.sidebar.administrator"
 msgstr "Administration"
 
 # DASHBOARD
+msgid "panel.dashboard.title"
+msgstr "Dashboard - Dulno"
 msgid "panel.dashboard.welcome"
 msgstr "Welcome"
 msgid "panel.dashboard.statistics.headline"
@@ -84,6 +86,8 @@ msgid "panel.dashboard.tip.2fa.description"
 msgstr "Now go to your settings and activate 2-factor authentication under '2FA'. This increases the security of your account immensely, as important changes or logging into the account must be confirmed by a second source."
 
 # TICKETS
+msgid "tickets.page.title"
+msgstr "Tickets - Dulno"
 msgid "tickets.headline"
 msgstr "Open Tickets"
 msgid "tickets.search"
@@ -106,6 +110,8 @@ msgid "tickets.empty.text"
 msgstr "You are doing a great job. Thank you!"
 
 # TICKET
+msgid "ticket.title"
+msgstr "Ticket - Dulno"
 msgid "ticket.message.delete.title"
 msgstr "Delete messsage?"
 msgid "ticket.message.delete.body"
@@ -132,6 +138,8 @@ msgid "ticket.close.successful.body"
 msgstr "You have successfully closed this ticket!"
 
 # QUESTIONS
+msgid "questions.page.title"
+msgstr "Questions - Dulno"
 msgid "questions.headline"
 msgstr "Open Questions"
 msgid "questions.search"
@@ -148,6 +156,8 @@ msgid "questions.empty.text"
 msgstr "You are doing a great job. Thank you!"
 
 # QUESTION
+msgid "question.title"
+msgstr "Question - Dulno"
 msgid "question.message.add"
 msgstr "ANSWER"
 msgid "question.message.add.successful.title"
@@ -166,6 +176,8 @@ msgid "question.close.successful.body"
 msgstr "You have successfully closed this question!"
 
 # SALES
+msgid "sales.page.title"
+msgstr "Sales - Dulno"
 msgid "sales.headline"
 msgstr "Open Sales"
 msgid "sales.search"
@@ -182,6 +194,8 @@ msgid "sales.empty.text"
 msgstr "You are doing a great job. Thank you!"
 
 # SALE
+msgid "sale.title"
+msgstr "Sale - Dulno"
 msgid "sale.customer.information"
 msgstr "CUSTOMER INFORMATION"
 msgid "sale.customer.email"
@@ -218,6 +232,8 @@ msgid "sale.close.successful.body"
 msgstr "You have successfully closed this sale!"
 
 # USERS
+msgid "users.title"
+msgstr "Users - Dulno"
 msgid "users.headline"
 msgstr "Find user"
 msgid "users.search"
@@ -230,6 +246,8 @@ msgid "users.find.failed.body"
 msgstr "No user could be found to whom the email could be assigned"
 
 # USER - GENERAL
+msgid "user.general.title"
+msgstr "User - General - Dulno"
 msgid "user.general.profile.headline"
 msgstr "PROFILE"
 msgid "user.general.profile.id"
@@ -310,6 +328,8 @@ msgid "user.general.organization.create.successful.body"
 msgstr "You have successfully created the new organization"
 
 # USER - MAIL
+msgid "user.mail.title"
+msgstr "User - Mails - Dulno"
 msgid "user.mail.headline"
 msgstr "MAILS"
 msgid "user.mail.empty"
@@ -322,6 +342,8 @@ msgid "mail.resend.successful.body"
 msgstr "The email was sent to the customer again"
 
 # USER - SESSION
+msgid "user.session.title"
+msgstr "User - Sessions - Dulno"
 msgid "user.session.headline"
 msgstr "SESSIONS"
 msgid "user.session.empty"
@@ -342,6 +364,8 @@ msgid "user.session.close.successful.body"
 msgstr "You have successfully closed the session"
 
 # ORGANIZATION - GENERAL
+msgid "organization.general.title"
+msgstr "Organization - General - Dulno"
 msgid "organization.general.profile.headline"
 msgstr "PROFILE"
 msgid "organization.general.profile.id"
@@ -406,6 +430,10 @@ msgid "entity.tab.termination"
 msgstr "TERMINATION"
 
 # ENTITY - BUNDLE
+msgid "user.bundle.title"
+msgstr "User - Bundle - Dulno"
+msgid "organization.bundle.title"
+msgstr "Organization - Bundle - Dulno"
 msgid "entity.bundle.headline"
 msgstr "PACKAGE"
 msgid "entity.bundle.unlimited"
@@ -482,6 +510,10 @@ msgid "entity.bundle.change"
 msgstr "CHANGE"
 
 # ENTITY - BUNDLE - CHANGE
+msgid "user.bundle.change.title"
+msgstr "User - Bundle - Dulno"
+msgid "organization.bundle.change.title"
+msgstr "Organization - Bundle - Dulno"
 msgid "entity.bundle.change.headline"
 msgstr "CHANGE PACKAGE"
 msgid "entity.bundle.change.description"
@@ -546,6 +578,10 @@ msgid "entity.bundle.change.failed.body"
 msgstr "Please fill in all dropdowns to change the package"
 
 # ENTITY - PAYMENT
+msgid "user.payment.title"
+msgstr "User - Payments - Dulno"
+msgid "organization.payment.title"
+msgstr "Organization - Payments - Dulno"
 msgid "entity.payment.headline"
 msgstr "PAYMENTS"
 msgid "entity.payment.time"
@@ -574,6 +610,10 @@ msgid "entity.payment.invoice.download"
 msgstr "VIEW"
 
 # ENTITY - OFFERS
+msgid "user.offers.title"
+msgstr "User - Offers - Dulno"
+msgid "organization.offers.title"
+msgstr "Organization - Offers - Dulno"
 msgid "entity.offers.headline"
 msgstr "OFFERS"
 msgid "entity.offers.type"
@@ -604,6 +644,10 @@ msgid "entity.offers.create"
 msgstr "CREATE"
 
 # ENTITY - TERMINATION
+msgid "user.termination.title"
+msgstr "User - Termination - Dulno"
+msgid "organization.termination.title"
+msgstr "Organization - Termination - Dulno"
 msgid "entity.termination.headline"
 msgstr "TERMINATION"
 msgid "entity.termination.process.description"
@@ -628,6 +672,8 @@ msgid "entity.termination.done.description"
 msgstr "The package have already been cancelled. The package expires on %s."
 
 # OFFER
+msgid "offer.title"
+msgstr "Offer - Dulno"
 msgid "offer.headline"
 msgstr "OFFER"
 msgid "offer.unlimited"
@@ -706,6 +752,8 @@ msgid "offer.withdraw.successful.body"
 msgstr "You have successfully withdrawn the offer"
 
 # OFFER - CREATE
+msgid "offer.create.title"
+msgstr "Create offer - Dulno"
 msgid "offer.create.headline"
 msgstr "CREATE OFFER"
 msgid "offer.create.description"
@@ -776,6 +824,8 @@ msgid "offer.create.failed.body"
 msgstr "Please fill in all dropdowns to create the offer"
 
 # TEMPLATES
+msgid "templates.title"
+msgstr "Templates - Dulno"
 msgid "templates.headline"
 msgstr "Templates"
 msgid "templates.search"
@@ -788,6 +838,8 @@ msgid "templates.load.more"
 msgstr "LOAD MORE"
 
 # TEMPLATE
+msgid "template.title"
+msgstr "Template - Dulno"
 msgid "template.headline"
 msgstr "Template"
 msgid "template.preview"
@@ -840,6 +892,8 @@ msgid "template.delete.successful.body"
 msgstr "Template was successfully deleted"
 
 # MAINTENANCE
+msgid "maintenance.title"
+msgstr "Maintenance - Dulno"
 msgid "maintenance.headline"
 msgstr "Maintenance"
 msgid "maintenance.empty"
@@ -864,6 +918,8 @@ msgid "maintenance.finish.successful.body"
 msgstr "This maintenance has been successfully finished"
 
 # MAINTENANCE - CREATE
+msgid "maintenance.create.title"
+msgstr "Create maintenance - Dulno"
 msgid "maintenance.create.headline"
 msgstr "Set up maintenance"
 msgid "maintenance.create.description"
@@ -880,6 +936,8 @@ msgid "maintenance.create.successful.body"
 msgstr "This maintenance has been successfully created"
 
 # ADMINISTRATION
+msgid "panel.administration.title"
+msgstr "Administration - Dulno"
 msgid "panel.administration.headline"
 msgstr "Administration"
 msgid "panel.administration.group.empty"
@@ -902,6 +960,8 @@ msgid "panel.administration.group.add.successful.body"
 msgstr "Adding the group was successful!"
 
 # GROUP
+msgid "panel.group.title"
+msgstr "Group - Dulno"
 msgid "panel.group.priority.headline"
 msgstr "Priority:"
 msgid "panel.group.priority"
@@ -968,6 +1028,8 @@ msgid "panel.group.rename.successful.body"
 msgstr "The group was successfully renamed"
 
 # MEMBER
+msgid "panel.member.title"
+msgstr "Member - Dulno"
 msgid "panel.member.group.headline"
 msgstr "Group:"
 msgid "panel.member.group"
