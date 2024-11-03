@@ -1,5 +1,4 @@
 #sales-headline {
-  color: white;
   text-align: center;
   font-weight: bold;
   margin-top: 2%;
@@ -20,32 +19,50 @@
   flex-direction: row;
   align-items: center;
   border-radius: 5px;
+}
+
+.dark #sales-search-box {
   background-color: #202428;
+}
+
+.light #sales-search-box {
+  background-color: #d8d8d8;
 }
 
 #sales-search-box input {
   flex-grow: 2;
   border: none;
   border-radius: 5px;
+}
+
+.dark #sales-search-box input {
   background-color: #202428;
   color: white;
 }
 
-#sales-search-box input::placeholder {
-  color: #828282 !important;
-  -webkit-text-fill-color: #828282;
+.light #sales-search-box input {
+  background-color: #d8d8d8;
+  color: black;
 }
 
-#sales-search-box input:focus {
+#sales-search-box input:focus{
   box-shadow: 0 0 0 rgb(255, 255, 255);
 }
 
 #sales-search-box button {
-  background-color: #202428;
-  color: #9b9b9b;
   border: none;
   border-radius: 5px;
   padding: 10px;
+}
+
+.dark #sales-search-box button {
+  background-color: #202428;
+  color: #9b9b9b;
+}
+
+.light #sales-search-box button {
+  background-color: #d8d8d8;
+  color: #545454;
 }
 
 @media (max-width: 400px) {
@@ -55,7 +72,7 @@
 }
 
 #sales-list {
-  width: min(calc(2000px - 15vw), 95%);
+  width: min(1500px, 95%);
   position: relative;
   list-style-type: none;
   padding: 0;
@@ -65,7 +82,6 @@
 #sales-list li {
   border-bottom: 1px #4a4a4a solid;
   width: 100%;
-  color: white;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -74,16 +90,26 @@
   transition-duration: 0.3s;
 }
 
-#sales-list li:hover {
+.dark #sales-list li:hover {
   background-color: #19202c !important;
 }
 
+.light #sales-list li:hover {
+  background-color: #cecece !important;
+}
+
 #sales-list li div {
-  padding: 3%;
+  padding: 40px 20px;
   display: flex;
   flex-direction: column;
   width: 20%;
   text-align: left;
+}
+
+#sales-list li div span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .sale-entry-title {
@@ -91,21 +117,19 @@
 }
 
 #sales-table-description {
-  width: min(calc(2000px - 15vw), 95%);
+  width: min(1500px, 95%);
   position: relative;
   list-style-type: none;
   margin: auto;
-  margin-top: 1%;
   border-bottom: 4px #717171 solid;
   padding: 0;
-  color: white;
   display: flex;
   flex-direction: row;
 }
 
 #sales-table-description li {
   width: 20%;
-  padding: 2% 3%;
+  padding: 20px;
   font-weight: bold;
   font-size: 20px;
 }
@@ -116,8 +140,16 @@
 
 #sales-table-description button {
   border: none;
+}
+
+.dark #sales-table-description button {
   background-color: #222b38;
   color: #9b9b9b;
+}
+
+.light #sales-table-description button {
+  background-color: #cacaca;
+  color: #232323;
 }
 
 @media (max-width: 400px) {
@@ -131,7 +163,6 @@
 }
 
 #sales-empty {
-  color: white;
   display: none;
   flex-flow: wrap;
   justify-content: center;

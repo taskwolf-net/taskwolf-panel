@@ -22,17 +22,17 @@
               <span>{% trans 'tickets.title' %}</span>
             </div>
           </li>
-          <li>
+          <li id="tickets-table-description-creator">
             <div>
               <span>{% trans 'tickets.creator' %}</span>
             </div>
           </li>
-          <li>
+          <li id="tickets-table-description-type">
             <div>
               <span>{% trans 'tickets.type' %}</span>
             </div>
           </li>
-          <li>
+          <li id="tickets-table-description-date">
             <div>
               <span>{% trans 'tickets.date' %}</span>
             </div>
@@ -129,6 +129,7 @@
 
   function appendTicketsCell(entry, identifier, information, elementType) {
     var div = document.createElement("div");
+    div.classList.add("ticket-entry-" + identifier);
     var element = document.createElement(elementType);
     element.innerText = information;
     element.classList.add("tickets-list-" + identifier);
