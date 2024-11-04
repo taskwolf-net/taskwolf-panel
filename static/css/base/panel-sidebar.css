@@ -48,7 +48,9 @@
   margin-left: 10px;
   margin-right: 10px;
   width: 35px;
+  min-width: 35px;
   height: 35px;
+  min-height: 35px;
   font-size: 28px !important;
   line-height: 35px !important;
 }
