@@ -46,14 +46,14 @@
     for (let i = 0; i < sessions.length; i++) {
       let session = sessions[i];
       displaySession(session.id, session.platform, session.country, session.city,
-        session.openTime, session.status);
+        session.openTime, session.lastRefresh, session.status);
     }
     if (sessions.length === 0) {
       document.getElementById("user-session-empty").classList.remove("d-none");
     }
   }
 
-  function displaySession(id, platform, country, city, openTime, status) {
+  function displaySession(id, platform, country, city, openTime, lastRefresh, status) {
     let entry = document.createElement("li");
     entry.classList.add("d-flex", "justify-content-between", "align-items-center");
     let entryPrefix = document.createElement("div");
@@ -81,8 +81,14 @@
     entryDescription.appendChild(entryLocation);
     let entryOpenTime = document.createElement("p");
     entryOpenTime.classList.add("mb-0");
-    entryOpenTime.innerHTML = new Date(openTime).toLocaleString();
+    entryOpenTime.innerHTML = "{% trans 'user.session.opening' %}: " +
+      new Date(openTime).toLocaleString();
     entryDescription.appendChild(entryOpenTime);
+    let entryLastRefresh = document.createElement("p");
+    entryLastRefresh.classList.add("mb-0");
+    entryLastRefresh.innerHTML = "{% trans 'user.session.last.refresh' %}: " +
+      new Date(lastRefresh).toLocaleString();
+    entryDescription.appendChild(entryLastRefresh);
     entryPrefix.appendChild(entryDescription);
     entry.appendChild(entryPrefix);
     let entrySuffix = document.createElement("div");
