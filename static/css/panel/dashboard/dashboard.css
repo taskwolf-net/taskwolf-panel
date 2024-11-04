@@ -22,7 +22,12 @@
     bottom: 0;
     right: 0;
     mask-image: linear-gradient(to bottom, transparent, black);
+  }
+  .dark &:before {
     background: linear-gradient(90deg, #282341, #202D41);
+  }
+  .light &:before {
+    background: linear-gradient(90deg, #BCAED8, #AEBED8);
   }
 }
 
