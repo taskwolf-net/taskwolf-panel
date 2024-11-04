@@ -37,16 +37,13 @@
             <div class="d-flex justify-content-between align-items-center">
               <div class="position-relative">
                 <h4 class="fa-regular fa-user mb-0 mx-2"></h4>
-                <span class="position-absolute top-0 start-100 translate-middle p-1 bg-success border rounded-circle">
+                <span class="position-absolute top-0 start-100 translate-middle p-1 border rounded-circle sidebar-profile-current-status-dot">
                 <span class="visually-hidden"></span>
-              </span>
-                <span class="position-absolute top-0 start-100 translate-middle spinner-grow spinner-grow-sm text-success" role="status">
-                <span class="visually-hidden">Loading...</span>
               </span>
               </div>
               <div class="ms-4">
                 <span class="sidebar-profile-username"></span><br>
-                <span class="text-success">Online</span>
+                <span class="sidebar-profile-current-status">Online</span>
               </div>
             </div>
           </a>
@@ -59,16 +56,26 @@
             <div id="sidebar-profile-popup-content">
               <h4 class="sidebar-profile-username"></h4>
               <h6 class="sidebar-profile-id"></h6>
-              <div id="sidebar-profile-popup-actions">
-                <div class="sidebar-profile-popup-action">
-                  <i class="fa-solid fa-gear me-3"></i>
-                  <label>Settings</label>
+              <div id="sidebar-profile-popup-actions" class="dropend">
+                <div id="sidebar-profile-popup-action-settings" class="sidebar-profile-popup-action">
+                  <i class="fa-solid fa-pen me-3"></i>
+                  <label>{% trans 'panel.sidebar.settings' %}</label>
                 </div>
                 <div class="sidebar-profile-popup-divider"></div>
-                <div class="sidebar-profile-popup-action">
-                  <span class="border rounded-circle me-3 bg-success" style="width: 16px; height: 16px"></span>
-                  <label class="text-success">Online</label>
+                <div class="sidebar-profile-popup-action" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                  <span class="border rounded-circle me-3 sidebar-profile-current-status-dot" style="width: 16px; height: 16px"></span>
+                  <label class="sidebar-profile-current-status"></label>
                   <i class="fa-solid fa-angle-right ms-auto"></i>
+                </div>
+                <div id="sidebar-profile-popup-status-menu" class="dropdown-menu">
+                  <div id="sidebar-profile-popup-status-online" class="sidebar-profile-popup-action">
+                    <span class="border rounded-circle me-3 bg-success" style="width: 16px; height: 16px"></span>
+                    <label>{% trans 'panel.sidebar.online' %}</label>
+                  </div>
+                  <div id="sidebar-profile-popup-status-idle" class="sidebar-profile-popup-action">
+                    <span class="border rounded-circle me-3 bg-warning" style="width: 16px; height: 16px"></span>
+                    <label>{% trans 'panel.sidebar.idle' %}</label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -98,6 +105,26 @@
         element.innerHTML = id;
       }
     });
+    let status = Cookie.find("dulno-panel-status");
+    if (status == null) {
+      status = "ONLINE";
+    }
+    for (let element of document.getElementsByClassName("sidebar-profile-current-status-dot")) {
+      if (status === "ONLINE") {
+        element.classList.add("bg-success");
+      }  if (status === "IDLE") {
+        element.classList.add("bg-warning");
+      }
+    }
+    for (let element of document.getElementsByClassName("sidebar-profile-current-status")) {
+      if (status === "ONLINE") {
+        element.classList.add("text-success");
+        element.innerHTML = "{% trans 'panel.sidebar.online' %}";
+      }  if (status === "IDLE") {
+        element.classList.add("text-warning");
+        element.innerHTML = "{% trans 'panel.sidebar.idle' %}";
+      }
+    }
   });
 
   function displayRestrictedSidebarItem(elementIdentifier, scopeIdentifier, permission) {
@@ -134,6 +161,21 @@
   document.getElementById("sidebar-profile-popup").onclick = function (event) {
     event.preventDefault();
     event.stopPropagation();
+  }
+
+  document.getElementById("sidebar-profile-popup-action-settings").onclick = function (event) {
+    sessionStorage.setItem("settings-return", window.location.href);
+    window.location.href = "/settings/profile/";
+  }
+
+  document.getElementById("sidebar-profile-popup-status-online").onclick = function (event) {
+    Cookie.create("dulno-panel-status", "ONLINE", 60 * 60 * 24 * 365, ".dulno.com");
+    window.location.reload();
+  }
+
+  document.getElementById("sidebar-profile-popup-status-idle").onclick = function (event) {
+    Cookie.create("dulno-panel-status", "IDLE", 60 * 60 * 24 * 365, ".dulno.com");
+    window.location.reload();
   }
 
   function fetchUsername(callback) {

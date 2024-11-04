@@ -92,7 +92,7 @@
   }
 }
 
-#sidebar .dropdown-menu {
+#sidebar-profile-popup {
   position: fixed !important;
   left: 10px;
   top: 100vh;
@@ -100,8 +100,23 @@
   z-index: 100;
   width: 400px !important;
   height: 500px !important;
-  background-color: #111315;
   padding: 0;
+}
+
+@media(max-height: 450px) {
+  #sidebar-profile-popup {
+    width: 95vw !important;
+    right: 0;
+    left: 0;
+  }
+}
+
+.dark #sidebar-profile-popup {
+  background-color: #111315;
+}
+
+.light #sidebar-profile-popup {
+  background-color: #e3e3e3;
 }
 
 #sidebar-profile-popup-header {
@@ -122,10 +137,19 @@
   position: absolute;
   top: 75px;
   left: 25px;
+  padding: 5px;
+}
+
+.dark #sidebar-profile-popup-icon {
   color: black;
   background-color: white;
   border: 10px solid #111315;
-  padding: 5px;
+}
+
+.light #sidebar-profile-popup-icon {
+  color: white;
+  background-color: black;
+  border: 10px solid #e3e3e3;
 }
 
 #sidebar-profile-popup-content {
@@ -138,7 +162,14 @@
   margin-top: 25px;
   padding: 10px;
   border-radius: 10px;
+}
+
+.dark #sidebar-profile-popup-actions {
   background-color: #212529;
+}
+
+.light #sidebar-profile-popup-actions {
+  background-color: #f8f9fa;
 }
 
 .sidebar-profile-popup-action {
@@ -149,8 +180,12 @@
   transition-duration: 0.2s;
 }
 
-.sidebar-profile-popup-action:hover {
+.dark .sidebar-profile-popup-action:hover {
   background-color: #2d3338;
+}
+
+.light .sidebar-profile-popup-action:hover {
+  background-color: #c7c7c7;
 }
 
 .sidebar-profile-popup-divider {
@@ -164,4 +199,17 @@
 
 .light .sidebar-profile-popup-divider {
   border-bottom: 1px #9b9b9b solid;
+}
+
+#sidebar-profile-popup-status-menu {
+  position: absolute;
+  top: calc(100% - 54px);
+  padding: 0;
+}
+
+@media(max-height: 600px) {
+  #sidebar-profile-popup-status-menu {
+    top: calc(100%);
+    left: 0;
+  }
 }

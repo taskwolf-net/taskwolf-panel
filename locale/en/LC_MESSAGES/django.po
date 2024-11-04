@@ -58,6 +58,12 @@ msgid "panel.sidebar.maintenance"
 msgstr "Maintenance"
 msgid "panel.sidebar.administrator"
 msgstr "Administration"
+msgid "panel.sidebar.settings"
+msgstr "Edit profile"
+msgid "panel.sidebar.online"
+msgstr "Online"
+msgid "panel.sidebar.idle"
+msgstr "Idle"
 
 # DASHBOARD
 msgid "panel.dashboard.title"
