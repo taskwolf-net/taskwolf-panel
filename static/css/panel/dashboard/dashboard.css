@@ -8,11 +8,27 @@
 }
 
 #dashboard-header {
-  padding: 5vh 20px;
+  position: relative;
+  padding: 5vh 20px 8vh;
   margin-bottom: 8vh;
   margin-left: 0;
   margin-right: 0;
   background: linear-gradient(90deg, #7152b0, #5277b0);
+}
+
+#dashboard-header-wave {
+  position: absolute;
+  left: 0;
+  border-bottom: 0;
+  width: 100%;
+  height: 3vh;
+  color: #0d1117;
+  background-color: transparent;
+}
+
+#dashboard-header-wave path {
+  width: 100%;
+  height: 3vh;
 }
 
 #dashboard-header-content {
@@ -27,10 +43,23 @@
   font-weight: bold;
   text-align: center;
   color: white;
+  animation: fade 1s ease-out forwards;
 }
 
 #dashboard-header-logo {
   height: 200px;
+  animation: fade 1s ease-out forwards;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 1000px) {
