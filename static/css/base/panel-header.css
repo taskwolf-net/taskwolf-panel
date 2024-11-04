@@ -61,11 +61,11 @@
   padding: 10px;
 }
 
-.dark #profile-button-wrapper:hover {
+.dark #profile-button-wrapper:hover, .dark #profile-button-wrapper:focus {
   background-color: #30363b;
 }
 
-.light #profile-button-wrapper:hover {
+.light #profile-button-wrapper:hover, .light #profile-button-wrapper:focus {
   background-color: #cccccc;
 }
 
@@ -76,6 +76,14 @@
 #profile-picture-arrow {
   font-size: 16px;
   padding-left: 10px;
+}
+
+.dropdown-toggle[aria-expanded="true"] #profile-picture-arrow {
+  transform: scaleY(-1);
+}
+
+.dropdown-toggle #profile-picture-arrow {
+  transition: all ease 0.2s;
 }
 
 .dark #profile-picture, .dark #profile-picture-arrow {
