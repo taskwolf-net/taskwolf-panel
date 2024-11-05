@@ -26,6 +26,12 @@
             <input id="group-priority-input" type="number" min="0" max="100" placeholder="{% trans 'panel.group.priority' %}">
             <button id="group-priority-change" class="btn btn-success" type="button">{% trans 'panel.group.priority.change' %}</button>
           </div>
+          <div id="group-color-header">
+            <h2>{% trans 'panel.group.color.headline' %}</h2>
+          </div>
+          <div id="group-color-container" class="my-4">
+            <input id="group-color-input" type="color">
+          </div>
           <div id="group-members-header">
             <h2>{% trans 'panel.group.members.headline' %}</h2>
             <button id="group-member-add" class="btn btn-success" type="button">{% trans 'panel.group.member.add' %}</button>
@@ -77,6 +83,8 @@
   function displayGroup() {
     document.getElementById("group-headline").innerHTML = group.name;
     document.getElementById("group-priority-input").value = group.priority;
+    document.getElementById("group-color-input").value = group.color;
+    document.getElementById("group-headline").style.color = group.color;
     for (var i = 0; i < members.length; i++) {
       var member = members[i];
       document.getElementById("group-members").appendChild(
@@ -102,10 +110,19 @@
 
   document.getElementById("group-priority-change").onclick = function (event) {
     var priority = document.getElementById("group-priority-input").value;
-    let request = new HttpRequest("https://team.dulno.com/v1/group/priority/change/", "POST", [], {priority: priority, name: group.name});
+    let request = new HttpRequest("https://team.dulno.com/v1/group/priority/change/",
+      "POST", [], {priority: priority, name: group.name});
     request.send(function (status, responseText) {
       Swal.fire("{% trans 'panel.group.priority.changed.title' %}", "{% trans 'panel.group.priority.changed.body' %}", "success").then(success => window.location.reload());
     });
+  }
+
+  document.getElementById("group-color-input").oninput = function(event) {
+    var color = document.getElementById("group-color-input").value;
+    document.getElementById("group-headline").style.color = color;
+    let request = new HttpRequest("https://team.dulno.com/v1/group/color/change/",
+      "POST", [], {color: color, name: group.name});
+    request.send(function (status, responseText) {});
   }
 
   function createTeamMemberElement(memberId, memberName, profilePicture) {

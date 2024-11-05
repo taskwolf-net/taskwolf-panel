@@ -42,8 +42,8 @@
               </span>
               </div>
               <div class="ms-4">
-                <span class="sidebar-profile-username"></span><br>
-                <span class="sidebar-profile-current-status">Online</span>
+                <h6 class="sidebar-profile-username"></h6>
+                <small class="sidebar-profile-group "></small><br>
               </div>
             </div>
           </a>
@@ -54,7 +54,8 @@
               <h1 class="fa-regular fa-user mb-0 mx-2"></h1>
             </div>
             <div id="sidebar-profile-popup-content">
-              <h4 class="sidebar-profile-username"></h4>
+              <h4 class="sidebar-profile-username mb-0"></h4>
+              <h6 class="sidebar-profile-group mb-2"></h6>
               <h6 class="sidebar-profile-id"></h6>
               <div id="sidebar-profile-popup-actions" class="dropend">
                 <div id="sidebar-profile-popup-action-settings" class="sidebar-profile-popup-action">
@@ -103,6 +104,12 @@
     fetchUserId(function (id) {
       for (let element of document.getElementsByClassName("sidebar-profile-id")) {
         element.innerHTML = id;
+      }
+    });
+    fetchGroup(function (group) {
+      for (let element of document.getElementsByClassName("sidebar-profile-group")) {
+        element.innerHTML = group.name;
+        element.style.color = group.color;
       }
     });
     let status = Cookie.find("dulno-panel-status");
@@ -191,6 +198,14 @@
     request.send(function (status, responseText) {
       let response = JSON.parse(responseText);
       callback(response.id);
+    });
+  }
+
+  function fetchGroup(callback) {
+    let request = new HttpRequest("https://team.dulno.com/v1/group/", "GET", []);
+    request.send(function (status, responseText) {
+      let response = JSON.parse(responseText);
+      callback(response);
     });
   }
 

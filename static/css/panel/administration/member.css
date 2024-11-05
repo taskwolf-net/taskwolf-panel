@@ -117,6 +117,7 @@
   box-shadow: none;
   outline: none;
   padding: 10px !important;
+  width: min(260px, 100%);
 }
 
 .dark .member-permission-add-content input {
