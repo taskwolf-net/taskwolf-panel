@@ -1,5 +1,5 @@
 from django.urls import path, include
-from . import dashboard, ticket, question, sale, user, organization, offer, template, maintenance, administration
+from . import dashboard, ticket, question, sale, user, organization, offer, template, maintenance, cluster, administration
 
 urlpatterns = [
   path('dashboard/', dashboard.dashboard),
@@ -32,6 +32,8 @@ urlpatterns = [
   path('template/<str:id>/', template.template),
   path('maintenance/', maintenance.maintenance),
   path('maintenance/create/', maintenance.maintenanceCreate),
+  path('cluster/resource/', cluster.clusterResource),
+  path('cluster/server/', cluster.clusterServer),
   path('administration/', administration.administration),
   path('group/<str:name>/', administration.group),
   path('member/<str:id>/', administration.member),

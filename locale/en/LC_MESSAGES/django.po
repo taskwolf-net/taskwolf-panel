@@ -56,6 +56,8 @@ msgid "panel.sidebar.templates"
 msgstr "Templates"
 msgid "panel.sidebar.maintenance"
 msgstr "Maintenance"
+msgid "panel.sidebar.cluster"
+msgstr "Cluster"
 msgid "panel.sidebar.administrator"
 msgstr "Administration"
 msgid "panel.sidebar.settings"
@@ -946,6 +948,20 @@ msgid "maintenance.create.successful.title"
 msgstr "Maintenance created"
 msgid "maintenance.create.successful.body"
 msgstr "This maintenance has been successfully created"
+
+# CLUSTER
+msgid "cluster.tab.resource"
+msgstr "RESOURCES"
+msgid "cluster.tab.server"
+msgstr "SERVER"
+
+# CLUSTER - RESOURCE
+msgid "cluster.resource.title"
+msgstr "Cluster - Resources - Dulno"
+
+# CLUSTER - SERVER
+msgid "cluster.server.title"
+msgstr "Cluster - Server - Dulno"
 
 # ADMINISTRATION
 msgid "panel.administration.title"

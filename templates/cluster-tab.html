@@ -1,0 +1,8 @@
+{% load static %}
+{% load i18n %}
+<div>
+  <ul class="cluster-tabs nav nav-tabs">
+    <li class="nav-item"><a class="nav-link {% if 'resource' in request.path %}nav-link-active{% endif %}" href="/cluster/resource/">{% trans 'cluster.tab.resource' %}</a></li>
+    <li class="nav-item"><a class="nav-link {% if 'server' in request.path %}nav-link-active{% endif %}" href="/cluster/server/">{% trans 'cluster.tab.server' %}</a></li>
+  </ul>
+</div>

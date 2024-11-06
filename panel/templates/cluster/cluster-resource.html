@@ -1,0 +1,39 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body class="dark" data-bs-theme="dark">
+    {% include 'panel-header.html' %}
+    {% include 'panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="cluster-resource-container">
+        <div id="cluster-resource-wrapper" class="d-none">
+          <div>
+            {% include 'cluster-tab.html' %}
+            <div id="cluster-resource-content">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  $(document).ready(function() {
+    displayLoader();
+    removeLoader();
+  });
+
+  function displayLoader() {
+    var loader = document.createElement("div");
+    loader.classList.add("loader");
+    document.getElementById("cluster-resource-container").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("cluster-resource-container")
+      .removeChild(document.getElementsByClassName("loader")[0]);
+    document.getElementById("cluster-resource-wrapper").classList.remove("d-none");
+  }
+</script>
