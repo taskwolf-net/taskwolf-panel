@@ -9,15 +9,7 @@
       <div id="user-general-container">
         <div id="user-general-wrapper" class="d-none">
           <div>
-            <ul class="nav nav-tabs">
-              <li class="nav-item"><a class="nav-link nav-link-active" href="/user/{{user}}/general/">{% trans 'entity.tab.general' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/mails/">{% trans 'entity.tab.mail' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/sessions/">{% trans 'entity.tab.session' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/bundle/">{% trans 'entity.tab.bundle' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/payment/">{% trans 'entity.tab.payment' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/offers/">{% trans 'entity.tab.offer' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/termination/">{% trans 'entity.tab.termination' %}</a></li>
-            </ul>
+            {% include 'entity-tab.html' %}
             <div id="user-general-content">
               <div class="user-general-side">
                 <div class="user-general-section">

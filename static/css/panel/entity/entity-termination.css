@@ -3,35 +3,6 @@
   margin: auto;
 }
 
-#entity-termination-container .nav-tabs {
-  width: min(1200px, 100%);
-  margin: 40px auto 75px auto;
-  border: none;
-}
-
-#entity-termination-container .nav-link {
-  border: none;
-  transition-duration: 0.3s;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 10px;
-  margin-left: 5px;
-  margin-right: 5px;
-}
-
-.dark #entity-termination-container .nav-link {
-  color: white;
-}
-
-.light #entity-termination-container .nav-link {
-  color: black;
-}
-
-#entity-termination-container .nav-link-active {
-  color: #8fc0f1;
-  border-bottom: 2px #8fc0f1 solid;
-}
-
 #entity-termination-process, #entity-termination-not-possible, #entity-termination-done {
   padding: 30px;
   border-radius: 5px;

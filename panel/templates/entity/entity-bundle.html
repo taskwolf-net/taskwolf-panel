@@ -8,19 +8,7 @@
     <div class="sidebar-influenced">
       <div id="entity-bundle-container">
         <div id="entity-bundle-wrapper" class="d-none">
-          <div>
-            <ul class="nav nav-tabs">
-              <li class="nav-item"><a class="nav-link" href="/{{type}}/{{entity}}/general/">{% trans 'entity.tab.general' %}</a></li>
-              {% if type == 'user' %}
-                <li class="nav-item"><a class="nav-link" href="/user/{{entity}}/mails/">{% trans 'entity.tab.mail' %}</a></li>
-                <li class="nav-item"><a class="nav-link" href="/user/{{entity}}/sessions/">{% trans 'entity.tab.session' %}</a></li>
-              {% endif %}
-              <li class="nav-item"><a class="nav-link nav-link-active" href="/{{type}}/{{entity}}/bundle/">{% trans 'entity.tab.bundle' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/{{type}}/{{entity}}/payment/">{% trans 'entity.tab.payment' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/{{type}}/{{entity}}/offers/">{% trans 'entity.tab.offer' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/{{type}}/{{entity}}/termination/">{% trans 'entity.tab.termination' %}</a></li>
-            </ul>
-          </div>
+          {% include 'entity-tab.html' %}
           <div id="entity-bundle-information">
             <h3 class="fw-bold mb-4">{% trans 'entity.bundle.headline' %}</h3>
             <ul id="entity-bundle-information-entries">

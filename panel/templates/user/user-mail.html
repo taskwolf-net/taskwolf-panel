@@ -8,17 +8,7 @@
     <div class="sidebar-influenced">
       <div id="user-mail-container">
         <div id="user-mail-wrapper" class="d-none">
-          <div>
-            <ul class="nav nav-tabs">
-              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/general/">{% trans 'entity.tab.general' %}</a></li>
-              <li class="nav-item"><a class="nav-link nav-link-active" href="/user/{{user}}/mails/">{% trans 'entity.tab.mail' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/sessions/">{% trans 'entity.tab.session' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/bundle/">{% trans 'entity.tab.bundle' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/payment/">{% trans 'entity.tab.payment' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/offers/">{% trans 'entity.tab.offer' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/user/{{user}}/termination/">{% trans 'entity.tab.termination' %}</a></li>
-            </ul>
-          </div>
+          {% include 'entity-tab.html' %}
           <div id="user-mails">
             <h4 class="fw-bold mb-4">{% trans 'user.mail.headline' %}</h4>
             <ul id="user-mail-list">

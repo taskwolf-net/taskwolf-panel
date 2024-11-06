@@ -11,25 +11,25 @@ async def users(request):
 @authentication_required
 async def userGeneral(request, id):
   return render(request, 'user/user-general.html', {'title': gettext("user.general.title"),
-    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-general.css'],
-    'user': id})
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/entity/entity-tab.css', 'css/panel/user/user-general.css'],
+    'user': id, 'entity': id, "type": "user"})
 
 @authentication_required
 async def userMail(request, id):
   return render(request, 'user/user-mail.html', {'title': gettext("user.mail.title"),
-    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-mail.css'],
-    'user': id})
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/entity/entity-tab.css', 'css/panel/user/user-mail.css'],
+    'user': id, 'entity': id, "type": "user"})
 
 @authentication_required
 async def userSession(request, id):
   return render(request, 'user/user-session.html', {'title': gettext("user.session.title"),
-    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/user/user-session.css'],
-    'user': id})
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/entity/entity-tab.css', 'css/panel/user/user-session.css'],
+    'user': id, 'entity': id, "type": "user"})
 
 @authentication_required
 async def userBundle(request, id):
   return render(request, 'entity/entity-bundle.html', {'title': gettext("user.bundle.title"),
-    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/entity/entity-bundle.css'],
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/entity/entity-tab.css', 'css/panel/entity/entity-bundle.css'],
      'entity': id, "type": "user"})
 
 @authentication_required
@@ -41,17 +41,17 @@ async def userBundleChange(request, id):
 @authentication_required
 async def userPayment(request, id):
   return render(request, 'entity/entity-payment.html', {'title': gettext("user.payment.title"),
-    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/entity/entity-payment.css'],
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/entity/entity-tab.css', 'css/panel/entity/entity-payment.css'],
     'entity': id, "type": "user"})
 
 @authentication_required
 async def userOffers(request, id):
   return render(request, 'entity/entity-offers.html', {'title': gettext("user.offers.title"),
-    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/entity/entity-offers.css'],
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/entity/entity-tab.css', 'css/panel/entity/entity-offers.css'],
      'entity': id, "type": "user"})
 
 @authentication_required
 async def userTermination(request, id):
   return render(request, 'entity/entity-termination.html', {'title': gettext("user.termination.title"),
-    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/entity/entity-termination.css'],
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/entity/entity-tab.css', 'css/panel/entity/entity-termination.css'],
      'entity': id, "type": "user"})

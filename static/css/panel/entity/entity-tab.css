@@ -1,0 +1,28 @@
+.entity-tabs {
+  width: 100% !important;
+  margin: 40px auto 75px auto !important;
+  border: none !important;
+}
+
+.entity-tabs .nav-link {
+  border: none !important;
+  transition-duration: 0.3s !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  padding-bottom: 10px !important;
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+}
+
+.dark .entity-tabs .nav-link {
+  color: white !important;
+}
+
+.light .entity-tabs .nav-link {
+  color: black !important;
+}
+
+.entity-tabs .nav-link-active {
+  color: #8fc0f1 !important;
+  border-bottom: 2px #8fc0f1 solid !important;
+}
