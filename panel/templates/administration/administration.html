@@ -52,21 +52,54 @@
 
   function displayGroups() {
     document.getElementById("administration-groups").innerHTML = "";
-    for (var i = 0; i < groups.length; i++) {
-      displayGroup(groups[i].name);
+    for (let i = 0; i < groups.length; i++) {
+      let group = groups[i];
+      displayGroup(group.name, group.color,
+        members.filter((member) => member.group === group.name));
     }
+    let unassignedMembers = findUnassignedMembers();
+    if (unassignedMembers.length === 0) {
+      return;
+    }
+    displayGroup("{% trans 'panel.administration.group.unassigned' %}", undefined,
+      unassignedMembers);
   }
 
-  function displayGroup(name) {
-    var groupMembers = members.filter((member) => member.group === name);
+  function findUnassignedMembers() {
+    let unassignedMembers = [];
+    for (let member of members) {
+      let groupFound = false;
+      for (let group of groups) {
+        if (member.group === group.name) {
+          groupFound = true;
+          break;
+        }
+      }
+      if (!groupFound) {
+        unassignedMembers.push(member);
+      }
+    }
+    return unassignedMembers;
+  }
+
+  function displayGroup(name, color, groupMembers) {
     var groupElement = document.createElement("li");
     groupElement.classList.add("mb-4");
     var groupHeaderElement = document.createElement("div");
     groupHeaderElement.classList.add("administration-group-header");
+    var groupNameContainer = document.createElement("div");
+    groupNameContainer.classList.add("d-flex", "align-items-center");
     var groupNameElement = document.createElement("h2");
-    groupNameElement.classList.add("text-left");
-    groupNameElement.innerHTML = name + " (" + groupMembers.length + "):";
-    groupHeaderElement.appendChild(groupNameElement);
+    if (color) {
+      groupNameElement.style.color = color;
+    }
+    groupNameElement.innerHTML = name;
+    groupNameContainer.appendChild(groupNameElement);
+    var groupSizeElement = document.createElement("h2");
+    groupSizeElement.classList.add("ms-2");
+    groupSizeElement.innerHTML = "(" + groupMembers.length + "):";
+    groupNameContainer.appendChild(groupSizeElement);
+    groupHeaderElement.appendChild(groupNameContainer);
     var groupEditElement = document.createElement("button");
     groupEditElement.classList.add("btn", "btn-success", "administration-group-edit");
     groupEditElement.type = "button";
@@ -128,6 +161,12 @@
     groupPriorityElement.classList.add("mt-2");
     groupPriorityElement.placeholder = "{% trans 'panel.administration.group.add.priority' %}";
     groupAddForm.appendChild(groupPriorityElement);
+    groupAddForm.appendChild(document.createElement("br"));
+    var groupColorElement = document.createElement("input");
+    groupColorElement.classList.add("mt-2");
+    groupColorElement.type = "color";
+    groupColorElement.value = "#ffffff";
+    groupAddForm.appendChild(groupColorElement);
     Swal.fire({
       title: "{% trans 'panel.administration.group.add.title' %}",
       html: groupAddForm,
@@ -136,8 +175,9 @@
       if (result.isConfirmed) {
         var name = groupNameElement.value;
         var priority = groupPriorityElement.value;
+        var color = groupColorElement.value;
         let request = new HttpRequest("https://team.dulno.com/v1/group/add/", "POST", [],
-          {name: name, priority: priority});
+          {name: name, priority: priority, color: color});
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'panel.administration.group.add.successful.title' %}", "{% trans 'panel.administration.group.add.successful.body' %}", "success").then(success => window.location.reload());
         });

@@ -74,6 +74,7 @@
   box-shadow: none;
   outline: none;
   padding: 10px !important;
+  width: min(260px, 100%) !important;
 }
 
 .dark .administration-group-add-content input {

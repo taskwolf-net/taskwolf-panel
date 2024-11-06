@@ -26,18 +26,18 @@
 <script>
   $(document).ready(function() {
     displayLoader();
-    fetchMaintenance(function (maintenace) {
-      displayMaintenance(maintenace);
+    fetchMaintenance(function (maintenance) {
+      displayMaintenance(maintenance);
       removeLoader();
     });
   });
 
-  function displayMaintenance(maintenace) {
-    for (var i = 0; i < maintenace.length; i++) {
-      var entry = maintenace[i];
+  function displayMaintenance(maintenance) {
+    for (var i = 0; i < maintenance.length; i++) {
+      var entry = maintenance[i];
       displayMaintenanceEntry(entry.id, entry.startTime, entry.duration, entry.status);
     }
-    if (maintenace.length === 0) {
+    if (maintenance.length === 0) {
       document.getElementById("maintenance-empty").classList.remove("d-none");
     }
   }
@@ -67,7 +67,7 @@
     informationElement.appendChild(timeElement);
     var durationElement = document.createElement("p");
     durationElement.classList.add("mb-0");
-    durationElement.innerHTML = (duration / (1000 * 60)) + " minutes";
+    durationElement.innerHTML = (duration / (1000 * 60)) + " {% trans 'maintenance.minutes' %}";
     informationElement.appendChild(durationElement);
     prefixElement.appendChild(informationElement);
     entryElement.appendChild(prefixElement);
