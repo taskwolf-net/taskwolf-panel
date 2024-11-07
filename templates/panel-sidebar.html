@@ -28,7 +28,7 @@
         <a href="/maintenance/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">build</span><span>{% trans 'panel.sidebar.maintenance' %}</span></a>
       </li>
       <li id="cluster-sidebar-item" class="sidebar-item {% if 'cluster' in request.path %}sidebar-active{% endif %}">
-        <a href="/cluster/resource/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">host</span><span>{% trans 'panel.sidebar.cluster' %}</span></a>
+        <a href="/cluster/resources/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">host</span><span>{% trans 'panel.sidebar.cluster' %}</span></a>
       </li>
       <li id="administration-sidebar-item" class="sidebar-item d-none {% if 'administration' in request.path or 'group' in request.path or 'member' in request.path %}sidebar-active{% endif %}">
         <a href="/administration/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">account_balance</span><span>{% trans 'panel.sidebar.administrator' %}</span></a>

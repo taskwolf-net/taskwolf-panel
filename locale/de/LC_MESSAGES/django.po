@@ -952,14 +952,26 @@ msgid "cluster.tab.resource"
 msgstr "RESSOURCEN"
 msgid "cluster.tab.server"
 msgstr "SERVER"
+msgid "cluster.tab.unit"
+msgstr "EINHEITEN"
+msgid "cluster.tab.error"
+msgstr "FEHLER"
 
-# CLUSTER - RESOURCE
-msgid "cluster.resource.title"
+# CLUSTER - RESOURCES
+msgid "cluster.resources.title"
 msgstr "Infrastruktur - Ressourcen - Dulno"
 
-# CLUSTER - SERVER
-msgid "cluster.server.title"
+# CLUSTER - SERVERS
+msgid "cluster.servers.title"
 msgstr "Infrastruktur - Server - Dulno"
+
+# CLUSTER - UNITS
+msgid "cluster.units.title"
+msgstr "Infrastruktur - Einheiten - Dulno"
+
+# CLUSTER - ERRORS
+msgid "cluster.errors.title"
+msgstr "Infrastruktur - Fehler - Dulno"
 
 # ADMINISTRATION
 msgid "panel.administration.title"
