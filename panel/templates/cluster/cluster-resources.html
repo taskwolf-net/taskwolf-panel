@@ -22,8 +22,17 @@
 <script>
   $(document).ready(function() {
     displayLoader();
-    removeLoader();
+    fetchResources(function (resources) {
+      removeLoader();
+    });
   });
+
+  function fetchResources(callback) {
+    let request = new HttpRequest("https://team.dulno.com/v1/cluster/resources/", "GET", []);
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText));
+    });
+  }
 
   function displayLoader() {
     var loader = document.createElement("div");
