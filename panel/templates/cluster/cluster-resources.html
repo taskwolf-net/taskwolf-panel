@@ -11,6 +11,54 @@
           <div>
             {% include 'cluster-tab.html' %}
             <div id="cluster-resource-content">
+              <div class="cluster-resource-type-content">
+                <div class="d-flex flex-md-row flex-column justify-content-between align-items-center mb-5">
+                  <h4 class="fw-bold mb-md-0 mb-4">{% trans 'cluster.resources.controller.headline' %}</h4>
+                  <div class="cluster-resource-switch">
+                    <button id="cluster-resource-controller-feature-average" class="text-warning cluster-resource-switch-entry cluster-resource-switch-active">{% trans 'cluster.resources.feature.average' %}</button>
+                    <button id="cluster-resource-controller-feature-maximum" class="text-danger cluster-resource-switch-entry">{% trans 'cluster.resources.feature.maximum' %}</button>
+                    <button id="cluster-resource-controller-feature-minimum" class="text-success cluster-resource-switch-entry">{% trans 'cluster.resources.feature.minimum' %}</button>
+                  </div>
+                </div>
+                <div class="d-xxl-flex justify-content-between align-items-center">
+                  <div class="cluster-resource-metric mx-auto mb-xxl-0 mb-4">
+                    <h4 class="text-center mb-5">{% trans 'cluster.resources.metric.cpu' %}</h4>
+                    <div id="cluster-resource-controller-cpu-circle" class="cluster-resource-metric-circle"></div>
+                  </div>
+                  <div class="cluster-resource-metric mx-auto mb-xxl-0 mb-4">
+                    <h4 class="text-center mb-5">{% trans 'cluster.resources.metric.ram' %}</h4>
+                    <div id="cluster-resource-controller-ram-circle" class="cluster-resource-metric-circle"></div>
+                  </div>
+                  <div class="cluster-resource-metric mx-auto">
+                    <h4 class="text-center mb-5">{% trans 'cluster.resources.metric.disk' %}</h4>
+                    <div id="cluster-resource-controller-disk-circle" class="cluster-resource-metric-circle"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="cluster-resource-type-content">
+                <div class="d-flex flex-md-row flex-column justify-content-between align-items-center mb-5">
+                  <h4 class="fw-bold mb-md-0 mb-4">{% trans 'cluster.resources.worker.headline' %}</h4>
+                  <div class="cluster-resource-switch">
+                    <button id="cluster-resource-worker-feature-average" class="text-warning cluster-resource-switch-entry cluster-resource-switch-active">{% trans 'cluster.resources.feature.average' %}</button>
+                    <button id="cluster-resource-worker-feature-maximum" class="text-danger cluster-resource-switch-entry">{% trans 'cluster.resources.feature.maximum' %}</button>
+                    <button id="cluster-resource-worker-feature-minimum" class="text-success cluster-resource-switch-entry">{% trans 'cluster.resources.feature.minimum' %}</button>
+                  </div>
+                </div>
+                <div class="d-xxl-flex justify-content-between align-items-center">
+                  <div class="cluster-resource-metric mx-auto mb-xxl-0 mb-4">
+                    <h4 class="text-center mb-5">{% trans 'cluster.resources.metric.cpu' %}</h4>
+                    <div id="cluster-resource-worker-cpu-circle" class="cluster-resource-metric-circle"></div>
+                  </div>
+                  <div class="cluster-resource-metric mx-auto mb-xxl-0 mb-4">
+                    <h4 class="text-center mb-5">{% trans 'cluster.resources.metric.ram' %}</h4>
+                    <div id="cluster-resource-worker-ram-circle" class="cluster-resource-metric-circle"></div>
+                  </div>
+                  <div class="cluster-resource-metric mx-auto mb-xxl-0">
+                    <h4 class="text-center mb-5">{% trans 'cluster.resources.metric.disk' %}</h4>
+                    <div id="cluster-resource-worker-disk-circle" class="cluster-resource-metric-circle"></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -20,18 +68,136 @@
 </html>
 
 <script>
+  let controllerFeature = "AVERAGE";
+  let workerFeature = "AVERAGE";
+
   $(document).ready(function() {
     displayLoader();
-    fetchResources(function (resources) {
+    /*fetchResources(function (resources) {
       removeLoader();
-    });
+    });*/
+    drawMetric("#cluster-resource-controller-cpu-circle", 24, 100);
+    drawMetric("#cluster-resource-controller-ram-circle", 40, 100, "3.2 GB / 8 GB");
+    drawMetric("#cluster-resource-controller-disk-circle", 19, 100, "15.6 GB / 80 GB");
+    drawMetric("#cluster-resource-worker-cpu-circle", 78, 100);
+    drawMetric("#cluster-resource-worker-ram-circle", 67, 100, "5.4 GB / 8 GB");
+    drawMetric("#cluster-resource-worker-disk-circle", 38, 100, "30.4 GB / 80 GB");
+    removeLoader();
   });
+
+  function drawMetric(circleElement, value, maxValue, subtitle) {
+    let isDarkTheme = Cookie.find("dulno-panel-theme") === "dark";
+    let bar = new ProgressBar.Circle(circleElement, {
+      strokeWidth: 4,
+      color: isDarkTheme ? '#e1e1e1' : '#252525',
+      trailColor: isDarkTheme ? '#131820' : '#969696',
+      trailWidth: 4,
+      easing: 'easeInOut',
+      duration: 800,
+      text: {
+        autoStyleContainer: false
+      },
+      from: { color: isDarkTheme ? "#b7b7b7" : "#444444", width: 3 },
+      to: { color: isDarkTheme ? "#b7b7b7" : "#444444", width: 3 },
+      step: function(state, circle) {
+        circle.path.setAttribute('stroke', state.color);
+        circle.path.setAttribute('stroke-width', state.width);
+        let value = Math.round(circle.value() * maxValue);
+        let text = document.createElement("div");
+        text.classList.add("text-center");
+        text.innerText = value + "%";
+        if (subtitle) {
+          text.appendChild(document.createElement("br"));
+          let subtitleElement = document.createElement("span");
+          subtitleElement.classList.add("cluster-resource-metric-circle-subtitle");
+          subtitleElement.innerText = subtitle;
+          text.appendChild(subtitleElement);
+        }
+        circle.setText(text);
+      }
+    });
+    bar.text.style.fontSize = '1.8rem';
+    bar.animate(value / maxValue);
+    drawMetricSpikes(document.getElementById(circleElement.replace("#", "")), 24);
+  }
+
+
+  function drawMetricSpikes(container, numSpikes) {
+    const outerRadius = 95;
+    for (let i = 0; i < numSpikes; i++) {
+      const angle = (i / numSpikes) * 360;
+      const spike = document.createElement('div');
+      spike.classList.add("cluster-resource-metric-circle-spike");
+      spike.style.transform = `rotate(${angle}deg) translate(0, -${outerRadius}px)`;
+      container.appendChild(spike);
+    }
+  }
 
   function fetchResources(callback) {
     let request = new HttpRequest("https://team.dulno.com/v1/cluster/resources/", "GET", []);
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));
     });
+  }
+
+  document.getElementById("cluster-resource-controller-feature-average").onclick = function (event) {
+    controllerFeature = "AVERAGE";
+    document.getElementById("cluster-resource-controller-feature-average")
+      .classList.add("cluster-resource-switch-active");
+    document.getElementById("cluster-resource-controller-feature-maximum")
+      .classList.remove("cluster-resource-switch-active");
+    document.getElementById("cluster-resource-controller-feature-minimum")
+      .classList.remove("cluster-resource-switch-active");
+  }
+
+  document.getElementById("cluster-resource-controller-feature-maximum").onclick = function (event) {
+    controllerFeature = "MAXIMUM";
+    document.getElementById("cluster-resource-controller-feature-maximum")
+      .classList.add("cluster-resource-switch-active");
+    document.getElementById("cluster-resource-controller-feature-average")
+      .classList.remove("cluster-resource-switch-active");
+    document.getElementById("cluster-resource-controller-feature-minimum")
+      .classList.remove("cluster-resource-switch-active");
+  }
+
+  document.getElementById("cluster-resource-controller-feature-minimum").onclick = function (event) {
+    controllerFeature = "MINIMUM";
+    document.getElementById("cluster-resource-controller-feature-minimum")
+      .classList.add("cluster-resource-switch-active");
+    document.getElementById("cluster-resource-controller-feature-average")
+      .classList.remove("cluster-resource-switch-active");
+    document.getElementById("cluster-resource-controller-feature-maximum")
+      .classList.remove("cluster-resource-switch-active");
+  }
+
+  document.getElementById("cluster-resource-worker-feature-average").onclick = function (event) {
+    workerFeature = "AVERAGE";
+    document.getElementById("cluster-resource-worker-feature-average")
+      .classList.add("cluster-resource-switch-active");
+    document.getElementById("cluster-resource-worker-feature-maximum")
+      .classList.remove("cluster-resource-switch-active");
+    document.getElementById("cluster-resource-worker-feature-minimum")
+      .classList.remove("cluster-resource-switch-active");
+  }
+
+  document.getElementById("cluster-resource-worker-feature-maximum").onclick = function (event) {
+    workerFeature = "MAXIMUM";
+    document.getElementById("cluster-resource-worker-feature-maximum")
+      .classList.add("cluster-resource-switch-active");
+    document.getElementById("cluster-resource-worker-feature-average")
+      .classList.remove("cluster-resource-switch-active");
+    document.getElementById("cluster-resource-worker-feature-minimum")
+      .classList.remove("cluster-resource-switch-active");
+  }
+
+  document.getElementById("cluster-resource-worker-feature-minimum").onclick = function (event) {
+    workerFeature = "MINIMUM";
+    document.getElementById("cluster-resource-worker-feature-minimum")
+      .classList.add("cluster-resource-switch-active");
+    document.getElementById("cluster-resource-worker-feature-average")
+      .classList.remove("cluster-resource-switch-active");
+    document.getElementById("cluster-resource-worker-feature-maximum")
+      .classList.remove("cluster-resource-switch-active");
   }
 
   function displayLoader() {
