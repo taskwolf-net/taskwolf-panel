@@ -1,26 +1,26 @@
-#cluster-resource-wrapper {
+#cluster-resources-wrapper {
   width: min(1200px, 95%);
   margin: auto;
 }
 
-.cluster-resource-type-content {
+.cluster-resources-type-content {
   padding: 30px;
   border-radius: 5px;
   margin-top: 50px;
   margin-bottom: 50px;
 }
 
-.dark .cluster-resource-type-content {
+.dark .cluster-resources-type-content {
   background-color: #131820;
   border: 1px #2b3441 solid;
 }
 
-.light .cluster-resource-type-content {
+.light .cluster-resources-type-content {
   background-color: #dadada;
   border: 1px #a0a0a0 solid;
 }
 
-.cluster-resource-switch {
+.cluster-resources-switch {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,19 +28,19 @@
   padding: 5px;
 }
 
-.dark .cluster-resource-switch {
+.dark .cluster-resources-switch {
   background-color: #131820;
   border: 1px #2b3441 solid;
   color: white;
 }
 
-.light .cluster-resource-switch {
+.light .cluster-resources-switch {
   background-color: #dadada;
   border: 1px #a0a0a0 solid;
   color: black;
 }
 
-.cluster-resource-switch-entry {
+.cluster-resources-switch-entry {
   border-radius: 50px;
   border: none;
   outline: none;
@@ -48,44 +48,44 @@
   background-color: transparent;
 }
 
-.dark .cluster-resource-switch-entry {
+.dark .cluster-resources-switch-entry {
   color: white;
 }
 
-.light .cluster-resource-switch-entry {
+.light .cluster-resources-switch-entry {
   color: black;
 }
 
-.dark .cluster-resource-switch-active {
+.dark .cluster-resources-switch-active {
   background-color: #2c3749;
 }
 
-.light .cluster-resource-switch-active {
+.light .cluster-resources-switch-active {
   background-color: #a4a4a4;
 }
 
-.cluster-resource-metric {
+.cluster-resources-metric {
   width: 320px;
   padding: 20px;
   border-radius: 10px;
 }
 
-.dark .cluster-resource-metric {
+.dark .cluster-resources-metric {
   background-color: #1b222d;
 }
 
-.light .cluster-resource-metric {
+.light .cluster-resources-metric {
   background-color: #c4c4c4;
 }
 
-.cluster-resource-metric-circle {
+.cluster-resources-metric-circle {
   width: 180px;
   height: 180px;
   position: relative;
   margin: 20px auto;
 }
 
-.cluster-resource-metric-circle-spike {
+.cluster-resources-metric-circle-spike {
   position: absolute;
   width: 2px;
   height: 8px;
@@ -97,21 +97,21 @@
   margin-top: -4px;
 }
 
-.cluster-resource-metric-circle-subtitle {
+.cluster-resources-metric-circle-subtitle {
   font-size: 12px;
   margin-top: 4px;
 }
 
-.dark .cluster-resource-metric-circle-subtitle {
+.dark .cluster-resources-metric-circle-subtitle {
   color: #b7b7b7;
 }
 
-.light .cluster-resource-metric-circle-subtitle {
+.light .cluster-resources-metric-circle-subtitle {
   color: #444444;
 }
 
 @media (max-width: 450px) {
-  .cluster-resource-metric {
+  .cluster-resources-metric {
     width: 100%;
     margin-left: 0;
     margin-right: 0;
