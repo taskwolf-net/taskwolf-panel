@@ -58,7 +58,7 @@
     let entryDescription = document.createElement("div");
     let entryPlatform = document.createElement("b");
     entryPlatform.classList.add("mb-0");
-    entryPlatform.innerHTML = "master" + " (" + server.type + ")";
+    entryPlatform.innerHTML = server.name + " (" + server.type + ")";
     entryDescription.appendChild(entryPlatform);
     entryPrefix.appendChild(entryDescription);
     let entryIp = document.createElement("p");
