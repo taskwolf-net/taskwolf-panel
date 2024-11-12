@@ -6,11 +6,11 @@
     {% include 'panel-header.html' %}
     {% include 'panel-sidebar.html' %}
     <div class="sidebar-influenced">
-      <div id="cluster-unit-container">
-        <div id="cluster-unit-wrapper" class="d-none">
+      <div id="cluster-units-container">
+        <div id="cluster-units-wrapper" class="d-none">
           <div>
             {% include 'cluster-tab.html' %}
-            <div id="cluster-unit-content">
+            <div id="cluster-units-content">
             </div>
           </div>
         </div>
@@ -22,18 +22,27 @@
 <script>
   $(document).ready(function() {
     displayLoader();
-    removeLoader();
+    fetchUnits(function (units) {
+      removeLoader();
+    });
   });
+
+  function fetchUnits(callback) {
+    let request = new HttpRequest("https://team.dulno.com/v1/cluster/units/", "GET", []);
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText).units);
+    });
+  }
 
   function displayLoader() {
     var loader = document.createElement("div");
     loader.classList.add("loader");
-    document.getElementById("cluster-unit-container").appendChild(loader);
+    document.getElementById("cluster-units-container").appendChild(loader);
   }
 
   function removeLoader() {
-    document.getElementById("cluster-unit-container")
+    document.getElementById("cluster-units-container")
       .removeChild(document.getElementsByClassName("loader")[0]);
-    document.getElementById("cluster-unit-wrapper").classList.remove("d-none");
+    document.getElementById("cluster-units-wrapper").classList.remove("d-none");
   }
 </script>
