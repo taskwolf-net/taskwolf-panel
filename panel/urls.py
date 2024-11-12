@@ -33,7 +33,7 @@ urlpatterns = [
   path('maintenance/', maintenance.maintenance),
   path('maintenance/create/', maintenance.maintenanceCreate),
   path('cluster/resources/', cluster.clusterResources),
-  path('cluster/server/', cluster.clusterServers),
+  path('cluster/servers/', cluster.clusterServers),
   path('cluster/units/', cluster.clusterUnits),
   path('cluster/errors/', cluster.clusterErrors),
   path('administration/', administration.administration),

@@ -1,4 +1,86 @@
-#cluster-server-wrapper {
+#cluster-servers-wrapper {
   width: min(1200px, 95%);
   margin: auto;
+}
+
+#cluster-servers-list {
+  list-style-type: none;
+  padding: 0;
+  width: 95%;
+  margin: auto;
+}
+
+#cluster-servers-list li {
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  transition-duration: 0.2s;
+}
+
+.dark #cluster-servers-list li {
+  background-color: #131820;
+  border: 1px #2b3441 solid;
+}
+
+.dark #cluster-servers-list li:hover {
+  background-color: #181e28;
+}
+
+.light #cluster-servers-list li {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
+}
+
+.light #cluster-servers-list li:hover {
+  background-color: #c4c4c4;
+}
+
+.cluster-servers-icon {
+  width: 40px;
+  text-align: center;
+  margin-right: 40px;
+  margin-left: 20px;
+}
+
+@media (max-width: 650px) {
+  .cluster-servers-icon {
+    margin-right: 20px;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .cluster-servers-icon {
+    display: none !important;
+  }
+}
+
+.cluster-servers-status {
+  border-radius: 5px;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.cluster-servers-status-running {
+  border: 2px #42a94b solid;
+  background-color: #d7f8da;
+  color: #1f721c;
+}
+
+.cluster-servers-status-initializing, .cluster-servers-status-stopping, .cluster-servers-status-deleting {
+  border: 2px #a99442 solid;
+  background-color: #f8f1d7;
+  color: #72571c;
+}
+
+.cluster-servers-status-off {
+  border: 2px #a94242 solid;
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.cluster-servers-status-unknown {
+  border: 2px #afafaf solid;
+  background-color: #ffffff;
+  color: #000000;
 }
