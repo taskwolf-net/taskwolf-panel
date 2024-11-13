@@ -16,6 +16,12 @@ async def clusterServers(request):
       'css/panel/cluster/cluster-servers.css']})
 
 @authentication_required
+async def clusterServer(request, id):
+  return render(request, 'cluster/cluster-server.html', {'title': gettext("cluster.servers.title"),
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css',
+      'css/panel/cluster/cluster-server.css'], 'id': id})
+
+@authentication_required
 async def clusterUnits(request):
   return render(request, 'cluster/cluster-units.html', {'title': gettext("cluster.units.title"),
     'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/cluster/cluster-tab.css',

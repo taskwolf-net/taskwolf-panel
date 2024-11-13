@@ -1,0 +1,116 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body class="dark" data-bs-theme="dark">
+    {% include 'panel-header.html' %}
+    {% include 'panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="cluster-server-container">
+        <div id="cluster-server-wrapper" class="d-none">
+          <div>
+            <div id="cluster-server-content">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  $(document).ready(function() {
+    displayLoader();
+    fetchServer(function (server) {
+      //displayServer(server);
+      removeLoader();
+    });
+  });
+
+  function displayServer(server) {
+    let entry = document.createElement("li");
+    entry.role = "button";
+    entry.classList.add("d-flex", "justify-content-between", "align-items-center");
+    let entryPrefix = document.createElement("div");
+    entryPrefix.classList.add("d-flex", "align-items-center");
+    let entryIconContainer = document.createElement("div");
+    entryIconContainer.classList.add("cluster-server-icon");
+    let entryIcon = document.createElement("h2");
+    entryIcon.classList.add("mb-0", "fa-solid", "fa-server");
+    entryIconContainer.appendChild(entryIcon);
+    entryPrefix.appendChild(entryIconContainer);
+    let entryDescription = document.createElement("div");
+    let entryPlatform = document.createElement("b");
+    entryPlatform.classList.add("mb-0");
+    entryPlatform.innerHTML = "master" + " (" + server.type + ")";
+    entryDescription.appendChild(entryPlatform);
+    entryPrefix.appendChild(entryDescription);
+    let entryIp = document.createElement("p");
+    entryIp.classList.add("mb-0");
+    entryIp.innerHTML = server.ipv4;
+    entryDescription.appendChild(entryIp);
+    let entryLocation = document.createElement("p");
+    entryLocation.classList.add("mb-0");
+    entryLocation.innerHTML = server.locationCity + " (" + server.locationCountry + ")";
+    entryDescription.appendChild(entryLocation);
+    entryPrefix.appendChild(entryDescription);
+    entry.appendChild(entryPrefix);
+    let entrySuffix = document.createElement("div");
+    entrySuffix.classList.add("d-flex", "align-items-center");
+    entrySuffix.appendChild(createServerStatusBatch(server.status));
+    let entryArrow = document.createElement("h4");
+    entryArrow.classList.add("mb-0", "ms-3", "text-secondary", "fa-solid", "fa-angle-right");
+    entrySuffix.appendChild(entryArrow);
+    entry.appendChild(entrySuffix);
+    entry.onclick = function (event) {
+      window.location.href = "/cluster/server/" + server.id + "/";
+    }
+    document.getElementById("cluster-server-list").appendChild(entry);
+  }
+
+  function createServerStatusBatch(status) {
+    let statusElement = document.createElement("span");
+    statusElement.classList.add("cluster-server-status");
+    if (status === "running") {
+      statusElement.innerHTML = "{% trans 'cluster.servers.running' %}";
+      statusElement.classList.add("cluster-server-status-running");
+    } else if (status === "initializing") {
+      statusElement.innerHTML = "{% trans 'cluster.servers.initializing' %}";
+      statusElement.classList.add("cluster-server-status-initializing");
+    } else if (status === "stopping") {
+      statusElement.innerHTML = "{% trans 'cluster.servers.stopping' %}";
+      statusElement.classList.add("cluster-server-status-stopping");
+    } else if (status === "off") {
+      statusElement.innerHTML = "{% trans 'cluster.servers.off' %}";
+      statusElement.classList.add("cluster-server-status-off");
+    } else if (status === "deleting") {
+      statusElement.innerHTML = "{% trans 'cluster.servers.deleting' %}";
+      statusElement.classList.add("cluster-server-status-deleting");
+    } else {
+      statusElement.innerHTML = "{% trans 'cluster.servers.unknown' %}";
+      statusElement.classList.add("cluster-server-status-unknown");
+    }
+    return statusElement;
+  }
+
+  function fetchServer(callback) {
+    let request = new HttpRequest("https://team.dulno.com/v1/cluster/server/",
+      "POST", [], {serverId: "{{id}}"});
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText));
+    });
+  }
+
+  function displayLoader() {
+    var loader = document.createElement("div");
+    loader.classList.add("loader");
+    document.getElementById("cluster-server-container").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("cluster-server-container")
+      .removeChild(document.getElementsByClassName("loader")[0]);
+    document.getElementById("cluster-server-wrapper").classList.remove("d-none");
+  }
+</script>
