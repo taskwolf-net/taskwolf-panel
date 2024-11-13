@@ -17,7 +17,7 @@ async def clusterServers(request):
 
 @authentication_required
 async def clusterServer(request, id):
-  return render(request, 'cluster/cluster-server.html', {'title': gettext("cluster.servers.title"),
+  return render(request, 'cluster/cluster-server.html', {'title': gettext("cluster.server.title"),
     'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css',
       'css/panel/cluster/cluster-server.css'], 'id': id})
 

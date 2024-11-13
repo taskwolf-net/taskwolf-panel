@@ -8,14 +8,12 @@
     <div class="sidebar-influenced">
       <div id="cluster-servers-container">
         <div id="cluster-servers-wrapper" class="d-none">
-          <div>
-            {% include 'cluster-tab.html' %}
-            <div id="cluster-servers-content">
-              <ul id="cluster-servers-list">
-              </ul>
-              <div id="cluster-servers-empty" class="text-center d-none">
-                <span>{% trans 'cluster.servers.empty' %}</span>
-              </div>
+          {% include 'cluster-tab.html' %}
+          <div id="cluster-servers-content">
+            <ul id="cluster-servers-list">
+            </ul>
+            <div id="cluster-servers-empty" class="text-center d-none">
+              <span>{% trans 'cluster.servers.empty' %}</span>
             </div>
           </div>
         </div>
@@ -88,22 +86,22 @@
     let statusElement = document.createElement("span");
     statusElement.classList.add("cluster-servers-status");
     if (status === "running") {
-      statusElement.innerHTML = "{% trans 'cluster.servers.running' %}";
+      statusElement.innerHTML = "{% trans 'cluster.server.running' %}";
       statusElement.classList.add("cluster-servers-status-running");
     } else if (status === "initializing") {
-      statusElement.innerHTML = "{% trans 'cluster.servers.initializing' %}";
+      statusElement.innerHTML = "{% trans 'cluster.server.initializing' %}";
       statusElement.classList.add("cluster-servers-status-initializing");
     } else if (status === "stopping") {
-      statusElement.innerHTML = "{% trans 'cluster.servers.stopping' %}";
+      statusElement.innerHTML = "{% trans 'cluster.server.stopping' %}";
       statusElement.classList.add("cluster-servers-status-stopping");
     } else if (status === "off") {
-      statusElement.innerHTML = "{% trans 'cluster.servers.off' %}";
+      statusElement.innerHTML = "{% trans 'cluster.server.off' %}";
       statusElement.classList.add("cluster-servers-status-off");
     } else if (status === "deleting") {
-      statusElement.innerHTML = "{% trans 'cluster.servers.deleting' %}";
+      statusElement.innerHTML = "{% trans 'cluster.server.deleting' %}";
       statusElement.classList.add("cluster-servers-status-deleting");
     } else {
-      statusElement.innerHTML = "{% trans 'cluster.servers.unknown' %}";
+      statusElement.innerHTML = "{% trans 'cluster.server.unknown' %}";
       statusElement.classList.add("cluster-servers-status-unknown");
     }
     return statusElement;

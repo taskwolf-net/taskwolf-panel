@@ -1,0 +1,124 @@
+#cluster-server-wrapper {
+  width: min(1200px, 95%);
+  margin: auto;
+}
+
+#cluster-server-back {
+  margin-top: 5vh;
+  margin-bottom: 2vh;
+  width: 52px;
+  height: 52px;
+  border: none;
+  background-color: transparent;
+  border-radius: 50%;
+  font-size: 25px;
+}
+
+.dark #cluster-server-back {
+  color: #b5b5b5;
+}
+
+.light #cluster-server-back {
+  color: #656565;
+}
+
+.dark #cluster-server-back:hover {
+  background-color: #212937;
+}
+
+.light #cluster-server-back:hover {
+  background-color: #d3d3d3;
+}
+
+.cluster-server-section {
+  padding: 30px;
+  border-radius: 5px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.dark .cluster-server-section {
+  background-color: #131820;
+  border: 1px #2b3441 solid;
+}
+
+.light .cluster-server-section {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
+}
+
+.cluster-server-section-quadrant {
+  width: 40%;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.dark .cluster-server-section-quadrant {
+  background-color: #1b222d;
+}
+
+.light .cluster-server-section-quadrant {
+  background-color: #c4c4c4;
+}
+
+#cluster-server-status {
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.cluster-server-status-running {
+  border: 2px #42a94b solid;
+  background-color: #d7f8da;
+  color: #1f721c;
+}
+
+.cluster-server-status-initializing, .cluster-server-status-stopping, .cluster-server-status-deleting {
+  border: 2px #a99442 solid;
+  background-color: #f8f1d7;
+  color: #72571c;
+}
+
+.cluster-server-status-off {
+  border: 2px #a94242 solid;
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.cluster-server-status-unknown {
+  border: 2px #afafaf solid;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.cluster-server-metric {
+  width: 320px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.dark .cluster-server-metric {
+  background-color: #1b222d;
+}
+
+.light .cluster-server-metric {
+  background-color: #c4c4c4;
+}
+
+.cluster-server-metric-circle {
+  width: 180px;
+  height: 180px;
+  position: relative;
+  margin: 20px auto;
+}
+
+.cluster-server-metric-circle-spike {
+  position: absolute;
+  width: 2px;
+  height: 8px;
+  background-color: #919191;
+  top: 50%;
+  left: 50%;
+  transform-origin: 50% 50%;
+  margin-left: -1px;
+  margin-top: -4px;
+}

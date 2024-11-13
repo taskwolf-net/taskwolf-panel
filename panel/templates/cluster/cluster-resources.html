@@ -8,55 +8,53 @@
     <div class="sidebar-influenced">
       <div id="cluster-resources-container">
         <div id="cluster-resources-wrapper" class="d-none">
-          <div>
-            {% include 'cluster-tab.html' %}
-            <div id="cluster-resources-content">
-              <div class="cluster-resources-type-content">
-                <div class="d-flex flex-md-row flex-column justify-content-between align-items-center mb-5">
-                  <h4 class="fw-bold mb-md-0 mb-4">{% trans 'cluster.resources.controller.headline' %}</h4>
-                  <div class="cluster-resources-switch">
-                    <button id="cluster-resources-controller-feature-average" class="text-warning cluster-resources-switch-entry cluster-resources-switch-active">{% trans 'cluster.resources.feature.average' %}</button>
-                    <button id="cluster-resources-controller-feature-maximum" class="text-danger cluster-resources-switch-entry">{% trans 'cluster.resources.feature.maximum' %}</button>
-                    <button id="cluster-resources-controller-feature-minimum" class="text-success cluster-resources-switch-entry">{% trans 'cluster.resources.feature.minimum' %}</button>
-                  </div>
-                </div>
-                <div class="d-xxl-flex justify-content-between align-items-center">
-                  <div class="cluster-resources-metric mx-auto mb-xxl-0 mb-4">
-                    <h4 class="text-center mb-5">{% trans 'cluster.resources.metric.cpu' %}</h4>
-                    <div id="cluster-resources-controller-cpu-circle" class="cluster-resources-metric-circle"></div>
-                  </div>
-                  <div class="cluster-resources-metric mx-auto mb-xxl-0 mb-4">
-                    <h4 class="text-center mb-5">{% trans 'cluster.resources.metric.ram' %}</h4>
-                    <div id="cluster-resources-controller-ram-circle" class="cluster-resources-metric-circle"></div>
-                  </div>
-                  <div class="cluster-resources-metric mx-auto">
-                    <h4 class="text-center mb-5">{% trans 'cluster.resources.metric.disk' %}</h4>
-                    <div id="cluster-resources-controller-disk-circle" class="cluster-resources-metric-circle"></div>
-                  </div>
+          {% include 'cluster-tab.html' %}
+          <div id="cluster-resources-content">
+            <div class="cluster-resources-type-content">
+              <div class="d-flex flex-md-row flex-column justify-content-between align-items-center mb-5">
+                <h4 class="fw-bold mb-md-0 mb-4">{% trans 'cluster.resources.controller.headline' %}</h4>
+                <div class="cluster-resources-switch">
+                  <button id="cluster-resources-controller-feature-average" class="text-warning cluster-resources-switch-entry cluster-resources-switch-active">{% trans 'cluster.resources.feature.average' %}</button>
+                  <button id="cluster-resources-controller-feature-maximum" class="text-danger cluster-resources-switch-entry">{% trans 'cluster.resources.feature.maximum' %}</button>
+                  <button id="cluster-resources-controller-feature-minimum" class="text-success cluster-resources-switch-entry">{% trans 'cluster.resources.feature.minimum' %}</button>
                 </div>
               </div>
-              <div class="cluster-resources-type-content">
-                <div class="d-flex flex-md-row flex-column justify-content-between align-items-center mb-5">
-                  <h4 class="fw-bold mb-md-0 mb-4">{% trans 'cluster.resources.worker.headline' %}</h4>
-                  <div class="cluster-resources-switch">
-                    <button id="cluster-resources-worker-feature-average" class="text-warning cluster-resources-switch-entry cluster-resources-switch-active">{% trans 'cluster.resources.feature.average' %}</button>
-                    <button id="cluster-resources-worker-feature-maximum" class="text-danger cluster-resources-switch-entry">{% trans 'cluster.resources.feature.maximum' %}</button>
-                    <button id="cluster-resources-worker-feature-minimum" class="text-success cluster-resources-switch-entry">{% trans 'cluster.resources.feature.minimum' %}</button>
-                  </div>
+              <div class="d-xxl-flex justify-content-between align-items-center">
+                <div class="cluster-resources-metric mx-auto mb-xxl-0 mb-4">
+                  <h4 class="text-center mb-5">{% trans 'cluster.resources.metric.cpu' %}</h4>
+                  <div id="cluster-resources-controller-cpu-circle" class="cluster-resources-metric-circle"></div>
                 </div>
-                <div class="d-xxl-flex justify-content-between align-items-center">
-                  <div class="cluster-resources-metric mx-auto mb-xxl-0 mb-4">
-                    <h4 class="text-center mb-5">{% trans 'cluster.resources.metric.cpu' %}</h4>
-                    <div id="cluster-resources-worker-cpu-circle" class="cluster-resources-metric-circle"></div>
-                  </div>
-                  <div class="cluster-resources-metric mx-auto mb-xxl-0 mb-4">
-                    <h4 class="text-center mb-5">{% trans 'cluster.resources.metric.ram' %}</h4>
-                    <div id="cluster-resources-worker-ram-circle" class="cluster-resources-metric-circle"></div>
-                  </div>
-                  <div class="cluster-resources-metric mx-auto mb-xxl-0">
-                    <h4 class="text-center mb-5">{% trans 'cluster.resources.metric.disk' %}</h4>
-                    <div id="cluster-resources-worker-disk-circle" class="cluster-resources-metric-circle"></div>
-                  </div>
+                <div class="cluster-resources-metric mx-auto mb-xxl-0 mb-4">
+                  <h4 class="text-center mb-5">{% trans 'cluster.resources.metric.ram' %}</h4>
+                  <div id="cluster-resources-controller-ram-circle" class="cluster-resources-metric-circle"></div>
+                </div>
+                <div class="cluster-resources-metric mx-auto">
+                  <h4 class="text-center mb-5">{% trans 'cluster.resources.metric.disk' %}</h4>
+                  <div id="cluster-resources-controller-disk-circle" class="cluster-resources-metric-circle"></div>
+                </div>
+              </div>
+            </div>
+            <div class="cluster-resources-type-content">
+              <div class="d-flex flex-md-row flex-column justify-content-between align-items-center mb-5">
+                <h4 class="fw-bold mb-md-0 mb-4">{% trans 'cluster.resources.worker.headline' %}</h4>
+                <div class="cluster-resources-switch">
+                  <button id="cluster-resources-worker-feature-average" class="text-warning cluster-resources-switch-entry cluster-resources-switch-active">{% trans 'cluster.resources.feature.average' %}</button>
+                  <button id="cluster-resources-worker-feature-maximum" class="text-danger cluster-resources-switch-entry">{% trans 'cluster.resources.feature.maximum' %}</button>
+                  <button id="cluster-resources-worker-feature-minimum" class="text-success cluster-resources-switch-entry">{% trans 'cluster.resources.feature.minimum' %}</button>
+                </div>
+              </div>
+              <div class="d-xxl-flex justify-content-between align-items-center">
+                <div class="cluster-resources-metric mx-auto mb-xxl-0 mb-4">
+                  <h4 class="text-center mb-5">{% trans 'cluster.resources.metric.cpu' %}</h4>
+                  <div id="cluster-resources-worker-cpu-circle" class="cluster-resources-metric-circle"></div>
+                </div>
+                <div class="cluster-resources-metric mx-auto mb-xxl-0 mb-4">
+                  <h4 class="text-center mb-5">{% trans 'cluster.resources.metric.ram' %}</h4>
+                  <div id="cluster-resources-worker-ram-circle" class="cluster-resources-metric-circle"></div>
+                </div>
+                <div class="cluster-resources-metric mx-auto mb-xxl-0">
+                  <h4 class="text-center mb-5">{% trans 'cluster.resources.metric.disk' %}</h4>
+                  <div id="cluster-resources-worker-disk-circle" class="cluster-resources-metric-circle"></div>
                 </div>
               </div>
             </div>

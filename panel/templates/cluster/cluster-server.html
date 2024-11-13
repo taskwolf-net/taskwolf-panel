@@ -8,9 +8,77 @@
     <div class="sidebar-influenced">
       <div id="cluster-server-container">
         <div id="cluster-server-wrapper" class="d-none">
-          <div>
-            <div id="cluster-server-content">
-
+          <button id="cluster-server-back"><i class="fa-solid fa-arrow-left-long"></i></button>
+          <div id="cluster-server-content">
+            <h1 id="cluster-server-name" class="fw-bold mb-5 text-center"></h1>
+            <div class="cluster-server-section">
+              <div class="d-xxl-flex justify-content-around mb-5">
+                <div class="cluster-server-section-quadrant">
+                  <h4 class="mb-4">{% trans 'cluster.server.general' %}:</h4>
+                  <div class="d-flex justify-content-center w-100">
+                    <div class="text-start w-50">
+                      <p class="mb-0 fw-bold">{% trans 'cluster.server.general.name' %}: </p>
+                      <p class="mb-0 fw-bold">{% trans 'cluster.server.general.type' %}: </p>
+                      <p class="mb-0 fw-bold">{% trans 'cluster.server.general.architecture' %}: </p>
+                      <p class="mb-0 fw-bold">{% trans 'cluster.server.general.cpu.type' %}: </p>
+                    </div>
+                    <div class="text-end ms-2 w-50">
+                      <p id="cluster-server-general-name" class="mb-0 text-truncate"></p>
+                      <p id="cluster-server-general-type" class="mb-0 text-truncate"></p>
+                      <p id="cluster-server-general-architecture" class="mb-0 text-truncate"></p>
+                      <p id="cluster-server-general-cpu-type" class="mb-0 text-truncate"></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="cluster-server-section-quadrant">
+                  <h4 class="mb-4">{% trans 'cluster.server.address' %}:</h4>
+                  <div class="d-flex justify-content-center w-100">
+                    <div class="text-start w-50">
+                      <p class="mb-0 fw-bold">{% trans 'cluster.server.address.ipv4' %}: </p>
+                      <p class="mb-0 fw-bold">{% trans 'cluster.server.address.ipv6' %}: </p>
+                    </div>
+                    <div class="text-end ms-2 w-50">
+                      <p id="cluster-server-address-ipv4" class="mb-0 text-truncate"></p>
+                      <p id="cluster-server-address-ipv6" class="mb-0 text-truncate"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="d-xxl-flex justify-content-around">
+                <div class="cluster-server-section-quadrant">
+                  <h4 class="mb-4">{% trans 'cluster.server.location' %}:</h4>
+                  <div class="d-flex justify-content-center w-100">
+                    <div class="text-start w-50">
+                      <p class="mb-0 fw-bold">{% trans 'cluster.server.location.country' %}: </p>
+                      <p class="mb-0 fw-bold">{% trans 'cluster.server.location.city' %}: </p>
+                    </div>
+                    <div class="text-end ms-2 w-50">
+                      <p id="cluster-server-location-country" class="mb-0 text-truncate"></p>
+                      <p id="cluster-server-location-city" class="mb-0 text-truncate"></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="cluster-server-section-quadrant">
+                  <h4 class="mb-4">{% trans 'cluster.server.status' %}:</h4>
+                  <div class="text-center my-5">
+                    <span id="cluster-server-status"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="cluster-server-section">
+              <div class="d-xxl-flex justify-content-between align-items-center">
+                <div class="cluster-server-metric mx-auto mb-xxl-0 mb-4">
+                  <h4 class="text-center mb-5">{% trans 'cluster.server.metric.disk' %}</h4>
+                </div>
+                <div class="cluster-server-metric mx-auto mb-xxl-0 mb-4">
+                  <h4 class="text-center mb-5">{% trans 'cluster.server.metric.cpu' %}</h4>
+                  <div id="cluster-server-cpu-circle" class="cluster-server-metric-circle"></div>
+                </div>
+                <div class="cluster-server-metric mx-auto mb-xxl-0 mb-4">
+                  <h4 class="text-center mb-5">{% trans 'cluster.server.metric.network' %}</h4>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -23,75 +91,86 @@
   $(document).ready(function() {
     displayLoader();
     fetchServer(function (server) {
-      //displayServer(server);
+      displayServer(server);
       removeLoader();
     });
   });
 
   function displayServer(server) {
-    let entry = document.createElement("li");
-    entry.role = "button";
-    entry.classList.add("d-flex", "justify-content-between", "align-items-center");
-    let entryPrefix = document.createElement("div");
-    entryPrefix.classList.add("d-flex", "align-items-center");
-    let entryIconContainer = document.createElement("div");
-    entryIconContainer.classList.add("cluster-server-icon");
-    let entryIcon = document.createElement("h2");
-    entryIcon.classList.add("mb-0", "fa-solid", "fa-server");
-    entryIconContainer.appendChild(entryIcon);
-    entryPrefix.appendChild(entryIconContainer);
-    let entryDescription = document.createElement("div");
-    let entryPlatform = document.createElement("b");
-    entryPlatform.classList.add("mb-0");
-    entryPlatform.innerHTML = "master" + " (" + server.type + ")";
-    entryDescription.appendChild(entryPlatform);
-    entryPrefix.appendChild(entryDescription);
-    let entryIp = document.createElement("p");
-    entryIp.classList.add("mb-0");
-    entryIp.innerHTML = server.ipv4;
-    entryDescription.appendChild(entryIp);
-    let entryLocation = document.createElement("p");
-    entryLocation.classList.add("mb-0");
-    entryLocation.innerHTML = server.locationCity + " (" + server.locationCountry + ")";
-    entryDescription.appendChild(entryLocation);
-    entryPrefix.appendChild(entryDescription);
-    entry.appendChild(entryPrefix);
-    let entrySuffix = document.createElement("div");
-    entrySuffix.classList.add("d-flex", "align-items-center");
-    entrySuffix.appendChild(createServerStatusBatch(server.status));
-    let entryArrow = document.createElement("h4");
-    entryArrow.classList.add("mb-0", "ms-3", "text-secondary", "fa-solid", "fa-angle-right");
-    entrySuffix.appendChild(entryArrow);
-    entry.appendChild(entrySuffix);
-    entry.onclick = function (event) {
-      window.location.href = "/cluster/server/" + server.id + "/";
-    }
-    document.getElementById("cluster-server-list").appendChild(entry);
+    document.getElementById("cluster-server-name").innerText = server.name;
+    document.getElementById("cluster-server-general-name").innerText = server.name;
+    document.getElementById("cluster-server-general-type").innerText = server.type;
+    document.getElementById("cluster-server-general-architecture").innerText = server.architecture;
+    document.getElementById("cluster-server-general-cpu-type").innerText = server.cpuType;
+    document.getElementById("cluster-server-address-ipv4").innerText = server.ipv4;
+    document.getElementById("cluster-server-address-ipv6").innerText = server.ipv6;
+    document.getElementById("cluster-server-location-country").innerText = server.locationCountry;
+    document.getElementById("cluster-server-location-city").innerText = server.locationCity;
+    displayServerStatusBatch(server.status);
+    drawMetric("#cluster-server-cpu-circle", server.cpu, 100);
   }
 
-  function createServerStatusBatch(status) {
-    let statusElement = document.createElement("span");
-    statusElement.classList.add("cluster-server-status");
+  function displayServerStatusBatch(status) {
+    let statusElement = document.getElementById("cluster-server-status");
     if (status === "running") {
-      statusElement.innerHTML = "{% trans 'cluster.servers.running' %}";
+      statusElement.innerHTML = "{% trans 'cluster.server.running' %}";
       statusElement.classList.add("cluster-server-status-running");
     } else if (status === "initializing") {
-      statusElement.innerHTML = "{% trans 'cluster.servers.initializing' %}";
+      statusElement.innerHTML = "{% trans 'cluster.server.initializing' %}";
       statusElement.classList.add("cluster-server-status-initializing");
     } else if (status === "stopping") {
-      statusElement.innerHTML = "{% trans 'cluster.servers.stopping' %}";
+      statusElement.innerHTML = "{% trans 'cluster.server.stopping' %}";
       statusElement.classList.add("cluster-server-status-stopping");
     } else if (status === "off") {
-      statusElement.innerHTML = "{% trans 'cluster.servers.off' %}";
+      statusElement.innerHTML = "{% trans 'cluster.server.off' %}";
       statusElement.classList.add("cluster-server-status-off");
     } else if (status === "deleting") {
-      statusElement.innerHTML = "{% trans 'cluster.servers.deleting' %}";
+      statusElement.innerHTML = "{% trans 'cluster.server.deleting' %}";
       statusElement.classList.add("cluster-server-status-deleting");
     } else {
-      statusElement.innerHTML = "{% trans 'cluster.servers.unknown' %}";
+      statusElement.innerHTML = "{% trans 'cluster.server.unknown' %}";
       statusElement.classList.add("cluster-server-status-unknown");
     }
-    return statusElement;
+  }
+
+  function drawMetric(circleElement, value, maxValue) {
+    let isDarkTheme = Cookie.find("dulno-panel-theme") === "dark";
+    let bar = new ProgressBar.Circle(circleElement, {
+      strokeWidth: 4,
+      color: isDarkTheme ? '#e1e1e1' : '#252525',
+      trailColor: isDarkTheme ? '#131820' : '#969696',
+      trailWidth: 4,
+      easing: 'easeInOut',
+      duration: 800,
+      text: {
+        autoStyleContainer: false
+      },
+      from: { color: isDarkTheme ? "#b7b7b7" : "#444444", width: 3 },
+      to: { color: isDarkTheme ? "#b7b7b7" : "#444444", width: 3 },
+      step: function(state, circle) {
+        circle.path.setAttribute('stroke', state.color);
+        circle.path.setAttribute('stroke-width', state.width);
+        let value = Math.round(circle.value() * maxValue);
+        let text = document.createElement("div");
+        text.classList.add("text-center");
+        text.innerText = value + "%";
+        circle.setText(text);
+      }
+    });
+    bar.text.style.fontSize = '1.8rem';
+    bar.animate(value / maxValue);
+    drawMetricSpikes(document.getElementById(circleElement.replace("#", "")), 24);
+  }
+
+  function drawMetricSpikes(container, numSpikes) {
+    const outerRadius = 95;
+    for (let i = 0; i < numSpikes; i++) {
+      const angle = (i / numSpikes) * 360;
+      const spike = document.createElement('div');
+      spike.classList.add("cluster-server-metric-circle-spike");
+      spike.style.transform = `rotate(${angle}deg) translate(0, -${outerRadius}px)`;
+      container.appendChild(spike);
+    }
   }
 
   function fetchServer(callback) {
@@ -100,6 +179,10 @@
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));
     });
+  }
+
+  document.getElementById("cluster-server-back").onclick = function (event) {
+    window.location.href = "/cluster/servers/";
   }
 
   function displayLoader() {
