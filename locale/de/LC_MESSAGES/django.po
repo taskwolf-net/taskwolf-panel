@@ -1056,6 +1056,8 @@ msgstr "Bandbreite (aus)"
 # CLUSTER - UNITS
 msgid "cluster.units.title"
 msgstr "Infrastruktur - Einheiten - Dulno"
+msgid "cluster.units.empty"
+msgstr "Es konnten keine Einheiten gefunden werden."
 
 # CLUSTER - ERRORS
 msgid "cluster.errors.title"

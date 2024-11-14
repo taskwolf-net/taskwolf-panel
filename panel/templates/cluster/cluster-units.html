@@ -10,6 +10,11 @@
         <div id="cluster-units-wrapper" class="d-none">
           {% include 'cluster-tab.html' %}
           <div id="cluster-units-content">
+            <ul id="cluster-units-list">
+            </ul>
+            <div id="cluster-units-empty" class="text-center d-none">
+              <span>{% trans 'cluster.units.empty' %}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -21,9 +26,78 @@
   $(document).ready(function() {
     displayLoader();
     fetchUnits(function (units) {
+      displayUnits(units);
       removeLoader();
     });
   });
+
+  function displayUnits(units) {
+    for (let i = 0; i < units.length; i++) {
+      let unit = units[i];
+      displayUnit(unit);
+    }
+    if (units.length === 0) {
+      document.getElementById("cluster-units-empty").classList.remove("d-none");
+    }
+  }
+
+  function displayUnit(unit) {
+    let entry = document.createElement("li");
+    entry.role = "button";
+    entry.classList.add("d-flex", "justify-content-between", "align-items-center");
+    let entryPrefix = document.createElement("div");
+    entryPrefix.classList.add("d-flex", "align-items-center");
+    let entryIconContainer = document.createElement("div");
+    entryIconContainer.classList.add("cluster-units-icon");
+    entryIconContainer.appendChild(createUnitIcon(unit.type));
+    entryPrefix.appendChild(entryIconContainer);
+    let entryDescription = document.createElement("div");
+    let entryName = document.createElement("b");
+    entryName.classList.add("mb-0");
+    let name = unit.name;
+    if (unit.type === "REPLICASET" || unit.type === "JOB") {
+      name = unit.name.substring(0, unit.name.lastIndexOf('-'));
+    }
+    entryName.innerHTML = name;
+    entryDescription.appendChild(entryName);
+    let entryType = document.createElement("p");
+    entryType.classList.add("mb-0");
+    entryType.innerHTML = unit.type;
+    entryDescription.appendChild(entryType);
+    entryPrefix.appendChild(entryDescription);
+    entry.appendChild(entryPrefix);
+    let entrySuffix = document.createElement("div");
+    entrySuffix.classList.add("d-flex", "align-items-center");
+    if (unit.desiredReplicas && unit.availableReplicas) {
+      let entrySize = document.createElement("h3");
+      entrySize.innerText = unit.desiredReplicas + "/" + unit.availableReplicas;
+      entrySize.classList.add("mb-0");
+      entrySuffix.appendChild(entrySize);
+    }
+    let entryArrow = document.createElement("h4");
+    entryArrow.classList.add("mb-0", "ms-3", "text-secondary", "fa-solid", "fa-angle-right");
+    entrySuffix.appendChild(entryArrow);
+    entry.appendChild(entrySuffix);
+    entry.onclick = function (event) {
+      window.location.href = "/cluster/unit/" + unit.id + "/";
+    }
+    document.getElementById("cluster-units-list").appendChild(entry);
+  }
+
+  function createUnitIcon(type) {
+    let entryIcon = document.createElement("h2");
+    entryIcon.classList.add("mb-0");
+    if (type === "REPLICASET") {
+      entryIcon.classList.add("fa-solid", "fa-copy");
+    } else if (type === "STATEFULSET") {
+      entryIcon.classList.add("fa-solid", "fa-database");
+    } else if (type === "DAEMONSET") {
+      entryIcon.classList.add("fa-solid", "fa-disc-one");
+    } else if (type === "JOB") {
+      entryIcon.classList.add("fa-solid", "fa-code");
+    }
+    return entryIcon;
+  }
 
   function fetchUnits(callback) {
     let request = new HttpRequest("https://team.dulno.com/v1/cluster/units/", "GET", []);

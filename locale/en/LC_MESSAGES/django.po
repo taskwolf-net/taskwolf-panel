@@ -1058,6 +1058,8 @@ msgstr "Bandwidth (out)"
 # CLUSTER - UNITS
 msgid "cluster.units.title"
 msgstr "Cluster - Units - Dulno"
+msgid "cluster.units.empty"
+msgstr "No units could be found."
 
 # CLUSTER - ERRORS
 msgid "cluster.errors.title"
