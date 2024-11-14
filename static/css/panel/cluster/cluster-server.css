@@ -48,9 +48,16 @@
 }
 
 .cluster-server-section-quadrant {
-  width: 40%;
+  width: 30%;
+  height: 200px;
   padding: 20px;
   border-radius: 10px;
+}
+
+@media (max-width: 1199px) {
+  .cluster-server-section-quadrant {
+    width: min(320px, 100%);
+  }
 }
 
 .dark .cluster-server-section-quadrant {
@@ -91,7 +98,8 @@
 }
 
 .cluster-server-metric {
-  width: 320px;
+  width: min(320px, 100%);
+  height: 320px;
   padding: 20px;
   border-radius: 10px;
 }

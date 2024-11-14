@@ -12,17 +12,17 @@
           <div id="cluster-server-content">
             <h1 id="cluster-server-name" class="fw-bold mb-5 text-center"></h1>
             <div class="cluster-server-section">
-              <div class="d-xxl-flex justify-content-around mb-5">
-                <div class="cluster-server-section-quadrant">
+              <div class="d-flex flex-xl-row flex-column justify-content-around align-items-center mb-5">
+                <div class="cluster-server-section-quadrant mb-xl-0 mb-5">
                   <h4 class="mb-4">{% trans 'cluster.server.general' %}:</h4>
-                  <div class="d-flex justify-content-center w-100">
-                    <div class="text-start w-50">
+                  <div class="d-flex justify-content-between w-100">
+                    <div class="text-start">
                       <p class="mb-0 fw-bold">{% trans 'cluster.server.general.name' %}: </p>
                       <p class="mb-0 fw-bold">{% trans 'cluster.server.general.type' %}: </p>
                       <p class="mb-0 fw-bold">{% trans 'cluster.server.general.architecture' %}: </p>
                       <p class="mb-0 fw-bold">{% trans 'cluster.server.general.cpu.type' %}: </p>
                     </div>
-                    <div class="text-end ms-2 w-50">
+                    <div class="text-end ms-2">
                       <p id="cluster-server-general-name" class="mb-0 text-truncate"></p>
                       <p id="cluster-server-general-type" class="mb-0 text-truncate"></p>
                       <p id="cluster-server-general-architecture" class="mb-0 text-truncate"></p>
@@ -30,29 +30,44 @@
                     </div>
                   </div>
                 </div>
+                <div class="cluster-server-section-quadrant mb-xl-0 mb-5">
+                  <h4 class="mb-4">{% trans 'cluster.server.specification' %}:</h4>
+                  <div class="d-flex justify-content-between w-100">
+                    <div class="text-start">
+                      <p class="mb-0 fw-bold">{% trans 'cluster.server.specification.core' %}: </p>
+                      <p class="mb-0 fw-bold">{% trans 'cluster.server.specification.memory' %}: </p>
+                      <p class="mb-0 fw-bold">{% trans 'cluster.server.specification.disk' %}: </p>
+                    </div>
+                    <div class="text-end ms-2">
+                      <p id="cluster-server-specification-cores" class="mb-0 text-truncate"></p>
+                      <p id="cluster-server-specification-memory" class="mb-0 text-truncate"></p>
+                      <p id="cluster-server-specification-disk" class="mb-0 text-truncate"></p>
+                    </div>
+                  </div>
+                </div>
                 <div class="cluster-server-section-quadrant">
                   <h4 class="mb-4">{% trans 'cluster.server.address' %}:</h4>
-                  <div class="d-flex justify-content-center w-100">
-                    <div class="text-start w-50">
+                  <div class="d-flex justify-content-between w-100">
+                    <div class="text-start">
                       <p class="mb-0 fw-bold">{% trans 'cluster.server.address.ipv4' %}: </p>
                       <p class="mb-0 fw-bold">{% trans 'cluster.server.address.ipv6' %}: </p>
                     </div>
-                    <div class="text-end ms-2 w-50">
+                    <div class="text-end ms-2">
                       <p id="cluster-server-address-ipv4" class="mb-0 text-truncate"></p>
                       <p id="cluster-server-address-ipv6" class="mb-0 text-truncate"></p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="d-xxl-flex justify-content-around">
-                <div class="cluster-server-section-quadrant">
+              <div class="d-flex flex-xl-row flex-column justify-content-around align-items-center">
+                <div class="cluster-server-section-quadrant mb-xl-0 mb-5">
                   <h4 class="mb-4">{% trans 'cluster.server.location' %}:</h4>
-                  <div class="d-flex justify-content-center w-100">
-                    <div class="text-start w-50">
+                  <div class="d-flex justify-content-between w-100">
+                    <div class="text-start">
                       <p class="mb-0 fw-bold">{% trans 'cluster.server.location.country' %}: </p>
                       <p class="mb-0 fw-bold">{% trans 'cluster.server.location.city' %}: </p>
                     </div>
-                    <div class="text-end ms-2 w-50">
+                    <div class="text-end ms-2">
                       <p id="cluster-server-location-country" class="mb-0 text-truncate"></p>
                       <p id="cluster-server-location-city" class="mb-0 text-truncate"></p>
                     </div>
@@ -70,6 +85,20 @@
               <div class="d-xxl-flex justify-content-between align-items-center">
                 <div class="cluster-server-metric mx-auto mb-xxl-0 mb-4">
                   <h4 class="text-center mb-5">{% trans 'cluster.server.metric.disk' %}</h4>
+                  <div class="d-flex justify-content-between w-100">
+                    <div class="text-start">
+                      <p class="mb-0 fw-bold">{% trans 'cluster.server.metric.disk.read.iops' %}: </p>
+                      <p class="mb-0 fw-bold">{% trans 'cluster.server.metric.disk.write.iops' %}: </p>
+                      <p class="mb-0 fw-bold">{% trans 'cluster.server.metric.disk.read.bandwidth' %}: </p>
+                      <p class="mb-0 fw-bold">{% trans 'cluster.server.metric.disk.write.bandwidth' %}: </p>
+                    </div>
+                    <div class="text-end ms-2">
+                      <p id="cluster-server-metric-disk-read-iops" class="mb-0 text-truncate"></p>
+                      <p id="cluster-server-metric-disk-write-iops" class="mb-0 text-truncate"></p>
+                      <p id="cluster-server-metric-disk-read-bandwidth" class="mb-0 text-truncate"></p>
+                      <p id="cluster-server-metric-disk-write-bandwidth" class="mb-0 text-truncate"></p>
+                    </div>
+                  </div>
                 </div>
                 <div class="cluster-server-metric mx-auto mb-xxl-0 mb-4">
                   <h4 class="text-center mb-5">{% trans 'cluster.server.metric.cpu' %}</h4>
@@ -77,6 +106,20 @@
                 </div>
                 <div class="cluster-server-metric mx-auto mb-xxl-0 mb-4">
                   <h4 class="text-center mb-5">{% trans 'cluster.server.metric.network' %}</h4>
+                  <div class="d-flex justify-content-between w-100">
+                    <div class="text-start">
+                      <p class="mb-0 fw-bold">{% trans 'cluster.server.metric.network.in.pps' %}: </p>
+                      <p class="mb-0 fw-bold">{% trans 'cluster.server.metric.network.out.pps' %}: </p>
+                      <p class="mb-0 fw-bold">{% trans 'cluster.server.metric.network.in.bandwidth' %}: </p>
+                      <p class="mb-0 fw-bold">{% trans 'cluster.server.metric.network.out.bandwidth' %}: </p>
+                    </div>
+                    <div class="text-end ms-2">
+                      <p id="cluster-server-metric-network-in-pps" class="mb-0 text-truncate"></p>
+                      <p id="cluster-server-metric-network-out-pps" class="mb-0 text-truncate"></p>
+                      <p id="cluster-server-metric-network-in-bandwidth" class="mb-0 text-truncate"></p>
+                      <p id="cluster-server-metric-network-out-bandwidth" class="mb-0 text-truncate"></p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -102,12 +145,23 @@
     document.getElementById("cluster-server-general-type").innerText = server.type;
     document.getElementById("cluster-server-general-architecture").innerText = server.architecture;
     document.getElementById("cluster-server-general-cpu-type").innerText = server.cpuType;
+    document.getElementById("cluster-server-specification-cores").innerText = server.cores;
+    document.getElementById("cluster-server-specification-memory").innerText = server.memory + " GB";
+    document.getElementById("cluster-server-specification-disk").innerText = server.disk + " GB";
     document.getElementById("cluster-server-address-ipv4").innerText = server.ipv4;
     document.getElementById("cluster-server-address-ipv6").innerText = server.ipv6;
     document.getElementById("cluster-server-location-country").innerText = server.locationCountry;
     document.getElementById("cluster-server-location-city").innerText = server.locationCity;
     displayServerStatusBatch(server.status);
-    drawMetric("#cluster-server-cpu-circle", server.cpu, 100);
+    document.getElementById("cluster-server-metric-disk-read-iops").innerText = server.diskReadIops + " / s";
+    document.getElementById("cluster-server-metric-disk-write-iops").innerText = server.diskWriteIops + " / s";
+    document.getElementById("cluster-server-metric-disk-read-bandwidth").innerText = server.diskReadBandwidth + " B";
+    document.getElementById("cluster-server-metric-disk-write-bandwidth").innerText = server.diskReadBandwidth + " B";
+    drawMetric("#cluster-server-cpu-circle", server.cpu, 100 * server.cores);
+    document.getElementById("cluster-server-metric-network-in-pps").innerText = server.networkInPps + " / s";
+    document.getElementById("cluster-server-metric-network-out-pps").innerText = server.networkOutPps + " / s";
+    document.getElementById("cluster-server-metric-network-in-bandwidth").innerText = server.networkInBandwidth + " B";
+    document.getElementById("cluster-server-metric-network-out-bandwidth").innerText = server.networkOutBandwidth + " B";
   }
 
   function displayServerStatusBatch(status) {
