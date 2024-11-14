@@ -1059,6 +1059,10 @@ msgstr "Infrastruktur - Einheiten - Dulno"
 msgid "cluster.units.empty"
 msgstr "Es konnten keine Einheiten gefunden werden."
 
+# CLUSTER - UNIT
+msgid "cluster.unit.title"
+msgstr "Infrastruktur - Einheit - Dulno"
+
 # CLUSTER - ERRORS
 msgid "cluster.errors.title"
 msgstr "Infrastruktur - Fehler - Dulno"

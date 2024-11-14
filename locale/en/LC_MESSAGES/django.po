@@ -1061,6 +1061,10 @@ msgstr "Cluster - Units - Dulno"
 msgid "cluster.units.empty"
 msgstr "No units could be found."
 
+# CLUSTER - UNIT
+msgid "cluster.unit.title"
+msgstr "Cluster - Unit - Dulno"
+
 # CLUSTER - ERRORS
 msgid "cluster.errors.title"
 msgstr "Cluster - Errors - Dulno"

@@ -1,0 +1,55 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body class="dark" data-bs-theme="dark">
+    {% include 'panel-header.html' %}
+    {% include 'panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="cluster-unit-container">
+        <div id="cluster-unit-wrapper" class="d-none">
+          <button id="cluster-unit-back"><i class="fa-solid fa-arrow-left-long"></i></button>
+          <div id="cluster-unit-content">
+            <h1 id="cluster-unit-name" class="fw-bold mb-5 text-center"></h1>
+            <div class="cluster-unit-section">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  $(document).ready(function() {
+    displayLoader();
+    fetchUnit(function (unit) {
+      removeLoader();
+    });
+  });
+
+  function fetchUnit(callback) {
+    let request = new HttpRequest("https://team.dulno.com/v1/cluster/unit/",
+      "POST", [], {unitName: "{{name}}", unitType: "{[type}}"});
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText));
+    });
+  }
+
+  document.getElementById("cluster-unit-back").onclick = function (event) {
+    window.location.href = "/cluster/units/";
+  }
+
+  function displayLoader() {
+    var loader = document.createElement("div");
+    loader.classList.add("loader");
+    document.getElementById("cluster-unit-container").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("cluster-unit-container")
+      .removeChild(document.getElementsByClassName("loader")[0]);
+    document.getElementById("cluster-unit-wrapper").classList.remove("d-none");
+  }
+</script>

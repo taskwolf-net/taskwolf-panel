@@ -79,7 +79,8 @@
     entrySuffix.appendChild(entryArrow);
     entry.appendChild(entrySuffix);
     entry.onclick = function (event) {
-      window.location.href = "/cluster/unit/" + unit.id + "/";
+      window.location.href = "/cluster/unit/" + unit.type.toLowerCase() + "/" +
+        unit.name + "/";
     }
     document.getElementById("cluster-units-list").appendChild(entry);
   }
