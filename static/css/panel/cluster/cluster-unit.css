@@ -120,30 +120,30 @@
   }
 }
 
-.cluster-pod-phase {
+.cluster-unit-pod-phase {
   border-radius: 5px;
   padding: 10px;
 }
 
-.cluster-pod-phase-running, .cluster-pod-phase-succeeded {
+.cluster-unit-pod-phase-running, .cluster-unit-pod-phase-succeeded {
   border: 2px #42a94b solid;
   background-color: #d7f8da;
   color: #1f721c;
 }
 
-.cluster-pod-phase-pending {
+.cluster-unit-pod-phase-pending {
   border: 2px #a99442 solid;
   background-color: #f8f1d7;
   color: #72571c;
 }
 
-.cluster-pod-phase-failed {
+.cluster-unit-pod-phase-failed {
   border: 2px #a94242 solid;
   background-color: #f8d7da;
   color: #721c24;
 }
 
-.cluster-pod-phase-unknown {
+.cluster-unit-pod-phase-unknown {
   border: 2px #afafaf solid;
   background-color: #ffffff;
   color: #000000;

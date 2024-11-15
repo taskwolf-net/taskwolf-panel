@@ -34,6 +34,13 @@ async def clusterUnit(request, type, name):
       'css/panel/cluster/cluster-unit.css'], 'type': type, 'name': name})
 
 @authentication_required
+async def clusterUnitPod(request, unitType, unitName, podName):
+  return render(request, 'cluster/cluster-unit-pod.html', {'title': gettext("cluster.unit.pod.title"),
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css',
+      'css/panel/cluster/cluster-unit-pod.css'], 'unitType': unitType,
+    'unitName': unitName, 'podName': podName})
+
+@authentication_required
 async def clusterErrors(request):
   return render(request, 'cluster/cluster-errors.html', {'title': gettext("cluster.errors.title"),
     'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/cluster/cluster-tab.css',

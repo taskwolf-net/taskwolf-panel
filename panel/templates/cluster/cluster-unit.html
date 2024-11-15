@@ -26,7 +26,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="cluster-unit-section-quadrant">
+                <div id="cluster-unit-specification" class="cluster-unit-section-quadrant">
                   <h4 class="mb-4">{% trans 'cluster.unit.specification' %}:</h4>
                   <div class="d-flex justify-content-between w-100">
                     <div class="text-start">
@@ -70,8 +70,12 @@
     document.getElementById("cluster-unit-name").innerText = name;
     document.getElementById("cluster-unit-general-name").innerText = name;
     document.getElementById("cluster-unit-general-type").innerText = unit.type;
-    document.getElementById("cluster-unit-specification-desired-replicas").innerText = unit.desiredReplicas;
-    document.getElementById("cluster-unit-specification-available-replicas").innerText = unit.availableReplicas;
+    if (unit.desiredReplicas && unit.availableReplicas) {
+      document.getElementById("cluster-unit-specification-desired-replicas").innerText = unit.desiredReplicas;
+      document.getElementById("cluster-unit-specification-available-replicas").innerText = unit.availableReplicas;
+    } else {
+      document.getElementById("cluster-unit-specification").classList.add("d-none");
+    }
     displayPods(unit.pods);
   }
 
@@ -132,22 +136,22 @@
 
   function createPodPhaseBatch(phase) {
     let phaseElement = document.createElement("span");
-    phaseElement.classList.add("cluster-pod-phase");
+    phaseElement.classList.add("cluster-unit-pod-phase");
     if (phase === "running") {
       phaseElement.innerHTML = "{% trans 'cluster.unit.pod.running' %}";
-      phaseElement.classList.add("cluster-pod-phase-running");
+      phaseElement.classList.add("cluster-unit-pod-phase-running");
     } else if (phase === "pending") {
       phaseElement.innerHTML = "{% trans 'cluster.unit.pod.pending' %}";
-      phaseElement.classList.add("cluster-pod-phase-pending");
+      phaseElement.classList.add("cluster-unit-pod-phase-pending");
     } else if (phase === "succeeded") {
       phaseElement.innerHTML = "{% trans 'cluster.unit.pod.succeeded' %}";
-      phaseElement.classList.add("cluster-pod-phase-succeeded");
+      phaseElement.classList.add("cluster-unit-pod-phase-succeeded");
     } else if (phase === "failed") {
       phaseElement.innerHTML = "{% trans 'cluster.unit.pod.failed' %}";
-      phaseElement.classList.add("cluster-pod-phase-failed");
+      phaseElement.classList.add("cluster-unit-pod-phase-failed");
     } else {
       phaseElement.innerHTML = "{% trans 'cluster.unit.pod.unknown' %}";
-      phaseElement.classList.add("cluster-pod-phase-unknown");
+      phaseElement.classList.add("cluster-unit-pod-phase-unknown");
     }
     return phaseElement;
   }

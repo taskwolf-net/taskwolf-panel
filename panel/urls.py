@@ -37,6 +37,7 @@ urlpatterns = [
   path('cluster/server/<str:id>/', cluster.clusterServer),
   path('cluster/units/', cluster.clusterUnits),
   path('cluster/unit/<str:type>/<str:name>/', cluster.clusterUnit),
+  path('cluster/unit/<str:unitType>/<str:unitName>/pod/<str:podName>/', cluster.clusterUnitPod),
   path('cluster/errors/', cluster.clusterErrors),
   path('administration/', administration.administration),
   path('group/<str:name>/', administration.group),

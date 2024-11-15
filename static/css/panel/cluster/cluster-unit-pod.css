@@ -1,0 +1,113 @@
+#cluster-unit-pod-wrapper {
+  width: min(1200px, 95%);
+  margin: auto;
+}
+
+#cluster-unit-pod-back {
+  margin-top: 5vh;
+  margin-bottom: 2vh;
+  width: 52px;
+  height: 52px;
+  border: none;
+  background-color: transparent;
+  border-radius: 50%;
+  font-size: 25px;
+}
+
+.dark #cluster-unit-pod-back {
+  color: #b5b5b5;
+}
+
+.light #cluster-unit-pod-back {
+  color: #656565;
+}
+
+.dark #cluster-unit-pod-back:hover {
+  background-color: #212937;
+}
+
+.light #cluster-unit-pod-back:hover {
+  background-color: #d3d3d3;
+}
+
+.cluster-unit-pod-section {
+  padding: 30px;
+  border-radius: 5px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.dark .cluster-unit-pod-section {
+  background-color: #131820;
+  border: 1px #2b3441 solid;
+}
+
+.light .cluster-unit-pod-section {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
+}
+
+.cluster-unit-pod-section-quadrant {
+  width: 30%;
+  height: 200px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+@media (max-width: 1199px) {
+  .cluster-unit-pod-section-quadrant {
+    width: min(320px, 100%);
+  }
+}
+
+.dark .cluster-unit-pod-section-quadrant {
+  background-color: #1b222d;
+}
+
+.light .cluster-unit-pod-section-quadrant {
+  background-color: #c4c4c4;
+}
+
+#cluster-unit-pod-phase {
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.cluster-unit-pod-phase-running, .cluster-unit-pod-phase-succeeded {
+  border: 2px #42a94b solid;
+  background-color: #d7f8da;
+  color: #1f721c;
+}
+
+.cluster-unit-pod-phase-pending {
+  border: 2px #a99442 solid;
+  background-color: #f8f1d7;
+  color: #72571c;
+}
+
+.cluster-unit-pod-phase-failed {
+  border: 2px #a94242 solid;
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.cluster-unit-pod-phase-unknown {
+  border: 2px #afafaf solid;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+#cluster-unit-pod-log {
+  width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 0;
+}
+
+.dark #cluster-unit-pod-log {
+  background-color: #1b222d;
+}
+
+.light #cluster-unit-pod-log {
+  background-color: #c4c4c4;
+}
