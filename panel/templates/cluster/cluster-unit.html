@@ -12,7 +12,39 @@
           <div id="cluster-unit-content">
             <h1 id="cluster-unit-name" class="fw-bold mb-5 text-center"></h1>
             <div class="cluster-unit-section">
-
+              <div class="d-flex flex-xl-row flex-column justify-content-around align-items-center">
+                <div class="cluster-unit-section-quadrant mb-xl-0 mb-5">
+                  <h4 class="mb-4">{% trans 'cluster.unit.general' %}:</h4>
+                  <div class="d-flex justify-content-between w-100">
+                    <div class="text-start">
+                      <p class="mb-0 fw-bold">{% trans 'cluster.unit.general.name' %}: </p>
+                      <p class="mb-0 fw-bold">{% trans 'cluster.unit.general.type' %}: </p>
+                    </div>
+                    <div class="text-end ms-2">
+                      <p id="cluster-unit-general-name" class="mb-0 text-truncate"></p>
+                      <p id="cluster-unit-general-type" class="mb-0 text-truncate"></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="cluster-unit-section-quadrant">
+                  <h4 class="mb-4">{% trans 'cluster.unit.specification' %}:</h4>
+                  <div class="d-flex justify-content-between w-100">
+                    <div class="text-start">
+                      <p class="mb-0 fw-bold">{% trans 'cluster.unit.specification.desired.replicas' %}: </p>
+                      <p class="mb-0 fw-bold">{% trans 'cluster.unit.specification.available.replicas' %}: </p>
+                    </div>
+                    <div class="text-end ms-2">
+                      <p id="cluster-unit-specification-desired-replicas" class="mb-0 text-truncate"></p>
+                      <p id="cluster-unit-specification-available-replicas" class="mb-0 text-truncate"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ul id="cluster-unit-pods-list">
+            </ul>
+            <div id="cluster-unit-pods-empty" class="text-center d-none">
+              <span>{% trans 'cluster.unit.pods.empty' %}</span>
             </div>
           </div>
         </div>
@@ -25,13 +57,104 @@
   $(document).ready(function() {
     displayLoader();
     fetchUnit(function (unit) {
+      displayUnit(unit);
       removeLoader();
     });
   });
 
+  function displayUnit(unit) {
+    let name = unit.name;
+    if (unit.type === "REPLICASET" || unit.type === "JOB") {
+      name = unit.name.substring(0, unit.name.lastIndexOf('-'));
+    }
+    document.getElementById("cluster-unit-name").innerText = name;
+    document.getElementById("cluster-unit-general-name").innerText = name;
+    document.getElementById("cluster-unit-general-type").innerText = unit.type;
+    document.getElementById("cluster-unit-specification-desired-replicas").innerText = unit.desiredReplicas;
+    document.getElementById("cluster-unit-specification-available-replicas").innerText = unit.availableReplicas;
+    displayPods(unit.pods);
+  }
+
+  function displayPods(pods) {
+    for (let i = 0; i < pods.length; i++) {
+      let pod = pods[i];
+      displayPod(pod);
+    }
+    if (pods.length === 0) {
+      document.getElementById("cluster-unit-pods-empty").classList.remove("d-none");
+    }
+  }
+
+  function displayPod(pod) {
+    let entry = document.createElement("li");
+    entry.role = "button";
+    entry.classList.add("d-flex", "justify-content-between", "align-items-center");
+    let entryPrefix = document.createElement("div");
+    entryPrefix.classList.add("d-flex", "align-items-center");
+    let entryIconContainer = document.createElement("div");
+    entryIconContainer.classList.add("cluster-unit-pods-icon");
+    let entryIcon = document.createElement("h2");
+    entryIcon.classList.add("mb-0", "fa-solid", "fa-box-archive");
+    entryIconContainer.appendChild(entryIcon);
+    entryPrefix.appendChild(entryIconContainer);
+    let entryDescription = document.createElement("div");
+    let entryPlatform = document.createElement("b");
+    entryPlatform.classList.add("mb-0");
+    entryPlatform.innerHTML = pod.name;
+    entryDescription.appendChild(entryPlatform);
+    entryPrefix.appendChild(entryDescription);
+    let entryIp = document.createElement("p");
+    entryIp.classList.add("mb-0");
+    entryIp.innerHTML = pod.ipAddress;
+    entryDescription.appendChild(entryIp);
+    let entryNode = document.createElement("p");
+    entryNode.classList.add("mb-0");
+    entryNode.innerHTML = pod.node;
+    entryDescription.appendChild(entryNode);
+    let entryStartTime = document.createElement("p");
+    entryStartTime.classList.add("mb-0");
+    entryStartTime.innerHTML = new Date(pod.startTime).toLocaleString();
+    entryDescription.appendChild(entryStartTime);
+    entryPrefix.appendChild(entryDescription);
+    entry.appendChild(entryPrefix);
+    let entrySuffix = document.createElement("div");
+    entrySuffix.classList.add("d-flex", "align-items-center");
+    entrySuffix.appendChild(createPodPhaseBatch(pod.phase.toLowerCase()));
+    let entryArrow = document.createElement("h4");
+    entryArrow.classList.add("mb-0", "ms-3", "text-secondary", "fa-solid", "fa-angle-right");
+    entrySuffix.appendChild(entryArrow);
+    entry.appendChild(entrySuffix);
+    entry.onclick = function (event) {
+      window.location.href = "/cluster/unit/{{type}}/{{name}}/pod/" + pod.name + "/";
+    }
+    document.getElementById("cluster-unit-pods-list").appendChild(entry);
+  }
+
+  function createPodPhaseBatch(phase) {
+    let phaseElement = document.createElement("span");
+    phaseElement.classList.add("cluster-pod-phase");
+    if (phase === "running") {
+      phaseElement.innerHTML = "{% trans 'cluster.unit.pod.running' %}";
+      phaseElement.classList.add("cluster-pod-phase-running");
+    } else if (phase === "pending") {
+      phaseElement.innerHTML = "{% trans 'cluster.unit.pod.pending' %}";
+      phaseElement.classList.add("cluster-pod-phase-pending");
+    } else if (phase === "succeeded") {
+      phaseElement.innerHTML = "{% trans 'cluster.unit.pod.succeeded' %}";
+      phaseElement.classList.add("cluster-pod-phase-succeeded");
+    } else if (phase === "failed") {
+      phaseElement.innerHTML = "{% trans 'cluster.unit.pod.failed' %}";
+      phaseElement.classList.add("cluster-pod-phase-failed");
+    } else {
+      phaseElement.innerHTML = "{% trans 'cluster.unit.pod.unknown' %}";
+      phaseElement.classList.add("cluster-pod-phase-unknown");
+    }
+    return phaseElement;
+  }
+
   function fetchUnit(callback) {
     let request = new HttpRequest("https://team.dulno.com/v1/cluster/unit/",
-      "POST", [], {unitName: "{{name}}", unitType: "{[type}}"});
+      "POST", [], {unitName: "{{name}}", unitType: "{{type}}"});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));
     });

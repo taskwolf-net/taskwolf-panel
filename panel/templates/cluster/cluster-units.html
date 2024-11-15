@@ -70,8 +70,8 @@
     entrySuffix.classList.add("d-flex", "align-items-center");
     if (unit.desiredReplicas && unit.availableReplicas) {
       let entrySize = document.createElement("h3");
-      entrySize.innerText = unit.desiredReplicas + "/" + unit.availableReplicas;
-      entrySize.classList.add("mb-0");
+      entrySize.innerText = unit.availableReplicas + "/" + unit.desiredReplicas;
+      entrySize.classList.add("mb-0", "ms-3");
       entrySuffix.appendChild(entrySize);
     }
     let entryArrow = document.createElement("h4");
