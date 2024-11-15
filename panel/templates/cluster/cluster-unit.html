@@ -8,7 +8,14 @@
     <div class="sidebar-influenced">
       <div id="cluster-unit-container">
         <div id="cluster-unit-wrapper" class="d-none">
-          <button id="cluster-unit-back"><i class="fa-solid fa-arrow-left-long"></i></button>
+          <div id="cluster-unit-pod-header">
+            <div>
+              <button id="cluster-unit-back"><i class="fa-solid fa-arrow-left-long"></i></button>
+            </div>
+            <div id="cluster-unit-restart-container">
+              <h4 id="cluster-unit-restart" class="fa-solid fa-rotate-right mb-0" role="button"></h4>
+            </div>
+          </div>
           <div id="cluster-unit-content">
             <h1 id="cluster-unit-name" class="fw-bold mb-5 text-center"></h1>
             <div class="cluster-unit-section">
@@ -77,6 +84,9 @@
       document.getElementById("cluster-unit-specification").classList.add("d-none");
     }
     displayPods(unit.pods);
+    applyTooltips(document.getElementById("cluster-unit-restart"),
+      document.getElementById("cluster-unit-restart-container"),
+      "{% trans 'cluster.unit.restart' %}")
   }
 
   function displayPods(pods) {
@@ -156,6 +166,24 @@
     return phaseElement;
   }
 
+  document.getElementById("cluster-unit-restart").onclick = function (event) {
+    Swal.fire({
+      title: "{% trans 'cluster.unit.restart.title' %}",
+      text: "{% trans 'cluster.unit.restart.body' %}",
+      icon: "warning",
+      confirmButtonColor: "#dc3545",
+      showCancelButton: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        let request = new HttpRequest("https://team.dulno.com/v1/cluster/unit/restart/",
+          "POST", [], {unitName: "{{name}}", unitType: "{{type}}"});
+        request.send(function (status, responseText) {
+          window.location.reload();
+        });
+      }
+    });
+  }
+
   function fetchUnit(callback) {
     let request = new HttpRequest("https://team.dulno.com/v1/cluster/unit/",
       "POST", [], {unitName: "{{name}}", unitType: "{{type}}"});
@@ -178,5 +206,15 @@
     document.getElementById("cluster-unit-container")
       .removeChild(document.getElementsByClassName("loader")[0]);
     document.getElementById("cluster-unit-wrapper").classList.remove("d-none");
+  }
+
+  function applyTooltips(element, container, text) {
+    $(element).attr("data-bs-toggle", "tooltip");
+    $(element).attr("data-bs-placement", "top");
+    $(element).attr("data-bs-title", text);
+    container.classList.add("position-relative");
+    new bootstrap.Tooltip(element, {
+      container: container
+    });
   }
 </script>

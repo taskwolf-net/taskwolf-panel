@@ -8,13 +8,17 @@
     <div class="sidebar-influenced">
       <div id="cluster-unit-pod-container">
         <div id="cluster-unit-pod-wrapper" class="d-none">
-          <button id="cluster-unit-pod-back"><i class="fa-solid fa-arrow-left-long"></i></button>
+          <div id="cluster-unit-pod-header">
+            <div>
+              <button id="cluster-unit-pod-back"><i class="fa-solid fa-arrow-left-long"></i></button>
+            </div>
+            <div id="cluster-unit-pod-delete-container">
+              <h4 id="cluster-unit-pod-delete" class="text-danger fa-regular fa-circle-stop mb-0" role="button"></h4>
+            </div>
+          </div>
           <div id="cluster-unit-pod-content">
             <h1 id="cluster-unit-pod-name" class="fw-bold mb-5 text-center"></h1>
             <div class="cluster-unit-pod-section">
-              <div class="text-end">
-                <h4 id="cluster-unit-pod-delete" class="text-danger fa-regular fa-circle-stop p-3 me-2" role="button"></h4>
-              </div>
               <div class="d-flex flex-xxl-row flex-column justify-content-around align-items-center">
                 <div class="cluster-unit-pod-section-quadrant mb-xxl-0 mb-5">
                   <h4 class="mb-4">{% trans 'cluster.unit.pod.general' %}:</h4>
@@ -85,7 +89,11 @@
     document.getElementById("cluster-unit-pod-general-start-time").innerText =
       new Date(pod.startTime).toLocaleString();
     displayPodPhaseBatch(pod.phase.toLowerCase());
-    document.getElementById("cluster-unit-pod-log").innerHTML = pod.log.replace(/\x1B\[[0-9;]*m/g, "").replace(/^.* > .*\r?\n?/gm, "");
+    document.getElementById("cluster-unit-pod-log").innerHTML =
+      pod.log.replace(/\x1B\[[0-9;]*m/g, "").replace(/^.* > .*\r?\n?/gm, "");
+    applyTooltips(document.getElementById("cluster-unit-pod-delete"),
+      document.getElementById("cluster-unit-pod-delete-container"),
+      "{% trans 'cluster.unit.pod.delete' %}")
   }
 
   function displayPodPhaseBatch(phase) {
@@ -149,5 +157,15 @@
     document.getElementById("cluster-unit-pod-container")
       .removeChild(document.getElementsByClassName("loader")[0]);
     document.getElementById("cluster-unit-pod-wrapper").classList.remove("d-none");
+  }
+
+  function applyTooltips(element, container, text) {
+    $(element).attr("data-bs-toggle", "tooltip");
+    $(element).attr("data-bs-placement", "top");
+    $(element).attr("data-bs-title", text);
+    container.classList.add("position-relative");
+    new bootstrap.Tooltip(element, {
+      container: container
+    });
   }
 </script>

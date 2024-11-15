@@ -3,9 +3,15 @@
   margin: auto;
 }
 
-#cluster-unit-pod-back {
+#cluster-unit-pod-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 5vh;
   margin-bottom: 2vh;
+}
+
+#cluster-unit-pod-back {
   width: 52px;
   height: 52px;
   border: none;
@@ -95,6 +101,30 @@
   border: 2px #afafaf solid;
   background-color: #ffffff;
   color: #000000;
+}
+
+#cluster-unit-pod-delete {
+  border-radius: 50%;
+  padding: 15px;
+  transition-duration: 0.2s;
+}
+
+.dark #cluster-unit-pod-delete {
+  background-color: #131820;
+  border: 1px #2b3441 solid;
+}
+
+.light #cluster-unit-pod-delete {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
+}
+
+.dark #cluster-unit-pod-delete:hover {
+  background-color: #1b222d;
+}
+
+.light #cluster-unit-pod-delete:hover {
+  background-color: #c4c4c4;
 }
 
 #cluster-unit-pod-log {
