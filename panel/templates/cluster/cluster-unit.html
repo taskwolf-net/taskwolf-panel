@@ -67,29 +67,31 @@
       displayUnit(unit);
       removeLoader();
     });
+    setInterval(function () {
+      fetchUnit(function (unit) {
+        displayUnit(unit);
+      });
+    }, 1000);
+    applyTooltips(document.getElementById("cluster-unit-restart"),
+      document.getElementById("cluster-unit-restart-container"),
+      "{% trans 'cluster.unit.restart' %}");
   });
 
   function displayUnit(unit) {
-    let name = unit.name;
-    if (unit.type === "REPLICASET" || unit.type === "JOB") {
-      name = unit.name.substring(0, unit.name.lastIndexOf('-'));
-    }
-    document.getElementById("cluster-unit-name").innerText = name;
-    document.getElementById("cluster-unit-general-name").innerText = name;
+    document.getElementById("cluster-unit-name").innerText = unit.name;
+    document.getElementById("cluster-unit-general-name").innerText = unit.name;
     document.getElementById("cluster-unit-general-type").innerText = unit.type;
-    if (unit.desiredReplicas && unit.availableReplicas) {
+    if (unit.desiredReplicas !== undefined && unit.availableReplicas !== undefined) {
       document.getElementById("cluster-unit-specification-desired-replicas").innerText = unit.desiredReplicas;
       document.getElementById("cluster-unit-specification-available-replicas").innerText = unit.availableReplicas;
     } else {
       document.getElementById("cluster-unit-specification").classList.add("d-none");
     }
     displayPods(unit.pods);
-    applyTooltips(document.getElementById("cluster-unit-restart"),
-      document.getElementById("cluster-unit-restart-container"),
-      "{% trans 'cluster.unit.restart' %}")
   }
 
   function displayPods(pods) {
+    document.getElementById("cluster-unit-pods-list").innerHTML = "";
     for (let i = 0; i < pods.length; i++) {
       let pod = pods[i];
       displayPod(pod);

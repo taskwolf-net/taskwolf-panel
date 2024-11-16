@@ -74,6 +74,14 @@
       displayPod(pod);
       removeLoader();
     });
+    setInterval(function () {
+      fetchPod(function (pod) {
+        displayPod(pod);
+      });
+    }, 1000);
+    applyTooltips(document.getElementById("cluster-unit-pod-delete"),
+      document.getElementById("cluster-unit-pod-delete-container"),
+      "{% trans 'cluster.unit.pod.delete' %}")
   });
 
   function displayPod(pod) {
@@ -91,9 +99,6 @@
     displayPodPhaseBatch(pod.phase.toLowerCase());
     document.getElementById("cluster-unit-pod-log").innerHTML =
       pod.log.replace(/\x1B\[[0-9;]*m/g, "").replace(/^.* > .*\r?\n?/gm, "");
-    applyTooltips(document.getElementById("cluster-unit-pod-delete"),
-      document.getElementById("cluster-unit-pod-delete-container"),
-      "{% trans 'cluster.unit.pod.delete' %}")
   }
 
   function displayPodPhaseBatch(phase) {

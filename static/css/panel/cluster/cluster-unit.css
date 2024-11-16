@@ -85,7 +85,6 @@
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
-  transition-duration: 0.2s;
 }
 
 .dark #cluster-unit-pods-list li {

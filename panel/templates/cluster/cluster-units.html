@@ -54,11 +54,7 @@
     let entryDescription = document.createElement("div");
     let entryName = document.createElement("b");
     entryName.classList.add("mb-0");
-    let name = unit.name;
-    if (unit.type === "REPLICASET" || unit.type === "JOB") {
-      name = unit.name.substring(0, unit.name.lastIndexOf('-'));
-    }
-    entryName.innerHTML = name;
+    entryName.innerHTML = unit.name;
     entryDescription.appendChild(entryName);
     let entryType = document.createElement("p");
     entryType.classList.add("mb-0");
@@ -68,7 +64,7 @@
     entry.appendChild(entryPrefix);
     let entrySuffix = document.createElement("div");
     entrySuffix.classList.add("d-flex", "align-items-center");
-    if (unit.desiredReplicas && unit.availableReplicas) {
+    if (unit.desiredReplicas !== undefined && unit.availableReplicas !== undefined) {
       let entrySize = document.createElement("h3");
       entrySize.innerText = unit.availableReplicas + "/" + unit.desiredReplicas;
       entrySize.classList.add("mb-0", "ms-3");
@@ -88,7 +84,7 @@
   function createUnitIcon(type) {
     let entryIcon = document.createElement("h2");
     entryIcon.classList.add("mb-0");
-    if (type === "REPLICASET") {
+    if (type === "DEPLOYMENT") {
       entryIcon.classList.add("fa-solid", "fa-copy");
     } else if (type === "STATEFULSET") {
       entryIcon.classList.add("fa-solid", "fa-database");
