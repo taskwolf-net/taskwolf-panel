@@ -6,32 +6,301 @@
     {% include 'panel-header.html' %}
     {% include 'panel-sidebar.html' %}
     <div class="sidebar-influenced">
-      <div id="cluster-error-container">
-        <div id="cluster-error-wrapper" class="d-none">
+      <div id="cluster-errors-container">
+        <div id="cluster-errors-wrapper" class="d-none">
           {% include 'cluster-tab.html' %}
-          <div id="cluster-error-content">
+          <div id="cluster-errors-content">
+            <ul id="cluster-errors-list">
+            </ul>
+            <button id="cluster-errors-fixed-all" class="btn btn-success d-block mt-5 mb-5 mx-auto px-5"><span class="fa-solid fa-check me-2"></span>{% trans 'cluster.errors.fixed.all' %}</button>
+            <div id="cluster-errors-empty" class="text-center d-none">
+              <span>{% trans 'cluster.errors.empty' %}</span>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+    <div id="cluster-errors-sidebar">
+      <div class="cluster-errors-sidebar-section d-flex align-items-center">
+        <div id="cluster-errors-sidebar-close" class="d-flex justify-content-center align-items-center p-2 me-3" role="button">
+          <h4 class="fa-solid fa-xmark mb-0"></h4>
+        </div>
+        <h3 class="mb-0 me-4">{% trans 'cluster.errors.sidebar.headline' %}</h3>
+        <h5 id="cluster-errors-sidebar-time" class="ms-auto mb-0 text-end"></h5>
+      </div>
+      <div class="cluster-errors-sidebar-divider mb-3"></div>
+      <div class="cluster-errors-sidebar-section">
+        <pre id="cluster-errors-sidebar-title" class="cluster-errors-sidebar-code mb-3"></pre>
+        <pre id="cluster-errors-sidebar-trace" class="cluster-errors-sidebar-code"></pre>
+      </div>
+      <div class="cluster-errors-sidebar-divider my-3"></div>
+      <div class="cluster-errors-sidebar-section">
+        <h4 class="mb-5 ms-2">{% trans 'cluster.errors.sidebar.appearance.headline' %}:</h4>
+        <p id="cluster-errors-sidebar-origin" class="cluster-errors-sidebar-code mb-3"></p>
+        <p id="cluster-errors-sidebar-pod" class="cluster-errors-sidebar-code mb-3 position-relative" style="padding-right: 70px"></p>
+        <p id="cluster-errors-sidebar-node" class="cluster-errors-sidebar-code"></p>
+      </div>
+      <div class="cluster-errors-sidebar-divider my-3"></div>
+      <div class="cluster-errors-sidebar-section">
+        <button id="cluster-errors-fixed" class="btn btn-success d-block mt-4 mb-4 mx-auto px-5"><span class="fa-solid fa-check me-2"></span>{% trans 'cluster.errors.sidebar.fixed' %}</button>
+      </div>
+      <div id="cluster-errors-sidebar-expand" role="button">
+        <h5 id="cluster-errors-sidebar-expand-icon" class="fa-solid fa-angle-left mb-0"></h5>
+      </div>
+      <div id="cluster-errors-sidebar-resizer"></div>
     </div>
   </body>
 </html>
 
 <script>
+  let selectedError;
+  let selectedElement;
+
   $(document).ready(function() {
     displayLoader();
-    removeLoader();
+    fetchErrors(function (errors) {
+      displayErrors(errors);
+      removeLoader();
+    });
   });
+
+  function displayErrors(errors) {
+    for (let i = 0; i < errors.length; i++) {
+      let error = errors[i];
+      displayError(error);
+    }
+    if (errors.length === 0) {
+      document.getElementById("cluster-errors-empty").classList.remove("d-none");
+      document.getElementById("cluster-errors-fixed-all").classList.add("d-none");
+    }
+  }
+
+  function displayError(error) {
+    let entry = document.createElement("li");
+    entry.role = "button";
+    entry.classList.add("d-flex", "justify-content-between", "align-items-center");
+    let entryPrefix = document.createElement("div");
+    entryPrefix.classList.add("cluster-errors-prefix", "d-flex", "align-items-center");
+    let entryIconContainer = document.createElement("div");
+    entryIconContainer.classList.add("cluster-errors-icon");
+    let entryIcon = document.createElement("h2");
+    entryIcon.classList.add("mb-0", "fa-solid", "fa-bug");
+    entryIconContainer.appendChild(entryIcon);
+    entryPrefix.appendChild(entryIconContainer);
+    let entryDescription = document.createElement("div");
+    entryDescription.classList.add("d-inline-block", "text-truncate", "w-100", "position-relative");
+    let entryTitle = document.createElement("b");
+    entryTitle.classList.add("mb-0", "text-truncate");
+    entryTitle.innerHTML = error.title;
+    entryDescription.appendChild(entryTitle);
+    let entryOrigin = document.createElement("p");
+    entryOrigin.classList.add("mb-0", "text-truncate");
+    entryOrigin.innerHTML = error.origin;
+    entryDescription.appendChild(entryOrigin);
+    let entryTime = document.createElement("p");
+    entryTime.classList.add("mb-0", "text-truncate");
+    entryTime.innerHTML = new Date(error.time).toLocaleString();
+    entryDescription.appendChild(entryTime);
+    entryPrefix.appendChild(entryDescription);
+    entry.appendChild(entryPrefix);
+    let entrySuffix = document.createElement("div");
+    entrySuffix.classList.add("d-flex", "align-items-center");
+    let statusElement = document.createElement("span");
+    statusElement.classList.add("cluster-errors-status");
+    statusElement.innerHTML = "{% trans 'cluster.errors.unsolved' %}";
+    statusElement.classList.add("cluster-errors-status-unsolved");
+    entrySuffix.appendChild(statusElement);
+    let entryArrow = document.createElement("h4");
+    entryArrow.classList.add("mb-0", "ms-3", "text-secondary", "fa-solid", "fa-angle-right");
+    entrySuffix.appendChild(entryArrow);
+    entry.appendChild(entrySuffix);
+    entry.onclick = function (event) {
+      errorClick(error, entry);
+    }
+    document.getElementById("cluster-errors-list").appendChild(entry);
+  }
+
+  function errorClick(error, element) {
+    selectedError = error;
+    selectedElement = element;
+    let alreadySelected = element.classList.contains("cluster-error-active");
+    for (let entry of document.getElementsByClassName("cluster-error-active")) {
+      entry.classList.remove("cluster-error-active");
+    }
+    if (alreadySelected) {
+      closeSidebar();
+      return;
+    }
+    element.classList.add("cluster-error-active");
+    document.getElementById("cluster-errors-sidebar").classList.add("cluster-errors-sidebar-open");
+    checkContentShifting();
+    enableContentTransition();
+    document.getElementById("cluster-errors-sidebar-time").innerText =
+      new Date(error.time).toLocaleString();
+    document.getElementById("cluster-errors-sidebar-title").innerText = error.title;
+    document.getElementById("cluster-errors-sidebar-trace").innerText =
+      error.trace.replaceAll("\t", "").replaceAll(error.title + "\n", "");
+    document.getElementById("cluster-errors-sidebar-origin").innerHTML =
+      "<b>{% trans 'cluster.errors.sidebar.origin' %}: </b>" + error.origin;
+    document.getElementById("cluster-errors-sidebar-pod").innerHTML =
+      "<b class='me-1'>{% trans 'cluster.errors.sidebar.pod' %}: </b>" + error.pod;
+    document.getElementById("cluster-errors-sidebar-pod").appendChild(
+      createPodRedirectButton(error));
+    document.getElementById("cluster-errors-sidebar-node").innerHTML =
+      "<b>{% trans 'cluster.errors.sidebar.node' %}: </b>" + error.node;
+  }
+
+  function createPodRedirectButton(error) {
+    let element = document.createElement("div");
+    element.classList.add("cluster-errors-sidebar-pod-redirect");
+    element.role = "button";
+    var icon = document.createElement("span");
+    icon.classList.add("fa-solid", "fa-arrow-up-right-from-square");
+    element.appendChild(icon);
+    element.onclick = function (event) {
+      window.location.href = "https://panel.dulno.com/cluster/unit/" +
+        error.podControllerType.toLowerCase() + "/" +
+        error.podControllerName.toLowerCase() + "/pod/" + error.pod + "/";
+    }
+    return element;
+  }
+
+  document.getElementById('cluster-errors-sidebar-close').addEventListener('click', () => {
+    for (let entry of document.getElementsByClassName("cluster-error-active")) {
+      entry.classList.remove("cluster-error-active");
+    }
+    closeSidebar();
+  });
+
+  function closeSidebar() {
+    document.getElementById("cluster-errors-sidebar").classList.remove("cluster-errors-sidebar-open");
+    document.getElementById("cluster-errors-container").classList.remove("cluster-errors-content-shift");
+    enableContentTransition();
+  }
+
+  let isResizing = false;
+  let lastDownX = 0;
+
+  document.getElementById("cluster-errors-sidebar-resizer").addEventListener("mousedown", (e) => {
+    isResizing = true;
+    lastDownX = e.clientX;
+    document.body.style.userSelect = "none";
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", stopResizing);
+  });
+
+  function handleMouseMove(e) {
+    if (!isResizing) return;
+    const offsetRight = lastDownX - e.clientX;
+    let newWidth = document.getElementById("cluster-errors-sidebar").offsetWidth + offsetRight;
+    if (newWidth <= 600) {
+      newWidth = 600;
+    }
+    if (newWidth >= window.innerWidth / 2) {
+      newWidth = window.innerWidth / 2;
+    }
+    document.documentElement.style.cssText = "--cluster-errors-sidebar-width: " + newWidth + "px";
+    lastDownX = e.clientX;
+    checkContentShifting();
+    updateSidebarExpandButton(document.getElementById("cluster-errors-sidebar").offsetWidth);
+  }
+
+  function checkContentShifting() {
+    if (window.innerWidth > 800 + document.getElementById("cluster-errors-sidebar").offsetWidth) {
+      document.getElementById("cluster-errors-container").classList.add("cluster-errors-content-shift");
+    } else {
+      document.getElementById("cluster-errors-container").classList.remove("cluster-errors-content-shift");
+    }
+  }
+
+  function enableContentTransition() {
+    document.getElementById("cluster-errors-container").style.transition = "margin-right 0.3s ease";
+    setTimeout(function () {
+      document.getElementById("cluster-errors-container").style.transition = "";
+    }, 300);
+  }
+
+  function stopResizing() {
+    isResizing = false;
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", stopResizing);
+    document.body.style.userSelect = "auto";
+  }
+
+  document.getElementById("cluster-errors-sidebar-expand").onclick = function() {
+    let width = 600;
+    if (document.getElementById("cluster-errors-sidebar").offsetWidth === 600) {
+      width = window.innerWidth / 2;
+    }
+    document.getElementById("cluster-errors-sidebar").style.transition = "width 0.3s ease";
+    setTimeout(function () {
+      document.getElementById("cluster-errors-sidebar").style.transition = "";
+    }, 300);
+    enableContentTransition();
+    document.documentElement.style.cssText = "--cluster-errors-sidebar-width: " + width + "px";
+    checkContentShifting();
+    updateSidebarExpandButton(width);
+  }
+
+  function updateSidebarExpandButton(width) {
+    if (width === 600) {
+      document.getElementById("cluster-errors-sidebar-expand")
+        .classList.remove("cluster-errors-sidebar-expanded");
+    } else {
+      document.getElementById("cluster-errors-sidebar-expand")
+        .classList.add("cluster-errors-sidebar-expanded");
+    }
+  }
+
+  document.getElementById("cluster-errors-fixed").onclick = function (event) {
+    let request = new HttpRequest("https://team.dulno.com/v1/cluster/error/fixed/",
+      "POST", [], {error: selectedError.id});
+    request.send(function (status, responseText) {
+      selectedElement.remove();
+      if (document.getElementById("cluster-errors-list").children.length === 0) {
+        document.getElementById("cluster-errors-empty").classList.remove("d-none");
+        document.getElementById("cluster-errors-fixed-all").classList.add("d-none");
+      }
+      closeSidebar();
+    });
+  }
+
+  document.getElementById("cluster-errors-fixed-all").onclick = function (event) {
+    Swal.fire({
+      title: "{% trans 'cluster.errors.fixed.all.title' %}",
+      text: "{% trans 'cluster.errors.fixed.all.body' %}",
+      icon: "warning",
+      confirmButtonColor: "#dc3545",
+      showCancelButton: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        let request = new HttpRequest("https://team.dulno.com/v1/cluster/errors/fixed/all/",
+          "GET", []);
+        request.send(function (status, responseText) {
+          Swal.fire("{% trans 'cluster.errors.fixed.all.successful.title' %}",
+            "{% trans 'cluster.errors.fixed.all.successful.body' %}", "success")
+            .then(success => window.location.reload());
+        });
+      }
+    });
+  }
+
+  function fetchErrors(callback) {
+    let request = new HttpRequest("https://team.dulno.com/v1/cluster/errors/", "GET", []);
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText).errors);
+    });
+  }
 
   function displayLoader() {
     var loader = document.createElement("div");
     loader.classList.add("loader");
-    document.getElementById("cluster-error-container").appendChild(loader);
+    document.getElementById("cluster-errors-container").appendChild(loader);
   }
 
   function removeLoader() {
-    document.getElementById("cluster-error-container")
+    document.getElementById("cluster-errors-container")
       .removeChild(document.getElementsByClassName("loader")[0]);
-    document.getElementById("cluster-error-wrapper").classList.remove("d-none");
+    document.getElementById("cluster-errors-wrapper").classList.remove("d-none");
   }
 </script>
