@@ -121,3 +121,25 @@ LANGUAGES = (
 )
 
 WHITELIST = True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+          'level': 'DEBUG',
+          'class': 'logging.StreamHandler',
+        },
+        'custom_handler': {
+            'level': 'ERROR',
+            'class': 'errors.exception.ExceptionHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'custom_handler'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
