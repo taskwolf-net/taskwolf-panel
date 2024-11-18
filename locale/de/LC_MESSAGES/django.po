@@ -1118,6 +1118,10 @@ msgid "cluster.unit.pod.delete.title"
 msgstr "Pod löschen?"
 msgid "cluster.unit.pod.delete.body"
 msgstr "Sind Sie sicher, dass Sie diesen Pod löschen wollen?"
+msgid "cluster.unit.pod.not.found.title"
+msgstr "Pod nicht gefunden"
+msgid "cluster.unit.pod.not.found.body"
+msgstr "Der von Ihnen gesuchte Pod konnte nicht gefunden werden. Klicken Sie, um zur Einheit zurückzukehren"
 
 # CLUSTER - ERRORS
 msgid "cluster.errors.title"

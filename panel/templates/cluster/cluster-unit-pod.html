@@ -71,14 +71,20 @@
   $(document).ready(function() {
     displayLoader();
     fetchPod(function (pod) {
+      if (!pod.found) {
+        Swal.fire("{% trans 'cluster.unit.pod.not.found.title' %}",
+          "{% trans 'cluster.unit.pod.not.found.body' %}", "error")
+          .then(success => returnToUnitPage());
+        return;
+      }
       displayPod(pod);
       removeLoader();
+      setInterval(function () {
+        fetchPod(function (pod) {
+          displayPod(pod);
+        });
+      }, 1000);
     });
-    setInterval(function () {
-      fetchPod(function (pod) {
-        displayPod(pod);
-      });
-    }, 1000);
     applyTooltips(document.getElementById("cluster-unit-pod-delete"),
       document.getElementById("cluster-unit-pod-delete-container"),
       "{% trans 'cluster.unit.pod.delete' %}")
@@ -134,7 +140,7 @@
         let request = new HttpRequest("https://team.dulno.com/v1/cluster/pod/delete/",
           "POST", [], {podName: "{{podName}}"});
         request.send(function (status, responseText) {
-          window.location.href = "/cluster/unit/{{unitType}}/{{unitName}}/";
+          returnToUnitPage();
         });
       }
     });
@@ -149,6 +155,10 @@
   }
 
   document.getElementById("cluster-unit-pod-back").onclick = function (event) {
+    returnToUnitPage();
+  }
+
+  function returnToUnitPage() {
     window.location.href = "/cluster/unit/{{unitType}}/{{unitName}}/";
   }
 
