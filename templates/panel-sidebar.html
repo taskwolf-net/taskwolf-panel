@@ -6,28 +6,28 @@
       <li class="sidebar-item mt-3 {% if request.path == '/dashboard/' or request.path == '/' %}sidebar-active{% endif %}">
         <a href="/dashboard/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">house</span><span>{% trans 'panel.sidebar.dashboard' %}</span></a>
       </li>
-      <li class="sidebar-divider"></li>
-      <li id="tickets-sidebar-item" class="sidebar-item {% if 'ticket' in request.path %}sidebar-active{% endif %}">
+      <li id="sidebar-divider-first" class="sidebar-divider d-none"></li>
+      <li id="tickets-sidebar-item" class="sidebar-item d-none {% if 'ticket' in request.path %}sidebar-active{% endif %}">
         <a href="/tickets/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">confirmation_number</span><span class="d-flex justify-content-between align-items-center w-100">{% trans 'panel.sidebar.tickets' %}<h6 id="tickets-sidebar-count" class="px-3 py-1 rounded-3 text-bg-secondary me-2 mb-0">-</h6></span></a>
       </li>
-      <li id="questions-sidebar-item" class="sidebar-item {% if 'question' in request.path %}sidebar-active{% endif %}">
+      <li id="questions-sidebar-item" class="sidebar-item d-none {% if 'question' in request.path %}sidebar-active{% endif %}">
         <a href="/questions/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">support_agent</span><span class="d-flex justify-content-between align-items-center w-100">{% trans 'panel.sidebar.questions' %}<h6 id="questions-sidebar-count" class="px-3 py-1 rounded-3 text-bg-secondary me-2 mb-0">-</h6></span></a>
       </li>
-      <li id="sales-sidebar-item" class="sidebar-item {% if 'sale' in request.path %}sidebar-active{% endif %}">
+      <li id="sales-sidebar-item" class="sidebar-item d-none {% if 'sale' in request.path %}sidebar-active{% endif %}">
         <a href="/sales/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">monitoring</span><span class="d-flex justify-content-between align-items-center w-100">{% trans 'panel.sidebar.sales' %}<h6 id="sales-sidebar-count" class="px-3 py-1 rounded-3 text-bg-secondary me-2 mb-0">-</h6></span></a>
       </li>
-      <li class="sidebar-divider"></li>
+      <li id="sidebar-divider-second" class="sidebar-divider d-none"></li>
       <li id="users-sidebar-item" class="sidebar-item d-none {% if 'user' in request.path %}sidebar-active{% endif %}">
         <a href="/users/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">person</span><span>{% trans 'panel.sidebar.users' %}</span></a>
       </li>
       <li id="templates-sidebar-item" class="sidebar-item d-none {% if 'template' in request.path %}sidebar-active{% endif %}">
         <a href="/templates/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">draft</span><span>{% trans 'panel.sidebar.templates' %}</span></a>
       </li>
-      <li class="sidebar-divider"></li>
+      <li id="sidebar-divider-third" class="sidebar-divider d-none"></li>
       <li id="maintenance-sidebar-item" class="sidebar-item d-none {% if 'maintenance' in request.path %}sidebar-active{% endif %}">
         <a href="/maintenance/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">build</span><span>{% trans 'panel.sidebar.maintenance' %}</span></a>
       </li>
-      <li id="cluster-sidebar-item" class="sidebar-item {% if 'cluster' in request.path %}sidebar-active{% endif %}">
+      <li id="cluster-sidebar-item" class="sidebar-item d-none {% if 'cluster' in request.path %}sidebar-active{% endif %}">
         <a href="/cluster/resources/" class="sidebar-link nav-link" aria-current="page"><span class="sidebar-icon material-symbols-outlined">host</span><span>{% trans 'panel.sidebar.cluster' %}</span></a>
       </li>
       <li id="administration-sidebar-item" class="sidebar-item d-none {% if 'administration' in request.path or 'group' in request.path or 'member' in request.path %}sidebar-active{% endif %}">
@@ -92,13 +92,14 @@
 
 <script>
   $(document).ready(function() {
-    displayRestrictedSidebarItem("tickets-sidebar-item", "tickets", "tickets.find");
-    displayRestrictedSidebarItem("questions-sidebar-item", "questions", "questions.find");
-    displayRestrictedSidebarItem("sales-sidebar-item", "sales", "sales.find");
-    displayRestrictedSidebarItem("users-sidebar-item", "users", "user.search");
-    displayRestrictedSidebarItem("templates-sidebar-item", "templates", "template.create");
-    displayRestrictedSidebarItem("maintenance-sidebar-item", "maintenance", "maintenance.find");
-    displayRestrictedSidebarItem("administration-sidebar-item", "administration", "groups.find");
+    displayRestrictedSidebarItem("tickets-sidebar-item", "tickets", "sidebar-divider-first", "tickets.find");
+    displayRestrictedSidebarItem("questions-sidebar-item", "questions", "sidebar-divider-first", "questions.find");
+    displayRestrictedSidebarItem("sales-sidebar-item", "sales", "sidebar-divider-first", "sales.find");
+    displayRestrictedSidebarItem("users-sidebar-item", "users", "sidebar-divider-second", "user.search");
+    displayRestrictedSidebarItem("templates-sidebar-item", "templates", "sidebar-divider-second", "template.create");
+    displayRestrictedSidebarItem("maintenance-sidebar-item", "maintenance", "sidebar-divider-third", "maintenance.find");
+    displayRestrictedSidebarItem("cluster-sidebar-item", "cluster", "sidebar-divider-third", "cluster.resources");
+    displayRestrictedSidebarItem("administration-sidebar-item", "administration", "sidebar-divider-third", "groups.find");
     fetchUsername(function (username) {
       for (let element of document.getElementsByClassName("sidebar-profile-username")) {
         element.innerHTML = username;
@@ -137,13 +138,14 @@
     }
   });
 
-  function displayRestrictedSidebarItem(elementIdentifier, scopeIdentifier, permission) {
+  function displayRestrictedSidebarItem(elementIdentifier, scopeIdentifier, dividerIdentifier, permission) {
     $(document).ready(function() {
       let request = new HttpRequest("https://team.dulno.com/v1/member/has/permission/", "POST", [],
         {permission: permission});
       request.send(function (status, responseText) {
         if (JSON.parse(responseText).hasPermission === true) {
           document.getElementById(elementIdentifier).classList.remove("d-none");
+          document.getElementById(dividerIdentifier).classList.remove("d-none");
           if (scopeIdentifier === "tickets" || scopeIdentifier === "questions" ||
             scopeIdentifier === "sales"
           ) {
