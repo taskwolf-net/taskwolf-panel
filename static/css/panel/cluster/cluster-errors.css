@@ -242,9 +242,6 @@
 }
 
 #cluster-errors-sidebar-expand {
-  position: absolute;
-  left: 10px;
-  bottom: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
