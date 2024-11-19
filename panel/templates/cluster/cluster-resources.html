@@ -11,8 +11,10 @@
           {% include 'cluster-tab.html' %}
           <div id="cluster-resources-content">
             <div class="cluster-resources-type-content">
-              <div class="d-flex flex-md-row flex-column justify-content-between align-items-center mb-5">
-                <h4 class="fw-bold mb-md-0 mb-4">{% trans 'cluster.resources.controller.headline' %}</h4>
+              <div class="d-flex flex-xl-row flex-column justify-content-between align-items-center mb-5">
+                <div class="d-flex mb-xl-0 mb-4">
+                  <h4 class="fw-bold mb-0">{% trans 'cluster.resources.controller.headline' %}</h4><h5 id="cluster-resources-controller-name" class="ms-4 mb-0"></h5>
+                </div>
                 <div class="cluster-resources-switch">
                   <button id="cluster-resources-controller-feature-average" class="text-warning cluster-resources-switch-entry cluster-resources-switch-active">{% trans 'cluster.resources.feature.average' %}</button>
                   <button id="cluster-resources-controller-feature-maximum" class="text-danger cluster-resources-switch-entry">{% trans 'cluster.resources.feature.maximum' %}</button>
@@ -35,8 +37,10 @@
               </div>
             </div>
             <div class="cluster-resources-type-content">
-              <div class="d-flex flex-md-row flex-column justify-content-between align-items-center mb-5">
-                <h4 class="fw-bold mb-md-0 mb-4">{% trans 'cluster.resources.worker.headline' %}</h4>
+              <div class="d-flex flex-xl-row flex-column justify-content-between align-items-center mb-5">
+                <div class="d-flex mb-xl-0 mb-4">
+                  <h4 class="fw-bold mb-0">{% trans 'cluster.resources.worker.headline' %}</h4><h5 id="cluster-resources-worker-name" class="ms-4 mb-0"></h5>
+                </div>
                 <div class="cluster-resources-switch">
                   <button id="cluster-resources-worker-feature-average" class="text-warning cluster-resources-switch-entry cluster-resources-switch-active">{% trans 'cluster.resources.feature.average' %}</button>
                   <button id="cluster-resources-worker-feature-maximum" class="text-danger cluster-resources-switch-entry">{% trans 'cluster.resources.feature.maximum' %}</button>
@@ -67,24 +71,31 @@
 
 <script>
   let selectedFeature = {controller: "AVERAGE", worker: "AVERAGE"};
+  let latestResources = {};
   let bars = {};
 
   $(document).ready(function() {
     displayLoader();
-    updateMetrics(function () {
+    refreshMetrics(function () {
       removeLoader();
     });
     setInterval(function () {
-      updateMetrics(function () {});
+      refreshMetrics(function () {});
     }, 1000);
   });
 
-  function updateMetrics(callback) {
+  function refreshMetrics(callback) {
     fetchResources(function (resources) {
       displayMetrics("controller", resources.controller);
       displayMetrics("worker", resources.worker);
+      latestResources = resources;
       callback();
     });
+  }
+
+  function updateMetrics() {
+    displayMetrics("controller", latestResources.controller);
+    displayMetrics("worker", latestResources.worker);
   }
 
   function displayMetrics(type, resources) {
@@ -98,6 +109,11 @@
     drawMetric("#cluster-resources-" + type + "-disk-circle",
       featureResources.diskSpaceRatio, 100, featureResources.usedDiskSpace.toFixed(1) +
         " GB / " + featureResources.totalDiskSpace.toFixed(1) + " GB");
+    if (feature === "AVERAGE") {
+      document.getElementById("cluster-resources-" + type + "-name").innerText = "";
+    } else {
+      document.getElementById("cluster-resources-" + type + "-name").innerText = featureResources.node;
+    }
   }
 
   function drawMetric(circleElement, value, maxValue, subtitle) {
@@ -162,6 +178,7 @@
 
   document.getElementById("cluster-resources-controller-feature-average").onclick = function (event) {
     selectedFeature.controller = "AVERAGE";
+    updateMetrics();
     document.getElementById("cluster-resources-controller-feature-average")
       .classList.add("cluster-resources-switch-active");
     document.getElementById("cluster-resources-controller-feature-maximum")
@@ -172,6 +189,7 @@
 
   document.getElementById("cluster-resources-controller-feature-maximum").onclick = function (event) {
     selectedFeature.controller = "MAXIMUM";
+    updateMetrics();
     document.getElementById("cluster-resources-controller-feature-maximum")
       .classList.add("cluster-resources-switch-active");
     document.getElementById("cluster-resources-controller-feature-average")
@@ -182,6 +200,7 @@
 
   document.getElementById("cluster-resources-controller-feature-minimum").onclick = function (event) {
     selectedFeature.controller = "MINIMUM";
+    updateMetrics();
     document.getElementById("cluster-resources-controller-feature-minimum")
       .classList.add("cluster-resources-switch-active");
     document.getElementById("cluster-resources-controller-feature-average")
@@ -192,6 +211,7 @@
 
   document.getElementById("cluster-resources-worker-feature-average").onclick = function (event) {
     selectedFeature.worker = "AVERAGE";
+    updateMetrics();
     document.getElementById("cluster-resources-worker-feature-average")
       .classList.add("cluster-resources-switch-active");
     document.getElementById("cluster-resources-worker-feature-maximum")
@@ -202,6 +222,7 @@
 
   document.getElementById("cluster-resources-worker-feature-maximum").onclick = function (event) {
     selectedFeature.worker = "MAXIMUM";
+    updateMetrics();
     document.getElementById("cluster-resources-worker-feature-maximum")
       .classList.add("cluster-resources-switch-active");
     document.getElementById("cluster-resources-worker-feature-average")
@@ -212,6 +233,7 @@
 
   document.getElementById("cluster-resources-worker-feature-minimum").onclick = function (event) {
     selectedFeature.worker = "MINIMUM";
+    updateMetrics();
     document.getElementById("cluster-resources-worker-feature-minimum")
       .classList.add("cluster-resources-switch-active");
     document.getElementById("cluster-resources-worker-feature-average")
