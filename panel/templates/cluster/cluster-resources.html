@@ -66,23 +66,45 @@
 </html>
 
 <script>
-  let controllerFeature = "AVERAGE";
-  let workerFeature = "AVERAGE";
+  let selectedFeature = {controller: "AVERAGE", worker: "AVERAGE"};
+  let bars = {};
 
   $(document).ready(function() {
     displayLoader();
-    fetchResources(function (resources) {
-      drawMetric("#cluster-resources-controller-cpu-circle", 24, 100);
-      drawMetric("#cluster-resources-controller-ram-circle", 40, 100, "3.2 GB / 8 GB");
-      drawMetric("#cluster-resources-controller-disk-circle", 19, 100, "15.6 GB / 80 GB");
-      drawMetric("#cluster-resources-worker-cpu-circle", 78, 100);
-      drawMetric("#cluster-resources-worker-ram-circle", 67, 100, "5.4 GB / 8 GB");
-      drawMetric("#cluster-resources-worker-disk-circle", 38, 100, "30.4 GB / 80 GB");
+    updateMetrics(function () {
       removeLoader();
     });
+    setInterval(function () {
+      updateMetrics(function () {});
+    }, 1000);
   });
 
+  function updateMetrics(callback) {
+    fetchResources(function (resources) {
+      displayMetrics("controller", resources.controller);
+      displayMetrics("worker", resources.worker);
+      callback();
+    });
+  }
+
+  function displayMetrics(type, resources) {
+    let feature = selectedFeature[type];
+    let featureResources = resources[feature.toLowerCase()];
+    drawMetric("#cluster-resources-" + type + "-cpu-circle",
+      featureResources.cpuRatio, 100);
+    drawMetric("#cluster-resources-" + type + "-ram-circle",
+      featureResources.memoryRatio, 100, featureResources.usedMemory.toFixed(1) +
+        " GB / " + featureResources.totalMemory.toFixed(1) + " GB");
+    drawMetric("#cluster-resources-" + type + "-disk-circle",
+      featureResources.diskSpaceRatio, 100, featureResources.usedDiskSpace.toFixed(1) +
+        " GB / " + featureResources.totalDiskSpace.toFixed(1) + " GB");
+  }
+
   function drawMetric(circleElement, value, maxValue, subtitle) {
+    if (bars[circleElement] !== undefined) {
+      bars[circleElement].animate(value / maxValue);
+      return;
+    }
     let isDarkTheme = Cookie.find("dulno-panel-theme") === "dark";
     let bar = new ProgressBar.Circle(circleElement, {
       strokeWidth: 4,
@@ -115,6 +137,7 @@
     });
     bar.text.style.fontSize = '1.8rem';
     bar.animate(value / maxValue);
+    bars[circleElement] = bar;
     drawMetricSpikes(document.getElementById(circleElement.replace("#", "")), 24);
   }
 
@@ -138,7 +161,7 @@
   }
 
   document.getElementById("cluster-resources-controller-feature-average").onclick = function (event) {
-    controllerFeature = "AVERAGE";
+    selectedFeature.controller = "AVERAGE";
     document.getElementById("cluster-resources-controller-feature-average")
       .classList.add("cluster-resources-switch-active");
     document.getElementById("cluster-resources-controller-feature-maximum")
@@ -148,7 +171,7 @@
   }
 
   document.getElementById("cluster-resources-controller-feature-maximum").onclick = function (event) {
-    controllerFeature = "MAXIMUM";
+    selectedFeature.controller = "MAXIMUM";
     document.getElementById("cluster-resources-controller-feature-maximum")
       .classList.add("cluster-resources-switch-active");
     document.getElementById("cluster-resources-controller-feature-average")
@@ -158,7 +181,7 @@
   }
 
   document.getElementById("cluster-resources-controller-feature-minimum").onclick = function (event) {
-    controllerFeature = "MINIMUM";
+    selectedFeature.controller = "MINIMUM";
     document.getElementById("cluster-resources-controller-feature-minimum")
       .classList.add("cluster-resources-switch-active");
     document.getElementById("cluster-resources-controller-feature-average")
@@ -168,7 +191,7 @@
   }
 
   document.getElementById("cluster-resources-worker-feature-average").onclick = function (event) {
-    workerFeature = "AVERAGE";
+    selectedFeature.worker = "AVERAGE";
     document.getElementById("cluster-resources-worker-feature-average")
       .classList.add("cluster-resources-switch-active");
     document.getElementById("cluster-resources-worker-feature-maximum")
@@ -178,7 +201,7 @@
   }
 
   document.getElementById("cluster-resources-worker-feature-maximum").onclick = function (event) {
-    workerFeature = "MAXIMUM";
+    selectedFeature.worker = "MAXIMUM";
     document.getElementById("cluster-resources-worker-feature-maximum")
       .classList.add("cluster-resources-switch-active");
     document.getElementById("cluster-resources-worker-feature-average")
@@ -188,7 +211,7 @@
   }
 
   document.getElementById("cluster-resources-worker-feature-minimum").onclick = function (event) {
-    workerFeature = "MINIMUM";
+    selectedFeature.worker = "MINIMUM";
     document.getElementById("cluster-resources-worker-feature-minimum")
       .classList.add("cluster-resources-switch-active");
     document.getElementById("cluster-resources-worker-feature-average")
