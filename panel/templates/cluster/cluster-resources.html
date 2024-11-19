@@ -119,9 +119,17 @@
   function drawMetric(circleElement, value, maxValue, subtitle) {
     if (bars[circleElement] !== undefined) {
       bars[circleElement].animate(value / maxValue);
+      let subtitleElement = document.getElementById(circleElement.replace("#", ""))
+        .querySelector(".cluster-resources-metric-circle-subtitle");
+      if (subtitleElement !== null) {
+        subtitleElement.innerText = subtitle;
+      }
       return;
     }
     let isDarkTheme = Cookie.find("dulno-panel-theme") === "dark";
+    let subtitleElement = document.createElement("span");
+    subtitleElement.classList.add("cluster-resources-metric-circle-subtitle");
+    subtitleElement.innerText = subtitle;
     let bar = new ProgressBar.Circle(circleElement, {
       strokeWidth: 4,
       color: isDarkTheme ? '#e1e1e1' : '#252525',
@@ -143,9 +151,6 @@
         text.innerText = value + "%";
         if (subtitle) {
           text.appendChild(document.createElement("br"));
-          let subtitleElement = document.createElement("span");
-          subtitleElement.classList.add("cluster-resources-metric-circle-subtitle");
-          subtitleElement.innerText = subtitle;
           text.appendChild(subtitleElement);
         }
         circle.setText(text);
