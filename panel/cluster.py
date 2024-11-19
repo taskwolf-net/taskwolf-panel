@@ -10,6 +10,13 @@ async def clusterResources(request):
     'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/cluster/cluster-tab.css',
       'css/panel/cluster/cluster-resources.css']})
 
+@permission_required(permission = "cluster.resources")
+@authentication_required
+async def clusterServices(request):
+  return render(request, 'cluster/cluster-services.html', {'title': gettext("cluster.services.title"),
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/cluster/cluster-tab.css',
+      'css/panel/cluster/cluster-services.css']})
+
 @permission_required(permission = "cluster.servers")
 @authentication_required
 async def clusterServers(request):

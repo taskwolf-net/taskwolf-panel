@@ -952,6 +952,8 @@ msgstr "This maintenance has been successfully created"
 # CLUSTER
 msgid "cluster.tab.resource"
 msgstr "RESOURCES"
+msgid "cluster.tab.service"
+msgstr "SERVICES"
 msgid "cluster.tab.server"
 msgstr "SERVER"
 msgid "cluster.tab.unit"
@@ -978,6 +980,14 @@ msgid "cluster.resources.metric.ram"
 msgstr "RAM"
 msgid "cluster.resources.metric.disk"
 msgstr "DISK"
+
+# CLUSTER - SERVICE
+msgid "cluster.services.title"
+msgstr "Cluster - Services - Dulno"
+msgid "cluster.services.online"
+msgstr "Online"
+msgid "cluster.services.offline"
+msgstr "Offline"
 
 # CLUSTER - SERVERS
 msgid "cluster.servers.title"
