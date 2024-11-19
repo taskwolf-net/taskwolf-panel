@@ -120,10 +120,12 @@
     isUrlReachable(url, function (response)  {
       var element = document.getElementById("cluster-service-status-" + identifier);
       element.innerHTML = "";
-      var delayElement = document.createElement("h5");
-      delayElement.classList.add("d-block", "me-4", "mb-0");
-      delayElement.innerText = response.delay + " ms";
-      element.appendChild(delayElement);
+      if (response.available) {
+        var delayElement = document.createElement("h5");
+        delayElement.classList.add("d-block", "me-4", "mb-0");
+        delayElement.innerText = response.delay + " ms";
+        element.appendChild(delayElement);
+      }
       var iconWrapper = document.createElement("div");
       iconWrapper.classList.add("cluster-service-status-icon");
       var iconContainer = document.createElement("div");
