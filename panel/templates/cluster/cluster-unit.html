@@ -45,6 +45,7 @@
                       <p id="cluster-unit-specification-available-replicas" class="mb-0 text-truncate"></p>
                     </div>
                   </div>
+                  <button id="cluster-unit-scale" class="btn btn-primary d-none d-block mt-4 mx-auto px-5"><i class="fa-solid fa-scale-balanced me-2"></i>{% trans 'cluster.unit.scale' %}</button>
                 </div>
               </div>
             </div>
@@ -61,6 +62,8 @@
 </html>
 
 <script>
+  let unitData;
+
   $(document).ready(function() {
     displayLoader();
     fetchUnit(function (unit) {
@@ -72,12 +75,16 @@
         displayUnit(unit);
       });
     }, 1000);
+    if ("{{type}}" === "deployment") {
+      document.getElementById("cluster-unit-scale").classList.remove("d-none");
+    }
     applyTooltips(document.getElementById("cluster-unit-restart"),
       document.getElementById("cluster-unit-restart-container"),
       "{% trans 'cluster.unit.restart' %}");
   });
 
   function displayUnit(unit) {
+    unitData = unit;
     document.getElementById("cluster-unit-name").innerText = unit.name;
     document.getElementById("cluster-unit-general-name").innerText = unit.name;
     document.getElementById("cluster-unit-general-type").innerText = unit.type;
@@ -166,6 +173,48 @@
       phaseElement.classList.add("cluster-unit-pod-phase-unknown");
     }
     return phaseElement;
+  }
+
+  document.getElementById("cluster-unit-scale").onclick = function (event) {
+    let scaleForm = document.createElement("div");
+    scaleForm.classList.add("cluster-unit-scale-content");
+    let scalePickerContainer = document.createElement("div");
+    scalePickerContainer.classList.add("d-flex", "justify-content-center", "align-items-center", "my-4");
+    let scalePickerInput = document.createElement("input");
+    scalePickerInput.classList.add("mx-2");
+    scalePickerInput.value = unitData.desiredReplicas;
+    scalePickerInput.step = "1";
+    scalePickerInput.min = "1";
+    let scalePickerDown = document.createElement("button");
+    scalePickerDown.innerText = "-";
+    scalePickerDown.onclick = function (event) {
+      scalePickerInput.value = Math.max(1, parseInt(scalePickerInput.value) - 1);
+    }
+    scalePickerContainer.appendChild(scalePickerDown);
+    scalePickerContainer.appendChild(scalePickerInput);
+    let scalePickerUp = document.createElement("button");
+    scalePickerUp.innerText = "+";
+    scalePickerUp.onclick = function (event) {
+      scalePickerInput.value = Math.max(1, parseInt(scalePickerInput.value) + 1);
+    }
+    scalePickerContainer.appendChild(scalePickerUp);
+    scaleForm.appendChild(scalePickerContainer);
+    Swal.fire({
+      title: "{% trans 'cluster.unit.scale.title' %}",
+      html: scaleForm,
+      showCancelButton: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        let replicas = scalePickerInput.value;
+        let request = new HttpRequest("https://team.dulno.com/v1/cluster/unit/scale/",
+          "POST", [], {unitName: "{{name}}", unitType: "{{type}}", replicas: replicas});
+        request.send(function (status, responseText) {
+          Swal.fire("{% trans 'cluster.unit.scale.successful.title' %}",
+            "{% trans 'cluster.unit.scale.successful.body' %}".replace("%s", replicas),
+            "success");
+        });
+      }
+    });
   }
 
   document.getElementById("cluster-unit-restart").onclick = function (event) {

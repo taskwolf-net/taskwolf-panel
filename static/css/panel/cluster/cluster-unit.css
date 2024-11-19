@@ -177,3 +177,43 @@
 .light #cluster-unit-restart:hover {
   background-color: #c4c4c4;
 }
+
+.cluster-unit-scale-content button {
+  background-color: #0d6efd;
+  border: none;
+  color: white;
+  font-size: 1em;
+  width: 35px;
+  height: 35px;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.cluster-unit-scale-content button:hover {
+  background-color: #1f79ff;
+}
+
+.cluster-unit-scale-content input {
+  background-color: transparent;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: none;
+  outline: none;
+  width: min(60px, 100%) !important;
+  height: 35px;
+}
+
+.dark .cluster-unit-scale-content input {
+  border: 1px solid #63717d;
+  color: white;
+}
+
+.light .cluster-unit-scale-content input {
+  border: 1px solid #909090;
+  color: black;
+}
+
+.cluster-unit-scale-content input::placeholder {
+  color: #a5a5a5;
+}
