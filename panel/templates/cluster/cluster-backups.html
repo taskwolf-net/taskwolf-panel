@@ -1,0 +1,66 @@
+{% load static %}
+{% load i18n %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body class="dark" data-bs-theme="dark">
+    {% include 'panel-header.html' %}
+    {% include 'panel-sidebar.html' %}
+    <div class="sidebar-influenced">
+      <div id="cluster-backups-container">
+        <div id="cluster-backups-wrapper" class="d-none">
+          {% include 'cluster-tab.html' %}
+          <div id="cluster-backups-content">
+            <ul id="cluster-backups-list">
+            </ul>
+            <div id="cluster-backups-empty" class="text-center d-none">
+              <span>{% trans 'cluster.backups.empty' %}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  $(document).ready(function() {
+    displayLoader();
+    fetchBackups(function (backups) {
+      displayBackups(backups);
+      removeLoader();
+    });
+  });
+
+  function displayBackups(backups) {
+    for (let i = 0; i < backups.length; i++) {
+      let backup = backups[i];
+      displayBackup(backup);
+    }
+    if (backups.length === 0) {
+      document.getElementById("cluster-backups-empty").classList.remove("d-none");
+    }
+  }
+
+  function displayBackup(backup) {
+
+  }
+
+  function fetchBackups(callback) {
+    let request = new HttpRequest("https://team.dulno.com/v1/cluster/backups/", "GET", []);
+    request.send(function (status, responseText) {
+      callback(JSON.parse(responseText).backups);
+    });
+  }
+
+  function displayLoader() {
+    var loader = document.createElement("div");
+    loader.classList.add("loader");
+    document.getElementById("cluster-backups-container").appendChild(loader);
+  }
+
+  function removeLoader() {
+    document.getElementById("cluster-backups-container")
+      .removeChild(document.getElementsByClassName("loader")[0]);
+    document.getElementById("cluster-backups-wrapper").classList.remove("d-none");
+  }
+</script>

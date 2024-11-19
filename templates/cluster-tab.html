@@ -6,6 +6,7 @@
     <li class="{% if 'service' in request.path %}cluster-tab-active{% endif %}"><a href="/cluster/services/">{% trans 'cluster.tab.service' %}</a></li>
     <li class="{% if 'server' in request.path %}cluster-tab-active{% endif %}"><a href="/cluster/servers/">{% trans 'cluster.tab.server' %}</a></li>
     <li class="{% if 'unit' in request.path %}cluster-tab-active{% endif %}"><a href="/cluster/units/">{% trans 'cluster.tab.unit' %}</a></li>
+    <li class="{% if 'backup' in request.path %}cluster-tab-active{% endif %}"><a href="/cluster/backups/">{% trans 'cluster.tab.backup' %}</a></li>
     <li class="{% if 'error' in request.path %}cluster-tab-active{% endif %}"><a href="/cluster/errors/">{% trans 'cluster.tab.error' %}</a></li>
   </ul>
 </div>

@@ -53,6 +53,13 @@ async def clusterUnitPod(request, unitType, unitName, podName):
       'css/panel/cluster/cluster-unit-pod.css'], 'unitType': unitType,
     'unitName': unitName, 'podName': podName})
 
+@permission_required(permission = "cluster.backups")
+@authentication_required
+async def clusterBackups(request):
+  return render(request, 'cluster/cluster-backups.html', {'title': gettext("cluster.backups.title"),
+    'css': ['css/base/panel-header.css', 'css/base/panel-sidebar.css', 'css/panel/cluster/cluster-tab.css',
+      'css/panel/cluster/cluster-backups.css']})
+
 @permission_required(permission = "cluster.errors")
 @authentication_required
 async def clusterErrors(request):

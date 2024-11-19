@@ -958,6 +958,8 @@ msgid "cluster.tab.server"
 msgstr "SERVER"
 msgid "cluster.tab.unit"
 msgstr "UNITS"
+msgid "cluster.tab.backup"
+msgstr "BACKUPS"
 msgid "cluster.tab.error"
 msgstr "ERRORS"
 
@@ -1142,6 +1144,12 @@ msgid "cluster.unit.pod.not.found.title"
 msgstr "Pod not found"
 msgid "cluster.unit.pod.not.found.body"
 msgstr "The pod you were looking for could not be found. Click to return to the unit"
+
+# CLUSTER - BACKUPS
+msgid "cluster.backups.title"
+msgstr "Cluster - Backups - Dulno"
+msgid "cluster.backups.empty"
+msgstr "No backups could be found."
 
 # CLUSTER - ERRORS
 msgid "cluster.errors.title"

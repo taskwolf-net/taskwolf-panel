@@ -956,6 +956,8 @@ msgid "cluster.tab.server"
 msgstr "SERVER"
 msgid "cluster.tab.unit"
 msgstr "EINHEITEN"
+msgid "cluster.tab.backup"
+msgstr "BACKUPS"
 msgid "cluster.tab.error"
 msgstr "FEHLER"
 
@@ -1140,6 +1142,12 @@ msgid "cluster.unit.pod.not.found.title"
 msgstr "Pod nicht gefunden"
 msgid "cluster.unit.pod.not.found.body"
 msgstr "Der von Ihnen gesuchte Pod konnte nicht gefunden werden. Klicken Sie, um zur Einheit zurückzukehren"
+
+# CLUSTER - BACKUPS
+msgid "cluster.backups.title"
+msgstr "Infrastruktur - Backups - Dulno"
+msgid "cluster.backups.empty"
+msgstr "Es konnten keine Backups gefunden werden."
 
 # CLUSTER - ERRORS
 msgid "cluster.errors.title"
