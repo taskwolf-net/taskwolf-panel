@@ -45,3 +45,28 @@
     display: none !important;
   }
 }
+
+.cluster-backups-download {
+  transition-duration: 0.2s;
+}
+
+.dark .cluster-backups-download:hover {
+  color: #d8d8d8;
+}
+
+.light .cluster-backups-download:hover {
+  color: #3a3a3a;
+}
+
+@keyframes cluster-backups-download-shake {
+  0% { transform: translateY(0); }
+  25% { transform: translateY(-5px); }
+  50% { transform: translateY(2px); }
+  75% { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes cluster-backups-download-green {
+  10% { color: #36df3d; }
+  90% { color: #36df3d; }
+}

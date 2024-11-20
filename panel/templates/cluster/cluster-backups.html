@@ -32,7 +32,7 @@
   });
 
   function displayBackups(backups) {
-    for (let entry of Object.keys(backups)) {
+    for (let entry of Object.keys(backups).sort().reverse()) {
       displayBackup(Number(entry), backups[entry]);
     }
     if (backups.length === 0) {
@@ -76,7 +76,8 @@
     entryDownloadContainer.style.width = "56px";
     entryDownloadContainer.style.height = "32px";
     let entryDownload = document.createElement("h4");
-    entryDownload.classList.add("mb-0", "fa-solid", "fa-download");
+    entryDownload.classList.add("cluster-backups-download", "mb-0", "fa-solid",
+      "fa-download");
     applyTooltips(entryDownload, entryDownloadContainer,
       "{% trans 'cluster.backups.download' %}");
     entryDownload.onclick = function (event) {
@@ -88,22 +89,50 @@
     document.getElementById("cluster-backups-list").appendChild(entry);
   }
 
-  function downloadBackup(time, element, parent) {
+  async function downloadBackup(time, element, parent) {
     bootstrap.Tooltip.getOrCreateInstance(element).hide();
     element.remove();
-    var spinnerContainer = document.createElement("div");
+    let spinnerContainer = document.createElement("div");
     spinnerContainer.classList.add("spinner-border");
     spinnerContainer.role = "status";
-    var spinner = document.createElement("div");
+    let spinner = document.createElement("div");
     spinner.classList.add("visually-hidden");
     spinnerContainer.appendChild(spinner);
     parent.appendChild(spinnerContainer);
-    let request = new HttpRequest("https://team.dulno.com/v1/cluster/backup/download/",
-      "POST", [], {backup: time});
-    request.send(function (status, responseText) {
-      spinnerContainer.remove();
-      parent.appendChild(element);
+    let blob = await fetchBackupFile(time);
+    let url = URL.createObjectURL(blob);
+    let a = document.createElement("a");
+    a.href = url;
+    a.download = "dulno-backup-" + time + ".tar.gz.gpg";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    spinnerContainer.remove();
+    parent.appendChild(element);
+    element.style.animation = 'cluster-backups-download-shake 0.75s ease, ' +
+      'cluster-backups-download-green 1.5s ease';
+    setTimeout(function() {
+      element.style.animation = '';
+    }, 2000);
+  }
+
+  async function fetchBackupFile(time) {
+    let headers = {"Content-Type": "application/json"};
+    let token = Cookie.find("panel-token");
+    if (token !== null) {
+      headers["Authorization"] = "Bearer " + token;
+    }
+    let whitelistKey = Cookie.find("dulno-whitelist-key");
+    if (whitelistKey !== null) {
+      headers["WHITELIST-KEY"] = whitelistKey;
+    }
+    let response = await fetch("https://team.dulno.com/v1/cluster/backup/download/", {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify({backup: time})
     });
+    return await response.blob();
   }
 
   function fetchBackups(callback) {

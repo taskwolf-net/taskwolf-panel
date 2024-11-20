@@ -1152,6 +1152,8 @@ msgid "cluster.backups.empty"
 msgstr "No backups could be found."
 msgid "cluster.backups.download"
 msgstr "Download"
+msgid "cluster.backups.download.complete"
+msgstr "Backup download completed"
 
 # CLUSTER - ERRORS
 msgid "cluster.errors.title"
