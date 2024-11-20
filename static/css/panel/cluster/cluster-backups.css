@@ -9,3 +9,39 @@
   width: 95%;
   margin: auto;
 }
+
+#cluster-backups-list li {
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.dark #cluster-backups-list li {
+  background-color: #131820;
+  border: 1px #2b3441 solid;
+}
+
+.light #cluster-backups-list li {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
+}
+
+.cluster-backups-icon {
+  width: 40px;
+  text-align: center;
+  margin-right: 40px;
+  margin-left: 20px;
+}
+
+@media (max-width: 650px) {
+  .cluster-backups-icon {
+    margin-right: 20px;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .cluster-backups-icon {
+    display: none !important;
+  }
+}

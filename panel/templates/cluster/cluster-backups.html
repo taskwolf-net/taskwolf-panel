@@ -32,17 +32,78 @@
   });
 
   function displayBackups(backups) {
-    for (let i = 0; i < backups.length; i++) {
-      let backup = backups[i];
-      displayBackup(backup);
+    for (let entry of Object.keys(backups)) {
+      displayBackup(Number(entry), backups[entry]);
     }
     if (backups.length === 0) {
       document.getElementById("cluster-backups-empty").classList.remove("d-none");
     }
   }
 
-  function displayBackup(backup) {
+  function displayBackup(time, content) {
+    let entry = document.createElement("li");
+    entry.classList.add("d-flex", "justify-content-between", "align-items-center");
+    let entryPrefix = document.createElement("div");
+    entryPrefix.classList.add("d-flex", "align-items-center");
+    let entryIconContainer = document.createElement("div");
+    entryIconContainer.classList.add("cluster-backups-icon");
+    let entryIcon = document.createElement("h2");
+    entryIcon.classList.add("mb-0", "fa-solid", "fa-kit-medical");
+    entryIconContainer.appendChild(entryIcon);
+    entryPrefix.appendChild(entryIconContainer);
+    let entryDescription = document.createElement("div");
+    let entryPlatform = document.createElement("b");
+    entryPlatform.classList.add("mb-0");
+    entryPlatform.innerHTML = new Date(time).toLocaleString();
+    entryDescription.appendChild(entryPlatform);
+    entryPrefix.appendChild(entryDescription);
+    let entryDatabases = document.createElement("p");
+    entryDatabases.classList.add("mb-0");
+    for (let i = 0; i < content.length; i++) {
+      if (i > 0) {
+        entryDatabases.innerText += ", ";
+      }
+      entryDatabases.innerText += content[i].pod;
+    }
+    entryDescription.appendChild(entryDatabases);
+    entryPrefix.appendChild(entryDescription);
+    entry.appendChild(entryPrefix);
+    let entrySuffix = document.createElement("div");
+    entrySuffix.classList.add("d-flex", "align-items-center");
+    let entryDownloadContainer = document.createElement("div");
+    entryDownloadContainer.classList.add("d-flex", "justify-content-center",
+      "align-items-center");
+    entryDownloadContainer.style.width = "56px";
+    entryDownloadContainer.style.height = "32px";
+    let entryDownload = document.createElement("h4");
+    entryDownload.classList.add("mb-0", "fa-solid", "fa-download");
+    applyTooltips(entryDownload, entryDownloadContainer,
+      "{% trans 'cluster.backups.download' %}");
+    entryDownload.onclick = function (event) {
+      downloadBackup(time, entryDownload, entryDownloadContainer);
+    }
+    entryDownloadContainer.appendChild(entryDownload)
+    entrySuffix.appendChild(entryDownloadContainer);
+    entry.appendChild(entrySuffix);
+    document.getElementById("cluster-backups-list").appendChild(entry);
+  }
 
+  function downloadBackup(time, element, parent) {
+    bootstrap.Tooltip.getOrCreateInstance(element).hide();
+    element.remove();
+    var spinnerContainer = document.createElement("div");
+    spinnerContainer.classList.add("spinner-border");
+    spinnerContainer.role = "status";
+    var spinner = document.createElement("div");
+    spinner.classList.add("visually-hidden");
+    spinnerContainer.appendChild(spinner);
+    parent.appendChild(spinnerContainer);
+    let request = new HttpRequest("https://team.dulno.com/v1/cluster/backup/download/",
+      "POST", [], {backup: time});
+    request.send(function (status, responseText) {
+      spinnerContainer.remove();
+      parent.appendChild(element);
+    });
   }
 
   function fetchBackups(callback) {
@@ -62,5 +123,15 @@
     document.getElementById("cluster-backups-container")
       .removeChild(document.getElementsByClassName("loader")[0]);
     document.getElementById("cluster-backups-wrapper").classList.remove("d-none");
+  }
+
+  function applyTooltips(element, container, text) {
+    $(element).attr("data-bs-toggle", "tooltip");
+    $(element).attr("data-bs-placement", "top");
+    $(element).attr("data-bs-title", text);
+    container.classList.add("position-relative");
+    new bootstrap.Tooltip(element, {
+      container: container
+    });
   }
 </script>

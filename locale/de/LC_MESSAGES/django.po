@@ -1148,6 +1148,8 @@ msgid "cluster.backups.title"
 msgstr "Infrastruktur - Backups - Dulno"
 msgid "cluster.backups.empty"
 msgstr "Es konnten keine Backups gefunden werden."
+msgid "cluster.backups.download"
+msgstr "Herunterladen"
 
 # CLUSTER - ERRORS
 msgid "cluster.errors.title"
