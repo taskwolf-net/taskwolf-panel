@@ -10,6 +10,10 @@
         <div id="cluster-backups-wrapper" class="d-none">
           {% include 'cluster-tab.html' %}
           <div id="cluster-backups-content">
+            <div id="cluster-backups-control-container" class="d-flex justify-content-end align-items-center me-4 mb-5">
+              <h2 id="cluster-backups-upload" class="fa-solid fa-upload mb-0 me-3" role="button"></h2>
+              <h1 id="cluster-backups-run" class="text-success fa-solid fa-circle-play mb-0" role="button"></h1>
+            </div>
             <ul id="cluster-backups-list">
             </ul>
             <div id="cluster-backups-empty" class="text-center d-none">
@@ -29,13 +33,20 @@
       displayBackups(backups);
       removeLoader();
     });
+    applyTooltips(document.getElementById("cluster-backups-run"),
+      document.getElementById("cluster-backups-control-container"),
+      "{% trans 'cluster.backups.run' %}");
+    applyTooltips(document.getElementById("cluster-backups-upload"),
+      document.getElementById("cluster-backups-control-container"),
+      "{% trans 'cluster.backups.upload' %}");
   });
 
   function displayBackups(backups) {
-    for (let entry of Object.keys(backups).sort().reverse()) {
+    let entries = Object.keys(backups).sort().reverse();
+    for (let entry of entries) {
       displayBackup(Number(entry), backups[entry]);
     }
-    if (backups.length === 0) {
+    if (entries.length === 0) {
       document.getElementById("cluster-backups-empty").classList.remove("d-none");
     }
   }
@@ -70,23 +81,38 @@
     entry.appendChild(entryPrefix);
     let entrySuffix = document.createElement("div");
     entrySuffix.classList.add("d-flex", "align-items-center");
-    let entryDownloadContainer = document.createElement("div");
-    entryDownloadContainer.classList.add("d-flex", "justify-content-center",
-      "align-items-center");
-    entryDownloadContainer.style.width = "56px";
-    entryDownloadContainer.style.height = "32px";
-    let entryDownload = document.createElement("h4");
-    entryDownload.classList.add("cluster-backups-download", "mb-0", "fa-solid",
-      "fa-download");
-    applyTooltips(entryDownload, entryDownloadContainer,
-      "{% trans 'cluster.backups.download' %}");
-    entryDownload.onclick = function (event) {
-      downloadBackup(time, entryDownload, entryDownloadContainer);
-    }
-    entryDownloadContainer.appendChild(entryDownload)
-    entrySuffix.appendChild(entryDownloadContainer);
+    entrySuffix.appendChild(createBackupControlButton("fa-download",
+      "{% trans 'cluster.backups.download' %}",
+      (event, entryControl, entryControlContainer) =>
+        downloadBackup(time, entryControl, entryControlContainer)));
+    entrySuffix.appendChild(createBackupControlButton("fa-recycle",
+      "{% trans 'cluster.backups.restore' %}",
+      (event, entryControl, entryControlContainer) => {}));
+    entrySuffix.appendChild(createBackupControlButton("fa-trash-can",
+      "{% trans 'cluster.backups.delete' %}",
+      (event, entryControl, entryControlContainer) => {},
+      "text-danger"));
     entry.appendChild(entrySuffix);
     document.getElementById("cluster-backups-list").appendChild(entry);
+  }
+
+  function createBackupControlButton(icon, tooltip, onclick, color) {
+    let entryControlContainer = document.createElement("div");
+    entryControlContainer.classList.add("d-flex", "justify-content-center",
+      "align-items-center");
+    entryControlContainer.style.width = "48px";
+    entryControlContainer.style.height = "32px";
+    let entryControl = document.createElement("h4");
+    entryControl.classList.add("mb-0", "fa-solid", icon);
+    if (color) {
+      entryControl.classList.add(color);
+    }
+    applyTooltips(entryControl, entryControlContainer, tooltip);
+    entryControl.onclick = function (event) {
+      onclick(event, entryControl, entryControlContainer);
+    }
+    entryControlContainer.appendChild(entryControl)
+    return entryControlContainer;
   }
 
   async function downloadBackup(time, element, parent) {
@@ -139,6 +165,26 @@
     let request = new HttpRequest("https://team.dulno.com/v1/cluster/backups/", "GET", []);
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText).backups);
+    });
+  }
+
+  document.getElementById("cluster-backups-run").onclick = function (event) {
+    Swal.fire({
+      title: "{% trans 'cluster.backups.run.title' %}",
+      text: "{% trans 'cluster.backups.run.body' %}",
+      icon: "warning",
+      confirmButtonColor: "#dc3545",
+      showCancelButton: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        let request = new HttpRequest("https://team.dulno.com/v1/cluster/unit/restart/",
+          "POST", [], {unitName: "dulno-cassandra-backup", unitType: "job"});
+        request.send(function (status, responseText) {
+          Swal.fire("{% trans 'cluster.backups.run.successful.title' %}",
+            "{% trans 'cluster.backups.run.successful.body' %}", "success")
+            .then(success => window.location.reload());
+        });
+      }
     });
   }
 
