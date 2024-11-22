@@ -3,6 +3,10 @@
   margin: auto;
 }
 
+.cluster-tabs {
+  margin: 40px auto 20px auto;
+}
+
 #cluster-backups-list {
   list-style-type: none;
   padding: 0;
@@ -46,16 +50,28 @@
   }
 }
 
-.cluster-backups-download {
+#cluster-backups-restart {
+  border-radius: 50%;
+  padding: 15px;
   transition-duration: 0.2s;
 }
 
-.dark .cluster-backups-download:hover {
-  color: #d8d8d8;
+.dark #cluster-backups-restart {
+  background-color: #131820;
+  border: 1px #2b3441 solid;
 }
 
-.light .cluster-backups-download:hover {
-  color: #3a3a3a;
+.light #cluster-backups-restart {
+  background-color: #dadada;
+  border: 1px #a0a0a0 solid;
+}
+
+.dark #cluster-backups-restart:hover {
+  background-color: #1b222d;
+}
+
+.light #cluster-backups-restart:hover {
+  background-color: #c4c4c4;
 }
 
 @keyframes cluster-backups-download-shake {
