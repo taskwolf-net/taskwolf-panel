@@ -144,18 +144,9 @@
   }
 
   async function fetchBackupFile(time) {
-    let headers = {"Content-Type": "application/json"};
-    let token = Cookie.find("panel-token");
-    if (token !== null) {
-      headers["Authorization"] = "Bearer " + token;
-    }
-    let whitelistKey = Cookie.find("dulno-whitelist-key");
-    if (whitelistKey !== null) {
-      headers["WHITELIST-KEY"] = whitelistKey;
-    }
     let response = await fetch("https://team.dulno.com/v1/cluster/backup/download/", {
       method: "POST",
-      headers: headers,
+      headers: createRequestHeaders(),
       body: JSON.stringify({backup: time})
     });
     return await response.blob();
@@ -186,6 +177,39 @@
         });
       }
     });
+  }
+
+  document.getElementById("cluster-backups-upload").onclick = function (event) {
+    let input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.tar.gz.gpg';
+    input.onchange = _ => {
+      let file = Array.from(input.files)[0];
+      if (file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        const apiUrl = 'https://team.dulno.com/v1/cluster/backup/upload/';
+        fetch(apiUrl, {
+          method: 'POST',
+          headers: createRequestHeaders(),
+          body: formData,
+        });
+      }
+    };
+    input.click();
+  }
+
+  function createRequestHeaders() {
+    let headers = {};
+    let token = Cookie.find("panel-token");
+    if (token !== null) {
+      headers["Authorization"] = "Bearer " + token;
+    }
+    let whitelistKey = Cookie.find("dulno-whitelist-key");
+    if (whitelistKey !== null) {
+      headers["WHITELIST-KEY"] = whitelistKey;
+    }
+    return headers;
   }
 
   function displayLoader() {
