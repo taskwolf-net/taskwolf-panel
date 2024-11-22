@@ -156,7 +156,7 @@
     document.getElementById("dashboard-open-tickets-circle").innerHTML = "";
     document.getElementById("dashboard-open-questions-circle").innerHTML = "";
     document.getElementById("dashboard-open-sales-circle").innerHTML = "";
-    var totalRequests = tickets + questions + sales;
+    var totalRequests = Math.max(tickets + questions + sales, 1);
     drawProgress("#dashboard-open-tickets-circle", tickets, totalRequests , "",
       "#235bd1", "#4d88ff");
     drawProgress("#dashboard-open-questions-circle", questions, totalRequests, "",
