@@ -87,10 +87,11 @@
         downloadBackup(time, entryControl, entryControlContainer)));
     entrySuffix.appendChild(createBackupControlButton("fa-recycle",
       "{% trans 'cluster.backups.restore' %}",
-      (event, entryControl, entryControlContainer) => {}));
+      (event, entryControl, entryControlContainer) => {},
+      "text-warning"));
     entrySuffix.appendChild(createBackupControlButton("fa-trash-can",
       "{% trans 'cluster.backups.delete' %}",
-      (event, entryControl, entryControlContainer) => {},
+      (event, entryControl, entryControlContainer) => deleteBackup(time),
       "text-danger"));
     entry.appendChild(entrySuffix);
     document.getElementById("cluster-backups-list").appendChild(entry);
@@ -152,6 +153,27 @@
     return await response.blob();
   }
 
+  async function deleteBackup(time) {
+    Swal.fire({
+      title: "{% trans 'cluster.backups.delete.title' %}",
+      text: "{% trans 'cluster.backups.delete.body' %}",
+      icon: "warning",
+      confirmButtonColor: "#dc3545",
+      showCancelButton: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        loaderPopup();
+        let request = new HttpRequest("https://team.dulno.com/v1/cluster/backup/delete/",
+          "POST", [], {backup: time});
+        request.send(function (status, responseText) {
+          Swal.fire("{% trans 'cluster.backups.delete.successful.title' %}",
+            "{% trans 'cluster.backups.delete.successful.body' %}", "success")
+            .then(success => window.location.reload());
+        });
+      }
+    });
+  }
+
   function fetchBackups(callback) {
     let request = new HttpRequest("https://team.dulno.com/v1/cluster/backups/", "GET", []);
     request.send(function (status, responseText) {
@@ -168,6 +190,7 @@
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
+        loaderPopup();
         let request = new HttpRequest("https://team.dulno.com/v1/cluster/unit/restart/",
           "POST", [], {unitName: "dulno-cassandra-backup", unitType: "job"});
         request.send(function (status, responseText) {
@@ -186,6 +209,7 @@
     input.onchange = _ => {
       let file = Array.from(input.files)[0];
       if (file) {
+        loaderPopup();
         const formData = new FormData();
         formData.append('file', file);
         const apiUrl = 'https://team.dulno.com/v1/cluster/backup/upload/';
@@ -193,6 +217,10 @@
           method: 'POST',
           headers: createRequestHeaders(),
           body: formData,
+        }).then(function (response) {
+          Swal.fire("{% trans 'cluster.backups.upload.successful.title' %}",
+            "{% trans 'cluster.backups.upload.successful.body' %}", "success")
+            .then(success => window.location.reload());
         });
       }
     };
@@ -222,6 +250,19 @@
     document.getElementById("cluster-backups-container")
       .removeChild(document.getElementsByClassName("loader")[0]);
     document.getElementById("cluster-backups-wrapper").classList.remove("d-none");
+  }
+
+  function loaderPopup() {
+    Swal.fire({
+      html: `
+        <div style="display: flex; justify-content: center; align-items: center; height: calc(340px - 4rem)">
+          <div class="spinner-border" role="status" style="width: 4rem; height: 4rem;">
+            <span class="visually-hidden">Loading</span>
+          </div>
+        </div>
+      `,
+      showConfirmButton: false
+    });
   }
 
   function applyTooltips(element, container, text) {
