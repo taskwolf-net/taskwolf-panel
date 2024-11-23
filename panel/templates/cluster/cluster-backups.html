@@ -87,7 +87,7 @@
         downloadBackup(time, entryControl, entryControlContainer)));
     entrySuffix.appendChild(createBackupControlButton("fa-recycle",
       "{% trans 'cluster.backups.restore' %}",
-      (event, entryControl, entryControlContainer) => {},
+      (event, entryControl, entryControlContainer) => restoreBackup(time),
       "text-warning"));
     entrySuffix.appendChild(createBackupControlButton("fa-trash-can",
       "{% trans 'cluster.backups.delete' %}",
@@ -104,6 +104,7 @@
     entryControlContainer.style.width = "48px";
     entryControlContainer.style.height = "32px";
     let entryControl = document.createElement("h4");
+    entryControl.role = "button";
     entryControl.classList.add("mb-0", "fa-solid", icon);
     if (color) {
       entryControl.classList.add(color);
@@ -153,7 +154,83 @@
     return await response.blob();
   }
 
-  async function deleteBackup(time) {
+  function restoreBackup(time) {
+    Swal.fire({
+      title: "{% trans 'cluster.backups.restore.title' %}",
+      text: "{% trans 'cluster.backups.restore.body' %}",
+      icon: "warning",
+      confirmButtonColor: "#dc3545",
+      showCancelButton: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        loaderPopup();
+        displayResponseProcess(time);
+      }
+    });
+  }
+
+  function displayResponseProcess(time) {
+    let pods = {};
+    let content = document.createElement("div");
+    content.classList.add("cluster-backups-restore-process-content");
+    let list = document.createElement("ul");
+    list.classList.add("mt-5");
+    content.appendChild(list);
+    const eventSource = new EventSource("https://team.dulno.com/v1/cluster" +
+      "/backup/restore/?token=" + Cookie.find("panel-token") + "&backup=" + time);
+    eventSource.onmessage = (event) => {
+      let response = JSON.parse(event.data);
+      if (response.type === "POD") {
+        let bar = document.createElement("div");
+        let status = document.createElement("small");
+        list.appendChild(createRestoreProgressEntry(response, bar, status));
+        pods[response.pod] = {currentTables: 0, totalTables: response.tableCount,
+          bar: bar, status: status};
+        if (response.podCount === list.children.length) {
+          Swal.fire({
+            title: "{% trans 'cluster.backups.restore.process.title' %}",
+            html: content,
+            showConfirmButton: false,
+          });
+        }
+      } else if (response.type === "TABLE") {
+        let pod = pods[response.pod];
+        pod.currentTables = pod.currentTables + 1;
+        pod.bar.style.width = (100 * (pod.currentTables / pod.totalTables)) + "%";
+        pod.status.innerText = response.table + " (" + response.keyspace + ")";
+      } else if (response.type === "COMPLETED") {
+        Swal.fire("{% trans 'cluster.backups.restore.successful.title' %}",
+          "{% trans 'cluster.backups.restore.successful.body' %}", "success");
+      }
+    };
+    eventSource.onerror = (error) => {
+      eventSource.close();
+    };
+  }
+
+  function createRestoreProgressEntry(data, barElement, status) {
+    let entry = document.createElement("li");
+    entry.classList.add("mb-5");
+    let name = document.createElement("h3");
+    name.classList.add("text-start", "mb-2");
+    name.innerText = data.pod + ":";
+    entry.appendChild(name);
+    let progress = document.createElement("div");
+    progress.classList.add("progress", "mb-3");
+    progress.role = "progressbar";
+    progress.setAttribute("aria-valuemin", "0");
+    progress.setAttribute("aria-valuemax", "100");
+    barElement.classList.add("progress-bar", "progress-bar-striped",
+      "progress-bar-animated");
+    barElement.style.width = "0%";
+    progress.appendChild(barElement);
+    entry.appendChild(progress);
+    status.classList.add("text-secondary");
+    entry.appendChild(status);
+    return entry;
+  }
+
+  function deleteBackup(time) {
     Swal.fire({
       title: "{% trans 'cluster.backups.delete.title' %}",
       text: "{% trans 'cluster.backups.delete.body' %}",
