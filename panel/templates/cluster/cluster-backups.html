@@ -171,11 +171,17 @@
 
   function displayResponseProcess(time) {
     let pods = {};
+    let startingTime;
     let content = document.createElement("div");
     content.classList.add("cluster-backups-restore-process-content");
     let list = document.createElement("ul");
     list.classList.add("mt-5");
     content.appendChild(list);
+    let divider = document.createElement("div");
+    divider.classList.add("cluster-backups-restore-process-divider", "mb-5", "mt-4", "w-100", "d-none");
+    content.appendChild(divider);
+    let remainingTime = document.createElement("span");
+    content.appendChild(remainingTime);
     const eventSource = new EventSource("https://team.dulno.com/v1/cluster" +
       "/backup/restore/?token=" + Cookie.find("panel-token") + "&backup=" + time);
     eventSource.onmessage = (event) => {
@@ -192,12 +198,16 @@
             html: content,
             showConfirmButton: false,
           });
+          startingTime = +new Date();
         }
       } else if (response.type === "TABLE") {
         let pod = pods[response.pod];
         pod.currentTables = pod.currentTables + 1;
         pod.bar.style.width = (100 * (pod.currentTables / pod.totalTables)) + "%";
-        pod.status.innerText = response.table + " (" + response.keyspace + ")";
+        pod.status.innerText = response.table.split("-")[0] + " (" + response.keyspace + ")";
+        remainingTime.innerText = calculateRemainingTime(pods, startingTime) +
+          " {% trans 'cluster.backups.restore.process.remaining' %}";
+        divider.classList.remove("d-none");
       } else if (response.type === "COMPLETED") {
         Swal.fire("{% trans 'cluster.backups.restore.successful.title' %}",
           "{% trans 'cluster.backups.restore.successful.body' %}", "success");
@@ -208,9 +218,20 @@
     };
   }
 
+  function calculateRemainingTime(pods, startingTime) {
+    let progress = 0;
+    let entries = Object.keys(pods);
+    for (let entry of entries) {
+      progress += pods[entry].currentTables / pods[entry].totalTables;
+    }
+    progress /= entries.length;
+    let elapsedTime = (+ new Date() - startingTime) / (1000 * 60);
+    return ((elapsedTime / progress) - elapsedTime).toFixed(0);
+  }
+
   function createRestoreProgressEntry(data, barElement, status) {
     let entry = document.createElement("li");
-    entry.classList.add("mb-5");
+    entry.classList.add("mb-2");
     let name = document.createElement("h3");
     name.classList.add("text-start", "mb-2");
     name.innerText = data.pod + ":";
@@ -225,8 +246,11 @@
     barElement.style.width = "0%";
     progress.appendChild(barElement);
     entry.appendChild(progress);
+    let statusContainer = document.createElement("div");
+    statusContainer.style.height = "38px";
     status.classList.add("text-secondary");
-    entry.appendChild(status);
+    statusContainer.appendChild(status);
+    entry.appendChild(statusContainer);
     return entry;
   }
 

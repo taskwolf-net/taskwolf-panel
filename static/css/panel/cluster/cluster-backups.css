@@ -96,3 +96,11 @@
 .dark .cluster-backups-restore-process-content .progress {
   background-color: #515762 !important;
 }
+
+.dark .cluster-backups-restore-process-divider {
+  border-bottom: 1px #666d7a solid;
+}
+
+.light .cluster-backups-restore-process-divider {
+  border-bottom: 1px #7a7a7a solid;
+}
