@@ -81,7 +81,12 @@
       removeLoader();
       setInterval(function () {
         fetchPod(function (pod) {
+          let scrolledToBottom = (window.innerHeight + Math.round(window.scrollY)) >=
+            document.body.offsetHeight;
           displayPod(pod);
+          if (scrolledToBottom) {
+            window.scrollTo({top: document.documentElement.scrollHeight});
+          }
         });
       }, 1000);
     });
