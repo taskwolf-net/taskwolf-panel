@@ -272,7 +272,7 @@
 
   document.getElementById("user-general-organization-create").onclick = function (event) {
     var organizationCreateForm = document.createElement("div");
-    organizationCreateForm.classList.add("swal2-content");
+    organizationCreateForm.classList.add("user-general-organization-create-content");
     var organizationCreateDescription = document.createElement("p");
     organizationCreateDescription.innerText = "{% trans 'user.general.organization.create.body' %}";
     organizationCreateForm.appendChild(organizationCreateDescription);

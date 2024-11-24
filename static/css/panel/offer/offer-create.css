@@ -50,35 +50,58 @@
   margin: auto;
 }
 
-.dark input {
+.dark #offer-create-process-data input {
   background-color: #0d1117 !important;
   color: white !important;
   -webkit-text-fill-color: white;
   border: 1px solid #cecece !important;
 }
 
-.dark input::placeholder {
+.dark #offer-create-process-data input::placeholder {
   color: #828282 !important;
   -webkit-text-fill-color: #828282;
 }
 
-.light input {
+.light #offer-create-process-data input {
   background-color: #eaeaea !important;
   color: black !important;
   -webkit-text-fill-color: black;
   border: 1px solid #4c4c4c !important;
 }
 
-.light input::placeholder {
+.light #offer-create-process-data input::placeholder {
   color: #949494 !important;
   -webkit-text-fill-color: #949494;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active{
+#offer-create-process-data input:-webkit-autofill,
+#offer-create-process-data input:-webkit-autofill:hover,
+#offer-create-process-data input:-webkit-autofill:focus,
+#offer-create-process-data input:-webkit-autofill:active{
   -webkit-background-clip: text;
   transition: background-color 5000s ease-in-out 0s;
   box-shadow: inset 0 0 20px 20px #23232329;
+}
+
+.offer-create-price-manual-content input {
+  background-color: transparent;
+  border-radius: 5px;
+  box-shadow: none;
+  outline: none;
+  padding: 10px !important;
+  width: min(260px, 100%) !important;
+}
+
+.dark .offer-create-price-manual-content input {
+  border: 1px solid white;
+  color: white;
+}
+
+.light .offer-create-price-manual-content input {
+  border: 1px solid black;
+  color: black;
+}
+
+.offer-create-price-manual-content input::placeholder {
+  color: #a5a5a5;
 }

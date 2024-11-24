@@ -203,7 +203,6 @@
     request.send(function (status, responseText) {
       var price = JSON.parse(responseText).price;
       var content = document.createElement("div");
-      content.classList.add("swal2-content");
       var descriptionElement = document.createElement("p");
       descriptionElement.innerHTML = "{% trans 'offer.create.price.suggestion.body' %}";
       content.appendChild(descriptionElement);
@@ -231,7 +230,7 @@
 
   function manualOfferPrice() {
     var content = document.createElement("div");
-    content.classList.add("swal2-content");
+    content.classList.add("offer-create-price-manual-content");
     var descriptionElement = document.createElement("p");
     descriptionElement.innerHTML = "{% trans 'offer.create.price.manual.body' %}";
     content.appendChild(descriptionElement);
