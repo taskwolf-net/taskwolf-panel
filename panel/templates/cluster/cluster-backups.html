@@ -205,8 +205,8 @@
         pod.currentTables = pod.currentTables + 1;
         pod.bar.style.width = (100 * (pod.currentTables / pod.totalTables)) + "%";
         pod.status.innerText = response.table.split("-")[0] + " (" + response.keyspace + ")";
-        remainingTime.innerText = calculateRemainingTime(pods, startingTime) +
-          " {% trans 'cluster.backups.restore.process.remaining' %}";
+        remainingTime.innerText = "{% trans 'cluster.backups.restore.process.remaining' %}: " +
+          calculateRemainingTime(pods, startingTime);
         divider.classList.remove("d-none");
       } else if (response.type === "COMPLETED") {
         Swal.fire("{% trans 'cluster.backups.restore.successful.title' %}",
@@ -225,8 +225,8 @@
       progress += pods[entry].currentTables / pods[entry].totalTables;
     }
     progress /= entries.length;
-    let elapsedTime = (+ new Date() - startingTime) / (1000 * 60);
-    return ((elapsedTime / progress) - elapsedTime).toFixed(0);
+    let elapsedTime = + new Date() - startingTime;
+    return new Date((elapsedTime / progress) - elapsedTime).toISOString().substr(14, 5);
   }
 
   function createRestoreProgressEntry(data, barElement, status) {
