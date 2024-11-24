@@ -87,20 +87,43 @@
   90% { color: #36df3d; }
 }
 
-.cluster-backups-restore-process-content ul {
+.cluster-backups-restore-content input {
+  background-color: transparent;
+  border-radius: 5px;
+  box-shadow: none;
+  outline: none;
+  padding: 10px !important;
+  width: min(260px, 100%) !important;
+}
+
+.dark .cluster-backups-restore-content input {
+  border: 1px solid white;
+  color: white;
+}
+
+.light .cluster-backups-restore-content input {
+  border: 1px solid black;
+  color: black;
+}
+
+.cluster-backups-restore-content input::placeholder {
+  color: #a5a5a5;
+}
+
+.cluster-backups-restore-content ul {
   padding: 0;
   list-style-type: none;
   width: 100%;
 }
 
-.dark .cluster-backups-restore-process-content .progress {
+.dark .cluster-backups-restore-content .progress {
   background-color: #515762 !important;
 }
 
-.dark .cluster-backups-restore-process-divider {
+.dark .cluster-backups-restore-divider {
   border-bottom: 1px #666d7a solid;
 }
 
-.light .cluster-backups-restore-process-divider {
+.light .cluster-backups-restore-divider {
   border-bottom: 1px #7a7a7a solid;
 }

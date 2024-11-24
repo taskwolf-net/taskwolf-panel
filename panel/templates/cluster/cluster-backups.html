@@ -163,17 +163,39 @@
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        loaderPopup();
-        displayResponseProcess(time);
+        displayRestoreFilter(time);
       }
     });
   }
 
-  function displayResponseProcess(time) {
+  function displayRestoreFilter(time) {
+    var content = document.createElement("div");
+    content.classList.add("cluster-backups-restore-content");
+    var keyspace = document.createElement("input");
+    keyspace.classList.add("mt-3");
+    keyspace.placeholder = "{% trans 'cluster.backups.restore.filter.keyspace' %}";
+    content.appendChild(keyspace);
+    var table = document.createElement("input");
+    table.classList.add("mt-4");
+    table.placeholder = "{% trans 'cluster.backups.restore.filter.table' %}";
+    content.appendChild(table);
+    Swal.fire({
+      title: "{% trans 'cluster.backups.restore.filter.title' %}",
+      html: content,
+      confirmButtonText: "{% trans 'cluster.backups.restore.filter.continue' %}",
+    }).then(result => {
+      if (result.isConfirmed) {
+        loaderPopup();
+        displayRestoreProcess(time, keyspace.value, table.value);
+      }
+    });
+  }
+
+  function displayRestoreProcess(time, keyspace, table) {
     let pods = {};
     let startingTime;
     let content = document.createElement("div");
-    content.classList.add("cluster-backups-restore-process-content");
+    content.classList.add("cluster-backups-restore-content");
     let list = document.createElement("ul");
     list.classList.add("mt-5");
     content.appendChild(list);
@@ -183,7 +205,8 @@
     let remainingTime = document.createElement("span");
     content.appendChild(remainingTime);
     const eventSource = new EventSource("https://team.dulno.com/v1/cluster" +
-      "/backup/restore/?token=" + Cookie.find("panel-token") + "&backup=" + time);
+      "/backup/restore/?token=" + Cookie.find("panel-token") + "&backup=" + time +
+      "&keyspace=" + keyspace + "&table=" + table);
     eventSource.onmessage = (event) => {
       let response = JSON.parse(event.data);
       if (response.type === "POD") {
