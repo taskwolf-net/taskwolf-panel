@@ -69,7 +69,8 @@
       let response = JSON.parse(responseText);
       let success = response.success;
       if (success === true) {
-        Cookie.create("panel-token", JSON.parse(responseText).apiKey, 60 * 60);
+        Cookie.create("panel-token", response.panelApiKey, 60 * 60 * 24 * 30, ".dulno.com");
+        Cookie.create("panel-refresh-token", response.refreshToken, 60 * 60 * 24 * 30, ".dulno.com");
         window.location.href = "/dashboard/";
       } else {
         let error = response.error;

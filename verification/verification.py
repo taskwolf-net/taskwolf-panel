@@ -16,11 +16,11 @@ def verification_page(function):
 
 @verification_page
 async def login(request):
-  authenticated = await isAuthenticated(request)
-  if (authenticated):
-    return await dashboard(request)
-  return render(request, 'login.html', {'title': 'Panel - Dulno',
-    'css': ['css/base/2fa.css', 'css/verification/login.css']})
+  token = request.COOKIES.get('panel-token')
+  if (token is None):
+    return render(request, 'login.html', {'title': 'Panel - Dulno',
+        'css': ['css/base/2fa.css', 'css/verification/login.css']})
+  return redirect("/dashboard/")
 
 @verification_page
 async def confirm(request, member, token):
