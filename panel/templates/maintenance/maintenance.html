@@ -16,7 +16,10 @@
             <span>{% trans 'maintenance.empty' %}</span>
           </div>
           <div class="maintenance-divider my-5"></div>
-          <button type="button" id="maintenance-create" class="btn btn-primary d-block mx-auto mt-5 px-5">{% trans 'maintenance.create' %}</button>
+          <div class="d-flex flex-md-row flex-column-reverse justify-content-center align-items-center mt-5">
+            <button type="button" id="maintenance-emergency" class="btn btn-danger d-block mx-auto me-md-4 px-5">{% trans 'maintenance.emergency' %}</button>
+            <button type="button" id="maintenance-create" class="btn btn-primary d-block mx-auto px-5">{% trans 'maintenance.create' %}</button>
+          </div>
         </div>
       </div>
     </div>
@@ -191,6 +194,58 @@
 
   document.getElementById("maintenance-create").onclick = function (event) {
     window.location.href = "/maintenance/create/";
+  }
+
+  document.getElementById("maintenance-emergency").onclick = function (event) {
+    let durationForm = document.createElement("div");
+    durationForm.classList.add("maintenance-emergency-content");
+    let durationTitle = document.createElement("h3");
+    durationTitle.innerText = "{% trans 'maintenance.emergency.description' %}";
+    durationTitle.classList.add("text-center");
+    durationForm.appendChild(durationTitle);
+    let durationPickerContainer = document.createElement("div");
+    durationPickerContainer.classList.add("d-flex", "justify-content-center", "align-items-center", "my-4");
+    let durationPickerInput = document.createElement("input");
+    durationPickerInput.classList.add("mx-2");
+    durationPickerInput.value = unitData.desiredReplicas;
+    durationPickerInput.step = "1";
+    durationPickerInput.min = "1";
+    let durationPickerDown = document.createElement("button");
+    durationPickerDown.innerText = "-";
+    durationPickerDown.onclick = function (event) {
+      durationPickerInput.value = Math.max(1, parseInt(durationPickerInput.value) - 1);
+    }
+    durationPickerContainer.appendChild(durationPickerDown);
+    durationPickerContainer.appendChild(durationPickerInput);
+    let durationPickerUp = document.createElement("button");
+    durationPickerUp.innerText = "+";
+    durationPickerUp.onclick = function (event) {
+      durationPickerInput.value = Math.max(1, parseInt(durationPickerInput.value) + 1);
+    }
+    durationPickerContainer.appendChild(durationPickerUp);
+    durationForm.appendChild(durationPickerContainer);
+    Swal.fire({
+      title: "{% trans 'maintenance.emergency.title' %}",
+      html: durationForm,
+      showCancelButton: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        let duration = parseInt(durationPickerInput.value) * 1000 * 60;
+        let now = new Date();
+        let nextMinute = 60000 - (now.getSeconds() * 1000 + now.getMilliseconds());
+        if (nextMinute <= 30000) {
+          nextMinute += 60000;
+        }
+        let startTime = now + nextMinute;
+        let request = new HttpRequest("https://team.dulno.com/v1/maintenance/create/", "POST",
+          [], {description: "", startTime: startTime, duration: duration});
+        request.send(function (status, responseText) {
+          Swal.fire("{% trans 'maintenance.emergency.successful.title' %}",
+            "{% trans 'maintenance.emergency.successful.body' %}", "success")
+            .then(success => window.location.reload());
+        });
+      }
+    });
   }
 
   function displayLoader() {
