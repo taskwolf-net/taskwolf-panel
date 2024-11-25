@@ -92,6 +92,42 @@
   margin-left: 20px;
 }
 
-#maintenance-create {
-  margin-top: 5vh;
+.maintenance-emergency-content button {
+  background-color: #0d6efd;
+  border: none;
+  color: white;
+  font-size: 1em;
+  width: 35px;
+  height: 35px;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.maintenance-emergency-content button:hover {
+  background-color: #1f79ff;
+}
+
+.maintenance-emergency-content input {
+  background-color: transparent;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: none;
+  outline: none;
+  width: min(60px, 100%) !important;
+  height: 35px;
+}
+
+.dark .maintenance-emergency-content input {
+  border: 1px solid #63717d;
+  color: white;
+}
+
+.light .maintenance-emergency-content input {
+  border: 1px solid #909090;
+  color: black;
+}
+
+.maintenance-emergency-content input::placeholder {
+  color: #a5a5a5;
 }

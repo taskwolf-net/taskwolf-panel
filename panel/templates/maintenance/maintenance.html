@@ -16,9 +16,9 @@
             <span>{% trans 'maintenance.empty' %}</span>
           </div>
           <div class="maintenance-divider my-5"></div>
-          <div class="d-flex flex-md-row flex-column-reverse justify-content-center align-items-center mt-5">
-            <button type="button" id="maintenance-emergency" class="btn btn-danger d-block mx-auto me-md-4 px-5">{% trans 'maintenance.emergency' %}</button>
-            <button type="button" id="maintenance-create" class="btn btn-primary d-block mx-auto px-5">{% trans 'maintenance.create' %}</button>
+          <div class="d-flex flex-md-row flex-column-reverse justify-content-center align-items-center pt-5">
+            <button type="button" id="maintenance-emergency" class="btn btn-danger me-md-5 px-5">{% trans 'maintenance.emergency' %}</button>
+            <button type="button" id="maintenance-create" class="btn btn-primary px-5">{% trans 'maintenance.create' %}</button>
           </div>
         </div>
       </div>
@@ -198,8 +198,8 @@
 
   document.getElementById("maintenance-emergency").onclick = function (event) {
     let durationForm = document.createElement("div");
-    durationForm.classList.add("maintenance-emergency-content");
-    let durationTitle = document.createElement("h3");
+    durationForm.classList.add("maintenance-emergency-content", "my-4");
+    let durationTitle = document.createElement("h5");
     durationTitle.innerText = "{% trans 'maintenance.emergency.description' %}";
     durationTitle.classList.add("text-center");
     durationForm.appendChild(durationTitle);
@@ -207,7 +207,7 @@
     durationPickerContainer.classList.add("d-flex", "justify-content-center", "align-items-center", "my-4");
     let durationPickerInput = document.createElement("input");
     durationPickerInput.classList.add("mx-2");
-    durationPickerInput.value = unitData.desiredReplicas;
+    durationPickerInput.value = "60";
     durationPickerInput.step = "1";
     durationPickerInput.min = "1";
     let durationPickerDown = document.createElement("button");
@@ -233,10 +233,10 @@
         let duration = parseInt(durationPickerInput.value) * 1000 * 60;
         let now = new Date();
         let nextMinute = 60000 - (now.getSeconds() * 1000 + now.getMilliseconds());
-        if (nextMinute <= 30000) {
+        if (nextMinute <= 40000) {
           nextMinute += 60000;
         }
-        let startTime = now + nextMinute;
+        let startTime = +now + nextMinute;
         let request = new HttpRequest("https://team.dulno.com/v1/maintenance/create/", "POST",
           [], {description: "", startTime: startTime, duration: duration});
         request.send(function (status, responseText) {
