@@ -163,22 +163,128 @@
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        displayRestoreFilter(time);
+        loaderPopup();
+        isMaintenanceRunning(function (isRunning) {
+          if (isRunning) {
+            displayRestoreFilter(time);
+          } else {
+            Swal.fire("{% trans 'cluster.backups.maintenance.note.title' %}",
+              "{% trans 'cluster.backups.maintenance.note.body' %}", "warning")
+              .then(success => setupMaintenance(time));
+          }
+        });
       }
     });
   }
 
+  function setupMaintenance(backupTime) {
+    let durationForm = document.createElement("div");
+    durationForm.classList.add("cluster-backups-restore-content", "my-4");
+    let durationTitle = document.createElement("h5");
+    durationTitle.innerText = "{% trans 'cluster.backups.restore.maintenance.description' %}";
+    durationTitle.classList.add("text-center");
+    durationForm.appendChild(durationTitle);
+    let durationPickerContainer = document.createElement("div");
+    durationPickerContainer.classList.add("d-flex", "justify-content-center", "align-items-center", "my-4");
+    let durationPickerInput = document.createElement("input");
+    durationPickerInput.type = "duration";
+    durationPickerInput.classList.add("mx-2");
+    durationPickerInput.value = "60";
+    durationPickerInput.step = "1";
+    durationPickerInput.min = "1";
+    let durationPickerDown = document.createElement("button");
+    durationPickerDown.innerText = "-";
+    durationPickerDown.onclick = function (event) {
+      durationPickerInput.value = Math.max(1, parseInt(durationPickerInput.value) - 1);
+    }
+    durationPickerContainer.appendChild(durationPickerDown);
+    durationPickerContainer.appendChild(durationPickerInput);
+    let durationPickerUp = document.createElement("button");
+    durationPickerUp.innerText = "+";
+    durationPickerUp.onclick = function (event) {
+      durationPickerInput.value = Math.max(1, parseInt(durationPickerInput.value) + 1);
+    }
+    durationPickerContainer.appendChild(durationPickerUp);
+    durationForm.appendChild(durationPickerContainer);
+    Swal.fire({
+      title: "{% trans 'cluster.backups.restore.maintenance.title' %}",
+      html: durationForm,
+      showCancelButton: true,
+    }).then(result => {
+      if (result.isConfirmed) {
+        let duration = parseInt(durationPickerInput.value) * 1000 * 60;
+        let now = new Date();
+        let nextMinute = 60000 - (now.getSeconds() * 1000 + now.getMilliseconds());
+        if (nextMinute <= 40000) {
+          nextMinute += 60000;
+        }
+        let startTime = +now + nextMinute;
+        let request = new HttpRequest("https://team.dulno.com/v1/maintenance/create/", "POST",
+          [], {description: "", startTime: startTime, duration: duration});
+        request.send(function (status, responseText) {
+          displayMaintenanceCountdown(backupTime, startTime)
+        });
+      }
+    });
+  }
+
+  function displayMaintenanceCountdown(backupTime, startTime) {
+    let countdown = document.createElement("h2");
+    countdown.classList.add("my-5");
+    countdown.innerHTML = new Date(startTime - new Date().getTime()).toISOString().substr(14, 5);
+    let interval = setInterval(function () {
+      let difference = startTime - new Date().getTime();
+      if (difference <= 0) {
+        clearInterval(interval);
+        displayRestoreFilter(backupTime);
+        return;
+      }
+      countdown.innerHTML = new Date(difference).toISOString().substr(14, 5);
+    }, 1000);
+    Swal.fire({
+      title: "{% trans 'cluster.backups.restore.maintenance.countdown.title' %}",
+      html: countdown,
+      showConfirmButton: false,
+    });
+  }
+
+  function isMaintenanceRunning(callback) {
+    let request = new HttpRequest("https://team.dulno.com/v1/maintenance/find/", "GET", []);
+    request.send(function (status, responseText) {
+      let maintenance = JSON.parse(responseText).maintenance;
+      for (let i = 0; i < maintenance.length; i++) {
+        if (new Date().getTime() - maintenance[i].startTime >= 0) {
+          callback(true);
+          return;
+        }
+      }
+      callback(false);
+    });
+  }
+
   function displayRestoreFilter(time) {
-    var content = document.createElement("div");
+    let content = document.createElement("div");
     content.classList.add("cluster-backups-restore-content");
-    var keyspace = document.createElement("input");
+    let keyspace = document.createElement("input");
     keyspace.classList.add("mt-3");
     keyspace.placeholder = "{% trans 'cluster.backups.restore.filter.keyspace' %}";
     content.appendChild(keyspace);
-    var table = document.createElement("input");
+    let table = document.createElement("input");
     table.classList.add("mt-4");
     table.placeholder = "{% trans 'cluster.backups.restore.filter.table' %}";
     content.appendChild(table);
+    let keepMaintenanceContainer = document.createElement("div");
+    keepMaintenanceContainer.classList.add("form-check", "mt-5");
+    let keepMaintenanceInput = document.createElement("input");
+    keepMaintenanceInput.classList.add("form-check-input");
+    keepMaintenanceInput.type = "checkbox";
+    keepMaintenanceInput.checked = true;
+    keepMaintenanceContainer.appendChild(keepMaintenanceInput);
+    let keepMaintenanceLabel = document.createElement("label");
+    keepMaintenanceLabel.classList.add("form-check-label");
+    keepMaintenanceLabel.innerText = "{% trans 'cluster.backups.restore.filter.keep.maintenance' %}";
+    keepMaintenanceContainer.appendChild(keepMaintenanceLabel);
+    content.appendChild(keepMaintenanceContainer);
     Swal.fire({
       title: "{% trans 'cluster.backups.restore.filter.title' %}",
       html: content,
@@ -186,52 +292,56 @@
     }).then(result => {
       if (result.isConfirmed) {
         loaderPopup();
-        displayRestoreProcess(time, keyspace.value, table.value);
+        displayRestoreProcess(time, keyspace.value, table.value,
+          keepMaintenanceInput.checked);
       }
     });
   }
 
-  function displayRestoreProcess(time, keyspace, table) {
-    let pods = {};
+  function displayRestoreProcess(time, keyspace, table, keepMaintenance) {
     let startingTime;
-    let content = document.createElement("div");
-    content.classList.add("cluster-backups-restore-content");
-    let list = document.createElement("ul");
-    list.classList.add("mt-5");
-    content.appendChild(list);
-    let divider = document.createElement("div");
-    divider.classList.add("cluster-backups-restore-divider", "mb-5", "mt-4", "w-100", "d-none");
-    content.appendChild(divider);
-    let remainingTime = document.createElement("span");
-    content.appendChild(remainingTime);
+    let pods = [];
+    let copies = {};
+    let restarts = {};
+    let copyList = document.createElement("ul");
+    let copyDivider = document.createElement("div");
+    let copyTime = document.createElement("span");
     const eventSource = new EventSource("https://team.dulno.com/v1/cluster" +
       "/backup/restore/?token=" + Cookie.find("panel-token") + "&backup=" + time +
-      "&keyspace=" + keyspace + "&table=" + table);
+      "&keyspace=" + keyspace + "&table=" + table + "&keepMaintenance=" + keepMaintenance);
     eventSource.onmessage = (event) => {
       let response = JSON.parse(event.data);
       if (response.type === "POD") {
         let bar = document.createElement("div");
         let status = document.createElement("small");
-        list.appendChild(createRestoreProgressEntry(response, bar, status));
-        pods[response.pod] = {currentTables: 0, totalTables: response.tableCount,
+        copyList.appendChild(createRestoreCopyProgressEntry(response, bar, status));
+        pods.push(response.pod);
+        copies[response.pod] = {currentTables: 0, totalTables: response.tableCount,
           bar: bar, status: status};
-        if (response.podCount === list.children.length) {
-          Swal.fire({
-            title: "{% trans 'cluster.backups.restore.process.title' %}",
-            html: content,
-            showConfirmButton: false,
-          });
+        if (response.podCount === copyList.children.length) {
+          displayRestoreCopyProcess(copyList, copyDivider, copyTime);
           startingTime = +new Date();
         }
       } else if (response.type === "TABLE") {
-        let pod = pods[response.pod];
+        let pod = copies[response.pod];
         pod.currentTables = pod.currentTables + 1;
         pod.bar.style.width = (100 * (pod.currentTables / pod.totalTables)) + "%";
         pod.status.innerText = response.table.split("-")[0] + " (" + response.keyspace + ")";
-        remainingTime.innerText = "{% trans 'cluster.backups.restore.process.remaining' %}: " +
-          calculateRemainingTime(pods, startingTime);
-        divider.classList.remove("d-none");
-      } else if (response.type === "COMPLETED") {
+        copyTime.innerText = "{% trans 'cluster.backups.restore.copy.remaining' %}: " +
+          calculateRemainingTime(copies, startingTime);
+        copyDivider.classList.remove("d-none");
+      } else if (response.type === "COPIED") {
+        restarts = displayRestoreRestartProcess(pods);
+      } else if (response.type === "RESTART") {
+        let restart = restarts[response.pod];
+        restart.name.classList.remove("text-secondary");
+        restart.name.classList.add("text-success");
+        restart.status.innerHTML = '<h3 class="text-success fa-solid fa-check mb-0"></h3>';
+        for (let nextPod of response.nextPods) {
+          restarts[nextPod].status.innerHTML = '<div class="spinner-border" role="status">' +
+            '<span class="visually-hidden">Loading</span></div>';
+        }
+      } else if (response.type === "RESTARTED") {
         Swal.fire("{% trans 'cluster.backups.restore.successful.title' %}",
           "{% trans 'cluster.backups.restore.successful.body' %}", "success");
       }
@@ -241,18 +351,64 @@
     };
   }
 
-  function calculateRemainingTime(pods, startingTime) {
+  function displayRestoreRestartProcess(pods) {
+    let restarts = {};
+    let content = document.createElement("div");
+    content.classList.add("cluster-backups-restore-content");
+    let list = document.createElement("ul");
+    list.classList.add("mt-5");
+    for (let pod of pods) {
+      let entry = document.createElement("li");
+      entry.classList.add("d-flex", "justify-content-between", "align-items-center", "mb-4");
+      let entryName = document.createElement("h4");
+      entryName.classList.add("text-secondary", "mb-0");
+      entryName.innerText = pod;
+      entry.appendChild(entryName);
+      let entryStatus = document.createElement("div");
+      if (pods.indexOf(pod) === 0) {
+        entryStatus.innerHTML = '<div class="spinner-border" role="status">' +
+          '<span class="visually-hidden">Loading</span></div>';
+      }
+      entry.appendChild(entryStatus);
+      list.appendChild(entry);
+      restarts[pod] = {name: entryName, status: entryStatus};
+    }
+    content.appendChild(list);
+    Swal.fire({
+      title: "{% trans 'cluster.backups.restore.restart.title' %}",
+      html: content,
+      showConfirmButton: false,
+    });
+    return restarts;
+  }
+
+  function displayRestoreCopyProcess(list, divider, time) {
+    let content = document.createElement("div");
+    content.classList.add("cluster-backups-restore-content");
+    list.classList.add("mt-5");
+    content.appendChild(list);
+    divider.classList.add("cluster-backups-restore-divider", "mb-5", "mt-4", "w-100", "d-none");
+    content.appendChild(divider);
+    content.appendChild(time);
+    Swal.fire({
+      title: "{% trans 'cluster.backups.restore.copy.title' %}",
+      html: content,
+      showConfirmButton: false,
+    });
+  }
+
+  function calculateRemainingTime(copies, startingTime) {
     let progress = 0;
-    let entries = Object.keys(pods);
+    let entries = Object.keys(copies);
     for (let entry of entries) {
-      progress += pods[entry].currentTables / pods[entry].totalTables;
+      progress += copies[entry].currentTables / copies[entry].totalTables;
     }
     progress /= entries.length;
     let elapsedTime = + new Date() - startingTime;
     return new Date((elapsedTime / progress) - elapsedTime).toISOString().substr(14, 5);
   }
 
-  function createRestoreProgressEntry(data, barElement, status) {
+  function createRestoreCopyProgressEntry(data, barElement, status) {
     let entry = document.createElement("li");
     entry.classList.add("mb-2");
     let name = document.createElement("h3");
