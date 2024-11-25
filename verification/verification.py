@@ -6,6 +6,7 @@ from base.authentication import isAuthenticated
 from panel.dashboard import dashboard
 from django.utils import translation
 from django.utils.translation import gettext
+from django.shortcuts import redirect
 
 def verification_page(function):
   @wraps(function)
