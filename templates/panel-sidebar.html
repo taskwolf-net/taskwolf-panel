@@ -100,17 +100,17 @@
     displayRestrictedSidebarItem("maintenance-sidebar-item", "maintenance", "sidebar-divider-third", "maintenance.find");
     displayRestrictedSidebarItem("cluster-sidebar-item", "cluster", "sidebar-divider-third", "cluster.resources");
     displayRestrictedSidebarItem("administration-sidebar-item", "administration", "sidebar-divider-third", "groups.find");
-    fetchUsername(function (username) {
+    fetchSidebarUsername(function (username) {
       for (let element of document.getElementsByClassName("sidebar-profile-username")) {
         element.innerHTML = username;
       }
     });
-    fetchUserId(function (id) {
+    fetchSidebarUserId(function (id) {
       for (let element of document.getElementsByClassName("sidebar-profile-id")) {
         element.innerHTML = id;
       }
     });
-    fetchGroup(function (group) {
+    fetchSidebarGroup(function (group) {
       for (let element of document.getElementsByClassName("sidebar-profile-group")) {
         element.innerHTML = group.name;
         element.style.color = group.color;
@@ -190,7 +190,7 @@
     window.location.reload();
   }
 
-  function fetchUsername(callback) {
+  function fetchSidebarUsername(callback) {
     let request = new HttpRequest("https://team.dulno.com/v1/settings/profile/username/", "GET", []);
     request.send(function (status, responseText) {
       let response = JSON.parse(responseText);
@@ -198,7 +198,7 @@
     });
   }
 
-  function fetchUserId(callback) {
+  function fetchSidebarUserId(callback) {
     let request = new HttpRequest("https://team.dulno.com/v1/settings/profile/id/", "GET", []);
     request.send(function (status, responseText) {
       let response = JSON.parse(responseText);
@@ -206,7 +206,7 @@
     });
   }
 
-  function fetchGroup(callback) {
+  function fetchSidebarGroup(callback) {
     let request = new HttpRequest("https://team.dulno.com/v1/group/", "GET", []);
     request.send(function (status, responseText) {
       let response = JSON.parse(responseText);
