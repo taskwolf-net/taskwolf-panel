@@ -8,14 +8,8 @@
     <div class="sidebar-influenced">
       <div id="organization-general-container">
         <div id="organization-general-wrapper" class="d-none">
+          {% include 'entity-tab.html' %}
           <div>
-            <ul class="nav nav-tabs">
-              <li class="nav-item"><a class="nav-link nav-link-active" href="/organization/{{organization}}/general/">{% trans 'entity.tab.general' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/organization/{{organization}}/bundle/">{% trans 'entity.tab.bundle' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/organization/{{organization}}/payment/">{% trans 'entity.tab.payment' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/organization/{{organization}}/offers/">{% trans 'entity.tab.offer' %}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/organization/{{organization}}/termination/">{% trans 'entity.tab.termination' %}</a></li>
-            </ul>
             <div id="organization-general-content">
               <div class="organization-general-side">
                 <div class="organization-general-section">

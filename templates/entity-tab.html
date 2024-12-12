@@ -1,15 +1,15 @@
 {% load static %}
 {% load i18n %}
 <div>
-  <ul class="entity-tabs nav nav-tabs">
-    <li class="nav-item"><a class="nav-link {% if 'general' in request.path %}nav-link-active{% endif %}" href="/{{type}}/{{entity}}/general/">{% trans 'entity.tab.general' %}</a></li>
+  <ul class="entity-tabs">
+    <li class="{% if 'general' in request.path %}entity-tab-active{% endif %}"><a href="/{{type}}/{{entity}}/general/">{% trans 'entity.tab.general' %}</a></li>
     {% if type == 'user' %}
-    <li class="nav-item"><a class="nav-link {% if 'mail' in request.path %}nav-link-active{% endif %}" href="/user/{{entity}}/mails/">{% trans 'entity.tab.mail' %}</a></li>
-    <li class="nav-item"><a class="nav-link {% if 'session' in request.path %}nav-link-active{% endif %}" href="/user/{{entity}}/sessions/">{% trans 'entity.tab.session' %}</a></li>
+    <li class="{% if 'mail' in request.path %}entity-tab-active{% endif %}"><a href="/user/{{entity}}/mails/">{% trans 'entity.tab.mail' %}</a></li>
+    <li class="{% if 'session' in request.path %}entity-tab-active{% endif %}"><a href="/user/{{entity}}/sessions/">{% trans 'entity.tab.session' %}</a></li>
     {% endif %}
-    <li class="nav-item"><a class="nav-link {% if 'bundle' in request.path %}nav-link-active{% endif %}" href="/{{type}}/{{entity}}/bundle/">{% trans 'entity.tab.bundle' %}</a></li>
-    <li class="nav-item"><a class="nav-link {% if 'payment' in request.path %}nav-link-active{% endif %}" href="/{{type}}/{{entity}}/payment/">{% trans 'entity.tab.payment' %}</a></li>
-    <li class="nav-item"><a class="nav-link {% if 'offer' in request.path %}nav-link-active{% endif %}" href="/{{type}}/{{entity}}/offers/">{% trans 'entity.tab.offer' %}</a></li>
-    <li class="nav-item"><a class="nav-link {% if 'termination' in request.path %}nav-link-active{% endif %}" href="/{{type}}/{{entity}}/termination/">{% trans 'entity.tab.termination' %}</a></li>
+    <li class="{% if 'bundle' in request.path %}entity-tab-active{% endif %}"><a href="/{{type}}/{{entity}}/bundle/">{% trans 'entity.tab.bundle' %}</a></li>
+    <li class="{% if 'payment' in request.path %}entity-tab-active{% endif %}"><a href="/{{type}}/{{entity}}/payment/">{% trans 'entity.tab.payment' %}</a></li>
+    <li class="{% if 'offer' in request.path %}entity-tab-active{% endif %}"><a href="/{{type}}/{{entity}}/offers/">{% trans 'entity.tab.offer' %}</a></li>
+    <li class="{% if 'termination' in request.path %}entity-tab-active{% endif %}"><a href="/{{type}}/{{entity}}/termination/">{% trans 'entity.tab.termination' %}</a></li>
   </ul>
 </div>
