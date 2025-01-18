@@ -47,7 +47,7 @@
                     {% trans 'entity.bundle.change.runtime' %}
                   </button>
                   <ul class="dropdown-menu w-100">
-                    <li id="entity-bundle-change-runtime-weekly" class="dropdown-item entity-bundle-change-runtime-entry">{% trans 'entity.bundle.change.runtime.weekly' %}</li>
+                    <li id="entity-bundle-change-runtime-infinite" class="dropdown-item entity-bundle-change-runtime-entry">{% trans 'entity.bundle.change.runtime.infinite' %}</li>
                     <li class="dropdown-item entity-bundle-change-runtime-entry">{% trans 'entity.bundle.change.runtime.monthly' %}</li>
                     <li class="dropdown-item entity-bundle-change-runtime-entry">{% trans 'entity.bundle.change.runtime.yearly' %}</li>
                     <li class="dropdown-item entity-bundle-change-runtime-entry">{% trans 'entity.bundle.change.runtime.unbound' %}</li>
@@ -139,9 +139,9 @@
     resetBundleClass();
     resetBundleRuntime();
     if (type !== "{% trans 'entity.bundle.change.type.trial' %}") {
-      document.getElementById("entity-bundle-change-runtime-weekly").classList.add("d-none");
+      document.getElementById("entity-bundle-change-runtime-infinite").classList.add("d-none");
     } else {
-      document.getElementById("entity-bundle-change-runtime-weekly").classList.remove("d-none");
+      document.getElementById("entity-bundle-change-runtime-infinite").classList.remove("d-none");
     }
     if (type === "{% trans 'entity.bundle.change.type.trial' %}" || type === "{% trans 'entity.bundle.change.type.enterprise' %}") {
       document.getElementById("entity-bundle-change-class-container").classList.add("d-none");
@@ -341,8 +341,8 @@
   }
 
   function findBundleRuntime(content) {
-    if (content === "{% trans 'entity.bundle.change.runtime.weekly' %}") {
-      return "WEEKLY";
+    if (content === "{% trans 'entity.bundle.change.runtime.infinite' %}") {
+      return "INFINITE";
     } else if (content === "{% trans 'entity.bundle.change.runtime.monthly' %}") {
       return "MONTHLY";
     } else if (content === "{% trans 'entity.bundle.change.runtime.yearly' %}") {

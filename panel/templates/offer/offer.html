@@ -316,8 +316,8 @@
   }
 
   function findPackageRuntime(bundle) {
-    if (bundle.runtime === "WEEKLY") {
-      return "{% trans 'offer.runtime.week' %}";
+    if (bundle.runtime === "INFINITE") {
+      return "{% trans 'offer.runtime.unlimited' %}";
     } else if (bundle.runtime === "MONTHLY") {
       return "{% trans 'offer.runtime.month' %}";
     } else if (bundle.runtime === "YEARLY") {
