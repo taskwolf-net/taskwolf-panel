@@ -15,13 +15,13 @@ class HttpRequest {
     }
     let headers = [...self.headers];
     headers.push({key: "Content-Type", value: "application/json"});
-    var token = Cookie.find("panel-token");
+    let token = Cookie.find("panel-token");
     if (token !== null) {
-      this.headers.push({key: "Authorization", value: "Bearer " + token});
+      headers.push({key: "Authorization", value: "Bearer " + token});
     }
-    var whitelistKey = Cookie.find("dulno-whitelist-key");
+    let whitelistKey = Cookie.find("dulno-whitelist-key");
     if (whitelistKey !== null) {
-      this.headers.push({key: "WHITELIST-KEY", value: whitelistKey});
+      headers.push({key: "WHITELIST-KEY", value: whitelistKey});
     }
     const xhr = new XMLHttpRequest();
     xhr.open(self.method, self.url.startsWith("http") ? self.url :
@@ -44,7 +44,7 @@ class HttpRequest {
 
   refresh(callback) {
     let self = this;
-    let refreshToken = Cookie.find("refresh-token");
+    let refreshToken = Cookie.find("panel-refresh-token");
     if (refreshToken == null) {
       return;
     }
@@ -53,8 +53,8 @@ class HttpRequest {
     request.send(function (status, responseText) {
       let response = JSON.parse(responseText);
       if (response.success === "true") {
-        Cookie.create("token", response.productApiKey, 60 * 60 * 24 * 30);
-        Cookie.create("refresh-token", response.refreshToken, 60 * 60 * 24 * 30);
+        Cookie.create("panel-token", response.panelApiKey, 60 * 60 * 24 * 30);
+        Cookie.create("panel-refresh-token", response.refreshToken, 60 * 60 * 24 * 30);
         self.send(callback);
       }
     });
