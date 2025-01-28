@@ -55,7 +55,7 @@
   });
 
   function fetchMembersData(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/members/", "GET", []);
+    let request = new HttpRequest("/members/", "GET", []);
     request.send(function (status, responseText) {
       member = JSON.parse(responseText).members.filter((member) => member.id === "{{member}}")[0];
       callback();
@@ -63,7 +63,7 @@
   }
 
   function fetchGroupsData(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/groups/", "GET", []);
+    let request = new HttpRequest("/groups/", "GET", []);
     request.send(function (status, responseText) {
       groups = JSON.parse(responseText).groups.sort(function(firstGroup, secondGroup) {
         return secondGroup.priority - firstGroup.priority;
@@ -104,7 +104,7 @@
 
   function selectGroup(group) {
     document.getElementById("member-group-dropdown-button").innerHTML = "{% trans 'panel.member.group' %}: " + group;
-    let request = new HttpRequest("https://team.dulno.com/v1/member/group/change/", "POST", [],
+    let request = new HttpRequest("/member/group/change/", "POST", [],
       {group: group, member: member.id});
     request.send(function (status, responseText) {
 
@@ -121,7 +121,7 @@
     var permissionRemoveElement = document.createElement("span");
     permissionRemoveElement.classList.add("member-permission-remove", "fa", "fa-ban", "text-danger");
     permissionRemoveElement.onclick = function (event) {
-      let request = new HttpRequest("https://team.dulno.com/v1/member/permission/remove/", "POST", [],
+      let request = new HttpRequest("/member/permission/remove/", "POST", [],
         {permission: permission, member: member.id});
       request.send(function (status, responseText) {
         location.reload();
@@ -146,7 +146,7 @@
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        let request = new HttpRequest("https://team.dulno.com/v1/member/permission/add/", "POST", [],
+        let request = new HttpRequest("/member/permission/add/", "POST", [],
           {permission: input.value, member: member.id});
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'panel.member.permission.add.successful.title' %}", "{% trans 'panel.member.permission.add.successful.body' %}", "success").then(success => window.location.reload());
@@ -164,7 +164,7 @@
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        let request = new HttpRequest("https://team.dulno.com/v1/member/remove/", "POST", [],
+        let request = new HttpRequest("/member/remove/", "POST", [],
           {member: member.id});
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'panel.member.delete.successful.title' %}", "{% trans 'panel.member.delete.successful.body' %}", "success").then(success => window.location.href = "/administration/");

@@ -175,7 +175,7 @@
   }
 
   function fetchResources(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/cluster/resources/", "GET", []);
+    let request = new HttpRequest("/cluster/resources/", "GET", []);
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));
     });

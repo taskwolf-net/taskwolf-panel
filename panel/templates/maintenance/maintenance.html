@@ -166,14 +166,14 @@
   }
 
   function fetchMaintenance(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/maintenance/find/", "GET", []);
+    let request = new HttpRequest("/maintenance/find/", "GET", []);
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText).maintenance);
     });
   }
 
   function deleteMaintenance(id) {
-    let request = new HttpRequest("https://team.dulno.com/v1/maintenance/delete/", "POST",
+    let request = new HttpRequest("/maintenance/delete/", "POST",
       [], {maintenance: id});
     request.send(function (status, responseText) {
       Swal.fire("{% trans 'maintenance.delete.successful.title' %}",
@@ -183,7 +183,7 @@
   }
 
   function finishMaintenance(id) {
-    let request = new HttpRequest("https://team.dulno.com/v1/maintenance/finish/", "POST",
+    let request = new HttpRequest("/maintenance/finish/", "POST",
       [], {maintenance: id});
     request.send(function (status, responseText) {
       Swal.fire("{% trans 'maintenance.finish.successful.title' %}",
@@ -237,7 +237,7 @@
           nextMinute += 60000;
         }
         let startTime = +now + nextMinute;
-        let request = new HttpRequest("https://team.dulno.com/v1/maintenance/create/", "POST",
+        let request = new HttpRequest("/maintenance/create/", "POST",
           [], {description: "", startTime: startTime, duration: duration});
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'maintenance.emergency.successful.title' %}",

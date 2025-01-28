@@ -5,9 +5,11 @@ import requests
 import json
 import jwt
 import datetime
+from app.settings import BACKEND_ENDPOINT, COOKIE_DOMAIN, DEVELOPMENT
 from django.utils import translation
 from django.conf import settings
 from django.shortcuts import redirect
+from django.http import HttpResponse
 
 def authentication_required(function):
   @wraps(function)
@@ -24,8 +26,8 @@ def authentication_required(function):
         setCookie(response, "panel-refresh-token", authenticationResponse["data"]["refreshToken"], 30)
       return response
     response = redirect("/")
-    response.delete_cookie("panel-token", domain=".dulno.com")
-    response.delete_cookie("panel-refresh-token", domain=".dulno.com")
+    response.delete_cookie("panel-token", domain=COOKIE_DOMAIN)
+    response.delete_cookie("panel-refresh-token", domain=COOKIE_DOMAIN)
     return response
   return authentication
 
@@ -36,7 +38,7 @@ async def isAuthenticated(request):
   headers = {}
   applyWhitelistKey(request, headers)
   response = await asyncio.get_event_loop().run_in_executor(None,
-    partial(requests.post, "http://10.96.0.9/v1/verification/isValid/",
+    partial(requests.post, BACKEND_ENDPOINT + "/v1/verification/isValid/",
       json = {"token": token}, headers = headers))
   if (response.status_code == 417):
     return await refreshAuthentication(request)
@@ -54,7 +56,7 @@ async def refreshAuthentication(request):
   headers = {}
   applyWhitelistKey(request, headers)
   response = await asyncio.get_event_loop().run_in_executor(None,
-    partial(requests.post, "http://10.96.0.9/v1/verification/refresh/",
+    partial(requests.post, BACKEND_ENDPOINT + "/v1/verification/refresh/",
       json = {"refreshToken": refreshToken}, headers = headers))
   text = response.text
   jsonText = json.loads(text)
@@ -74,7 +76,7 @@ async def applyLanguage(request):
   headers = {"Authorization": "Bearer " + token}
   applyWhitelistKey(request, headers)
   response = await asyncio.get_event_loop().run_in_executor(None,
-    partial(requests.get, "http://10.96.0.9/v1/settings/language/",
+    partial(requests.get, BACKEND_ENDPOINT + "/v1/settings/language/",
     headers = headers))
   text = response.text
   jsonText = json.loads(text)
@@ -105,7 +107,7 @@ async def checkPermission(request, permission):
   headers = {"Authorization": "Bearer " + token}
   applyWhitelistKey(request, headers)
   response = await asyncio.get_event_loop().run_in_executor(None,
-    partial(requests.post, "http://10.96.0.9/v1/member/has/permission/",
+    partial(requests.post, BACKEND_ENDPOINT + "/v1/member/has/permission/",
       headers = headers, json = {"permission": permission}))
   text = response.text
   jsonText = json.loads(text)
@@ -115,5 +117,5 @@ async def checkPermission(request, permission):
 def setCookie(response, key, value, expirationDays):
   expires = datetime.datetime.strftime(datetime.datetime.utcnow() +
     datetime.timedelta(days=expirationDays), "%a, %d-%b-%Y %H:%M:%S GMT")
-  response.set_cookie(key, value, expires=expires, domain=".dulno.com",
+  response.set_cookie(key, value, expires=expires, domain=COOKIE_DOMAIN,
     secure=True)

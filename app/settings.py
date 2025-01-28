@@ -10,12 +10,21 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '***REMOVED***'
 
+# Whether the project should be configured in development mode
+DEVELOPMENT = False
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = DEVELOPMENT
 
 ALLOWED_HOSTS = ['panel.dulno.com', '0.0.0.0']
 SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 
+COOKIE_DOMAIN = '.dulno.com'
+
+if DEVELOPMENT:
+  COOKIE_DOMAIN = '0.0.0.0'
+
+BACKEND_ENDPOINT = 'http://10.96.0.9'
 
 # Application definition
 
@@ -120,7 +129,7 @@ LANGUAGES = (
   ('de', 'Deutsch'),
 )
 
-WHITELIST = True
+WHITELIST = False
 
 LOGGING = {
   'version': 1,

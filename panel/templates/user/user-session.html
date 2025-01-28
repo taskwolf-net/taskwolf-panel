@@ -162,7 +162,7 @@
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        let request = new HttpRequest("https://team.dulno.com/v1/user/session/close/", "POST",
+        let request = new HttpRequest("/user/session/close/", "POST",
           [], {user: "{{user}}", session: id});
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'user.session.close.successful.title' %}",
@@ -174,7 +174,7 @@
   }
 
   function fetchSessions(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/user/sessions/", "POST",
+    let request = new HttpRequest("/user/sessions/", "POST",
       [], {user: "{{user}}"});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText).sessions);

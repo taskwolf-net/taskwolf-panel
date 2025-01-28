@@ -111,7 +111,7 @@
   }
 
   function resendMail(id) {
-    let request = new HttpRequest("https://team.dulno.com/v1/mail/resend/", "POST",
+    let request = new HttpRequest("/mail/resend/", "POST",
       [], {mail: id});
     request.send(function (status, responseText) {
       Swal.fire("{% trans 'mail.resend.successful.title' %}",
@@ -121,7 +121,7 @@
   }
 
   function fetchMails(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/mails/find/", "POST",
+    let request = new HttpRequest("/mails/find/", "POST",
       [], {user: "{{user}}"});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText).mails);

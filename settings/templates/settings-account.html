@@ -75,7 +75,7 @@
       Swal.fire("{% trans 'settings.account.password.insecure.title' %}", "{% trans 'settings.account.password.insecure.body' %}", "error");
       return;
     }
-    let request = new HttpRequest("https://team.dulno.com/v1/settings/account/password/change/", "POST",
+    let request = new HttpRequest("/settings/account/password/change/", "POST",
       [], {currentPassword: currentPasswordElement.value, newPassword: newPasswordElement.value});
     request.send(function (status, responseText) {
       var response = JSON.parse(responseText);
@@ -97,7 +97,7 @@
     if (passwordElement.value === "" || emailElement.value === "") {
       return;
     }
-    let request = new HttpRequest("https://team.dulno.com/v1/settings/account/email/change/request/", "POST",
+    let request = new HttpRequest("/settings/account/email/change/request/", "POST",
       [], {password: passwordElement.value, newEmail: emailElement.value});
     request.send(function (status, responseText) {
       let response = JSON.parse(responseText);

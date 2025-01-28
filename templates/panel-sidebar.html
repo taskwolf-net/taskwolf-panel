@@ -140,7 +140,7 @@
 
   function displayRestrictedSidebarItem(elementIdentifier, scopeIdentifier, dividerIdentifier, permission) {
     $(document).ready(function() {
-      let request = new HttpRequest("https://team.dulno.com/v1/member/has/permission/", "POST", [],
+      let request = new HttpRequest("/member/has/permission/", "POST", [],
         {permission: permission});
       request.send(function (status, responseText) {
         if (JSON.parse(responseText).hasPermission === true) {
@@ -157,7 +157,7 @@
   }
 
   function displayEntityCount(identifier) {
-    let request = new HttpRequest("https://team.dulno.com/v1/" + identifier + "/pending/",
+    let request = new HttpRequest("/" + identifier + "/pending/",
       "GET", []);
     request.send(function (status, responseText) {
       let number = JSON.parse(responseText)[identifier];
@@ -181,17 +181,17 @@
   }
 
   document.getElementById("sidebar-profile-popup-status-online").onclick = function (event) {
-    Cookie.create("dulno-panel-status", "ONLINE", 60 * 60 * 24 * 365, ".dulno.com");
+    Cookie.create("dulno-panel-status", "ONLINE", 60 * 60 * 24 * 365);
     window.location.reload();
   }
 
   document.getElementById("sidebar-profile-popup-status-idle").onclick = function (event) {
-    Cookie.create("dulno-panel-status", "IDLE", 60 * 60 * 24 * 365, ".dulno.com");
+    Cookie.create("dulno-panel-status", "IDLE", 60 * 60 * 24 * 365);
     window.location.reload();
   }
 
   function fetchSidebarUsername(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/settings/profile/username/", "GET", []);
+    let request = new HttpRequest("/settings/profile/username/", "GET", []);
     request.send(function (status, responseText) {
       let response = JSON.parse(responseText);
       callback(response.username);
@@ -199,7 +199,7 @@
   }
 
   function fetchSidebarUserId(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/settings/profile/id/", "GET", []);
+    let request = new HttpRequest("/settings/profile/id/", "GET", []);
     request.send(function (status, responseText) {
       let response = JSON.parse(responseText);
       callback(response.id);
@@ -207,7 +207,7 @@
   }
 
   function fetchSidebarGroup(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/group/", "GET", []);
+    let request = new HttpRequest("/group/", "GET", []);
     request.send(function (status, responseText) {
       let response = JSON.parse(responseText);
       callback(response);

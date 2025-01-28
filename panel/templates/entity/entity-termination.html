@@ -71,7 +71,7 @@
   }
 
   function fetchTerminationStatus(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/entity/termination/status/", "POST",
+    let request = new HttpRequest("/entity/termination/status/", "POST",
       [], {entity: "{{entity}}"});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));
@@ -79,7 +79,7 @@
   }
 
   function fetchBundle(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/entity/bundle/find/", "POST",
+    let request = new HttpRequest("/entity/bundle/find/", "POST",
       [], {entity: "{{entity}}"});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));
@@ -95,7 +95,7 @@
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        let request = new HttpRequest("https://team.dulno.com/v1/entity/bundle/terminate/", "POST",
+        let request = new HttpRequest("/entity/bundle/terminate/", "POST",
           [], {entity: "{{entity}}"});
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'entity.termination.process.successful.title' %}", "{% trans 'entity.termination.process.successful.body' %}", "success").then(success => window.location.reload());

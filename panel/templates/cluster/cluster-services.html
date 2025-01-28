@@ -160,7 +160,7 @@
   }
 
   async function isUrlReachable(url, callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/service/available/",
+    let request = new HttpRequest("/service/available/",
       "POST", [], {url: url});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));

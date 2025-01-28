@@ -146,7 +146,7 @@
   }
 
   async function fetchBackupFile(time) {
-    let response = await fetch("https://team.dulno.com/v1/cluster/backup/download/", {
+    let response = await fetch(HttpRequest.PREFIX + "/cluster/backup/download/", {
       method: "POST",
       headers: createRequestHeaders(),
       body: JSON.stringify({backup: time})
@@ -219,7 +219,7 @@
           nextMinute += 60000;
         }
         let startTime = +now + nextMinute;
-        let request = new HttpRequest("https://team.dulno.com/v1/maintenance/create/", "POST",
+        let request = new HttpRequest("/maintenance/create/", "POST",
           [], {description: "", startTime: startTime, duration: duration});
         request.send(function (status, responseText) {
           displayMaintenanceCountdown(backupTime, startTime)
@@ -249,7 +249,7 @@
   }
 
   function isMaintenanceRunning(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/maintenance/find/", "GET", []);
+    let request = new HttpRequest("/maintenance/find/", "GET", []);
     request.send(function (status, responseText) {
       let maintenance = JSON.parse(responseText).maintenance;
       for (let i = 0; i < maintenance.length; i++) {
@@ -306,7 +306,7 @@
     let copyList = document.createElement("ul");
     let copyDivider = document.createElement("div");
     let copyTime = document.createElement("span");
-    const eventSource = new EventSource("https://team.dulno.com/v1/cluster" +
+    const eventSource = new EventSource(HttpRequest.PREFIX + "/cluster" +
       "/backup/restore/?token=" + Cookie.find("panel-token") + "&backup=" + time +
       "&keyspace=" + keyspace + "&table=" + table + "&keepMaintenance=" + keepMaintenance);
     eventSource.onmessage = (event) => {
@@ -443,7 +443,7 @@
     }).then(result => {
       if (result.isConfirmed) {
         loaderPopup();
-        let request = new HttpRequest("https://team.dulno.com/v1/cluster/backup/delete/",
+        let request = new HttpRequest("/cluster/backup/delete/",
           "POST", [], {backup: time});
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'cluster.backups.delete.successful.title' %}",
@@ -455,7 +455,7 @@
   }
 
   function fetchBackups(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/cluster/backups/", "GET", []);
+    let request = new HttpRequest("/cluster/backups/", "GET", []);
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText).backups);
     });
@@ -471,7 +471,7 @@
     }).then(result => {
       if (result.isConfirmed) {
         loaderPopup();
-        let request = new HttpRequest("https://team.dulno.com/v1/cluster/unit/restart/",
+        let request = new HttpRequest("/cluster/unit/restart/",
           "POST", [], {unitName: "dulno-cassandra-backup", unitType: "job"});
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'cluster.backups.run.successful.title' %}",
@@ -492,7 +492,7 @@
         loaderPopup();
         const formData = new FormData();
         formData.append('file', file);
-        const apiUrl = 'https://team.dulno.com/v1/cluster/backup/upload/';
+        const apiUrl = HttpRequest.PREFIX + '/cluster/backup/upload/';
         fetch(apiUrl, {
           method: 'POST',
           headers: createRequestHeaders(),

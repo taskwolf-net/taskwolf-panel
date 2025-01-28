@@ -65,7 +65,7 @@
   });
 
   function fetchGroupsData(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/groups/", "GET", []);
+    let request = new HttpRequest("/groups/", "GET", []);
     request.send(function (status, responseText) {
       group = JSON.parse(responseText).groups.filter((group) => group.name.toLowerCase() === "{{group}}".toLowerCase())[0];
       callback();
@@ -73,7 +73,7 @@
   }
 
   function fetchMembersData(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/members/", "GET", []);
+    let request = new HttpRequest("/members/", "GET", []);
     request.send(function (status, responseText) {
       members = JSON.parse(responseText).members.filter((member) => member.group.toLowerCase() === "{{group}}".toLowerCase());
       callback();
@@ -110,7 +110,7 @@
 
   document.getElementById("group-priority-change").onclick = function (event) {
     var priority = document.getElementById("group-priority-input").value;
-    let request = new HttpRequest("https://team.dulno.com/v1/group/priority/change/",
+    let request = new HttpRequest("/group/priority/change/",
       "POST", [], {priority: priority, name: group.name});
     request.send(function (status, responseText) {
       Swal.fire("{% trans 'panel.group.priority.changed.title' %}", "{% trans 'panel.group.priority.changed.body' %}", "success").then(success => window.location.reload());
@@ -120,7 +120,7 @@
   document.getElementById("group-color-input").oninput = function(event) {
     var color = document.getElementById("group-color-input").value;
     document.getElementById("group-headline").style.color = color;
-    let request = new HttpRequest("https://team.dulno.com/v1/group/color/change/",
+    let request = new HttpRequest("/group/color/change/",
       "POST", [], {color: color, name: group.name});
     request.send(function (status, responseText) {});
   }
@@ -141,7 +141,7 @@
     var memberRemoveElement = document.createElement("span");
     memberRemoveElement.classList.add("group-member-remove", "fa", "fa-ban", "text-danger");
     memberRemoveElement.onclick = function (event) {
-      let request = new HttpRequest("https://team.dulno.com/v1/member/remove/", "POST",
+      let request = new HttpRequest("/member/remove/", "POST",
         [], {member: memberId});
       request.send(function (status, responseText) {
         location.reload();
@@ -170,7 +170,7 @@
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        let request = new HttpRequest("https://team.dulno.com/v1/member/add/", "POST", [],
+        let request = new HttpRequest("/member/add/", "POST", [],
           {email: email.value, name: name.value, group: group.name});
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'panel.group.member.add.successful.title' %}", "{% trans 'panel.group.member.add.successful.body' %}", "success").then(success => window.location.reload());
@@ -189,7 +189,7 @@
     var permissionRemoveElement = document.createElement("span");
     permissionRemoveElement.classList.add("group-permission-remove", "fa", "fa-ban", "text-danger");
     permissionRemoveElement.onclick = function (event) {
-      let request = new HttpRequest("https://team.dulno.com/v1/group/permission/remove/", "POST", [],
+      let request = new HttpRequest("/group/permission/remove/", "POST", [],
         {permission: permission, name: group.name});
       request.send(function (status, responseText) {
         location.reload();
@@ -214,7 +214,7 @@
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        let request = new HttpRequest("https://team.dulno.com/v1/group/permission/add/", "POST", [],
+        let request = new HttpRequest("/group/permission/add/", "POST", [],
           {permission: input.value, name: group.name});
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'panel.group.permission.add.successful.title' %}", "{% trans 'panel.group.permission.add.successful.body' %}", "success").then(success => window.location.reload());
@@ -232,7 +232,7 @@
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        let request = new HttpRequest("https://team.dulno.com/v1/group/remove/", "POST", [],
+        let request = new HttpRequest("/group/remove/", "POST", [],
           {name: group.name});
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'panel.group.delete.successful.title' %}", "{% trans 'panel.group.delete.successful.body' %}", "success").then(success => window.location.href = "/administration/");
@@ -256,7 +256,7 @@
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        let request = new HttpRequest("https://team.dulno.com/v1/group/rename/", "POST", [],
+        let request = new HttpRequest("/group/rename/", "POST", [],
           {currentName: group.name, newName: input.value});
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'panel.group.rename.successful.title' %}", "{% trans 'panel.group.rename.successful.body' %}", "success")

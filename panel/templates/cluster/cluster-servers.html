@@ -108,7 +108,7 @@
   }
 
   function fetchServers(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/cluster/servers/", "GET", []);
+    let request = new HttpRequest("/cluster/servers/", "GET", []);
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText).servers);
     });

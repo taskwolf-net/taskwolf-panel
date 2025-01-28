@@ -96,11 +96,11 @@
     document.getElementById("user-general-profile-email").innerHTML += user.email;
     var languageElement = document.getElementById("user-general-profile-language");
     if (user.language.toUpperCase() === "EN") {
-      languageElement.innerHTML += "<img class='user-general-profile-language mx-2' src='https://dulno.com/static/img/languages/en.webp'>";
+      languageElement.innerHTML += "<img class='user-general-profile-language mx-2' src='/static/img/languages/en.webp'>";
       languageElement.innerHTML += "({% trans 'user.general.profile.language.en' %})";
     }
     if (user.language.toUpperCase() === "DE") {
-      languageElement.innerHTML += "<img class='user-general-profile-language mx-2' src='https://dulno.com/static/img/languages/de.webp' %}'>";
+      languageElement.innerHTML += "<img class='user-general-profile-language mx-2' src='/static/img/languages/de.webp' %}'>";
       languageElement.innerHTML += "({% trans 'user.general.profile.language.de' %})";
     }
     document.getElementById("user-general-profile-join-date").innerHTML += new Date(user.joinDate).toLocaleString();
@@ -285,7 +285,7 @@
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        let request = new HttpRequest("https://team.dulno.com/v1/organization/create/", "POST", [],
+        let request = new HttpRequest("/organization/create/", "POST", [],
           {owner: "{{user}}", name: organizationCreateName.value});
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'user.general.organization.create.successful.title' %}", "{% trans 'user.general.organization.create.successful.body' %}", "success").then(success => window.location.reload());
@@ -295,7 +295,7 @@
   }
 
   function fetchUser(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/user/find/", "POST",
+    let request = new HttpRequest("/user/find/", "POST",
       [], {user: "{{user}}"});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));
@@ -303,7 +303,7 @@
   }
 
   function fetchBundle(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/entity/bundle/find/", "POST",
+    let request = new HttpRequest("/entity/bundle/find/", "POST",
       [], {entity: "{{user}}"});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));

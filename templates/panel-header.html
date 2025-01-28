@@ -30,11 +30,11 @@
     window.location.href = "/settings/profile/";
   };
   document.getElementById('logout-button').onclick = function() {
-    let request = new HttpRequest("https://api.dulno.com/v1/verification/logout/",
+    let request = new HttpRequest("/verification/logout/",
       "GET", []);
     request.send(function (status, responseText) {
-      Cookie.destroy("panel-token", ".dulno.com");
-      Cookie.destroy("panel-refresh-token", ".dulno.com");
+      Cookie.destroy("panel-token");
+      Cookie.destroy("panel-refresh-token");
       window.location.href = "/";
     });
   };

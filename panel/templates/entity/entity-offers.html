@@ -146,7 +146,7 @@
   }
 
   function fetchOffers(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/offers/find/", "POST",
+    let request = new HttpRequest("/offers/find/", "POST",
       [], {target: "{{entity}}"});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));

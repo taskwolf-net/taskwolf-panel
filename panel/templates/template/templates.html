@@ -58,7 +58,7 @@
   }
 
   function fetchLanguage(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/settings/language/", "GET", []);
+    let request = new HttpRequest("/settings/language/", "GET", []);
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText).language);
     });

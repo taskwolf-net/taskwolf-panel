@@ -18,7 +18,7 @@
 
 <script>
   document.getElementById("email-change-continue").onclick = function (event) {
-    let request = new HttpRequest("https://team.dulno.com/v1/settings/account/email/change/complete/", "POST",
+    let request = new HttpRequest("/settings/account/email/change/complete/", "POST",
       [], {member: "{{member}}", token: "{{token}}"});
     request.send(function (status, responseText) {
       Cookie.destroy("panel-token");

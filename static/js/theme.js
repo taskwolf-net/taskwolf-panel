@@ -4,7 +4,7 @@ window.addEventListener('load', function () {
     return;
   }
   if (Cookie.find("dulno-panel-theme") == null) {
-    Cookie.create("dulno-panel-theme", "dark", 60 * 60 * 24 * 365, ".dulno.com");
+    Cookie.create("dulno-panel-theme", "dark", 60 * 60 * 24 * 365);
   }
   let theme = Cookie.find("dulno-panel-theme");
   var logoSource;

@@ -356,7 +356,7 @@
   }
 
   function fetchBundle(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/entity/bundle/find/", "POST",
+    let request = new HttpRequest("/entity/bundle/find/", "POST",
       [], {entity: "{{entity}}"});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));

@@ -10,7 +10,7 @@
         <div id="dashboard-container" class="d-none">
           <div id="dashboard-header">
             <div id="dashboard-header-content">
-              <img id="dashboard-header-logo" src="https://dulno.com/static/img/logo-light.webp">
+              <img id="dashboard-header-logo" src="/static/img/logo-light.webp">
               <h1 id="dashboard-headline">{% trans 'panel.dashboard.welcome' %}<br> </h1>
             </div>
           </div>
@@ -223,7 +223,7 @@
   }
 
   function fetchUsername(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/settings/profile/username/", "GET", []);
+    let request = new HttpRequest("/settings/profile/username/", "GET", []);
     request.send(function (status, responseText) {
       let response = JSON.parse(responseText);
       callback(response.username);
@@ -231,28 +231,28 @@
   }
 
   function fetchTicketData(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/tickets/pending/", "GET", []);
+    let request = new HttpRequest("/tickets/pending/", "GET", []);
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText).tickets);
     });
   }
 
   function fetchQuestionData(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/questions/pending/", "GET", []);
+    let request = new HttpRequest("/questions/pending/", "GET", []);
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText).questions);
     });
   }
 
   function fetchSaleData(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/sales/pending/", "GET", []);
+    let request = new HttpRequest("/sales/pending/", "GET", []);
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText).sales);
     });
   }
 
   function fetch2FA(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/settings/2fa/", "GET", []);
+    let request = new HttpRequest("/settings/2fa/", "GET", []);
     request.send(function (status, responseText) {
       let response = JSON.parse(responseText);
       callback(response.enabled);
@@ -294,7 +294,7 @@
   }
 
   async function isUrlReachable(url, callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/service/available/",
+    let request = new HttpRequest("/service/available/",
       "POST", [], {url: url});
     request.send(function (status, responseText) {
       let response = JSON.parse(responseText);

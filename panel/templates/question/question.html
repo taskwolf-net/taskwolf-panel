@@ -40,7 +40,7 @@
   });
 
   function fetchUsername(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/settings/profile/username/", "GET",
+    let request = new HttpRequest("/settings/profile/username/", "GET",
       []);
     request.send(function (status, responseText) {
       username = JSON.parse(responseText).username;
@@ -49,7 +49,7 @@
   }
 
   function fetchQuestionData(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/question/find/", "POST", [],
+    let request = new HttpRequest("/question/find/", "POST", [],
       {question: "{{question}}"});
     request.send(function (status, responseText) {
       question = JSON.parse(responseText);
@@ -112,7 +112,7 @@
     if (dulnoWritten) {
       var dulnoPicture = document.createElement("img");
       dulnoPicture.classList.add("question-message-profile-picture");
-      dulnoPicture.src = "https://dulno.com/static/img/logo-light.webp";
+      dulnoPicture.src = "/static/img/logo-light.webp";
       messageDescription.appendChild(dulnoPicture);
     } else {
       var userPicture = document.createElement("i");
@@ -153,7 +153,7 @@
 
   document.getElementById("question-message-add").onclick = function(event) {
     var message = document.getElementById("question-answer-field").firstElementChild.innerHTML;
-    let request = new HttpRequest("https://team.dulno.com/v1/question/answer/", "POST", [],
+    let request = new HttpRequest("/question/answer/", "POST", [],
       {question: question.id, message: message});
     request.send(function (status, responseText) {
       Swal.fire("{% trans 'question.message.add.successful.title' %}", "{% trans 'question.message.add.successful.body' %}", "success").then(success => window.location.reload());
@@ -169,7 +169,7 @@
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        let request = new HttpRequest("https://team.dulno.com/v1/question/close/", "POST", [],
+        let request = new HttpRequest("/question/close/", "POST", [],
           {question: question.id});
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'question.close.successful.title' %}", "{% trans 'question.close.successful.body' %}", "success").then(success => window.location.href = "/questions/");

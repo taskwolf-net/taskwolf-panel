@@ -224,7 +224,7 @@
   }
 
   function fetchOrganization(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/organization/find/", "POST",
+    let request = new HttpRequest("/organization/find/", "POST",
       [], {organization: "{{organization}}"});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));
@@ -232,7 +232,7 @@
   }
 
   function fetchBundle(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/entity/bundle/find/", "POST",
+    let request = new HttpRequest("/entity/bundle/find/", "POST",
       [], {entity: "{{organization}}"});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));

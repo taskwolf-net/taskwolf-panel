@@ -33,7 +33,7 @@
   });
 
   function fetchGroupsData(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/groups/", "GET", []);
+    let request = new HttpRequest("/groups/", "GET", []);
     request.send(function (status, responseText) {
       groups = JSON.parse(responseText).groups.sort(function(firstGroup, secondGroup) {
         return secondGroup.priority - firstGroup.priority;
@@ -43,7 +43,7 @@
   }
 
   function fetchMembersData(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/members/", "GET", []);
+    let request = new HttpRequest("/members/", "GET", []);
     request.send(function (status, responseText) {
       members = JSON.parse(responseText).members;
       callback();
@@ -176,7 +176,7 @@
         var name = groupNameElement.value;
         var priority = groupPriorityElement.value;
         var color = groupColorElement.value;
-        let request = new HttpRequest("https://team.dulno.com/v1/group/add/", "POST", [],
+        let request = new HttpRequest("/group/add/", "POST", [],
           {name: name, priority: priority, color: color});
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'panel.administration.group.add.successful.title' %}", "{% trans 'panel.administration.group.add.successful.body' %}", "success").then(success => window.location.reload());

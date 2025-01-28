@@ -253,7 +253,7 @@
   }
 
   document.getElementById("cluster-errors-fixed").onclick = function (event) {
-    let request = new HttpRequest("https://team.dulno.com/v1/cluster/error/fixed/",
+    let request = new HttpRequest("/cluster/error/fixed/",
       "POST", [], {error: selectedError.id});
     request.send(function (status, responseText) {
       selectedElement.remove();
@@ -274,7 +274,7 @@
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        let request = new HttpRequest("https://team.dulno.com/v1/cluster/errors/fixed/all/",
+        let request = new HttpRequest("/cluster/errors/fixed/all/",
           "GET", []);
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'cluster.errors.fixed.all.successful.title' %}",
@@ -286,7 +286,7 @@
   }
 
   function fetchErrors(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/cluster/errors/", "GET", []);
+    let request = new HttpRequest("/cluster/errors/", "GET", []);
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText).errors);
     });

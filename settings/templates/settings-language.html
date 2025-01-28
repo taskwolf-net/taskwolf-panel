@@ -12,11 +12,11 @@
           <div id="settings-language-container">
             <div class="settings-language">
               <h4 class="mb-4">{% trans 'settings.language.english' %}</h4>
-              <input id="settings-language-en" class="settings-language-flag" src="https://dulno.com/static/img/languages/en.webp" type="image"/>
+              <input id="settings-language-en" class="settings-language-flag" src="/static/img/languages/en.webp" type="image"/>
             </div>
             <div class="settings-language">
               <h4 class="mb-4">{% trans 'settings.language.german' %}</h4>
-              <input id="settings-language-de" class="settings-language-flag" src="https://dulno.com/static/img/languages/de.webp" type="image"/>
+              <input id="settings-language-de" class="settings-language-flag" src="/static/img/languages/de.webp" type="image"/>
             </div>
           </div>
         </div>
@@ -27,7 +27,7 @@
 
 <script>
   $(document).ready(function() {
-    let request = new HttpRequest("https://team.dulno.com/v1/settings/language/", "GET",
+    let request = new HttpRequest("/settings/language/", "GET",
       []);
     request.send(function (status, responseText) {
       var language = JSON.parse(responseText).language;
@@ -44,7 +44,7 @@
   }
 
   function changeLanguage(code) {
-    let request = new HttpRequest("https://team.dulno.com/v1/settings/language/change/", "POST",
+    let request = new HttpRequest("/settings/language/change/", "POST",
       [], {language: code});
     request.send(function (status, responseText) {
       window.location.reload();

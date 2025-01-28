@@ -58,7 +58,7 @@
   });
 
   function fetchSalesData(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/sales/find/", "GET", []);
+    let request = new HttpRequest("/sales/find/", "GET", []);
     request.send(function (status, responseText) {
       sales = JSON.parse(responseText).sales;
       callback();

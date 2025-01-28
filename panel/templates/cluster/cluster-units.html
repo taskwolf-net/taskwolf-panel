@@ -98,7 +98,7 @@
   }
 
   function fetchUnits(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/cluster/units/", "GET", []);
+    let request = new HttpRequest("/cluster/units/", "GET", []);
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText).units);
     });

@@ -142,7 +142,7 @@
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        let request = new HttpRequest("https://team.dulno.com/v1/cluster/pod/delete/",
+        let request = new HttpRequest("/cluster/pod/delete/",
           "POST", [], {podName: "{{podName}}"});
         request.send(function (status, responseText) {
           returnToUnitPage();
@@ -152,7 +152,7 @@
   }
 
   function fetchPod(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/cluster/pod/",
+    let request = new HttpRequest("/cluster/pod/",
       "POST", [], {podName: "{{podName}}"});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));

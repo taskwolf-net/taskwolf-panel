@@ -98,7 +98,7 @@
   var accessType = "";
 
   $(document).ready(function() {
-    let languageRequest = new HttpRequest("https://team.dulno.com/v1/settings/language/",
+    let languageRequest = new HttpRequest("/settings/language/",
       "GET", []);
     languageRequest.send(function (languageStatus, languageResponseText) {
       language = JSON.parse(languageResponseText).language;
@@ -470,7 +470,7 @@
   }
 
   document.getElementById("template-publish").onclick = function (event) {
-    var url = "https://team.dulno.com/v1/template/" +
+    var url = HttpRequest.PREFIX + "/template/" +
       ("{{template}}" === "" ? "create" : "update") + "/";
     var body = {};
     if ("{{template}}" !== "") {
@@ -491,7 +491,7 @@
   }
 
   document.getElementById("template-delete").onclick = function (event) {
-    let request = new HttpRequest("https://team.dulno.com/v1/template/delete/",
+    let request = new HttpRequest("/template/delete/",
       "POST", [], {template: "{{template}}"});
     request.send(function (status, responseText) {
       Swal.fire("{% trans 'template.delete.successful.title' %}", "{% trans 'template.delete.successful.body' %}", "success")

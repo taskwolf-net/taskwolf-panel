@@ -58,7 +58,7 @@
   });
 
   function fetchQuestionsData(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/questions/find/", "GET", []);
+    let request = new HttpRequest("/questions/find/", "GET", []);
     request.send(function (status, responseText) {
       questions = JSON.parse(responseText).questions;
       callback();

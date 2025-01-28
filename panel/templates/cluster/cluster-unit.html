@@ -206,7 +206,7 @@
     }).then(result => {
       if (result.isConfirmed) {
         let replicas = scalePickerInput.value;
-        let request = new HttpRequest("https://team.dulno.com/v1/cluster/unit/scale/",
+        let request = new HttpRequest("/cluster/unit/scale/",
           "POST", [], {unitName: "{{name}}", unitType: "{{type}}", replicas: replicas});
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'cluster.unit.scale.successful.title' %}",
@@ -226,7 +226,7 @@
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        let request = new HttpRequest("https://team.dulno.com/v1/cluster/unit/restart/",
+        let request = new HttpRequest("/cluster/unit/restart/",
           "POST", [], {unitName: "{{name}}", unitType: "{{type}}"});
         request.send(function (status, responseText) {
           window.location.reload();
@@ -236,7 +236,7 @@
   }
 
   function fetchUnit(callback) {
-    let request = new HttpRequest("https://team.dulno.com/v1/cluster/unit/",
+    let request = new HttpRequest("/cluster/unit/",
       "POST", [], {unitName: "{{name}}", unitType: "{{type}}"});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText));

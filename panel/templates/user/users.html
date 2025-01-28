@@ -33,7 +33,7 @@
   });
 
   document.getElementById("user-find").onclick = function (event) {
-    let request = new HttpRequest("https://team.dulno.com/v1/user/search/", "POST",
+    let request = new HttpRequest("/user/search/", "POST",
       [], {user: document.getElementById("users-search-input").value});
     request.send(function (status, responseText) {
       var information = JSON.parse(responseText);
