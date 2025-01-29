@@ -22,7 +22,7 @@ publish:
   only:
     - master
 
-deploy_web:
+deploy_panel:
   stage: deploy
   image:
     name: bitnami/kubectl:latest
