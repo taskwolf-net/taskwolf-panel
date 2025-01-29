@@ -148,7 +148,7 @@
     entrySuffix.appendChild(entryArrow);
     entry.appendChild(entrySuffix);
     entry.onclick = function (event) {
-      window.location.href = "/cluster/unit/{{type}}/{{name}}/pod/" + pod.name + "/";
+      window.location.href = "/cluster/unit/" + "{{type}}" + "/" + "{{name}}" + "/pod/" + pod.name + "/";
     }
     document.getElementById("cluster-unit-pods-list").appendChild(entry);
   }

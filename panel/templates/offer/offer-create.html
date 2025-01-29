@@ -349,9 +349,9 @@
 
   function returnPage() {
     if ("{{type}}" === "user") {
-      window.location.href = "/user/{{target}}/offers/";
+      window.location.href = "/user/" + "{{target}}" + "/offers/";
     } else if ("{{type}}" === "organization") {
-      window.location.href = "/organization/{{target}}/offers/";
+      window.location.href = "/organization/" + "{{target}}" + "/offers/";
     }
   }
 
