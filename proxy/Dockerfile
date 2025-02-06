@@ -14,6 +14,6 @@ FROM nginx
 
 COPY --from=builder /home/dulno/panel/static /home/dulno/panel/static/
 
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY proxy /etc/nginx/sites-available/proxy
-COPY proxy /etc/nginx/sites-enabled/proxy
+COPY proxy/nginx.conf /etc/nginx/nginx.conf
+COPY proxy/proxy /etc/nginx/sites-available/proxy
+COPY proxy/proxy /etc/nginx/sites-enabled/proxy
