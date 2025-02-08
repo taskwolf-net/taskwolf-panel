@@ -97,11 +97,11 @@
     var languageElement = document.getElementById("user-general-profile-language");
     if (user.language.toUpperCase() === "EN") {
       languageElement.innerHTML += "<img class='user-general-profile-language mx-2' src='/static/img/languages/en.webp'>";
-      languageElement.innerHTML += "({% trans 'user.general.profile.language.en' %})";
+      languageElement.innerHTML += "(" + "{% trans 'user.general.profile.language.en' %}" + ")";
     }
     if (user.language.toUpperCase() === "DE") {
       languageElement.innerHTML += "<img class='user-general-profile-language mx-2' src='/static/img/languages/de.webp' %}'>";
-      languageElement.innerHTML += "({% trans 'user.general.profile.language.de' %})";
+      languageElement.innerHTML += "(" + "{% trans 'user.general.profile.language.de' %}" + ")";
     }
     document.getElementById("user-general-profile-join-date").innerHTML += new Date(user.joinDate).toLocaleString();
   }
@@ -121,7 +121,7 @@
     if (bundle.runtime === "UNBOUND") {
       document.getElementById("user-general-bundle-expiration").innerHTML +=
         Math.ceil(Number(bundle.expiration - Date.now()) / (1000 * 60 * 60 * 24)).toString() +
-        " {% trans 'user.general.bundle.expiration.days' %}";
+        " " + "{% trans 'user.general.bundle.expiration.days' %}";
       document.getElementById("user-general-bundle-expiration").classList.remove("d-none");
     } else {
       document.getElementById("user-general-bundle-runtime").innerHTML += findPackageRuntime(bundle);

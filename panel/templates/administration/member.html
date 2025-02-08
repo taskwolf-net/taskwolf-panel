@@ -74,7 +74,7 @@
 
   function displayMember() {
     document.getElementById("member-headline").innerHTML = member.name;
-    document.getElementById("member-group-dropdown-button").innerHTML = "{% trans 'panel.member.group' %}: " + member.group;
+    document.getElementById("member-group-dropdown-button").innerHTML = "{% trans 'panel.member.group' %}" + ": " + member.group;
     for (var i = 0; i < groups.length; i++) {
       addGroup(groups[i].name);
     }
@@ -103,7 +103,7 @@
   }
 
   function selectGroup(group) {
-    document.getElementById("member-group-dropdown-button").innerHTML = "{% trans 'panel.member.group' %}: " + group;
+    document.getElementById("member-group-dropdown-button").innerHTML = "{% trans 'panel.member.group' %}" + ": " + group;
     let request = new HttpRequest("/member/group/change/", "POST", [],
       {group: group, member: member.id});
     request.send(function (status, responseText) {

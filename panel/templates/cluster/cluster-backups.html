@@ -327,7 +327,7 @@
         pod.currentTables = pod.currentTables + 1;
         pod.bar.style.width = (100 * (pod.currentTables / pod.totalTables)) + "%";
         pod.status.innerText = response.table.split("-")[0] + " (" + response.keyspace + ")";
-        copyTime.innerText = "{% trans 'cluster.backups.restore.copy.remaining' %}: " +
+        copyTime.innerText = "{% trans 'cluster.backups.restore.copy.remaining' %}" + ": " +
           calculateRemainingTime(copies, startingTime);
         copyDivider.classList.remove("d-none");
       } else if (response.type === "COPIED") {

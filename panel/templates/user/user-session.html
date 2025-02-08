@@ -71,12 +71,12 @@
     entryDescription.appendChild(entryLocation);
     let entryOpenTime = document.createElement("p");
     entryOpenTime.classList.add("mb-0");
-    entryOpenTime.innerHTML = "{% trans 'user.session.opening' %}: " +
+    entryOpenTime.innerHTML = "{% trans 'user.session.opening' %}" + ": " +
       new Date(openTime).toLocaleString();
     entryDescription.appendChild(entryOpenTime);
     let entryLastRefresh = document.createElement("p");
     entryLastRefresh.classList.add("mb-0");
-    entryLastRefresh.innerHTML = "{% trans 'user.session.last.refresh' %}: " +
+    entryLastRefresh.innerHTML = "{% trans 'user.session.last.refresh' %}" + ": " +
       new Date(lastRefresh).toLocaleString();
     entryDescription.appendChild(entryLastRefresh);
     entryPrefix.appendChild(entryDescription);

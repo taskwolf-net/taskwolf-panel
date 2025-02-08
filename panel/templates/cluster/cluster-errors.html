@@ -141,13 +141,13 @@
     document.getElementById("cluster-errors-sidebar-trace").innerText =
       error.trace.replaceAll("\t", "").replaceAll(error.title + "\n", "");
     document.getElementById("cluster-errors-sidebar-origin").innerHTML =
-      "<b>{% trans 'cluster.errors.sidebar.origin' %}: </b>" + error.origin;
+      "<b>" + "{% trans 'cluster.errors.sidebar.origin' %}" + ": </b>" + error.origin;
     document.getElementById("cluster-errors-sidebar-pod").innerHTML =
-      "<b class='me-1'>{% trans 'cluster.errors.sidebar.pod' %}: </b>" + error.pod;
+      "<b class='me-1'>" + "{% trans 'cluster.errors.sidebar.pod' %}" + ": </b>" + error.pod;
     document.getElementById("cluster-errors-sidebar-pod").appendChild(
       createPodRedirectButton(error));
     document.getElementById("cluster-errors-sidebar-node").innerHTML =
-      "<b>{% trans 'cluster.errors.sidebar.node' %}: </b>" + error.node;
+      "<b>" + "{% trans 'cluster.errors.sidebar.node' %}" + ": </b>" + error.node;
   }
 
   function createPodRedirectButton(error) {

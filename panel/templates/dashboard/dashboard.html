@@ -85,39 +85,11 @@
                 <li class="dashboard-service">
                   <div class="d-flex align-items-center">
                     <div class="dashboard-service-icon">
-                      <i class="fa-solid fa-gauge"></i>
+                      <i class="fa-solid fa-box-archive"></i>
                     </div>
-                    <span class="dashboard-service-name">Panel</span>
+                    <span class="dashboard-service-name">APT</span>
                   </div>
-                  <div id="dashboard-service-status-panel" class="dashboard-service-status">
-                    <div class="spinner-border" role="status">
-                      <span class="visually-hidden"></span>
-                    </div>
-                  </div>
-                </li>
-                <div class="dashboard-service-separator"></div>
-                <li class="dashboard-service">
-                  <div class="d-flex align-items-center">
-                    <div class="dashboard-service-icon">
-                      <i class="fa-solid fa-server"></i>
-                    </div>
-                    <span class="dashboard-service-name">Panel API</span>
-                  </div>
-                  <div id="dashboard-service-status-panel-api" class="dashboard-service-status">
-                    <div class="spinner-border" role="status">
-                      <span class="visually-hidden"></span>
-                    </div>
-                  </div>
-                </li>
-                <div class="dashboard-service-separator"></div>
-                <li class="dashboard-service">
-                  <div class="d-flex align-items-center">
-                    <div class="dashboard-service-icon">
-                      <i class="fa-brands fa-gitlab"></i>
-                    </div>
-                    <span class="dashboard-service-name">GitLab</span>
-                  </div>
-                  <div id="dashboard-service-status-gitlab" class="dashboard-service-status">
+                  <div id="dashboard-service-status-apt" class="dashboard-service-status">
                     <div class="spinner-border" role="status">
                       <span class="visually-hidden"></span>
                     </div>
@@ -169,9 +141,7 @@
     displayServiceAvailability("web", "https://dulno.com/");
     displayServiceAvailability("api", "https://api.dulno.com/v1/");
     displayServiceAvailability("documentation", "https://documentation.dulno.com/");
-    displayServiceAvailability("panel", "https://panel.dulno.com/");
-    displayServiceAvailability("panel-api", "https://team.dulno.com/v1/");
-    displayServiceAvailability("gitlab", "https://git.dulno.com/");
+    displayServiceAvailability("apt", "https://apt.dulno.com/");
   }
 
   function displayTip(twoFactorEnabled) {
