@@ -10,5 +10,10 @@ ENV OBFUSCATION_HOME=/home/dulno/panel
 
 RUN node /home/dulno/panel/obfuscation/obfuscate.js
 
-FROM alpine
-COPY --from=builder /home/dulno/panel/static /static/
+FROM nginx
+
+COPY --from=builder /home/dulno/panel/static /home/dulno/panel/static/
+
+COPY proxy/nginx.conf /etc/nginx/nginx.conf
+COPY proxy/proxy /etc/nginx/sites-available/proxy
+COPY proxy/proxy /etc/nginx/sites-enabled/proxy

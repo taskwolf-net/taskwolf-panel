@@ -1,0 +1,17 @@
+server {
+  server_name 10.96.0.12;
+
+  location /static/ {
+    alias /home/dulno/panel/static/;
+    add_header X-Robots-Tag "noindex, nofollow, nosnippet, noarchive";
+  }
+
+  location / {
+    proxy_pass http://10.96.0.6;
+    proxy_set_header Host $http_host;
+    add_header X-Robots-Tag "noindex, nofollow, nosnippet, noarchive";
+  }
+
+  listen 80;
+  server_tokens off;
+}
