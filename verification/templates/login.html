@@ -62,35 +62,41 @@
       Cookie.create("dulno-remember-me", document.getElementById("email").value,
         12 * 30 * 24 * 60 * 60);
     }
-    let request = new HttpRequest("/verification/login/", "POST", [],
-      {email: document.getElementById("email").value, password: document.getElementById("password").value,
-        multiFactorCode: multiFactorCode});
-    request.send(function (status, responseText) {
-      let response = JSON.parse(responseText);
-      let success = response.success;
-      if (success === true) {
-        Cookie.create("panel-token", response.panelApiKey, 60 * 60 * 24 * 30);
-        Cookie.create("panel-refresh-token", response.refreshToken, 60 * 60 * 24 * 30);
-        window.location.href = "/dashboard/";
-      } else {
-        let error = response.error;
-        if (error === 1001) {
-          if (multiFactorCode === "") {
-            display2FA(function(code) {login(code)});
-          } else {
-            Swal.fire("2-factor authentication failed", "The token entered has either expired or is incorrect. Please try again", "error").then((result) => {
-              if (result.isConfirmed) {
-                display2FA(function(code) {login(code)});
-              }
-            });
+    let futureAddress = new HttpRequest("https://api.dulno.com/v1/address/", "GET", []);
+    futureAddress.send(function (addressStatus, addressResponse) {
+      let address = JSON.parse(addressResponse).address;
+      let request = new HttpRequest("/verification/login/", "POST",
+        [{key: "X-Real-IP", value: address}],
+        {email: document.getElementById("email").value,
+          password: document.getElementById("password").value,
+          multiFactorCode: multiFactorCode});
+      request.send(function (status, responseText) {
+        let response = JSON.parse(responseText);
+        let success = response.success;
+        if (success === true) {
+          Cookie.create("panel-token", response.panelApiKey, 60 * 60 * 24 * 30);
+          Cookie.create("panel-refresh-token", response.refreshToken, 60 * 60 * 24 * 30);
+          window.location.href = "/dashboard/";
+        } else {
+          let error = response.error;
+          if (error === 1001) {
+            if (multiFactorCode === "") {
+              display2FA(function(code) {login(code)});
+            } else {
+              Swal.fire("2-factor authentication failed", "The token entered has either expired or is incorrect. Please try again", "error").then((result) => {
+                if (result.isConfirmed) {
+                  display2FA(function(code) {login(code)});
+                }
+              });
+            }
+            return;
           }
-          return;
+          if (error === 1000) {
+            Swal.fire("Login has failed", "The password entered is incorrect", "error");
+          }
+          document.getElementById("password").value = "";
         }
-        if (error === 1000) {
-          Swal.fire("Login has failed", "The password entered is incorrect", "error");
-        }
-        document.getElementById("password").value = "";
-      }
+      });
     });
   };
 </script>
