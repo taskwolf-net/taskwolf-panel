@@ -70,7 +70,8 @@
     informationElement.appendChild(timeElement);
     var durationElement = document.createElement("p");
     durationElement.classList.add("mb-0");
-    durationElement.innerHTML = (duration / (1000 * 60)) + " {% trans 'maintenance.minutes' %}";
+    durationElement.innerHTML = (duration / (1000 * 60)) + " " +
+      "{% trans 'maintenance.minutes' %}";
     informationElement.appendChild(durationElement);
     prefixElement.appendChild(informationElement);
     entryElement.appendChild(prefixElement);
