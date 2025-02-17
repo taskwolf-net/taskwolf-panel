@@ -96,7 +96,10 @@ def permission_required(permission):
       hasPermission = await checkPermission(request, permission)
       if (hasPermission):
         return await function(request, *args, **kwargs)
-      return redirect("/")
+      response = redirect("/")
+      response.delete_cookie("panel-token", domain=COOKIE_DOMAIN)
+      response.delete_cookie("panel-refresh-token", domain=COOKIE_DOMAIN)
+      return response
     return authentication
   return wrapper
 
@@ -118,4 +121,4 @@ def setCookie(response, key, value, expirationDays):
   expires = datetime.datetime.strftime(datetime.datetime.utcnow() +
     datetime.timedelta(days=expirationDays), "%a, %d-%b-%Y %H:%M:%S GMT")
   response.set_cookie(key, value, expires=expires, domain=COOKIE_DOMAIN,
-    secure=True)
+    secure=(DEVELOPMENT == False))
