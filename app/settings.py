@@ -19,7 +19,7 @@ DEBUG = DEVELOPMENT
 ALLOWED_HOSTS = ['panel.dulno.com', '10.96.0.12', '0.0.0.0']
 SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 
-COOKIE_DOMAIN = '.dulno.com'
+COOKIE_DOMAIN = '.panel.dulno.com'
 
 if DEVELOPMENT:
   COOKIE_DOMAIN = '0.0.0.0'
