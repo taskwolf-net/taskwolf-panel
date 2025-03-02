@@ -15,7 +15,9 @@
   <link rel="stylesheet" href="{% static 'dependency/quill@2.0.2/quill.snow.css' %}">
   <script src="{% static 'js/icon.js' %}"></script>
   <script src="{% static 'js/cookie.js' %}"></script>
-  <script src="{% static 'js/httprequest.js' %}"></script>
+  <script>
+    {% include 'js/httprequest.js' %}
+  </script>
   <script src="{% static 'js/theme.js' %}"></script>
   <script src="{% static 'js/progressbar.js' %}"></script>
   <script src="{% static 'dependency/bootstrap@5.3.3/js/bootstrap.bundle.js' %}"></script>

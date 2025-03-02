@@ -1,5 +1,5 @@
 window.addEventListener('load', function () {
-  let url = window.location.href.replace("https://panel.dulno.com/", "").replaceAll("/", "");
+  let url = window.location.pathname.replaceAll("/", "");
   if (url === "") {
     return;
   }
@@ -20,7 +20,7 @@ window.addEventListener('load', function () {
   }
   let logoElements = document.getElementsByClassName("dulno-logo");
   for (let i = 0; i < logoElements.length; i++) {
-    logoElements[i].src = "https://dulno.com/static/img/" + logoSource;
+    logoElements[i].src = "/static/img/" + logoSource;
   }
   for (let themeButton of document.getElementsByClassName("btn-theme")) {
     if (theme === "light") {

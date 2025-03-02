@@ -116,7 +116,7 @@
 
   function fetchTemplateData(language, callback) {
     let templateRequest = new HttpRequest(
-      "https://api.dulno.com/v1/template/find/unauthorized/" + language + "/",
+      "https://api." + "{{domain}}" + "/v1/template/find/unauthorized/" + language + "/",
       "POST", [], {template: "{{template}}"});
     templateRequest.send(function (templateStatus, templateResponseText) {
       callback(JSON.parse(templateResponseText));
@@ -174,7 +174,7 @@
     }
     var logoElement = document.createElement("img");
     logoElement.classList.add("template-workflow-component");
-    logoElement.src = "https://dulno.com/static/img/applications/" +
+    logoElement.src = "https://" + "{{domain}}" + "/static/img/applications/" +
       component.moduleLogo.split(".")[0] + ".webp";
     return logoElement;
   }
@@ -402,7 +402,7 @@
     applicationInformationContainer.classList.add(prefix + "-information");
     var applicationIconElement = document.createElement("img");
     applicationIconElement.classList.add(prefix + "-icon");
-    applicationIconElement.src = "https://dulno.com/static/img/applications/" +
+    applicationIconElement.src = "https://" + "{{domain}}" + "/static/img/applications/" +
       logo.split(".")[0] + ".webp";
     applicationInformationContainer.appendChild(applicationIconElement);
     var applicationNameElement = document.createElement("span");
@@ -453,7 +453,7 @@
 
   function fetchAllModules(language, callback) {
     let request = new HttpRequest(
-      "https://api.dulno.com/v1/modules/all/unauthorized/" + language + "/",
+      "https://api." + "{{domain}}" + "/v1/modules/all/unauthorized/" + language + "/",
       "GET", []);
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText).modules);
@@ -462,7 +462,7 @@
 
   function fetchComponents(language, type, module, callback) {
     let request = new HttpRequest(
-      "https://api.dulno.com/v1/components/find/unauthorized/" + language + "/",
+      "https://api." + "{{domain}}" + "/v1/components/find/unauthorized/" + language + "/",
       "POST", [], {module: module, componentType: type});
     request.send(function (status, responseText) {
       callback(JSON.parse(responseText).components);
