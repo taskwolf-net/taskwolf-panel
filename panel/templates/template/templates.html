@@ -65,7 +65,7 @@
   }
 
   function fetchMoreTemplates(callback) {
-    let request = new HttpRequest("https://api.dulno.com/v1/templates/load/unauthorized/" + language + "/",
+    let request = new HttpRequest("https://api." + "{{domain}}" + "/v1/templates/load/unauthorized/" + language + "/",
       "POST", [], {pageState: currentPageState, search: currentSearch});
     request.send(function (status, responseText) {
       var result = JSON.parse(responseText);
@@ -127,7 +127,7 @@
 
   function createLogoElement(module) {
     var logoElement = document.createElement("img");
-    logoElement.src = "https://dulno.com/static/img/applications/" +
+    logoElement.src = "https://" + "{{domain}}" + "/static/img/applications/" +
       module.moduleLogo.split(".")[0] + ".webp";
     logoElement.width = 64;
     logoElement.height = 64;

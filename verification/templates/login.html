@@ -62,7 +62,7 @@
       Cookie.create("dulno-remember-me", document.getElementById("email").value,
         12 * 30 * 24 * 60 * 60);
     }
-    let futureAddress = new HttpRequest("https://api.dulno.com/v1/address/", "GET", []);
+    let futureAddress = new HttpRequest("https://api." + "{{domain}}" + "/v1/address/", "GET", []);
     futureAddress.send(function (addressStatus, addressResponse) {
       let address = JSON.parse(addressResponse).address;
       let request = new HttpRequest("/verification/login/", "POST",

@@ -158,7 +158,7 @@
     icon.classList.add("fa-solid", "fa-arrow-up-right-from-square");
     element.appendChild(icon);
     element.onclick = function (event) {
-      window.location.href = "https://panel.dulno.com/cluster/unit/" +
+      window.location.href = "https://panel." + "{{domain}}" + "/cluster/unit/" +
         error.podControllerType.toLowerCase() + "/" +
         error.podControllerName.toLowerCase() + "/pod/" + error.pod + "/";
     }
