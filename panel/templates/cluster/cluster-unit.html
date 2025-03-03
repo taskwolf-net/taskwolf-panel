@@ -69,12 +69,12 @@
     fetchUnit(function (unit) {
       displayUnit(unit);
       removeLoader();
+      setInterval(function () {
+        fetchUnit(function (unit) {
+          displayUnit(unit);
+        });
+      }, 1000);
     });
-    setInterval(function () {
-      fetchUnit(function (unit) {
-        displayUnit(unit);
-      });
-    }, 1000);
     if ("{{type}}" === "deployment") {
       document.getElementById("cluster-unit-scale").classList.remove("d-none");
     }

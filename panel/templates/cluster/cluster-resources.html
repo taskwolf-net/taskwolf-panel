@@ -10,7 +10,7 @@
         <div id="cluster-resources-wrapper" class="d-none">
           {% include 'cluster-tab.html' %}
           <div id="cluster-resources-content">
-            <div class="cluster-resources-type-content">
+            <div id="cluster-resources-controller" class="cluster-resources-type-content d-none">
               <div class="d-flex flex-xl-row flex-column justify-content-between align-items-center mb-5">
                 <div class="d-flex mb-xl-0 mb-4">
                   <h4 class="fw-bold mb-0">{% trans 'cluster.resources.controller.headline' %}</h4><h5 id="cluster-resources-controller-name" class="ms-4 mb-0"></h5>
@@ -36,7 +36,7 @@
                 </div>
               </div>
             </div>
-            <div class="cluster-resources-type-content">
+            <div id="cluster-resources-worker" class="cluster-resources-type-content d-none">
               <div class="d-flex flex-xl-row flex-column justify-content-between align-items-center mb-5">
                 <div class="d-flex mb-xl-0 mb-4">
                   <h4 class="fw-bold mb-0">{% trans 'cluster.resources.worker.headline' %}</h4><h5 id="cluster-resources-worker-name" class="ms-4 mb-0"></h5>
@@ -78,10 +78,10 @@
     displayLoader();
     refreshMetrics(function () {
       removeLoader();
+      setInterval(function () {
+        refreshMetrics(function () {});
+      }, 1000);
     });
-    setInterval(function () {
-      refreshMetrics(function () {});
-    }, 1000);
   });
 
   function refreshMetrics(callback) {
@@ -99,8 +99,12 @@
   }
 
   function displayMetrics(type, resources) {
+    if (Object.keys(resources).length === 0) {
+      return;
+    }
     let feature = selectedFeature[type];
     let featureResources = resources[feature.toLowerCase()];
+    document.getElementById("cluster-resources-" + type).classList.remove("d-none");
     drawMetric("#cluster-resources-" + type + "-cpu-circle",
       featureResources.cpuRatio, 100);
     drawMetric("#cluster-resources-" + type + "-ram-circle",
