@@ -13,3 +13,31 @@ This is the repository that manages all functionalities of the web panel in the 
 |------|-----------------------------------------------------------------------|
 | main | ![](https://git.dulno.com/dulno/dulno-panel/badges/main/pipeline.svg) |
 | dev  | ![](https://git.dulno.com/dulno/dulno-panel/badges/dev/pipeline.svg)  |
+
+## Installation
+
+```bash
+python -m venv env
+
+source env/bin/activate
+
+pip install django gunicorn django-cors-headers requests jwt
+
+django-admin compilemessages
+
+gunicorn --config app/gunicorn-config.py app.wsgi
+```
+
+## Run
+
+```bash
+source env/bin/activate
+
+gunicorn --config app/gunicorn-config.py app.wsgi
+```
+
+## Compile locales
+
+```bash
+django-admin compilemessages
+```
