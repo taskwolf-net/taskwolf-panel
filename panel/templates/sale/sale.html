@@ -165,18 +165,18 @@
     });
   }
 
-  function displayEntry(dulnoWritten, author, date, time, contentElement) {
+  function displayEntry(taskwolfWritten, author, date, time, contentElement) {
     var messageContainer = document.createElement("li");
     messageContainer.classList.add("sale-message-container");
     var messageDescription = document.createElement("div");
     messageDescription.classList.add("sale-message-description");
     messageDescription.appendChild(document.createElement("br"));
     messageDescription.appendChild(document.createElement("br"));
-    if (dulnoWritten) {
-      var dulnoPicture = document.createElement("img");
-      dulnoPicture.classList.add("sale-message-profile-picture");
-      dulnoPicture.src = "/static/img/logo-light.webp";
-      messageDescription.appendChild(dulnoPicture);
+    if (taskwolfWritten) {
+      var taskwolfPicture = document.createElement("img");
+      taskwolfPicture.classList.add("sale-message-profile-picture");
+      taskwolfPicture.src = "/static/img/logo-light.webp";
+      messageDescription.appendChild(taskwolfPicture);
     } else {
       var userPicture = document.createElement("i");
       userPicture.classList.add("sale-message-profile-icon", "fa-regular", "fa-user");

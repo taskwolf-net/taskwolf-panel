@@ -1,19 +1,19 @@
 ARG DOCKER_REGISTRY
-FROM ${DOCKER_REGISTRY}/dulno-obfuscation:latest AS builder
+FROM ${DOCKER_REGISTRY}/taskwolf-obfuscation:latest AS builder
 
-RUN mkdir -p /home/dulno/panel
-RUN ln -s /obfuscation /home/dulno/panel
+RUN mkdir -p /home/taskwolf/panel
+RUN ln -s /obfuscation /home/taskwolf/panel
 
-COPY static /home/dulno/panel/static
-COPY obfuscation /home/dulno/panel/obfuscation
+COPY static /home/taskwolf/panel/static
+COPY obfuscation /home/taskwolf/panel/obfuscation
 
-ENV OBFUSCATION_HOME=/home/dulno/panel
+ENV OBFUSCATION_HOME=/home/taskwolf/panel
 
-RUN node /home/dulno/panel/obfuscation/obfuscate.js
+RUN node /home/taskwolf/panel/obfuscation/obfuscate.js
 
 FROM nginx
 
-COPY --from=builder /home/dulno/panel/static /home/dulno/panel/static/
+COPY --from=builder /home/taskwolf/panel/static /home/taskwolf/panel/static/
 
 COPY proxy/nginx.conf /etc/nginx/nginx.conf
 COPY proxy/proxy /etc/nginx/sites-available/proxy

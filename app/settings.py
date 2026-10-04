@@ -12,24 +12,24 @@ SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 # Whether the project should be configured in productive, staging or local mode
 # Possible values: PRODUCTIVE, STAGING, LOCAL
-ENVIRONMENT = os.getenv('DULNO_ENVIRONMENT', 'LOCAL')
+ENVIRONMENT = os.getenv('TASKWOLF_ENVIRONMENT', 'LOCAL')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = ENVIRONMENT == 'STAGING' or ENVIRONMENT == 'LOCAL'
 
 if ENVIRONMENT == 'PRODUCTIVE':
-  ALLOWED_HOSTS = ['panel.dulno.com', '10.96.0.12', '0.0.0.0']
+  ALLOWED_HOSTS = ['panel.taskwolf.net', '10.96.0.12', '0.0.0.0']
 elif ENVIRONMENT == 'STAGING':
-  ALLOWED_HOSTS = ['panel.dulno.dev', '10.96.0.12', '0.0.0.0']
+  ALLOWED_HOSTS = ['panel.taskwolf.dev', '10.96.0.12', '0.0.0.0']
 elif ENVIRONMENT == 'LOCAL':
   ALLOWED_HOSTS = ['0.0.0.0']
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 
 if ENVIRONMENT == 'PRODUCTIVE':
-  COOKIE_DOMAIN = '.dulno.com'
+  COOKIE_DOMAIN = '.taskwolf.net'
 elif ENVIRONMENT == 'STAGING':
-  COOKIE_DOMAIN = '.dulno.dev'
+  COOKIE_DOMAIN = '.taskwolf.dev'
 elif ENVIRONMENT == 'LOCAL':
   COOKIE_DOMAIN = '0.0.0.0'
 

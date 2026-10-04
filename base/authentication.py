@@ -62,8 +62,8 @@ async def refreshAuthentication(request):
   jsonText = json.loads(text)
   success = jsonText["success"]
   if (success == "true"):
-    request.dulnoToken = jsonText["panelApiKey"]
-    request.dulnoRefreshToken = jsonText["refreshToken"]
+    request.taskwolfToken = jsonText["panelApiKey"]
+    request.taskwolfRefreshToken = jsonText["refreshToken"]
     return {"success": True, "data": {"panel-token": jsonText["panelApiKey"],
       "refreshToken": jsonText["refreshToken"]}}
   return {"success": False}
@@ -85,7 +85,7 @@ async def applyLanguage(request):
 def applyWhitelistKey(request, headers):
   if (not settings.WHITELIST):
     return
-  whitelistKey = request.COOKIES.get('dulno-whitelist-key')
+  whitelistKey = request.COOKIES.get('taskwolf-whitelist-key')
   if (whitelistKey != None):
     headers["WHITELIST-KEY"] = whitelistKey
 

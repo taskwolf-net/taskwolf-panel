@@ -2,7 +2,7 @@ server {
   server_name 10.96.0.12;
 
   location /static/ {
-    alias /home/dulno/panel/static/;
+    alias /home/taskwolf/panel/static/;
     add_header X-Robots-Tag "noindex, nofollow, nosnippet, noarchive";
   }
 

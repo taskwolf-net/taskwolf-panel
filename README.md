@@ -1,4 +1,4 @@
-# Dulno - Panel
+# Taskwolf - Panel
 
 [![CI](https://github.com/taskwolf-net/taskwolf-panel/actions/workflows/ci.yml/badge.svg)](https://github.com/taskwolf-net/taskwolf-panel/actions/workflows/ci.yml)
 

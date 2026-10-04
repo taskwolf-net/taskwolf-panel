@@ -102,18 +102,18 @@
     });
   }
 
-  function displayEntry(dulnoWritten, author, date, time, contentElement) {
+  function displayEntry(taskwolfWritten, author, date, time, contentElement) {
     var messageContainer = document.createElement("li");
     messageContainer.classList.add("question-message-container");
     var messageDescription = document.createElement("div");
     messageDescription.classList.add("question-message-description");
     messageDescription.appendChild(document.createElement("br"));
     messageDescription.appendChild(document.createElement("br"));
-    if (dulnoWritten) {
-      var dulnoPicture = document.createElement("img");
-      dulnoPicture.classList.add("question-message-profile-picture");
-      dulnoPicture.src = "/static/img/logo-light.webp";
-      messageDescription.appendChild(dulnoPicture);
+    if (taskwolfWritten) {
+      var taskwolfPicture = document.createElement("img");
+      taskwolfPicture.classList.add("question-message-profile-picture");
+      taskwolfPicture.src = "/static/img/logo-light.webp";
+      messageDescription.appendChild(taskwolfPicture);
     } else {
       var userPicture = document.createElement("i");
       userPicture.classList.add("question-message-profile-icon", "fa-regular", "fa-user");

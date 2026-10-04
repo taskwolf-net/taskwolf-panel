@@ -30,7 +30,7 @@
 
 <script>
   $(document).ready(function() {
-    let rememberMe = Cookie.find("dulno-remember-me");
+    let rememberMe = Cookie.find("taskwolf-remember-me");
     if (rememberMe != null) {
       document.getElementById("email").value = rememberMe;
       document.getElementById("password").focus();
@@ -59,7 +59,7 @@
 
   function login(multiFactorCode) {
     if (document.getElementById("remember-check").checked) {
-      Cookie.create("dulno-remember-me", document.getElementById("email").value,
+      Cookie.create("taskwolf-remember-me", document.getElementById("email").value,
         12 * 30 * 24 * 60 * 60);
     }
     let futureAddress = new HttpRequest("https://api." + "{{domain}}" + "/v1/address/", "GET", []);

@@ -188,7 +188,7 @@
   }
 
   function drawMetric(circleElement, value, maxValue) {
-    let isDarkTheme = Cookie.find("dulno-panel-theme") === "dark";
+    let isDarkTheme = Cookie.find("taskwolf-panel-theme") === "dark";
     let bar = new ProgressBar.Circle(circleElement, {
       strokeWidth: 4,
       color: isDarkTheme ? '#e1e1e1' : '#252525',

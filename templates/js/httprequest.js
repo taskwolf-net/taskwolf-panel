@@ -19,7 +19,7 @@ class HttpRequest {
     if (token !== null) {
       headers.push({key: "Authorization", value: "Bearer " + token});
     }
-    let whitelistKey = Cookie.find("dulno-whitelist-key");
+    let whitelistKey = Cookie.find("taskwolf-whitelist-key");
     if (whitelistKey !== null) {
       headers.push({key: "WHITELIST-KEY", value: whitelistKey});
     }

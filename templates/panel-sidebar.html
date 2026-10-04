@@ -116,7 +116,7 @@
         element.style.color = group.color;
       }
     });
-    let status = Cookie.find("dulno-panel-status");
+    let status = Cookie.find("taskwolf-panel-status");
     if (status == null) {
       status = "ONLINE";
     }
@@ -181,12 +181,12 @@
   }
 
   document.getElementById("sidebar-profile-popup-status-online").onclick = function (event) {
-    Cookie.create("dulno-panel-status", "ONLINE", 60 * 60 * 24 * 365);
+    Cookie.create("taskwolf-panel-status", "ONLINE", 60 * 60 * 24 * 365);
     window.location.reload();
   }
 
   document.getElementById("sidebar-profile-popup-status-idle").onclick = function (event) {
-    Cookie.create("dulno-panel-status", "IDLE", 60 * 60 * 24 * 365);
+    Cookie.create("taskwolf-panel-status", "IDLE", 60 * 60 * 24 * 365);
     window.location.reload();
   }
 

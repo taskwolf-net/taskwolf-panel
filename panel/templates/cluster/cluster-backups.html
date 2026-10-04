@@ -131,7 +131,7 @@
     let url = URL.createObjectURL(blob);
     let a = document.createElement("a");
     a.href = url;
-    a.download = "dulno-backup-" + time + ".tar.gz.gpg";
+    a.download = "taskwolf-backup-" + time + ".tar.gz.gpg";
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -472,7 +472,7 @@
       if (result.isConfirmed) {
         loaderPopup();
         let request = new HttpRequest("/cluster/unit/restart/",
-          "POST", [], {unitName: "dulno-cassandra-backup", unitType: "job"});
+          "POST", [], {unitName: "taskwolf-cassandra-backup", unitType: "job"});
         request.send(function (status, responseText) {
           Swal.fire("{% trans 'cluster.backups.run.successful.title' %}",
             "{% trans 'cluster.backups.run.successful.body' %}", "success")
@@ -513,7 +513,7 @@
     if (token !== null) {
       headers["Authorization"] = "Bearer " + token;
     }
-    let whitelistKey = Cookie.find("dulno-whitelist-key");
+    let whitelistKey = Cookie.find("taskwolf-whitelist-key");
     if (whitelistKey !== null) {
       headers["WHITELIST-KEY"] = whitelistKey;
     }

@@ -69,7 +69,7 @@ msgstr "Abwesend"
 
 # DASHBOARD
 msgid "panel.dashboard.title"
-msgstr "Übersicht - Dulno"
+msgstr "Übersicht - Taskwolf"
 msgid "panel.dashboard.welcome"
 msgstr "Willkommen"
 msgid "panel.dashboard.open.tickets"
@@ -93,7 +93,7 @@ msgstr "Gehen Sie nun in Ihre Einstellungen und aktivieren Sie die 2-Faktor-Auth
 
 # TICKETS
 msgid "tickets.page.title"
-msgstr "Tickets - Dulno"
+msgstr "Tickets - Taskwolf"
 msgid "tickets.headline"
 msgstr "Offene Tickets"
 msgid "tickets.search"
@@ -117,7 +117,7 @@ msgstr "Ihr macht einen tollen Job. Danke für eure Arbeit!"
 
 # TICKET
 msgid "ticket.title"
-msgstr "Ticket - Dulno"
+msgstr "Ticket - Taskwolf"
 msgid "ticket.message.delete.title"
 msgstr "Nachricht löschen?"
 msgid "ticket.message.delete.body"
@@ -145,7 +145,7 @@ msgstr "Du hast das Ticket erfolgreich geschlossen!"
 
 # QUESTIONS
 msgid "questions.page.title"
-msgstr "Fragen - Dulno"
+msgstr "Fragen - Taskwolf"
 msgid "questions.headline"
 msgstr "Offene Fragen"
 msgid "questions.search"
@@ -163,7 +163,7 @@ msgstr "Ihr macht einen tollen Job. Danke für eure Arbeit!"
 
 # QUESTION
 msgid "question.title"
-msgstr "Frage - Dulno"
+msgstr "Frage - Taskwolf"
 msgid "question.message.add"
 msgstr "ANTWORTEN"
 msgid "question.message.add.successful.title"
@@ -183,7 +183,7 @@ msgstr "Du hast die Frage erfolgreich geschlossen!"
 
 # SALES
 msgid "sales.page.title"
-msgstr "Verkäufe - Dulno"
+msgstr "Verkäufe - Taskwolf"
 msgid "sales.headline"
 msgstr "Offene Verkäufe"
 msgid "sales.search"
@@ -201,7 +201,7 @@ msgstr "Ihr macht einen tollen Job. Danke für eure Arbeit!"
 
 # SALE
 msgid "sale.title"
-msgstr "Verkauf - Dulno"
+msgstr "Verkauf - Taskwolf"
 msgid "sale.customer.information"
 msgstr "KUNDEN INFORMATION"
 msgid "sale.customer.email"
@@ -239,7 +239,7 @@ msgstr "Du hast den Verkauf erfolgreich geschlossen!"
 
 # USERS
 msgid "users.title"
-msgstr "Nutzer - Dulno"
+msgstr "Nutzer - Taskwolf"
 msgid "users.headline"
 msgstr "Nutzer finden"
 msgid "users.search"
@@ -253,7 +253,7 @@ msgstr "Es konnte kein Nutzer gefunden werden, dem die E-Mail zugewiesen werden 
 
 # USER - GENERAL
 msgid "user.general.title"
-msgstr "Nutzer - Allgemein - Dulno"
+msgstr "Nutzer - Allgemein - Taskwolf"
 msgid "user.general.profile.headline"
 msgstr "PROFIL"
 msgid "user.general.profile.id"
@@ -335,7 +335,7 @@ msgstr "Sie haben die neue Organisation erfolgreich erstellt"
 
 # USER - MAIL
 msgid "user.mail.title"
-msgstr "Nutzer - Mails - Dulno"
+msgstr "Nutzer - Mails - Taskwolf"
 msgid "user.mail.headline"
 msgstr "MAILS"
 msgid "user.mail.empty"
@@ -349,7 +349,7 @@ msgstr "Die E-Mail wurde erneut an den Kunden gesendet"
 
 # USER - SESSION
 msgid "user.session.title"
-msgstr "Nutzer - Sitzungen - Dulno"
+msgstr "Nutzer - Sitzungen - Taskwolf"
 msgid "user.session.headline"
 msgstr "SITZUNGEN"
 msgid "user.session.empty"
@@ -375,7 +375,7 @@ msgstr "Sie haben die Sitzung erfolgreich beendet"
 
 # ORGANIZATION - GENERAL
 msgid "organization.general.title"
-msgstr "Organization - Allgemein - Dulno"
+msgstr "Organization - Allgemein - Taskwolf"
 msgid "organization.general.profile.headline"
 msgstr "PROFIL"
 msgid "organization.general.profile.id"
@@ -441,9 +441,9 @@ msgstr "KÜNDIGUNG"
 
 # ENTITY - BUNDLE
 msgid "user.bundle.title"
-msgstr "Nutzer - Paket - Dulno"
+msgstr "Nutzer - Paket - Taskwolf"
 msgid "organization.bundle.title"
-msgstr "Organisation - Paket - Dulno"
+msgstr "Organisation - Paket - Taskwolf"
 msgid "entity.bundle.headline"
 msgstr "PAKET"
 msgid "entity.bundle.unlimited"
@@ -521,9 +521,9 @@ msgstr "ÄNDERN"
 
 # ENTITY - BUNDLE - CHANGE
 msgid "user.bundle.change.title"
-msgstr "Nutzer - Paket - Dulno"
+msgstr "Nutzer - Paket - Taskwolf"
 msgid "organization.bundle.change.title"
-msgstr "Organisation - Paket - Dulno"
+msgstr "Organisation - Paket - Taskwolf"
 msgid "entity.bundle.change.headline"
 msgstr "PAKET ÄNDERN"
 msgid "entity.bundle.change.description"
@@ -589,9 +589,9 @@ msgstr "Bitte füllen Sie alle Dropdowns aus, um das Paket zu ändern"
 
 # ENTITY - PAYMENT
 msgid "user.payment.title"
-msgstr "Nutzer - Zahlungen - Dulno"
+msgstr "Nutzer - Zahlungen - Taskwolf"
 msgid "organization.payment.title"
-msgstr "Organisation - Zahlungen - Dulno"
+msgstr "Organisation - Zahlungen - Taskwolf"
 msgid "entity.payment.headline"
 msgstr "ZAHLUNGEN"
 msgid "entity.payment.time"
@@ -621,9 +621,9 @@ msgstr "ANSEHEN"
 
 # ENTITY - OFFERS
 msgid "user.offers.title"
-msgstr "Nutzer - Angebote - Dulno"
+msgstr "Nutzer - Angebote - Taskwolf"
 msgid "organization.offers.title"
-msgstr "Organisation - Angebote - Dulno"
+msgstr "Organisation - Angebote - Taskwolf"
 msgid "entity.offers.headline"
 msgstr "ANGEBOTE"
 msgid "entity.offers.type"
@@ -655,9 +655,9 @@ msgstr "ERSTELLEN"
 
 # ENTITY - TERMINATION
 msgid "user.termination.title"
-msgstr "Nutzer - Kündigung - Dulno"
+msgstr "Nutzer - Kündigung - Taskwolf"
 msgid "organization.termination.title"
-msgstr "Organisation - Kündigung - Dulno"
+msgstr "Organisation - Kündigung - Taskwolf"
 msgid "entity.termination.headline"
 msgstr "KÜNDIGUNG"
 msgid "entity.termination.process.description"
@@ -677,13 +677,13 @@ msgstr "Kündigung erfolgreich"
 msgid "entity.termination.process.successful.body"
 msgstr "Sie haben das Paket erfolgreich gekündigt"
 msgid "entity.termination.not.possible.description"
-msgstr "Sie können das Paket nicht kündigen. Das liegt daran, dass der Kunde die kostenlose Testversion von Dulno benutzen."
+msgstr "Sie können das Paket nicht kündigen. Das liegt daran, dass der Kunde die kostenlose Testversion von Taskwolf benutzen."
 msgid "entity.termination.done.description"
 msgstr "Das Paket wurde bereits gekündigt. Das Paket läuft am %s aus."
 
 # OFFER
 msgid "offer.title"
-msgstr "Angebot - Dulno"
+msgstr "Angebot - Taskwolf"
 msgid "offer.headline"
 msgstr "ANGEBOT"
 msgid "offer.unlimited"
@@ -763,7 +763,7 @@ msgstr "Sie haben das Angebot erfolgreich zurückgezogen"
 
 # OFFER - CREATE
 msgid "offer.create.title"
-msgstr "Angebot erstellen - Dulno"
+msgstr "Angebot erstellen - Taskwolf"
 msgid "offer.create.headline"
 msgstr "ANGEBOT ERSTELLEN"
 msgid "offer.create.description"
@@ -835,7 +835,7 @@ msgstr "Bitte füllen Sie alle Dropdowns aus, um das Angebot zu erstellen"
 
 # TEMPLATES
 msgid "templates.title"
-msgstr "Vorlagen - Dulno"
+msgstr "Vorlagen - Taskwolf"
 msgid "templates.headline"
 msgstr "Vorlagen"
 msgid "templates.search"
@@ -849,7 +849,7 @@ msgstr "MEHR LADEN"
 
 # TEMPLATE
 msgid "template.title"
-msgstr "Vorlage - Dulno"
+msgstr "Vorlage - Taskwolf"
 msgid "template.headline"
 msgstr "Vorlage"
 msgid "template.preview"
@@ -903,7 +903,7 @@ msgstr "Vorlage wurde erfolgreich gelöscht"
 
 # MAINTENANCE
 msgid "maintenance.title"
-msgstr "Wartungsarbeiten - Dulno"
+msgstr "Wartungsarbeiten - Taskwolf"
 msgid "maintenance.headline"
 msgstr "Wartungsarbeiten"
 msgid "maintenance.empty"
@@ -941,7 +941,7 @@ msgstr "Diese Wartung wurde erfolgreich fertiggestellt"
 
 # MAINTENANCE - CREATE
 msgid "maintenance.create.title"
-msgstr "Wartung einrichten - Dulno"
+msgstr "Wartung einrichten - Taskwolf"
 msgid "maintenance.create.headline"
 msgstr "Wartung einrichten"
 msgid "maintenance.create.description"
@@ -973,7 +973,7 @@ msgstr "FEHLER"
 
 # CLUSTER - RESOURCES
 msgid "cluster.resources.title"
-msgstr "Infrastruktur - Ressourcen - Dulno"
+msgstr "Infrastruktur - Ressourcen - Taskwolf"
 msgid "cluster.resources.controller.headline"
 msgstr "STEUERER"
 msgid "cluster.resources.worker.headline"
@@ -993,7 +993,7 @@ msgstr "DISK"
 
 # CLUSTER - SERVICE
 msgid "cluster.services.title"
-msgstr "Infrastruktur - Dienste - Dulno"
+msgstr "Infrastruktur - Dienste - Taskwolf"
 msgid "cluster.services.online"
 msgstr "Online"
 msgid "cluster.services.offline"
@@ -1001,13 +1001,13 @@ msgstr "Offline"
 
 # CLUSTER - SERVERS
 msgid "cluster.servers.title"
-msgstr "Infrastruktur - Servers - Dulno"
+msgstr "Infrastruktur - Servers - Taskwolf"
 msgid "cluster.servers.empty"
 msgstr "Es konnten keine Server gefunden werden."
 
 # CLUSTER - SERVER
 msgid "cluster.server.title"
-msgstr "Infrastruktur - Server - Dulno"
+msgstr "Infrastruktur - Server - Taskwolf"
 msgid "cluster.server.general"
 msgstr "ALLGEMEIN"
 msgid "cluster.server.general.name"
@@ -1077,13 +1077,13 @@ msgstr "Bandbreite (aus)"
 
 # CLUSTER - UNITS
 msgid "cluster.units.title"
-msgstr "Infrastruktur - Einheiten - Dulno"
+msgstr "Infrastruktur - Einheiten - Taskwolf"
 msgid "cluster.units.empty"
 msgstr "Es konnten keine Einheiten gefunden werden."
 
 # CLUSTER - UNIT
 msgid "cluster.unit.title"
-msgstr "Infrastruktur - Einheit - Dulno"
+msgstr "Infrastruktur - Einheit - Taskwolf"
 msgid "cluster.unit.general"
 msgstr "ALLGEMEIN"
 msgid "cluster.unit.general.name"
@@ -1115,7 +1115,7 @@ msgstr "Sind Sie sicher, dass Sie alle Pods der Einheit neu starten wollen?"
 
 # CLUSTER - UNIT - POD
 msgid "cluster.unit.pod.title"
-msgstr "Infrastruktur - Pod - Dulno"
+msgstr "Infrastruktur - Pod - Taskwolf"
 msgid "cluster.unit.pod.general"
 msgstr "ALLGEMEIN"
 msgid "cluster.unit.pod.general.node"
@@ -1155,7 +1155,7 @@ msgstr "Der von Ihnen gesuchte Pod konnte nicht gefunden werden. Klicken Sie, um
 
 # CLUSTER - BACKUPS
 msgid "cluster.backups.title"
-msgstr "Infrastruktur - Backups - Dulno"
+msgstr "Infrastruktur - Backups - Taskwolf"
 msgid "cluster.backups.empty"
 msgstr "Es konnten keine Backups gefunden werden."
 msgid "cluster.backups.run"
@@ -1227,7 +1227,7 @@ msgstr "Das Backup wurde erfolgreich gelöscht"
 
 # CLUSTER - ERRORS
 msgid "cluster.errors.title"
-msgstr "Infrastruktur - Fehler - Dulno"
+msgstr "Infrastruktur - Fehler - Taskwolf"
 msgid "cluster.errors.empty"
 msgstr "Es konnten keine Fehler gefunden werden."
 msgid "cluster.errors.unsolved"
@@ -1257,7 +1257,7 @@ msgstr "BEHOBEN"
 
 # ADMINISTRATION
 msgid "panel.administration.title"
-msgstr "Administration - Dulno"
+msgstr "Administration - Taskwolf"
 msgid "panel.administration.headline"
 msgstr "Administration"
 msgid "panel.administration.group.empty"
@@ -1283,7 +1283,7 @@ msgstr "Das Hinzufügen der Gruppe war erfolgreich!"
 
 # GROUP
 msgid "panel.group.title"
-msgstr "Gruppe - Dulno"
+msgstr "Gruppe - Taskwolf"
 msgid "panel.group.priority.headline"
 msgstr "Priorität:"
 msgid "panel.group.priority"
@@ -1353,7 +1353,7 @@ msgstr "Die Gruppe wurde erfolgreich umbenannt"
 
 # MEMBER
 msgid "panel.member.title"
-msgstr "Nutzer - Dulno"
+msgstr "Nutzer - Taskwolf"
 msgid "panel.member.group.headline"
 msgstr "Gruppe:"
 msgid "panel.member.group"
@@ -1407,7 +1407,7 @@ msgstr "Sitzungen"
 
 # PROFILE
 msgid "settings.profile.title"
-msgstr "Profileinstellungen - Dulno"
+msgstr "Profileinstellungen - Taskwolf"
 msgid "settings.profile.headline"
 msgstr "Profileinstellungen"
 msgid "settings.profile.name"
@@ -1421,7 +1421,7 @@ msgstr "Dein Profilname wurde erfolgreich aktualisiert!"
 
 # ACCOUNT
 msgid "settings.account.title"
-msgstr "Kontoeinstellungen - Dulno"
+msgstr "Kontoeinstellungen - Taskwolf"
 msgid "settings.account.headline"
 msgstr "Kontoeinstellungen"
 msgid "settings.account.password.headline"
@@ -1451,7 +1451,7 @@ msgstr "Geändert!"
 msgid "settings.account.password.successful.body"
 msgstr "Dein Passwort wurde erfolgreich geändert!"
 msgid "settings.account.email.title"
-msgstr "Email ändern - Dulno"
+msgstr "Email ändern - Taskwolf"
 msgid "settings.account.email.headline"
 msgstr "Email ändern"
 msgid "settings.account.email.password"
@@ -1475,7 +1475,7 @@ msgstr "Ein Änderungsantrag wurde an deine neuen Email Adresse gesendet!"
 
 # LANGUAGE
 msgid "settings.language.title"
-msgstr "Spracheinstellungen - Dulno"
+msgstr "Spracheinstellungen - Taskwolf"
 msgid "settings.language.headline"
 msgstr "Spracheinstellungen"
 msgid "settings.language.english"
@@ -1485,7 +1485,7 @@ msgstr "Deutsch"
 
 # THEME
 msgid "settings.theme.title"
-msgstr "Aussehen Einstellungen - Dulno"
+msgstr "Aussehen Einstellungen - Taskwolf"
 msgid "settings.theme.headline"
 msgstr "Aussehen Einstellungen"
 msgid "settings.theme.dark"
@@ -1495,7 +1495,7 @@ msgstr "Hell"
 
 # 2FA
 msgid "settings.2fa.title"
-msgstr "2FA - Dulno"
+msgstr "2FA - Taskwolf"
 msgid "settings.2fa.headline"
 msgstr "2-Faktor-Authentifizierung"
 msgid "settings.2fa.enable"
@@ -1555,7 +1555,7 @@ msgstr "Geben Sie jetzt einen Ihrer Wiederherstellungsschlüssel ein"
 
 # SESSION
 msgid "settings.session.title"
-msgstr "Sitzungen - Dulno"
+msgstr "Sitzungen - Taskwolf"
 msgid "settings.session.headline"
 msgstr "Sitzungen"
 msgid "settings.session.active"

@@ -3,10 +3,10 @@ window.addEventListener('load', function () {
   if (url === "") {
     return;
   }
-  if (Cookie.find("dulno-panel-theme") == null) {
-    Cookie.create("dulno-panel-theme", "dark", 60 * 60 * 24 * 365);
+  if (Cookie.find("taskwolf-panel-theme") == null) {
+    Cookie.create("taskwolf-panel-theme", "dark", 60 * 60 * 24 * 365);
   }
-  let theme = Cookie.find("dulno-panel-theme");
+  let theme = Cookie.find("taskwolf-panel-theme");
   var logoSource;
   if (theme === "dark") {
     document.body.classList.add("dark");
@@ -18,7 +18,7 @@ window.addEventListener('load', function () {
     document.body.setAttribute("data-bs-theme", "light");
     logoSource = "logo-dark.webp";
   }
-  let logoElements = document.getElementsByClassName("dulno-logo");
+  let logoElements = document.getElementsByClassName("taskwolf-logo");
   for (let i = 0; i < logoElements.length; i++) {
     logoElements[i].src = "/static/img/" + logoSource;
   }

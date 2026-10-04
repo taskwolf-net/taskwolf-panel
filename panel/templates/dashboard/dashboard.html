@@ -138,10 +138,10 @@
   }
 
   function displayServiceAvailabilities() {
-    displayServiceAvailability("web", "https://dulno.com/");
-    displayServiceAvailability("api", "https://api.dulno.com/v1/");
-    displayServiceAvailability("documentation", "https://documentation.dulno.com/");
-    displayServiceAvailability("apt", "https://apt.dulno.com/dists/distributions");
+    displayServiceAvailability("web", "https://taskwolf.net/");
+    displayServiceAvailability("api", "https://api.taskwolf.net/v1/");
+    displayServiceAvailability("documentation", "https://documentation.taskwolf.net/");
+    displayServiceAvailability("apt", "https://apt.taskwolf.net/dists/distributions");
   }
 
   function displayTip(twoFactorEnabled) {
@@ -167,7 +167,7 @@
   }
 
   function drawProgress(circleElement, value, maxValue, circleValueSuffix, toDarkColor, toLightColor) {
-    let isDarkTheme = Cookie.find("dulno-panel-theme") === "dark";
+    let isDarkTheme = Cookie.find("taskwolf-panel-theme") === "dark";
     var bar = new ProgressBar.Circle(circleElement, {
       strokeWidth: 4,
       color: isDarkTheme ? '#ffffff' : '#000000',
